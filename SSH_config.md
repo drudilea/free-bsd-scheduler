@@ -1,14 +1,10 @@
-# SSH connection
+# SSH config
 
 > Root user privileges
 
 ## Installation
 
-- Install NANO editor
-
-```bash
-pkg install nano
-```
+- [Install Vim editor](install_addons.md#vim-console)
 
 - Enable SSHD in `/etc/rc.conf`
 
@@ -31,7 +27,7 @@ service sshd restart
 - Edit `sshd_config` file
 
 ```bash
-nano /etc/ssh/sshd_config
+vim /etc/ssh/sshd_config
 ```
 
 - Find the following line:
