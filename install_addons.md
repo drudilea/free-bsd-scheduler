@@ -31,7 +31,8 @@ pkg update -f
 Next, download and install the Vim package.
 
 ```bash
-pkg install vim-console
+pkg install vim-console (FreeBSD 11)
+pkg install vim (FreeBSD 13)
 ```
 
 You’ll need to enter **y** to confirm the installation. That’s it!

@@ -1,12 +1,11 @@
 ## VM comparison table
 
-| Features       |         bsd11-0         |         bsd11-1         |      bsd11-latest       |
-| -------------- | :---------------------: | :---------------------: | :---------------------: |
-| ip             |     `192.168.0.25`      |     `192.168.0.21`      |     `192.168.0.18`      |
-| SSH_config     |            y            |            y            |            y            |
-| Vim            |            y            |            y            |            y            |
-| Git            |            y            |            y            |            y            |
-| Repo_NP        | `/home/nicog/pi_assets` | `/home/nicog/pi_assets` | `/home/nicog/pi_assets` |
-| Kernel         |           BSD           |        NicoPapp         |        NicoPapp         |
-| Only for clone |            y            |            y            |            n            |
-| Debugger mode  |            n            |            y            |            y            |
+| Features       |         bsd11-0         |         bsd11-1         |      bsd11-latest       | bsd13-0 | bsd13-latest |
+| -------------- | :---------------------: | :---------------------: | :---------------------: | :-----: | :----------: |
+| SSH_config     |            X            |            X            |            X            |    X    |      X       |
+| Vim            |            X            |            X            |            X            |    X    |      X       |
+| Git            |            X            |            X            |            X            |    X    |      X       |
+| Repo_NP        | `/home/nicog/pi_assets` | `/home/nicog/pi_assets` | `/home/nicog/pi_assets` |         |              |
+| Kernel         |           BSD           |        NicoPapp         |        NicoPapp         |   BSD   |     BSD      |
+| ONLY FOR CLONE |            X            |           `X`           |                         |   `X`   |              |
+| Debugger mode  |                         |            X            |            X            |    X    |      X       |
