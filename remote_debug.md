@@ -40,7 +40,7 @@
 6. Ejecutar los siguientes comandos en la máquina **Dev**
 
    ```bash
-   cd /usr/object/src/sys/usr/src/sys/KERNELCONFIG
+   cd /usr/obj/usr/src/sys/[KERNEL_CONFIG_FILE_NAME]
 
    make gdbinit
 
