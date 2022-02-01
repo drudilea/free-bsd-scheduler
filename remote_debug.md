@@ -1,82 +1,86 @@
 # Debug de FreeBSD Kernel entre dos máquinas virtuales (debug remoto)
 
-1. Definir dos maquinas virtuales, **"Dev"** (se usará para correr kgdb) y **"Target"** (es la que será debuggeada)
+1.  Definir dos maquinas virtuales, **"Dev"** (se usará para correr kgdb) y **"Target"** (es la que será debuggeada)
 
-2. Una de las máquinas virtuales creará un pipe de conexión (**Dev**) y la otra se conectará al mismo. **Siempre encender primero la máquina que crea el pipe.**
+2.  Una de las máquinas virtuales creará un pipe de conexión (**Dev**) y la otra se conectará al mismo. **Siempre encender primero la máquina que crea el pipe.**
 
-3. Configurar las máquinas virtuales de la siguiente forma:
+3.  Configurar las máquinas virtuales de la siguiente forma:
 
-   ## Dev
+    ## Dev
 
-   <img src='./assets/remoteDebugging/pipe_dev_config.png' style='max-height: 600px' />
+    <img src='./assets/remoteDebugging/pipe_dev_config.png' style='max-height: 600px' />
 
-   ## Target
+    ## Target
 
-   <img src='./assets/remoteDebugging/pipe_target_config.png' style='max-height: 600px' />
+    <img src='./assets/remoteDebugging/pipe_target_config.png' style='max-height: 600px' />
 
-4. Para realizar una prueba del puerto serial entre ambas máquinas se deben encender las dos máquinas virtuales y en **Target** escribir el siguiente comando para comenzar a ver los comandos enviados por la otra máquina
+    > En caso de que no sea posible la conexión con la dirección de pipe propuesta (generalmente en Mac), es posible utilizar la siguiente: `/tmp/serial`
 
-   ```bash
-   cat /dev/cuau0
-   ```
+4.  Para realizar una prueba del puerto serial entre ambas máquinas se deben encender las dos máquinas virtuales y en **Target** escribir el siguiente comando para comenzar a ver los comandos enviados por la otra máquina
 
-   Luego en la máquina **Dev** ejecutar el siguiente comando para enviar un texto de prueba:
+    ```bash
+    cat /dev/cuau0
+    ```
 
-   ```bash
-   echo "Test String" >> /dev/cuau0
-   ```
+    Luego en la máquina **Dev** ejecutar el siguiente comando para enviar un texto de prueba:
 
-   Si la conexión fue exitosa, se debería ver el texto enviado por la máquina **Dev** en la máquina **Target**
+    ```bash
+    echo "Test String" >> /dev/cuau0
+    ```
 
-5. En **Target** editar el archivo ubicado en `/boot/device.hints` para
-   que se encuentre la siguiente línea
+    Si la conexión fue exitosa, se debería ver el texto enviado por la máquina **Dev** en la máquina **Target**
 
-   ```bash
-   hint.uart.0.flags="0x80"
-   ```
+5.  En **Target** editar el archivo ubicado en `/boot/device.hints` para
+    que se encuentre la siguiente línea
 
-   **Luego de editar el archivo, reiniciar la máquina**
+    ```bash
+    hint.uart.0.flags="0x80"
+    ```
 
-6. Ejecutar los siguientes comandos en la máquina **Dev**
+    **Luego de editar el archivo, reiniciar la máquina**
 
-   ```bash
-   cd /usr/obj/usr/src/sys/[KERNEL_CONFIG_FILE_NAME]
+6.  Ejecutar los siguientes comandos en la máquina **Dev**
 
-   make gdbinit
+    ```bash
+    cd /usr/obj/usr/src/sys/[KERNEL_CONFIG_FILE_NAME]
 
-   kgdb -r /dev/cuau0 ./kernel.debug
-   ```
+    make gdbinit
 
-7. En este punto se puede comprobar dentro de **Target** que el backend de GDB se encuentra disponible a través del siguiente comando:
+    kgdb -r /dev/cuau0 ./kernel.debug
+    ```
 
-   ```bash
-   sysctl debug.kdb.available
-   ```
+7.  En este punto se puede comprobar dentro de **Target** que el backend de GDB se encuentra disponible a través del siguiente comando:
 
-   Se debería obtener como respuesta lo siguiente:
+    ```bash
+    sysctl debug.kdb.available
+    ```
 
-   `debug.kdb.available: ddb gdb`
+    Se debería obtener como respuesta lo siguiente:
 
-8. En **Target** ingresar al backend de GDB dentro del modo debugger mediante:
+    `debug.kdb.available: ddb gdb`
 
-   ```bash
-   sysctl debug.kdb.enter=1
+8.  En **Target** ingresar al backend de GDB dentro del modo debugger mediante:
 
-   db> gdb
-   ```
+    ```bash
+    sysctl debug.kdb.enter=1
 
-9. Para debuggear desde la máquina **Dev**, utilizar:
-   - n(next)
-   - s(step)
-   - bt(break)
-   - c(continue
+    db> gdb
+    ```
+
+9.  Para debuggear desde la máquina **Dev**, utilizar:
+    - n(next)
+    - s(step)
+    - bt(break)
+    - c(continue
 
 ---
 
 ## Documentación
 
 - [FreeBSD kernel debugging][freebsd kernel debugging]
+- [Compile FreeBSD kernel in debugging mode][compile freebsd kernel]
 
 <!-- Global variables -->
 
 [freebsd kernel debugging]: http://chetanbl.blogspot.com/2011/11/freebsd-kernel-module-debugging.html
+[compile freebsd kernel]: https://github.com/nicolaspapp/freebsd/wiki/Compilaci%C3%B3n-del-Kernel-de-FreeBSD-en-modo-Debug
