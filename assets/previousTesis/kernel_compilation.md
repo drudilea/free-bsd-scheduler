@@ -44,17 +44,17 @@
    tar -C / -xzvf src.txz
    ```
 
-En el caso de querer debuggear el código existente, se deberá hacer clone del repositorio actual y hacer un checkout de la rama correspondiente al proyecto final.
+   En el caso de querer debuggear el código existente, se deberá hacer clone del repositorio actual y hacer un checkout de la rama correspondiente al proyecto final.
 
 2. Dirigirse a la primera VM y seteas la siguiente configuración en serial ports:
 
-https://drive.google.com/file/d/14d5CjhLVKxIeaJFO9jwsHE5b1ukU7zb1/view?usp=sharing
+   https://drive.google.com/file/d/14d5CjhLVKxIeaJFO9jwsHE5b1ukU7zb1/view?usp=sharing
 
-Tener en cuenta que debe estar descheckeada la opción de conectar a pipe existing ya que queremos que cree uno nuevo.
+   Tener en cuenta que debe estar descheckeada la opción de conectar a pipe existing ya que queremos que cree uno nuevo.
 
 3. Dirigirse a la segunda VM y setear la configuración de la misma manera sólo que se debe seleccionar la opción de conectarse al pipe existente.
 
-https://drive.google.com/file/d/1iHPMtNBKfwwwOTP2kE8zJXiQBoU7SuDU/view?usp=sharing
+   https://drive.google.com/file/d/1iHPMtNBKfwwwOTP2kE8zJXiQBoU7SuDU/view?usp=sharing
 
 4. Para realizar prueba se prenden las dos máquinas virtuales y en la VM1 escribir:
 
@@ -93,7 +93,9 @@ https://drive.google.com/file/d/1iHPMtNBKfwwwOTP2kE8zJXiQBoU7SuDU/view?usp=shari
 
 7. Para debuggear en la VM2 utilizar n(next), s(step), bt(break), c(continue)
 
-\*Nota: Tener en consideración que se deben copiar los archivos de `/usr/obj` en la VM1 hacia la VM2 para poder debuggear el kernel.
+   \*Nota: Tener en consideración que se deben copiar los archivos de `/usr/obj` en la VM1 hacia la VM2 para poder debuggear el kernel.
+
+---
 
 ### Comandos útiles a la hora de debuggear:
 
@@ -107,15 +109,15 @@ https://drive.google.com/file/d/1iHPMtNBKfwwwOTP2kE8zJXiQBoU7SuDU/view?usp=shari
 | print \*dato  | Imprimir estructuras de datos                                                 |
 | frame         | Te dice donde estas parado en el programa (Stack Frame)                       |
 
-### Recompilado rápido del Kernel (Súper Útil)
+---
+
+## Recompilado rápido del Kernel (Súper Útil)
 
 Existen una serie de banderas que pueden utilizarse para realizar un recompilado
 más rápido del kernel. Estas son las siguientes:
 
 ```bash
-make NO_KERNELCLEAN=yes NO_KERNELDEPEND=yes
-MODULES_WITH_WORLD=yes buildkernel KERNCONF=KERNELCONF
-NO
+make NO_KERNELCLEAN=yes NO_KERNELDEPEND=yes MODULES_WITH_WORLD=yes buildkernel KERNCONF=KERNELCONF
 ```
 
 - **NO_KERNELCLEAN:** evita que se eliminen los archivos ya compilados
@@ -124,7 +126,9 @@ NO
   cuando no se haya realizado ningúun cambio en un header.
 - **MODULES WITH WORLD:** evita el recompilado de lo módulos del kernel.
 
-### Bilbiografía:
+---
+
+## Bilbiografía:
 
 - [KERNEL DEBUG](https://www.freebsd.org/doc/en_US.ISO8859-1/books/developers-handbook/kerneldebug-online-ddb.html)
 - [FreeBSD kernel debugging ](http://chetanbl.blogspot.com.ar/2011/11/freebsd-kernel-module-debugging.html)
