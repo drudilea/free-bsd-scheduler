@@ -1,18 +1,18 @@
 ## Repositorio del equipo de trabajo
 
-El [repositorio del equipo de trabajo][repo-fork], consiste en un fork realizado sobre el [repositorio oficial de freebsd-src][repo-freebsd]. 
+El [repositorio del equipo de trabajo][repo-fork], consiste en un fork realizado sobre el [repositorio oficial de freebsd-src][repo-freebsd].
 
 La modalidad de fork, permite mantener actualizado el repositorio con las últimas versiones del proyecto original, y al mismo tiempo consultar la version realizada por el proyecto integrador previo.
 
-El próximo paso, luego de hacer el fork de la version oficial del repositorio de FreeBSD, fue crear una nueva rama a partir de `release/11.0.0` y aplicar manualmente los cambios realizados por Papp y Turina en los archivos correspondientes. 
+El próximo paso, luego de hacer el fork de la version oficial del repositorio de FreeBSD, fue crear una nueva rama a partir de `release/11.0.0` y aplicar manualmente los cambios realizados por Papp y Turina en los archivos correspondientes.
 
 De esta forma, existe la posibilidad de hacer Fetch Upstreams cada vez que sea necesario e implementar el trabajo haciendo uso de las últimas versiones del S.O.
 
-
 ### Estrategia de Ramas
-Consideramos de mucha utilidad, la definicion/normalización de un sistema de ramas, para poder así llevar más organizado nuestro trabajo y poder encontrar fácilmente el paso a paso de los avances del proyecto desde un comienzo hasta la finalización del mismo. 
 
-Para definir los nombres de las ramas, establecimos 3 casos principales por los cuales se crearían nuevas ramas. 
+Consideramos de mucha utilidad, la definicion/normalización de un sistema de ramas, para poder así llevar más organizado nuestro trabajo y poder encontrar fácilmente el paso a paso de los avances del proyecto desde un comienzo hasta la finalización del mismo.
+
+Para definir los nombres de las ramas, establecimos 3 casos principales por los cuales se crearían nuevas ramas.
 
 - Testing: Para casos en los que únicamente se necesite hacer uso de logs para comprobar que alguna parte del codigo fuente esté funcionando como es deseado (o no).
 
