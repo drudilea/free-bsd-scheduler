@@ -2,14 +2,8 @@
 
 > Se compara el archivo `sched_4bsd.c` con el mismo archivo de la versión 12.0.0.
 
-```diff
-...
-...
-```
+---
 
-### Función ``
+## NO HAY CAMBIOS
 
-```diff
-...
-...
-```
+<img src="https://pbs.twimg.com/media/FH4qA9UXwAkKvsO.jpg">
