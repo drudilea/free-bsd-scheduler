@@ -75,6 +75,20 @@
 
 ---
 
+## Comandos útiles a la hora de debuggear:
+
+| Comando       | Explicación                                                                   |
+| ------------- | ----------------------------------------------------------------------------- |
+| break {where} | Agrega un breakpoint, puede ser un nombre de método, o una línea de archivo   |
+| continue      | Continúa la ejecución hasta el próximo breakpoint                             |
+| next          | Ejecuta la línea actual (Mismo nivel de produnidad)                           |
+| step          | Ejecuta la línea actual ingresando al método que se está convocando (Step-in) |
+| info locals   | Imprime variables locales                                                     |
+| print \*dato  | Imprimir estructuras de datos                                                 |
+| frame         | Te dice donde estas parado en el programa (Stack Frame)                       |
+
+---
+
 ## Documentación
 
 - [FreeBSD kernel debugging][freebsd kernel debugging]
