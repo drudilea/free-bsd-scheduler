@@ -16,8 +16,6 @@ pkg install git
 
 You’ll need to enter **y** to confirm the installation. That’s it!
 
-You can now move on to the Configuring Git section below to see some basic, useful customization options.
-
 ---
 
 ## <h2 id="vim-console"> Vim Console </h2>
