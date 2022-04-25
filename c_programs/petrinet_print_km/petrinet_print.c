@@ -1,8 +1,10 @@
-#include <sys/kernel.h>
-#include <sys/module.h>
+// clang-format off
 #include <sys/param.h>
-#include <sys/sched_petri.h>
+#include <sys/module.h>
 #include <sys/systm.h>
+#include <sys/kernel.h>
+#include <sys/sched_petri.h>
+// clang-format on
 
 /* The function called at load/unload. */
 static int event_handler(struct module *module, int event, void *arg) {
