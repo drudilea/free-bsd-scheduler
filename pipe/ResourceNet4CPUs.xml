@@ -2,12 +2,12 @@
 <pnml>
     <net id="Net-One" type="P/T net">
         <token id="Default" enabled="true" red="0" green="0" blue="0"/>
-        <place id="Cantq0">
+        <place id="CANTQ_P0">
             <graphics>
                 <position x="300.0" y="270.0"/>
             </graphics>
             <name>
-                <value>Cantq0</value>
+                <value>CANTQ_P0</value>
                 <graphics>
                     <offset x="29.555555555555554" y="-5.555555555555557"/>
                 </graphics>
@@ -22,12 +22,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Cantq1">
+        <place id="CANTQ_P1">
             <graphics>
                 <position x="375.0" y="330.0"/>
             </graphics>
             <name>
-                <value>Cantq1</value>
+                <value>CANTQ_P1</value>
                 <graphics>
                     <offset x="36.88888888888888" y="44.7777777777778"/>
                 </graphics>
@@ -42,12 +42,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Cantq2">
+        <place id="CANTQ_P2">
             <graphics>
                 <position x="450.0" y="285.0"/>
             </graphics>
             <name>
-                <value>Cantq2</value>
+                <value>CANTQ_P2</value>
                 <graphics>
                     <offset x="39.66666666666664" y="41.11111111111115"/>
                 </graphics>
@@ -62,12 +62,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Cantq3">
+        <place id="CANTQ_P3">
             <graphics>
                 <position x="375.0" y="225.0"/>
             </graphics>
             <name>
-                <value>Cantq3</value>
+                <value>CANTQ_P3</value>
                 <graphics>
                     <offset x="36.22222222222223" y="-2.3333333333333353"/>
                 </graphics>
@@ -82,12 +82,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="CPU0">
+        <place id="CPU_P0">
             <graphics>
                 <position x="195.0" y="210.0"/>
             </graphics>
             <name>
-                <value>CPU0</value>
+                <value>CPU_P0</value>
                 <graphics>
                     <offset x="14.0" y="2.0"/>
                 </graphics>
@@ -102,12 +102,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="CPU1">
+        <place id="CPU_P1">
             <graphics>
                 <position x="270.0" y="450.0"/>
             </graphics>
             <name>
-                <value>CPU1</value>
+                <value>CPU_P1</value>
                 <graphics>
                     <offset x="14.777777777777775" y="-2.0"/>
                 </graphics>
@@ -122,12 +122,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="CPU2">
+        <place id="CPU_P2">
             <graphics>
                 <position x="555.0" y="375.0"/>
             </graphics>
             <name>
-                <value>CPU2</value>
+                <value>CPU_P2</value>
                 <graphics>
                     <offset x="20.666666666666664" y="-3.0"/>
                 </graphics>
@@ -142,12 +142,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="CPU3">
+        <place id="CPU_P3">
             <graphics>
                 <position x="450.0" y="105.0"/>
             </graphics>
             <name>
-                <value>CPU3</value>
+                <value>CPU_P3</value>
                 <graphics>
                     <offset x="31.0" y="43.0"/>
                 </graphics>
@@ -162,12 +162,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Executing0">
+        <place id="EXECUTING_P0">
             <graphics>
                 <position x="30.0" y="210.0"/>
             </graphics>
             <name>
-                <value>Executing0</value>
+                <value>EXECUTING_P0</value>
                 <graphics>
                     <offset x="45.0" y="-4.0"/>
                 </graphics>
@@ -182,12 +182,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Executing1">
+        <place id="EXECUTING_P1">
             <graphics>
                 <position x="270.0" y="570.0"/>
             </graphics>
             <name>
-                <value>Executing1</value>
+                <value>EXECUTING_P1</value>
                 <graphics>
                     <offset x="33.44444444444444" y="-1.7777777777777777"/>
                 </graphics>
@@ -202,12 +202,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Executing2">
+        <place id="EXECUTING_P2">
             <graphics>
                 <position x="705.0" y="375.0"/>
             </graphics>
             <name>
-                <value>Executing2</value>
+                <value>EXECUTING_P2</value>
                 <graphics>
                     <offset x="41.66666666666667" y="39.888888888888886"/>
                 </graphics>
@@ -222,12 +222,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Executing3">
+        <place id="EXECUTING_P3">
             <graphics>
                 <position x="450.0" y="15.0"/>
             </graphics>
             <name>
-                <value>Executing3</value>
+                <value>EXECUTING_P3</value>
                 <graphics>
                     <offset x="40.888888888888886" y="40.444444444444464"/>
                 </graphics>
@@ -242,12 +242,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Globalqueue">
+        <place id="GLOBAL_QUEUE">
             <graphics>
                 <position x="555.0" y="45.0"/>
             </graphics>
             <name>
-                <value>Globalqueue</value>
+                <value>GLOBAL_QUEUE</value>
                 <graphics>
                     <offset x="47.33333333333336" y="-3.0"/>
                 </graphics>
@@ -262,12 +262,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Queue0">
+        <place id="QUEUE_P0">
             <graphics>
                 <position x="150.0" y="270.0"/>
             </graphics>
             <name>
-                <value>Queue0</value>
+                <value>QUEUE_P0</value>
                 <graphics>
                     <offset x="29.66666666666666" y="-1.8888888888888888"/>
                 </graphics>
@@ -282,12 +282,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Queue1">
+        <place id="QUEUE_P1">
             <graphics>
                 <position x="375.0" y="465.0"/>
             </graphics>
             <name>
-                <value>Queue1</value>
+                <value>QUEUE_P1</value>
                 <graphics>
                     <offset x="16.666666666666664" y="-1.1111111111111112"/>
                 </graphics>
@@ -302,12 +302,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Queue2">
+        <place id="QUEUE_P2">
             <graphics>
                 <position x="585.0" y="285.0"/>
             </graphics>
             <name>
-                <value>Queue2</value>
+                <value>QUEUE_P2</value>
                 <graphics>
                     <offset x="29.999999999999993" y="-2.2222222222222223"/>
                 </graphics>
@@ -322,12 +322,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Queue3">
+        <place id="QUEUE_P3">
             <graphics>
                 <position x="360.0" y="120.0"/>
             </graphics>
             <name>
-                <value>Queue3</value>
+                <value>QUEUE_P3</value>
                 <graphics>
                     <offset x="19.0" y="3.0"/>
                 </graphics>
@@ -342,12 +342,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="SMPnotready">
+        <place id="SMP_NOT_READY">
             <graphics>
                 <position x="150.0" y="570.0"/>
             </graphics>
             <name>
-                <value>SMPnotready</value>
+                <value>SMP_NOT_READY</value>
                 <graphics>
                     <offset x="39.66666666666667" y="-2.6666666666666665"/>
                 </graphics>
@@ -362,12 +362,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="SMPready">
+        <place id="SMP_READY">
             <graphics>
                 <position x="15.0" y="570.0"/>
             </graphics>
             <name>
-                <value>SMPready</value>
+                <value>SMP_READY</value>
                 <graphics>
                     <offset x="42.222222222222214" y="-4.0"/>
                 </graphics>
@@ -382,12 +382,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Toexec0">
+        <place id="TOEXEC_P0">
             <graphics>
                 <position x="105.0" y="360.0"/>
             </graphics>
             <name>
-                <value>Toexec0</value>
+                <value>TOEXEC_P0</value>
                 <graphics>
                     <offset x="11.0" y="-3.0"/>
                 </graphics>
@@ -402,12 +402,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Toexec1">
+        <place id="TOEXEC_P1">
             <graphics>
                 <position x="450.0" y="495.0"/>
             </graphics>
             <name>
-                <value>Toexec1</value>
+                <value>TOEXEC_P1</value>
                 <graphics>
                     <offset x="31.66666666666666" y="-4.0"/>
                 </graphics>
@@ -422,12 +422,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Toexec2">
+        <place id="TOEXEC_P2">
             <graphics>
                 <position x="660.0" y="210.0"/>
             </graphics>
             <name>
-                <value>Toexec2</value>
+                <value>TOEXEC_P2</value>
                 <graphics>
                     <offset x="20.777777777777768" y="-1.0"/>
                 </graphics>
@@ -442,12 +442,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <place id="Toexec3">
+        <place id="TOEXEC_P3">
             <graphics>
                 <position x="300.0" y="60.0"/>
             </graphics>
             <name>
-                <value>Toexec3</value>
+                <value>TOEXEC_P3</value>
                 <graphics>
                     <offset x="41.0" y="40.0"/>
                 </graphics>
@@ -462,12 +462,12 @@
                 <value>0</value>
             </capacity>
         </place>
-        <transition id="Addtoqueue0">
+        <transition id="ADDTOQUEUE_P0">
             <graphics>
                 <position x="225.0" y="270.0"/>
             </graphics>
             <name>
-                <value>Addtoqueue0</value>
+                <value>ADDTOQUEUE_P0</value>
                 <graphics>
                     <offset x="52.888888888888886" y="36.777777777777786"/>
                 </graphics>
@@ -488,12 +488,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Addtoqueue1">
+        <transition id="ADDTOQUEUE_P1">
             <graphics>
                 <position x="375.0" y="405.0"/>
             </graphics>
             <name>
-                <value>Addtoqueue1</value>
+                <value>ADDTOQUEUE_P1</value>
                 <graphics>
                     <offset x="46.6666666666667" y="30.888888888888893"/>
                 </graphics>
@@ -514,12 +514,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Addtoqueue2">
+        <transition id="ADDTOQUEUE_P2">
             <graphics>
                 <position x="510.0" y="285.0"/>
             </graphics>
             <name>
-                <value>Addtoqueue2</value>
+                <value>ADDTOQUEUE_P2</value>
                 <graphics>
                     <offset x="53.88888888888889" y="36.11111111111112"/>
                 </graphics>
@@ -540,12 +540,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Addtoqueue3">
+        <transition id="ADDTOQUEUE_P3">
             <graphics>
                 <position x="375.0" y="165.0"/>
             </graphics>
             <name>
-                <value>Addtoqueue3</value>
+                <value>ADDTOQUEUE_P3</value>
                 <graphics>
                     <offset x="51.888888888888886" y="8.000000000000004"/>
                 </graphics>
@@ -566,12 +566,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Exec0">
+        <transition id="EXEC_P0">
             <graphics>
                 <position x="45.0" y="420.0"/>
             </graphics>
             <name>
-                <value>Exec0</value>
+                <value>EXEC_P0</value>
                 <graphics>
                     <offset x="30.0" y="30.0"/>
                 </graphics>
@@ -592,12 +592,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Exec1">
+        <transition id="EXEC_P1">
             <graphics>
                 <position x="540.0" y="555.0"/>
             </graphics>
             <name>
-                <value>Exec1</value>
+                <value>EXEC_P1</value>
                 <graphics>
                     <offset x="29.444444444444436" y="36.111111111111114"/>
                 </graphics>
@@ -618,12 +618,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Exec2">
+        <transition id="EXEC_P2">
             <graphics>
                 <position x="705.0" y="150.0"/>
             </graphics>
             <name>
-                <value>Exec2</value>
+                <value>EXEC_P2</value>
                 <graphics>
                     <offset x="28.333333333333325" y="36.111111111111114"/>
                 </graphics>
@@ -644,12 +644,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Exec3">
+        <transition id="EXEC_P3">
             <graphics>
                 <position x="240.0" y="15.0"/>
             </graphics>
             <name>
-                <value>Exec3</value>
+                <value>EXEC_P3</value>
                 <graphics>
                     <offset x="23.111111111111114" y="31.333333333333332"/>
                 </graphics>
@@ -670,12 +670,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Execempty0">
+        <transition id="EXEC_EMPTY_P0">
             <graphics>
                 <position x="105.0" y="465.0"/>
             </graphics>
             <name>
-                <value>Execempty0</value>
+                <value>EXEC_EMPTY_P0</value>
                 <graphics>
                     <offset x="48.0" y="28.0"/>
                 </graphics>
@@ -696,12 +696,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Execempty1">
+        <transition id="EXEC_EMPTY_P1">
             <graphics>
                 <position x="600.0" y="495.0"/>
             </graphics>
             <name>
-                <value>Execempty1</value>
+                <value>EXEC_EMPTY_P1</value>
                 <graphics>
                     <offset x="46.11111111111114" y="32.77777777777777"/>
                 </graphics>
@@ -722,12 +722,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Execempty2">
+        <transition id="EXEC_EMPTY_P2">
             <graphics>
                 <position x="660.0" y="135.0"/>
             </graphics>
             <name>
-                <value>Execempty2</value>
+                <value>EXEC_EMPTY_P2</value>
                 <graphics>
                     <offset x="50.55555555555556" y="30.55555555555555"/>
                 </graphics>
@@ -748,12 +748,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Execempty3">
+        <transition id="EXEC_EMPTY_P3">
             <graphics>
                 <position x="165.0" y="60.0"/>
             </graphics>
             <name>
-                <value>Execempty3</value>
+                <value>EXEC_EMPTY_P3</value>
                 <graphics>
                     <offset x="45.0" y="28.0"/>
                 </graphics>
@@ -774,12 +774,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Fromglobal0">
+        <transition id="FROM_GLOBAL_CPU_P0">
             <graphics>
                 <position x="180.0" y="345.0"/>
             </graphics>
             <name>
-                <value>Fromglobal0</value>
+                <value>FROM_GLOBAL_CPU_P0</value>
                 <graphics>
                     <offset x="50.0" y="32.0"/>
                 </graphics>
@@ -800,12 +800,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Fromglobal1">
+        <transition id="FROM_GLOBAL_CPU_P1">
             <graphics>
                 <position x="450.0" y="435.0"/>
             </graphics>
             <name>
-                <value>Fromglobal1</value>
+                <value>FROM_GLOBAL_CPU_P1</value>
                 <graphics>
                     <offset x="46.11111111111114" y="29.44444444444445"/>
                 </graphics>
@@ -826,12 +826,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Fromglobal2">
+        <transition id="FROM_GLOBAL_CPU_P2">
             <graphics>
                 <position x="555.0" y="195.0"/>
             </graphics>
             <name>
-                <value>Fromglobal2</value>
+                <value>FROM_GLOBAL_CPU_P2</value>
                 <graphics>
                     <offset x="48.33333333333337" y="31.66666666666666"/>
                 </graphics>
@@ -852,12 +852,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Fromglobal3">
+        <transition id="FROM_GLOBAL_CPU_P3">
             <graphics>
                 <position x="300.0" y="135.0"/>
             </graphics>
             <name>
-                <value>Fromglobal3</value>
+                <value>FROM_GLOBAL_CPU_P3</value>
                 <graphics>
                     <offset x="52.0" y="30.0"/>
                 </graphics>
@@ -878,12 +878,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remempty0">
+        <transition id="REMOVE_EMPTY_QUEUE_P0">
             <graphics>
                 <position x="285.0" y="210.0"/>
             </graphics>
             <name>
-                <value>Remempty0</value>
+                <value>REMOVE_EMPTY_QUEUE_P0</value>
                 <graphics>
                     <offset x="47.22222222222225" y="32.77777777777777"/>
                 </graphics>
@@ -904,12 +904,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remempty1">
+        <transition id="REMOVE_EMPTY_QUEUE_P1">
             <graphics>
                 <position x="300.0" y="330.0"/>
             </graphics>
             <name>
-                <value>Remempty1</value>
+                <value>REMOVE_EMPTY_QUEUE_P1</value>
                 <graphics>
                     <offset x="45.00000000000003" y="31.66666666666666"/>
                 </graphics>
@@ -930,12 +930,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remempty2">
+        <transition id="REMOVE_EMPTY_QUEUE_P2">
             <graphics>
                 <position x="510.0" y="330.0"/>
             </graphics>
             <name>
-                <value>Remempty2</value>
+                <value>REMOVE_EMPTY_QUEUE_P2</value>
                 <graphics>
                     <offset x="46.11111111111113" y="31.666666666666664"/>
                 </graphics>
@@ -956,12 +956,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remempty3">
+        <transition id="REMOVE_EMPTY_QUEUE_P3">
             <graphics>
                 <position x="435.0" y="225.0"/>
             </graphics>
             <name>
-                <value>Remempty3</value>
+                <value>REMOVE_EMPTY_QUEUE_P3</value>
                 <graphics>
                     <offset x="48.33333333333336" y="30.55555555555555"/>
                 </graphics>
@@ -982,12 +982,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remove0">
+        <transition id="REMOVE_QUEUE_P0">
             <graphics>
                 <position x="225.0" y="225.0"/>
             </graphics>
             <name>
-                <value>Remove0</value>
+                <value>REMOVE_QUEUE_P0</value>
                 <graphics>
                     <offset x="42.0" y="30.0"/>
                 </graphics>
@@ -1008,12 +1008,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remove1">
+        <transition id="REMOVE_QUEUE_P1">
             <graphics>
                 <position x="300.0" y="375.0"/>
             </graphics>
             <name>
-                <value>Remove1</value>
+                <value>REMOVE_QUEUE_P1</value>
                 <graphics>
                     <offset x="33.888888888888886" y="30.555555555555564"/>
                 </graphics>
@@ -1034,12 +1034,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remove2">
+        <transition id="REMOVE_QUEUE_P2">
             <graphics>
                 <position x="585.0" y="315.0"/>
             </graphics>
             <name>
-                <value>Remove2</value>
+                <value>REMOVE_QUEUE_P2</value>
                 <graphics>
                     <offset x="40.55555555555557" y="28.333333333333332"/>
                 </graphics>
@@ -1060,12 +1060,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Remove3">
+        <transition id="REMOVE_QUEUE_P3">
             <graphics>
                 <position x="435.0" y="195.0"/>
             </graphics>
             <name>
-                <value>Remove3</value>
+                <value>REMOVE_QUEUE_P3</value>
                 <graphics>
                     <offset x="44.0" y="28.0"/>
                 </graphics>
@@ -1086,12 +1086,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="RemoveGlobal">
+        <transition id="REMOVE_GLOBAL_QUEUE">
             <graphics>
                 <position x="615.0" y="90.0"/>
             </graphics>
             <name>
-                <value>RemoveGlobal</value>
+                <value>REMOVE_GLOBAL_QUEUE</value>
                 <graphics>
                     <offset x="55.00000000000005" y="35.0"/>
                 </graphics>
@@ -1112,12 +1112,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnCPU0">
+        <transition id="RETURN_VOL_P0">
             <graphics>
                 <position x="120.0" y="210.0"/>
             </graphics>
             <name>
-                <value>ReturnCPU0</value>
+                <value>RETURN_VOL_P0</value>
                 <graphics>
                     <offset x="46.66666666666666" y="33.55555555555556"/>
                 </graphics>
@@ -1138,12 +1138,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnCPU1">
+        <transition id="RETURN_VOL_P1">
             <graphics>
                 <position x="270.0" y="495.0"/>
             </graphics>
             <name>
-                <value>ReturnCPU1</value>
+                <value>RETURN_VOL_P1</value>
                 <graphics>
                     <offset x="64.66666666666669" y="33.11111111111111"/>
                 </graphics>
@@ -1164,12 +1164,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnCPU2">
+        <transition id="RETURN_VOL_P2">
             <graphics>
                 <position x="630.0" y="375.0"/>
             </graphics>
             <name>
-                <value>ReturnCPU2</value>
+                <value>RETURN_VOL_P2</value>
                 <graphics>
                     <offset x="46.444444444444464" y="4.555555555555557"/>
                 </graphics>
@@ -1190,12 +1190,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnCPU3">
+        <transition id="RETURN_VOL_P3">
             <graphics>
                 <position x="450.0" y="60.0"/>
             </graphics>
             <name>
-                <value>ReturnCPU3</value>
+                <value>RETURN_VOL_P3</value>
                 <graphics>
                     <offset x="38.44444444444443" y="32.0"/>
                 </graphics>
@@ -1216,12 +1216,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnWait0">
+        <transition id="RETURN_INVOL_P0">
             <graphics>
                 <position x="120.0" y="180.0"/>
             </graphics>
             <name>
-                <value>ReturnWait0</value>
+                <value>RETURN_INVOL_P0</value>
                 <graphics>
                     <offset x="49.0" y="6.0"/>
                 </graphics>
@@ -1242,12 +1242,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnWait1">
+        <transition id="RETURN_INVOL_P1">
             <graphics>
                 <position x="225.0" y="495.0"/>
             </graphics>
             <name>
-                <value>ReturnWait1</value>
+                <value>RETURN_INVOL_P1</value>
                 <graphics>
                     <offset x="41.111111111111114" y="32.111111111111114"/>
                 </graphics>
@@ -1268,12 +1268,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnWait2">
+        <transition id="RETURN_INVOL_P2">
             <graphics>
                 <position x="630.0" y="420.0"/>
             </graphics>
             <name>
-                <value>ReturnWait2</value>
+                <value>RETURN_INVOL_P2</value>
                 <graphics>
                     <offset x="46.0" y="34.0"/>
                 </graphics>
@@ -1294,12 +1294,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="ReturnWait3">
+        <transition id="RETURN_INVOL_P3">
             <graphics>
                 <position x="495.0" y="60.0"/>
             </graphics>
             <name>
-                <value>ReturnWait3</value>
+                <value>RETURN_INVOL_P3</value>
                 <graphics>
                     <offset x="60.888888888888886" y="31.000000000000004"/>
                 </graphics>
@@ -1320,12 +1320,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="StartSMP">
+        <transition id="START_SMP">
             <graphics>
                 <position x="90.0" y="570.0"/>
             </graphics>
             <name>
-                <value>StartSMP</value>
+                <value>START_SMP</value>
                 <graphics>
                     <offset x="38.22222222222223" y="36.55555555555556"/>
                 </graphics>
@@ -1346,12 +1346,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="TG">
+        <transition id="QUEUE_GLOBAL">
             <graphics>
                 <position x="615.0" y="30.0"/>
             </graphics>
             <name>
-                <value>TG</value>
+                <value>QUEUE_GLOBAL</value>
                 <graphics>
                     <offset x="21.66666666666666" y="35.0"/>
                 </graphics>
@@ -1372,12 +1372,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Throw">
+        <transition id="THROW">
             <graphics>
                 <position x="375.0" y="270.0"/>
             </graphics>
             <name>
-                <value>Throw</value>
+                <value>THROW</value>
                 <graphics>
                     <offset x="32.0" y="37.0"/>
                 </graphics>
@@ -1398,12 +1398,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Unqueue">
+        <transition id="UNQUEUE_P0">
             <graphics>
                 <position x="105.0" y="270.0"/>
             </graphics>
             <name>
-                <value>Unqueue</value>
+                <value>UNQUEUE_P0</value>
                 <graphics>
                     <offset x="41.0" y="32.0"/>
                 </graphics>
@@ -1424,12 +1424,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Unqueue1">
+        <transition id="UNQUEUE_P1">
             <graphics>
                 <position x="375.0" y="495.0"/>
             </graphics>
             <name>
-                <value>Unqueue1</value>
+                <value>UNQUEUE_P1</value>
                 <graphics>
                     <offset x="41.666666666666686" y="28.33333333333333"/>
                 </graphics>
@@ -1450,12 +1450,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Unqueue2">
+        <transition id="UNQUEUE_P2">
             <graphics>
                 <position x="660.0" y="285.0"/>
             </graphics>
             <name>
-                <value>Unqueue2</value>
+                <value>UNQUEUE_P2</value>
                 <graphics>
                     <offset x="42.7777777777778" y="31.666666666666668"/>
                 </graphics>
@@ -1476,12 +1476,12 @@
                 <value>1</value>
             </priority>
         </transition>
-        <transition id="Unqueue3">
+        <transition id="UNQUEUE_P3">
             <graphics>
                 <position x="360.0" y="60.0"/>
             </graphics>
             <name>
-                <value>Unqueue3</value>
+                <value>UNQUEUE_P3</value>
                 <graphics>
                     <offset x="44.0" y="32.0"/>
                 </graphics>
@@ -1502,7 +1502,7 @@
                 <value>1</value>
             </priority>
         </transition>
-        <arc id="Addtoqueue0 to Cantq0" source="Addtoqueue0" target="Cantq0">
+        <arc id="ADDTOQUEUE_P0 to CANTQ_P0" source="ADDTOQUEUE_P0" target="CANTQ_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1515,7 +1515,7 @@
             <arcpath id="001" x="297" y="282" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Addtoqueue0 to Queue0" source="Addtoqueue0" target="Queue0">
+        <arc id="ADDTOQUEUE_P0 to QUEUE_P0" source="ADDTOQUEUE_P0" target="QUEUE_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1528,7 +1528,7 @@
             <arcpath id="001" x="176" y="282" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Addtoqueue1 to Cantq1" source="Addtoqueue1" target="Cantq1">
+        <arc id="ADDTOQUEUE_P1 to CANTQ_P1" source="ADDTOQUEUE_P1" target="CANTQ_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1541,7 +1541,7 @@
             <arcpath id="001" x="385" y="356" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Addtoqueue1 to Queue1" source="Addtoqueue1" target="Queue1">
+        <arc id="ADDTOQUEUE_P1 to QUEUE_P1" source="ADDTOQUEUE_P1" target="QUEUE_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1554,7 +1554,7 @@
             <arcpath id="001" x="386" y="462" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Addtoqueue2 to Cantq2" source="Addtoqueue2" target="Cantq2">
+        <arc id="ADDTOQUEUE_P2 to CANTQ_P2" source="ADDTOQUEUE_P2" target="CANTQ_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1567,7 +1567,7 @@
             <arcpath id="001" x="476" y="297" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Addtoqueue2 to Queue2" source="Addtoqueue2" target="Queue2">
+        <arc id="ADDTOQUEUE_P2 to QUEUE_P2" source="ADDTOQUEUE_P2" target="QUEUE_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1580,7 +1580,7 @@
             <arcpath id="001" x="582" y="297" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Addtoqueue3 to Cantq3" source="Addtoqueue3" target="Cantq3">
+        <arc id="ADDTOQUEUE_P3 to CANTQ_P3" source="ADDTOQUEUE_P3" target="CANTQ_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1593,7 +1593,7 @@
             <arcpath id="001" x="386" y="222" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Addtoqueue3 to Queue3" source="Addtoqueue3" target="Queue3">
+        <arc id="ADDTOQUEUE_P3 to QUEUE_P3" source="ADDTOQUEUE_P3" target="QUEUE_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1606,7 +1606,7 @@
             <arcpath id="001" x="377" y="146" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq0 to Addtoqueue0" source="Cantq0" target="Addtoqueue0">
+        <arc id="CANTQ_P0 to ADDTOQUEUE_P0" source="CANTQ_P0" target="ADDTOQUEUE_P0">
             <graphics/>
             <inscription>
                 <value/>
@@ -1620,7 +1620,7 @@
             <arcpath id="002" x="241" y="287" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq0 to Exec0" source="Cantq0" target="Exec0">
+        <arc id="CANTQ_P0 to EXEC_P0" source="CANTQ_P0" target="EXEC_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1634,7 +1634,7 @@
             <arcpath id="002" x="71" y="432" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq0 to Execempty0" source="Cantq0" target="Execempty0">
+        <arc id="CANTQ_P0 to EXEC_EMPTY_P0" source="CANTQ_P0" target="EXEC_EMPTY_P0">
             <graphics/>
             <inscription>
                 <value/>
@@ -1648,7 +1648,7 @@
             <arcpath id="002" x="131" y="477" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq0 to Remempty0" source="Cantq0" target="Remempty0">
+        <arc id="CANTQ_P0 to REMOVE_EMPTY_QUEUE_P0" source="CANTQ_P0" target="REMOVE_EMPTY_QUEUE_P0">
             <graphics/>
             <inscription>
                 <value/>
@@ -1661,7 +1661,7 @@
             <arcpath id="001" x="296" y="226" curvePoint="true"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq0 to Remove0" source="Cantq0" target="Remove0">
+        <arc id="CANTQ_P0 to REMOVE_QUEUE_P0" source="CANTQ_P0" target="REMOVE_QUEUE_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1674,7 +1674,7 @@
             <arcpath id="001" x="251" y="237" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq0 to Throw" source="Cantq0" target="Throw">
+        <arc id="CANTQ_P0 to THROW" source="CANTQ_P0" target="THROW">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1687,7 +1687,7 @@
             <arcpath id="001" x="371" y="282" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq1 to Addtoqueue1" source="Cantq1" target="Addtoqueue1">
+        <arc id="CANTQ_P1 to ADDTOQUEUE_P1" source="CANTQ_P1" target="ADDTOQUEUE_P1">
             <graphics/>
             <inscription>
                 <value/>
@@ -1701,7 +1701,7 @@
             <arcpath id="002" x="391" y="412" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq1 to Exec1" source="Cantq1" target="Exec1">
+        <arc id="CANTQ_P1 to EXEC_P1" source="CANTQ_P1" target="EXEC_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1715,7 +1715,7 @@
             <arcpath id="002" x="556" y="562" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq1 to Execempty1" source="Cantq1" target="Execempty1">
+        <arc id="CANTQ_P1 to EXEC_EMPTY_P1" source="CANTQ_P1" target="EXEC_EMPTY_P1">
             <graphics/>
             <inscription>
                 <value/>
@@ -1730,7 +1730,7 @@
             <arcpath id="003" x="611" y="501" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq1 to Remempty1" source="Cantq1" target="Remempty1">
+        <arc id="CANTQ_P1 to REMOVE_EMPTY_QUEUE_P1" source="CANTQ_P1" target="REMOVE_EMPTY_QUEUE_P1">
             <graphics/>
             <inscription>
                 <value/>
@@ -1743,7 +1743,7 @@
             <arcpath id="001" x="326" y="342" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq1 to Remove1" source="Cantq1" target="Remove1">
+        <arc id="CANTQ_P1 to REMOVE_QUEUE_P1" source="CANTQ_P1" target="REMOVE_QUEUE_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1756,7 +1756,7 @@
             <arcpath id="001" x="326" y="387" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq1 to Throw" source="Cantq1" target="Throw">
+        <arc id="CANTQ_P1 to THROW" source="CANTQ_P1" target="THROW">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1769,7 +1769,7 @@
             <arcpath id="001" x="386" y="286" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq2 to Addtoqueue2" source="Cantq2" target="Addtoqueue2">
+        <arc id="CANTQ_P2 to ADDTOQUEUE_P2" source="CANTQ_P2" target="ADDTOQUEUE_P2">
             <graphics/>
             <inscription>
                 <value/>
@@ -1783,7 +1783,7 @@
             <arcpath id="002" x="521" y="291" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq2 to Exec2" source="Cantq2" target="Exec2">
+        <arc id="CANTQ_P2 to EXEC_P2" source="CANTQ_P2" target="EXEC_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1797,7 +1797,7 @@
             <arcpath id="002" x="701" y="162" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq2 to Execempty2" source="Cantq2" target="Execempty2">
+        <arc id="CANTQ_P2 to EXEC_EMPTY_P2" source="CANTQ_P2" target="EXEC_EMPTY_P2">
             <graphics/>
             <inscription>
                 <value/>
@@ -1811,7 +1811,7 @@
             <arcpath id="002" x="656" y="147" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq2 to Remempty2" source="Cantq2" target="Remempty2">
+        <arc id="CANTQ_P2 to REMOVE_EMPTY_QUEUE_P2" source="CANTQ_P2" target="REMOVE_EMPTY_QUEUE_P2">
             <graphics/>
             <inscription>
                 <value/>
@@ -1825,7 +1825,7 @@
             <arcpath id="002" x="506" y="342" curvePoint="true"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq2 to Remove2" source="Cantq2" target="Remove2">
+        <arc id="CANTQ_P2 to REMOVE_QUEUE_P2" source="CANTQ_P2" target="REMOVE_QUEUE_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1838,7 +1838,7 @@
             <arcpath id="001" x="581" y="327" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq2 to Throw" source="Cantq2" target="Throw">
+        <arc id="CANTQ_P2 to THROW" source="CANTQ_P2" target="THROW">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1851,7 +1851,7 @@
             <arcpath id="001" x="401" y="282" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq3 to Addtoqueue3" source="Cantq3" target="Addtoqueue3">
+        <arc id="CANTQ_P3 to ADDTOQUEUE_P3" source="CANTQ_P3" target="ADDTOQUEUE_P3">
             <graphics/>
             <inscription>
                 <value/>
@@ -1865,7 +1865,7 @@
             <arcpath id="002" x="371" y="177" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq3 to Exec3" source="Cantq3" target="Exec3">
+        <arc id="CANTQ_P3 to EXEC_P3" source="CANTQ_P3" target="EXEC_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1879,7 +1879,7 @@
             <arcpath id="002" x="246" y="31" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq3 to Execempty3" source="Cantq3" target="Execempty3">
+        <arc id="CANTQ_P3 to EXEC_EMPTY_P3" source="CANTQ_P3" target="EXEC_EMPTY_P3">
             <graphics/>
             <inscription>
                 <value/>
@@ -1893,7 +1893,7 @@
             <arcpath id="002" x="176" y="76" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq3 to Remempty3" source="Cantq3" target="Remempty3">
+        <arc id="CANTQ_P3 to REMOVE_EMPTY_QUEUE_P3" source="CANTQ_P3" target="REMOVE_EMPTY_QUEUE_P3">
             <graphics/>
             <inscription>
                 <value/>
@@ -1906,7 +1906,7 @@
             <arcpath id="001" x="431" y="237" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="Cantq3 to Remove3" source="Cantq3" target="Remove3">
+        <arc id="CANTQ_P3 to REMOVE_QUEUE_P3" source="CANTQ_P3" target="REMOVE_QUEUE_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1919,7 +1919,7 @@
             <arcpath id="001" x="431" y="207" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Cantq3 to Throw" source="Cantq3" target="Throw">
+        <arc id="CANTQ_P3 to THROW" source="CANTQ_P3" target="THROW">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1932,7 +1932,7 @@
             <arcpath id="001" x="386" y="276" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU0 to Fromglobal0" source="CPU0" target="Fromglobal0">
+        <arc id="CPU_P0 to FROM_GLOBAL_CPU_P0" source="CPU_P0" target="FROM_GLOBAL_CPU_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1946,7 +1946,7 @@
             <arcpath id="002" x="191" y="351" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU0 to Unqueue" source="CPU0" target="Unqueue">
+        <arc id="CPU_P0 to UNQUEUE_P0" source="CPU_P0" target="UNQUEUE_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1959,7 +1959,7 @@
             <arcpath id="001" x="116" y="276" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU1 to Fromglobal1" source="CPU1" target="Fromglobal1">
+        <arc id="CPU_P1 to FROM_GLOBAL_CPU_P1" source="CPU_P1" target="FROM_GLOBAL_CPU_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1973,7 +1973,7 @@
             <arcpath id="002" x="446" y="447" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU1 to Unqueue1" source="CPU1" target="Unqueue1">
+        <arc id="CPU_P1 to UNQUEUE_P1" source="CPU_P1" target="UNQUEUE_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -1986,7 +1986,7 @@
             <arcpath id="001" x="371" y="507" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU2 to Fromglobal2" source="CPU2" target="Fromglobal2">
+        <arc id="CPU_P2 to FROM_GLOBAL_CPU_P2" source="CPU_P2" target="FROM_GLOBAL_CPU_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2000,7 +2000,7 @@
             <arcpath id="002" x="566" y="211" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU2 to Unqueue2" source="CPU2" target="Unqueue2">
+        <arc id="CPU_P2 to UNQUEUE_P2" source="CPU_P2" target="UNQUEUE_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2013,7 +2013,7 @@
             <arcpath id="001" x="671" y="301" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU3 to Fromglobal3" source="CPU3" target="Fromglobal3">
+        <arc id="CPU_P3 to FROM_GLOBAL_CPU_P3" source="CPU_P3" target="FROM_GLOBAL_CPU_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2027,7 +2027,7 @@
             <arcpath id="002" x="326" y="147" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="CPU3 to Unqueue3" source="CPU3" target="Unqueue3">
+        <arc id="CPU_P3 to UNQUEUE_P3" source="CPU_P3" target="UNQUEUE_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2040,7 +2040,7 @@
             <arcpath id="001" x="386" y="72" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Exec0 to Executing0" source="Exec0" target="Executing0">
+        <arc id="EXEC_P0 to EXECUTING_P0" source="EXEC_P0" target="EXECUTING_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2054,7 +2054,7 @@
             <arcpath id="002" x="47" y="235" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Exec1 to Executing1" source="Exec1" target="Executing1">
+        <arc id="EXEC_P1 to EXECUTING_P1" source="EXEC_P1" target="EXECUTING_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2068,7 +2068,7 @@
             <arcpath id="002" x="296" y="581" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Exec2 to Executing2" source="Exec2" target="Executing2">
+        <arc id="EXEC_P2 to EXECUTING_P2" source="EXEC_P2" target="EXECUTING_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2082,7 +2082,7 @@
             <arcpath id="002" x="717" y="372" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Exec3 to Executing3" source="Exec3" target="Executing3">
+        <arc id="EXEC_P3 to EXECUTING_P3" source="EXEC_P3" target="EXECUTING_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2097,7 +2097,7 @@
             <arcpath id="003" x="447" y="26" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Execempty0 to Executing0" source="Execempty0" target="Executing0">
+        <arc id="EXEC_EMPTY_P0 to EXECUTING_P0" source="EXEC_EMPTY_P0" target="EXECUTING_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2111,7 +2111,7 @@
             <arcpath id="002" x="39" y="236" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Execempty1 to Executing1" source="Execempty1" target="Executing1">
+        <arc id="EXEC_EMPTY_P1 to EXECUTING_P1" source="EXEC_EMPTY_P1" target="EXECUTING_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2125,7 +2125,7 @@
             <arcpath id="002" x="296" y="583" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Execempty2 to Executing2" source="Execempty2" target="Executing2">
+        <arc id="EXEC_EMPTY_P2 to EXECUTING_P2" source="EXEC_EMPTY_P2" target="EXECUTING_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2139,7 +2139,7 @@
             <arcpath id="002" x="720" y="372" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Execempty3 to Executing3" source="Execempty3" target="Executing3">
+        <arc id="EXEC_EMPTY_P3 to EXECUTING_P3" source="EXEC_EMPTY_P3" target="EXECUTING_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2153,7 +2153,7 @@
             <arcpath id="002" x="447" y="24" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing0 to ReturnCPU0" source="Executing0" target="ReturnCPU0">
+        <arc id="EXECUTING_P0 to RETURN_VOL_P0" source="EXECUTING_P0" target="RETURN_VOL_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2166,7 +2166,7 @@
             <arcpath id="001" x="116" y="222" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing0 to ReturnWait0" source="Executing0" target="ReturnWait0">
+        <arc id="EXECUTING_P0 to RETURN_INVOL_P0" source="EXECUTING_P0" target="RETURN_INVOL_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2180,7 +2180,7 @@
             <arcpath id="002" x="116" y="192" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing1 to ReturnCPU1" source="Executing1" target="ReturnCPU1">
+        <arc id="EXECUTING_P1 to RETURN_VOL_P1" source="EXECUTING_P1" target="RETURN_VOL_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2193,7 +2193,7 @@
             <arcpath id="001" x="281" y="511" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing1 to ReturnWait1" source="Executing1" target="ReturnWait1">
+        <arc id="EXECUTING_P1 to RETURN_INVOL_P1" source="EXECUTING_P1" target="RETURN_INVOL_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2207,7 +2207,7 @@
             <arcpath id="002" x="236" y="511" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing2 to ReturnCPU2" source="Executing2" target="ReturnCPU2">
+        <arc id="EXECUTING_P2 to RETURN_VOL_P2" source="EXECUTING_P2" target="RETURN_VOL_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2220,7 +2220,7 @@
             <arcpath id="001" x="656" y="387" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing2 to ReturnWait2" source="Executing2" target="ReturnWait2">
+        <arc id="EXECUTING_P2 to RETURN_INVOL_P2" source="EXECUTING_P2" target="RETURN_INVOL_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2234,7 +2234,7 @@
             <arcpath id="002" x="656" y="432" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing3 to ReturnCPU3" source="Executing3" target="ReturnCPU3">
+        <arc id="EXECUTING_P3 to RETURN_VOL_P3" source="EXECUTING_P3" target="RETURN_VOL_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2247,7 +2247,7 @@
             <arcpath id="001" x="461" y="66" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Executing3 to ReturnWait3" source="Executing3" target="ReturnWait3">
+        <arc id="EXECUTING_P3 to RETURN_INVOL_P3" source="EXECUTING_P3" target="RETURN_INVOL_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2261,7 +2261,7 @@
             <arcpath id="002" x="506" y="66" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Fromglobal0 to Toexec0" source="Fromglobal0" target="Toexec0">
+        <arc id="FROM_GLOBAL_CPU_P0 to TOEXEC_P0" source="FROM_GLOBAL_CPU_P0" target="TOEXEC_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2274,7 +2274,7 @@
             <arcpath id="001" x="131" y="368" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Fromglobal1 to Toexec1" source="Fromglobal1" target="Toexec1">
+        <arc id="FROM_GLOBAL_CPU_P1 to TOEXEC_P1" source="FROM_GLOBAL_CPU_P1" target="TOEXEC_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2287,7 +2287,7 @@
             <arcpath id="001" x="461" y="492" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Fromglobal2 to Toexec2" source="Fromglobal2" target="Toexec2">
+        <arc id="FROM_GLOBAL_CPU_P2 to TOEXEC_P2" source="FROM_GLOBAL_CPU_P2" target="TOEXEC_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2300,7 +2300,7 @@
             <arcpath id="001" x="657" y="219" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Fromglobal3 to Toexec3" source="Fromglobal3" target="Toexec3">
+        <arc id="FROM_GLOBAL_CPU_P3 to TOEXEC_P3" source="FROM_GLOBAL_CPU_P3" target="TOEXEC_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2313,7 +2313,7 @@
             <arcpath id="001" x="311" y="86" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Globalqueue to Fromglobal0" source="Globalqueue" target="Fromglobal0">
+        <arc id="GLOBAL_QUEUE to FROM_GLOBAL_CPU_P0" source="GLOBAL_QUEUE" target="FROM_GLOBAL_CPU_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2328,7 +2328,7 @@
             <arcpath id="003" x="206" y="357" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Globalqueue to Fromglobal1" source="Globalqueue" target="Fromglobal1">
+        <arc id="GLOBAL_QUEUE to FROM_GLOBAL_CPU_P1" source="GLOBAL_QUEUE" target="FROM_GLOBAL_CPU_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2342,7 +2342,7 @@
             <arcpath id="002" x="461" y="441" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Globalqueue to Fromglobal2" source="Globalqueue" target="Fromglobal2">
+        <arc id="GLOBAL_QUEUE to FROM_GLOBAL_CPU_P2" source="GLOBAL_QUEUE" target="FROM_GLOBAL_CPU_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2355,7 +2355,7 @@
             <arcpath id="001" x="566" y="201" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Globalqueue to Fromglobal3" source="Globalqueue" target="Fromglobal3">
+        <arc id="GLOBAL_QUEUE to FROM_GLOBAL_CPU_P3" source="GLOBAL_QUEUE" target="FROM_GLOBAL_CPU_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2370,7 +2370,7 @@
             <arcpath id="003" x="326" y="147" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Globalqueue to RemoveGlobal" source="Globalqueue" target="RemoveGlobal">
+        <arc id="GLOBAL_QUEUE to REMOVE_GLOBAL_QUEUE" source="GLOBAL_QUEUE" target="REMOVE_GLOBAL_QUEUE">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2383,7 +2383,7 @@
             <arcpath id="001" x="626" y="96" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue0 to Remempty0" source="Queue0" target="Remempty0">
+        <arc id="QUEUE_P0 to REMOVE_EMPTY_QUEUE_P0" source="QUEUE_P0" target="REMOVE_EMPTY_QUEUE_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2398,7 +2398,7 @@
             <arcpath id="003" x="281" y="222" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue0 to Remove0" source="Queue0" target="Remove0">
+        <arc id="QUEUE_P0 to REMOVE_QUEUE_P0" source="QUEUE_P0" target="REMOVE_QUEUE_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2411,7 +2411,7 @@
             <arcpath id="001" x="236" y="241" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue0 to Unqueue" source="Queue0" target="Unqueue">
+        <arc id="QUEUE_P0 to UNQUEUE_P0" source="QUEUE_P0" target="UNQUEUE_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2424,7 +2424,7 @@
             <arcpath id="001" x="131" y="282" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue1 to Remempty1" source="Queue1" target="Remempty1">
+        <arc id="QUEUE_P1 to REMOVE_EMPTY_QUEUE_P1" source="QUEUE_P1" target="REMOVE_EMPTY_QUEUE_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2439,7 +2439,7 @@
             <arcpath id="003" x="296" y="342" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue1 to Remove1" source="Queue1" target="Remove1">
+        <arc id="QUEUE_P1 to REMOVE_QUEUE_P1" source="QUEUE_P1" target="REMOVE_QUEUE_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2452,7 +2452,7 @@
             <arcpath id="001" x="311" y="391" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue1 to Unqueue1" source="Queue1" target="Unqueue1">
+        <arc id="QUEUE_P1 to UNQUEUE_P1" source="QUEUE_P1" target="UNQUEUE_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2465,7 +2465,7 @@
             <arcpath id="001" x="386" y="501" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue2 to Remempty2" source="Queue2" target="Remempty2">
+        <arc id="QUEUE_P2 to REMOVE_EMPTY_QUEUE_P2" source="QUEUE_P2" target="REMOVE_EMPTY_QUEUE_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2478,7 +2478,7 @@
             <arcpath id="001" x="536" y="342" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue2 to Remove2" source="Queue2" target="Remove2">
+        <arc id="QUEUE_P2 to REMOVE_QUEUE_P2" source="QUEUE_P2" target="REMOVE_QUEUE_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2491,7 +2491,7 @@
             <arcpath id="001" x="596" y="321" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue2 to Unqueue2" source="Queue2" target="Unqueue2">
+        <arc id="QUEUE_P2 to UNQUEUE_P2" source="QUEUE_P2" target="UNQUEUE_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2504,7 +2504,7 @@
             <arcpath id="001" x="656" y="297" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue3 to Remempty3" source="Queue3" target="Remempty3">
+        <arc id="QUEUE_P3 to REMOVE_EMPTY_QUEUE_P3" source="QUEUE_P3" target="REMOVE_EMPTY_QUEUE_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2519,7 +2519,7 @@
             <arcpath id="003" x="446" y="231" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue3 to Remove3" source="Queue3" target="Remove3">
+        <arc id="QUEUE_P3 to REMOVE_QUEUE_P3" source="QUEUE_P3" target="REMOVE_QUEUE_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2532,7 +2532,7 @@
             <arcpath id="001" x="446" y="201" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Queue3 to Unqueue3" source="Queue3" target="Unqueue3">
+        <arc id="QUEUE_P3 to UNQUEUE_P3" source="QUEUE_P3" target="UNQUEUE_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2545,7 +2545,7 @@
             <arcpath id="001" x="371" y="76" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnCPU0 to CPU0" source="ReturnCPU0" target="CPU0">
+        <arc id="RETURN_VOL_P0 to CPU_P0" source="RETURN_VOL_P0" target="CPU_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2558,7 +2558,7 @@
             <arcpath id="001" x="192" y="222" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnCPU1 to CPU1" source="ReturnCPU1" target="CPU1">
+        <arc id="RETURN_VOL_P1 to CPU_P1" source="RETURN_VOL_P1" target="CPU_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2571,7 +2571,7 @@
             <arcpath id="001" x="281" y="476" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnCPU2 to CPU2" source="ReturnCPU2" target="CPU2">
+        <arc id="RETURN_VOL_P2 to CPU_P2" source="RETURN_VOL_P2" target="CPU_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2584,7 +2584,7 @@
             <arcpath id="001" x="581" y="387" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnCPU3 to CPU3" source="ReturnCPU3" target="CPU3">
+        <arc id="RETURN_VOL_P3 to CPU_P3" source="RETURN_VOL_P3" target="CPU_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2597,7 +2597,7 @@
             <arcpath id="001" x="461" y="102" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnWait0 to CPU0" source="ReturnWait0" target="CPU0">
+        <arc id="RETURN_INVOL_P0 to CPU_P0" source="RETURN_INVOL_P0" target="CPU_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2611,7 +2611,7 @@
             <arcpath id="002" x="195" y="213" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnWait1 to CPU1" source="ReturnWait1" target="CPU1">
+        <arc id="RETURN_INVOL_P1 to CPU_P1" source="RETURN_INVOL_P1" target="CPU_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2625,7 +2625,7 @@
             <arcpath id="002" x="267" y="465" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnWait2 to CPU2" source="ReturnWait2" target="CPU2">
+        <arc id="RETURN_INVOL_P2 to CPU_P2" source="RETURN_INVOL_P2" target="CPU_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2639,7 +2639,7 @@
             <arcpath id="002" x="575" y="399" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="ReturnWait3 to CPU3" source="ReturnWait3" target="CPU3">
+        <arc id="RETURN_INVOL_P3 to CPU_P3" source="RETURN_INVOL_P3" target="CPU_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2653,7 +2653,7 @@
             <arcpath id="002" x="474" y="109" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="SMPnotready to Addtoqueue0" source="SMPnotready" target="Addtoqueue0">
+        <arc id="SMP_NOT_READY to ADDTOQUEUE_P0" source="SMP_NOT_READY" target="ADDTOQUEUE_P0">
             <graphics/>
             <inscription>
                 <value/>
@@ -2667,7 +2667,7 @@
             <arcpath id="002" x="231" y="286" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to Addtoqueue1" source="SMPnotready" target="Addtoqueue1">
+        <arc id="SMP_NOT_READY to ADDTOQUEUE_P1" source="SMP_NOT_READY" target="ADDTOQUEUE_P1">
             <graphics/>
             <inscription>
                 <value/>
@@ -2681,7 +2681,7 @@
             <arcpath id="002" x="371" y="417" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to Addtoqueue2" source="SMPnotready" target="Addtoqueue2">
+        <arc id="SMP_NOT_READY to ADDTOQUEUE_P2" source="SMP_NOT_READY" target="ADDTOQUEUE_P2">
             <graphics/>
             <inscription>
                 <value/>
@@ -2697,7 +2697,7 @@
             <arcpath id="004" x="506" y="297" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to Addtoqueue3" source="SMPnotready" target="Addtoqueue3">
+        <arc id="SMP_NOT_READY to ADDTOQUEUE_P3" source="SMP_NOT_READY" target="ADDTOQUEUE_P3">
             <graphics/>
             <inscription>
                 <value/>
@@ -2714,7 +2714,7 @@
             <arcpath id="005" x="401" y="177" curvePoint="true"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to Exec0" source="SMPnotready" target="Exec0">
+        <arc id="SMP_NOT_READY to EXEC_P0" source="SMP_NOT_READY" target="EXEC_P0">
             <graphics/>
             <inscription>
                 <value/>
@@ -2728,7 +2728,7 @@
             <arcpath id="002" x="56" y="436" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to Fromglobal1" source="SMPnotready" target="Fromglobal1">
+        <arc id="SMP_NOT_READY to FROM_GLOBAL_CPU_P1" source="SMP_NOT_READY" target="FROM_GLOBAL_CPU_P1">
             <graphics/>
             <inscription>
                 <value/>
@@ -2744,7 +2744,7 @@
             <arcpath id="004" x="446" y="447" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to Fromglobal2" source="SMPnotready" target="Fromglobal2">
+        <arc id="SMP_NOT_READY to FROM_GLOBAL_CPU_P2" source="SMP_NOT_READY" target="FROM_GLOBAL_CPU_P2">
             <graphics/>
             <inscription>
                 <value/>
@@ -2761,7 +2761,7 @@
             <arcpath id="005" x="581" y="207" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to Fromglobal3" source="SMPnotready" target="Fromglobal3">
+        <arc id="SMP_NOT_READY to FROM_GLOBAL_CPU_P3" source="SMP_NOT_READY" target="FROM_GLOBAL_CPU_P3">
             <graphics/>
             <inscription>
                 <value/>
@@ -2776,7 +2776,7 @@
             <arcpath id="003" x="296" y="147" curvePoint="false"/>
             <type value="inhibitor"/>
         </arc>
-        <arc id="SMPnotready to StartSMP" source="SMPnotready" target="StartSMP">
+        <arc id="SMP_NOT_READY to START_SMP" source="SMP_NOT_READY" target="START_SMP">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2789,7 +2789,7 @@
             <arcpath id="001" x="116" y="582" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="StartSMP to SMPready" source="StartSMP" target="SMPready">
+        <arc id="START_SMP to SMP_READY" source="START_SMP" target="SMP_READY">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2802,7 +2802,7 @@
             <arcpath id="001" x="41" y="582" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="TG to Globalqueue" source="TG" target="Globalqueue">
+        <arc id="QUEUE_GLOBAL to GLOBAL_QUEUE" source="QUEUE_GLOBAL" target="GLOBAL_QUEUE">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2815,7 +2815,7 @@
             <arcpath id="001" x="580" y="50" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec0 to Exec0" source="Toexec0" target="Exec0">
+        <arc id="TOEXEC_P0 to EXEC_P0" source="TOEXEC_P0" target="EXEC_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2828,7 +2828,7 @@
             <arcpath id="001" x="61" y="427" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec0 to Execempty0" source="Toexec0" target="Execempty0">
+        <arc id="TOEXEC_P0 to EXEC_EMPTY_P0" source="TOEXEC_P0" target="EXEC_EMPTY_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2841,7 +2841,7 @@
             <arcpath id="001" x="116" y="471" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec1 to Exec1" source="Toexec1" target="Exec1">
+        <arc id="TOEXEC_P1 to EXEC_P1" source="TOEXEC_P1" target="EXEC_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2855,7 +2855,7 @@
             <arcpath id="002" x="546" y="561" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec1 to Execempty1" source="Toexec1" target="Execempty1">
+        <arc id="TOEXEC_P1 to EXEC_EMPTY_P1" source="TOEXEC_P1" target="EXEC_EMPTY_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2868,7 +2868,7 @@
             <arcpath id="001" x="596" y="507" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec2 to Exec2" source="Toexec2" target="Exec2">
+        <arc id="TOEXEC_P2 to EXEC_P2" source="TOEXEC_P2" target="EXEC_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2881,7 +2881,7 @@
             <arcpath id="001" x="711" y="166" curvePoint="true"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec2 to Execempty2" source="Toexec2" target="Execempty2">
+        <arc id="TOEXEC_P2 to EXEC_EMPTY_P2" source="TOEXEC_P2" target="EXEC_EMPTY_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2894,7 +2894,7 @@
             <arcpath id="001" x="671" y="151" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec3 to Exec3" source="Toexec3" target="Exec3">
+        <arc id="TOEXEC_P3 to EXEC_P3" source="TOEXEC_P3" target="EXEC_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2908,7 +2908,7 @@
             <arcpath id="002" x="256" y="32" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Toexec3 to Execempty3" source="Toexec3" target="Execempty3">
+        <arc id="TOEXEC_P3 to EXEC_EMPTY_P3" source="TOEXEC_P3" target="EXEC_EMPTY_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2921,7 +2921,7 @@
             <arcpath id="001" x="191" y="72" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Unqueue1 to Toexec1" source="Unqueue1" target="Toexec1">
+        <arc id="UNQUEUE_P1 to TOEXEC_P1" source="UNQUEUE_P1" target="TOEXEC_P1">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2934,7 +2934,7 @@
             <arcpath id="001" x="447" y="507" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Unqueue2 to Toexec2" source="Unqueue2" target="Toexec2">
+        <arc id="UNQUEUE_P2 to TOEXEC_P2" source="UNQUEUE_P2" target="TOEXEC_P2">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2947,7 +2947,7 @@
             <arcpath id="001" x="671" y="236" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Unqueue3 to Toexec3" source="Unqueue3" target="Toexec3">
+        <arc id="UNQUEUE_P3 to TOEXEC_P3" source="UNQUEUE_P3" target="TOEXEC_P3">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
@@ -2960,7 +2960,7 @@
             <arcpath id="001" x="326" y="72" curvePoint="false"/>
             <type value="normal"/>
         </arc>
-        <arc id="Unqueue to Toexec0" source="Unqueue" target="Toexec0">
+        <arc id="UNQUEUE_P0 to TOEXEC_P0" source="UNQUEUE_P0" target="TOEXEC_P0">
             <graphics/>
             <inscription>
                 <value>Default,1</value>
