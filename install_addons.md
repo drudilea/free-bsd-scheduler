@@ -34,3 +34,39 @@ pkg install vim (FreeBSD 13)
 ```
 
 You’ll need to enter **y** to confirm the installation. That’s it!
+
+---
+
+## <h2 id="nano"> Nano Editor </h2>
+
+First, update the pkg repository index
+
+```bash
+pkg update -f
+```
+
+Next, download and install the Nano package.
+
+```bash
+pkg install nano
+```
+
+You’ll need to enter **y** to confirm the installation. That’s it!
+
+---
+
+## <h2 id="htop"> htop </h2>
+
+First, update the pkg repository index
+
+```bash
+pkg update -f
+```
+
+Next, download and install the htop package.
+
+```bash
+pkg install htop
+```
+
+You’ll need to enter **y** to confirm the installation. That’s it!
