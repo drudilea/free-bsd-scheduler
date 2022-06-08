@@ -50,4 +50,8 @@ PermitRootLogin yes
  ssh <user>@<virtual-machine-ip>
 ```
 
-> In case that your VM gets an IP address like `10.0.x.x`, you should follow [this tutorial](https://www.xmodulo.com/access-nat-guest-from-host-virtualbox.html) to connect by SSH
+> In case that your VM gets an IP address like `10.0.x.x`, you should follow [this tutorial](https://www.xmodulo.com/access-nat-guest-from-host-virtualbox.html) to connect by SSH `and login with:`
+
+```bash
+ssh root@0.0.0.0 -p 2222
+```
