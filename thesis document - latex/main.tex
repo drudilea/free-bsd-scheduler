@@ -1,0 +1,70 @@
+\documentclass[12pt,twoside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage[T1]{fontenc}
+\usepackage{ragged2e}
+\usepackage{bm}
+\usepackage{nicefrac}
+\usepackage[]{algorithm2e}
+\usepackage{lscape}
+\usepackage{float} 
+\usepackage{hyperref} 
+
+
+\begin{document}
+
+\input{titlepage}
+
+
+\input{abstract}
+
+\chapter*{Dedicatoria}
+To mum and dad
+
+\chapter*{Declaración}
+I declare that..
+
+\chapter*{Agradecimientos}
+I want to thank...
+
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\chapter{Introducción}
+\input{introduction}
+
+\chapter{Estado del Arte}
+\input{chapter02}
+
+\chapter{Objetivo 1}
+\input{chapter03}
+
+\chapter{Objetivo 2}
+\input{chapter04}
+
+\chapter{Objetivo 3}
+\input{chapter05}
+
+\chapter{Conclusion}
+\input{conclusion}
+
+
+
+\medskip
+
+\bibliography{references,mendeley}
+\bibliographystyle{apalike}
+
+\end{document}
