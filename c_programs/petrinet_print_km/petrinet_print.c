@@ -12,7 +12,7 @@ static int event_handler(struct module *module, int event, void *arg) {
   switch (event) {
   case MOD_LOAD:
     uprintf("Hello chicos tesis! \n");
-    print_uni_label();
+    set_print_transition(200);
     break;
   case MOD_UNLOAD:
     uprintf("Bye Bye chicos tesis !\n");
