@@ -1,1 +1,14 @@
 .DS_store
+*.aux
+*.out
+*.log
+*.lot
+*.synctex.*
+*.lof
+*.bbl
+*.blg
+*.fdb*
+*.fls
+*.bib
+*.toc
+
