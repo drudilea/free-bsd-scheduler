@@ -6,11 +6,11 @@ Para poder desarrollar los procedimientos es necesario conocer la estructura de 
 
 ### Modelado de un hilo
 
-<img src="assets/thread_model.jpeg">
+<img src="../assets/thread_model.jpeg">
 
 ### Modelado de un recurso (CPU)
 
-<img src="assets/single_resource_net_model.png">
+<img src="../assets/single_resource_net_model.png">
 
 Correspondencia entre el nombre de las plazas del modelo con el nombre de las plazas en el código
 
@@ -26,6 +26,20 @@ Correspondencia entre el nombre de las plazas del modelo con el nombre de las pl
 
 - La plaza CPU nunca puede contener mas de dos tokens
 - La suma de los tokens de las plazas relacionadas al modelado del CPU no puede ser mayor que uno
+
+## Plazas
+
+| Código              | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index |
+| ------------------- | :---------: | :---------: | :---------: | :---------: | :---: |
+| PLACE_CANTQ         |      0      |      5      |     10      |     15      |       |
+| PLACE_QUEUE         |      1      |      6      |     11      |     16      |       |
+| PLACE_CPU           |      2      |      7      |     12      |     17      |       |
+| PLACE_TOEXEC        |      3      |      8      |     13      |     18      |       |
+| PLACE_EXECUTING     |      4      |      9      |     14      |     19      |       |
+|                     |             |             |             |             |       |
+| PLACE_GLOBAL_QUEUE  |             |             |             |             |  20   |
+| PLACE_SMP_NOT_READY |             |             |             |             |  21   |
+| PLACE_SMP_READY     |             |             |             |             |  22   |
 
 ## Transiciones
 
