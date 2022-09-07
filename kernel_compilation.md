@@ -60,7 +60,7 @@ make NO_KERNELCLEAN=yes NO_KERNELDEPEND=yes MODULES_WITH_WORLD=yes buildkernel K
   que no necesitan ser recompilados
 - **NO_KERNELDEPEND:** evita revisar el árbol de dependencias. Utilizar
   cuando no se haya realizado ningún cambio en un header.
-- **MODULES_WITH_WORLD:** evita el recompilado de lo módulos del kernel.
+- **MODULES_WITH_WORLD:** evita el recompilado de los módulos del kernel.
 
 ---
 
