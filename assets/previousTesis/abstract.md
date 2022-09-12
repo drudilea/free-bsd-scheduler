@@ -265,6 +265,35 @@
   >
   > - `resource_fire_net`: recibe un thread y una az1 ` como parámetros, dispara la transición en la red global haciendo uso de la matriz de incidencia y dispara las transiciones automáticas que se habiliten.
 
+  <br/>
+
+- Archivo [`sched_4bsd.c`](../../migrations/11.0.0_PI/sys/kern/sched_4bsd.c)
+
+  > En la función `sched_setup`, dónde se inicializa el scheduler, se llama a `init_resource_net` para inicializar y asignar espacio de memoria para la red de recursos.
+
+    <details><summary><b style="cursor: pointer;">Ver código</b></summary>
+
+  ```c
+  ...
+
+  /* ARGSUSED */
+  static void
+  sched_setup(void *dummy)
+  {
+
+    setup_runqs();
+    init_resource_net();
+    /* Account for thread0. */
+    sched_load_add();
+  }
+
+  ...
+  ```
+
+    </details>
+
+  <br/>
+
 ### Correspondencia entre el nombre de las transiciones y su respectivo indice con el numero final de transición en el código (por procesador/global)
 
 | Código                   | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index GLOBAL |
@@ -282,6 +311,8 @@
 | TRAN_START_SMP           |             |             |             |             |      37      |
 | TRAN_THROW               |             |             |             |             |      38      |
 | TRAN_QUEUE_GLOBAL        |             |             |             |             |      39      |
+
+<br/>
 
 ---
 
