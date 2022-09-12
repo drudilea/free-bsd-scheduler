@@ -183,7 +183,7 @@
   > - `inhibition_matrix`: matriz de tamaño `CPU_NUMBER_PLACES` \* `CPU_NUMBER_TRANSITIONS`.
   > - `is_automatic_transition`: vector con las transiciones automáticas de la red, de tamaño `CPU_NUMBER_TRANSITIONS`.
 
-    <details><summary><b style="cursor: pointer;">Ver código</b></summary>
+  <details><summary><b style="cursor: pointer;">Ver código</b></summary>
 
   ```h
   #ifndef SCHED_PETRI_H
@@ -191,26 +191,25 @@
   ...
 
   #define CPU_NUMBER 4
-  // FOR GLOBAL TRANISTIONS
   #define CPU_BASE_PLACES 5
   #define CPU_BASE_TRANSITIONS 9
   #define CPU_NUMBER_PLACES (CPU_BASE_PLACES*CPU_NUMBER)+3
   #define CPU_NUMBER_TRANSITION (CPU_BASE_TRANSITIONS*CPU_NUMBER)+4
+
   /* Definitions of transition and places for the CPU resource net */
-  //PLACES
+  // PLACES
   #define PLACE_CANTQ 0
   #define PLACE_QUEUE 1
   #define PLACE_CPU 2
   #define PLACE_TOEXEC 3
   #define PLACE_EXECUTING 4
 
-
   // Global queue independent of the number of CPUs
   #define PLACE_GLOBAL_QUEUE (CPU_NUMBER_PLACES-3)
   #define PLACE_SMP_NOT_READY (CPU_NUMBER_PLACES-2)
   #define PLACE_SMP_READY (CPU_NUMBER_PLACES-1)
 
-  //TRANSITION
+  // TRANSITIONS
   #define TRAN_ADDTOQUEUE 0
   #define TRAN_UNQUEUE 1
   #define TRAN_EXEC 2
@@ -221,13 +220,11 @@
   #define TRAN_REMOVE_QUEUE 7
   #define TRAN_REMOVE_EMPTY_QUEUE 8
 
-
-  //Global transition
+  // GLOBAL TRANSITIONS
   #define TRAN_REMOVE_GLOBAL_QUEUE (CPU_NUMBER_TRANSITION-4)
   #define TRAN_START_SMP (CPU_NUMBER_TRANSITION-3)
   #define TRAN_THROW (CPU_NUMBER_TRANSITION-2)
   #define TRAN_QUEUE_GLOBAL (CPU_NUMBER_TRANSITION-1)
-
 
   struct petri_cpu_resource_net {
   	int mark[CPU_NUMBER_PLACES];
@@ -254,7 +251,37 @@
   #endif
   ```
 
-    </details>
+  </details>
+
+  <br/>
+
+- Archivo [`petri_global_net.c`](../../migrations/11.0.0_PI/sys/kern/petri_global_net.c)
+
+  > Se representa la Red de Petri de recursos propuesta junto a su funcionamiento:
+  >
+  > - `init_resource_net`: función que inicializa `mark`, `incidence_matrix`, `ihibition_matrix` e `is_automatic_transition`.
+  >
+  > - `resource_get_sensitized`: analiza todas sus transiciones para actualizar su `sensitized_buffer` (funcíon no utilizada).
+  >
+  > - `resource_fire_net`: recibe un thread y una az1 ` como parámetros, dispara la transición en la red global haciendo uso de la matriz de incidencia y dispara las transiciones automáticas que se habiliten.
+
+### Correspondencia entre el nombre de las transiciones y su respectivo indice con el numero final de transición en el código (por procesador/global)
+
+| Código                   | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index GLOBAL |
+| ------------------------ | :---------: | :---------: | :---------: | :---------: | :----------: |
+| TRAN_ADDTOQUEUE          |      0      |      9      |     18      |     27      |              |
+| TRAN_UNQUEUE             |      1      |     10      |     19      |     28      |              |
+| TRAN_EXEC                |      2      |     11      |     20      |     29      |              |
+| TRAN_EXEC_EMPTY          |      3      |     12      |     21      |     30      |              |
+| TRAN_RETURN_VOL          |      4      |     13      |     22      |     31      |              |
+| TRAN_RETURN_INVOL        |      5      |     14      |     23      |     32      |              |
+| TRAN_FROM_GLOBAL_CPU     |      6      |     15      |     24      |     33      |              |
+| TRAN_REMOVE_QUEUE        |      7      |     16      |     25      |     34      |              |
+| TRAN_REMOVE_EMPTY_QUEUE  |      8      |     17      |     26      |     35      |              |
+| TRAN_REMOVE_GLOBAL_QUEUE |             |             |             |             |      36      |
+| TRAN_START_SMP           |             |             |             |             |      37      |
+| TRAN_THROW               |             |             |             |             |      38      |
+| TRAN_QUEUE_GLOBAL        |             |             |             |             |      39      |
 
 ---
 
