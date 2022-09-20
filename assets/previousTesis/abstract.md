@@ -30,6 +30,8 @@
   > `mark`: vector que tiene el marcado inicial, con tamaño `PLACES_SIZE`.
   >
   > `sensitized_buffer`: vector que representa las transiciones sensibilizadas de su red asociada, con tamaño `TRANSITIONS_SIZE`.
+  >
+  > `td_frominh`: campo que indica cuando un thread acaba de salir de estado inhibido, es decir al retornar de un cambio de contexto voluntario.
 
   <details><summary><b style="cursor: pointer;">Ver código</b></summary>
 
@@ -47,6 +49,7 @@
   ...
   	int mark[PLACES_SIZE];
   	int sensitized_buffer[TRANSITIONS_SIZE];
+    int 	td_frominh;		/* Thread comes from an inhibited state*/
   };
   ```
 
@@ -182,6 +185,8 @@
   > - `incidence_matrix`: matriz de tamaño `CPU_NUMBER_PLACES` \* `CPU_NUMBER_TRANSITIONS`.
   > - `inhibition_matrix`: matriz de tamaño `CPU_NUMBER_PLACES` \* `CPU_NUMBER_TRANSITIONS`.
   > - `is_automatic_transition`: vector con las transiciones automáticas de la red, de tamaño `CPU_NUMBER_TRANSITIONS`.
+  >
+  > Se define la función `resource_choose_cpu` que recibe un thread como parámetro y devuelve el índice de la transición de encolado de la CPU que se le asignará a dicho hilo.
 
   <details><summary><b style="cursor: pointer;">Ver código</b></summary>
 
@@ -261,15 +266,35 @@
   >
   > - `init_resource_net`: función que inicializa `mark`, `incidence_matrix`, `ihibition_matrix` e `is_automatic_transition`.
   >
+  > - La transción de descarte `TRAN_THROW` es la única transición automática de la red. Una transición automática es aquella que se dispara cada vez que se encuentra sensibilizada.
+  >
   > - `resource_get_sensitized`: analiza todas sus transiciones para actualizar su `sensitized_buffer` (funcíon no utilizada).
   >
-  > - `resource_fire_net`: recibe un thread y una az1 ` como parámetros, dispara la transición en la red global haciendo uso de la matriz de incidencia y dispara las transiciones automáticas que se habiliten.
+  > - `resource_fire_net`: recibe un thread y un índice de transición como parámetros, dispara la transición en la red global haciendo uso de la matriz de incidencia y dispara las transiciones automáticas que se habiliten.
+  >
+  > - `hierarchical_transitions`: vector con las transiciones jerárquicas de la red de recursos. Ordenadas de acuerdo al índice correspondiente con `hierarchical_corresponse`.
+  >
+  > - `hierarchical_corresponse`: vector con las transiciones jerárquicas de la red del thread. Ordenadas de acuerdo al índice correspondiente con `hierarchical_transitions`.
+  >
+  > - Se llama a `resource_fire_net` en sched_choose para contemplar el desencolado de los threads que van a pasar a ejecución en la CPU que le corresponda.
+  >
+  > Se implementa la función `resource_expulse_thread` que recibe un hilo como parámetro. Devuelve el índice de transición de retorno voluntario o involuntario y cambia el valor de la variable `td_frominh` según corresponda.
 
   <br/>
 
 - Archivo [`sched_4bsd.c`](../../migrations/11.0.0_PI/sys/kern/sched_4bsd.c)
 
   > En la función `sched_setup`, dónde se inicializa el scheduler, se llama a `init_resource_net` para inicializar y asignar espacio de memoria para la red de recursos.
+  >
+  > En la función `sched_add` se llama a `resource_fire_net` para contemplar en la red el encolado de los threads que ingresan al scheduler en la CPU que le corresponda.
+  >
+  > Cuando finaliza la ejecución de los threads, ya sea de forma voluntaria o no, se llama a `resource_expulse_thread` para liberar la CPU en el código fuente dentro de la función `sched_switch`.
+  >
+  > En la función `sched_switch` se llama a `resource_fire_net` para contemplar en la red el desencolado de los threads que van a pasar a ejecución en la CPU que le corresponda o en la cola global en caso de no tener afinidad. Una vez que se desencola un thread, se llama a `resource_execute_thread` para ejecutar la transición de ejecución que corresponda, según el valor de `smp_set`.
+  >
+  > En la función `sched_choose` se busca el próximo hilo a correr. En monoprocesador lo obtiene de la cola global. Mientras que en SMP busca un hilo en la cola global y otro en el CPU que está ejecutando actualmente. En caso de que encuentre hilos en ambas colas, selecciona el de mayor prioridad.
+  > Luego de disparar la transición de desencolado correspondiente, remueve el hilo de la cola y devuelve el mismo.
+  > Solo en el caso de que no haya hilos en ninguna cola, se utiliza el mecanismo del `idlethread` para ejecutar un hilo vacío.
 
     <details><summary><b style="cursor: pointer;">Ver código</b></summary>
 
@@ -288,13 +313,72 @@
   }
 
   ...
+
+  ...
+
+  // sched_add() - Sacar el thread del estado inhibido
+  if (td && ((td)->td_frominh == 1))
+  {
+  	thread_petri_fire(td, TRAN_WAKEUP);
+  	td->td_frominh = 0;
+  }
+  ...
+
+  // sched_add() - Encolado de threads con afinidad o cola global
+  cpu = sched_pickcpu(td);
+  if (cpu != NOCPU)
+  {
+    ts->ts_runq = &runq_pcpu[cpu];
+    single_cpu = 1;
+    resource_fire_net(td, TRAN_ADDTOQUEUE + (cpu * CPU_BASE_TRANSITIONS));
+  }
+  else
+  {
+    ts->ts_runq = &runq;
+    resource_fire_net(td, TRAN_QUEUE_GLOBAL);
+  }
+
+  ...
+
+  ...
+  // sched_switch() - Liberar CPU asociada al thread
+  resource_expulse_thread(td, flags);
+
+  ...
+  // sched_switch() - Threads que pasan a ejecución en la CPU que corresponda
+  if (ts->ts_runq != &runq)
+  {
+    resource_fire_net(newtd, TRAN_UNQUEUE + (PCPU_GET(cpuid) * CPU_BASE_TRANSITIONS));
+  }
+  else
+  {
+    resource_fire_net(newtd, TRAN_FROM_GLOBAL_CPU + (PCPU_GET(cpuid) * CPU_BASE_TRANSITIONS));
+  }
+  ...
+
+  // sched_pickcpu() - Llama a resource_choose_cpu para elegir la CPU que le corresponde al thread
+  static int sched_pickcpu(struct thread *td)
+  {
+    int transition, cpu;
+
+    mtx_assert(&sched_lock, MA_OWNED);
+
+    transition = resource_choose_cpu(td);
+
+    if (transition == TRAN_QUEUE_GLOBAL)
+      cpu = -1;
+    else
+      cpu = (int)(transition / CPU_BASE_TRANSITIONS);
+
+    return (cpu);
+  }
   ```
 
     </details>
 
   <br/>
 
-### Correspondencia entre el nombre de las transiciones y su respectivo indice con el numero final de transición en el código (por procesador/global)
+### Correspondencia entre el nombre de las transiciones y su respectivo índice con el numero final de transición en el código (por procesador/global)
 
 | Código                   | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index GLOBAL |
 | ------------------------ | :---------: | :---------: | :---------: | :---------: | :----------: |
