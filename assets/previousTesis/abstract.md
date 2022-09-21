@@ -10,6 +10,9 @@
 - **T3**: El scheduler interrumpe el hilo y lo vuelve a colocar en una cola. El planificador toma otro hilo de la cola (el de mayor prioridad) y realiza un cambio de contexto.
 - **T4**: Algún evento, semáforo o espera bloquea al hilo. Se agrega en una sleepq o turnstile, en la cual el hilo queda a la espera de un evento que le quitará el bloqueo.
 - **T5**: Se desbloquea el hilo y puede volver a encolarse nuevamente. El evento que lo desbloquea se genera fuera del scheduler. El hilo queda a la espera para poder cambiar de estado cuando corresponda.
+- **T6**: Se ejecutará cada vez que un hilo deba ser expulsado de la cola en que se encuentra actualmente.
+
+<br/>
 
 ### Correspondencia entre el nombre de las plazas del modelo con el nombre de las plazas en el código
 
@@ -20,6 +23,12 @@
 | Runq      | PLACE_CPU_RUN_QUEUE |
 | Runninr   | PLACE_RUNNING       |
 | Inhibited | PLACE_INHIBITED     |
+
+<br/>
+
+## Marcado inicial
+
+El marcado inicial del hilo debe iniciar con un token en su plaza `Can_run`, ya que al momento de ingresar por primera vez al scheduler para ser encolado, el mismo ya fue inicializado (INACTIVE ⇒ CAN RUN ya ejecutado). Sin embargo existe un hilo particular, el hilo con id 100000, que se encarga de inicializar al resto, por lo que el mismo inicialmente va a encontrarse en estado RUNNING y se considera inicialmente ya corriendo en la CPU0.
 
 ---
 
@@ -157,6 +166,39 @@
 
 <br/>
 
+- Archivo [`sched_4bsd.c`](../../migrations/11.0.0_PI/sys/kern/sched_4bsd.c)
+
+  > En la función `schedinit` se inicializa el marcado del thread0. Esta función se ejecuta únicamente al inicializarse el sistema.
+
+  <details><summary><b style="cursor: pointer;">Ver código</b></summary>
+
+  ```c
+  ...
+
+  void schedinit(void)
+  {
+
+    /*
+    * Set up the scheduler specific parts of thread0.
+    */
+    thread0.td_lock = &sched_lock;
+    td_get_sched(&thread0)->ts_slice = sched_slice;
+    mtx_init(&sched_lock, "sched lock", NULL, MTX_SPIN | MTX_RECURSE);
+
+    int initial_mark_t0[PLACES_SIZE] = {0, 0, 0, 1, 0};
+    int i;
+    for (i = 0; i < PLACES_SIZE; i++)
+    {
+      thread0.mark[i] = initial_mark_t0[i];
+    }
+  }
+  ...
+  ```
+
+  </details>
+
+<br/>
+
 ---
 
 ## Modelado de la red de recursos
@@ -166,6 +208,32 @@
 <details><summary><b style="cursor: pointer;">Ver red de recursos completa</b></summary>
 <img src="../../assets/resource_net_model.png">
 </details>
+
+<br/>
+
+### Correspondencia entre el nombre de las transiciones y su respectivo índice con el numero final de transición en el código (por procesador/global)
+
+| Código                   | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index GLOBAL |
+| ------------------------ | :---------: | :---------: | :---------: | :---------: | :----------: |
+| TRAN_ADDTOQUEUE          |      0      |      9      |     18      |     27      |              |
+| TRAN_UNQUEUE             |      1      |     10      |     19      |     28      |              |
+| TRAN_EXEC                |      2      |     11      |     20      |     29      |              |
+| TRAN_EXEC_EMPTY          |      3      |     12      |     21      |     30      |              |
+| TRAN_RETURN_VOL          |      4      |     13      |     22      |     31      |              |
+| TRAN_RETURN_INVOL        |      5      |     14      |     23      |     32      |              |
+| TRAN_FROM_GLOBAL_CPU     |      6      |     15      |     24      |     33      |              |
+| TRAN_REMOVE_QUEUE        |      7      |     16      |     25      |     34      |              |
+| TRAN_REMOVE_EMPTY_QUEUE  |      8      |     17      |     26      |     35      |              |
+| TRAN_REMOVE_GLOBAL_QUEUE |             |             |             |             |      36      |
+| TRAN_START_SMP           |             |             |             |             |      37      |
+| TRAN_THROW               |             |             |             |             |      38      |
+| TRAN_QUEUE_GLOBAL        |             |             |             |             |      39      |
+
+<br/>
+
+## Marcado inicial
+
+La red de recursos se inicializará siempre con un token en la plaza que indica que el sistema se encuentra funcionando en modo monoprocesador. Además, se inicializarán las plazas que representan a las CPU con un token, excepto la de la CPU0 ya que la misma inicialmente se encuentra ejecutando el hilo inicial del sistema, por lo que esta última deberá inicializarse con un token en la plaza de ejecución.
 
 ---
 
@@ -276,9 +344,11 @@
   >
   > - `hierarchical_corresponse`: vector con las transiciones jerárquicas de la red del thread. Ordenadas de acuerdo al índice correspondiente con `hierarchical_transitions`.
   >
-  > - Se llama a `resource_fire_net` en sched_choose para contemplar el desencolado de los threads que van a pasar a ejecución en la CPU que le corresponda.
+  > - Se llama a `resource_fire_net` en `sched_choose` para contemplar el desencolado de los threads que van a pasar a ejecución en la CPU que le corresponda.
   >
-  > Se implementa la función `resource_expulse_thread` que recibe un hilo como parámetro. Devuelve el índice de transición de retorno voluntario o involuntario y cambia el valor de la variable `td_frominh` según corresponda.
+  > - Se implementa la función `resource_expulse_thread` que recibe un hilo como parámetro. Devuelve el índice de transición de retorno voluntario o involuntario y cambia el valor de la variable `td_frominh` según corresponda.
+  >
+  > - `resource_remove_thread`: ejecuta la transición de expulsión de la CPU que corresponda, según cual sea la que se encuentre sensibilizada.
 
   <br/>
 
@@ -295,6 +365,10 @@
   > En la función `sched_choose` se busca el próximo hilo a correr. En monoprocesador lo obtiene de la cola global. Mientras que en SMP busca un hilo en la cola global y otro en el CPU que está ejecutando actualmente. En caso de que encuentre hilos en ambas colas, selecciona el de mayor prioridad.
   > Luego de disparar la transición de desencolado correspondiente, remueve el hilo de la cola y devuelve el mismo.
   > Solo en el caso de que no haya hilos en ninguna cola, se utiliza el mecanismo del `idlethread` para ejecutar un hilo vacío.
+  >
+  > Dentro de `sched_rem` se llama a `resource_fire_net` para expulsar a los threads que se encuentran actualmente en la cola global y deben ser reubicados; o bien llamar a `resource_remove_thread` para expulsar los threads que se encuentran en una cola de CPU para reubicarlos.
+  >
+  > En la función `sched_throw` se llama a `resource_expulse_thread` para expulsar a los threads que deben ser desechados. Luego se selecciona un nuevo hilo de la cola y se lo pasa a ejecución con la función `resource_execute_thread`.
 
     <details><summary><b style="cursor: pointer;">Ver código</b></summary>
 
@@ -372,31 +446,51 @@
 
     return (cpu);
   }
+  ...
+
+  // sched_rem() - Dispara la transición de expulsión correspondiente y remueve el thread de la cola
+  #ifdef SMP
+    if (ts->ts_runq != &runq)
+    {
+      runq_length[ts->ts_runq - runq_pcpu]--;
+      resource_remove_thread(td, (ts->ts_runq - runq_pcpu));
+    }
+    else
+    {
+      resource_fire_net(td, TRAN_REMOVE_GLOBAL_QUEUE);
+    }
+  #endif
+    runq_remove(ts->ts_runq, td);
+    TD_SET_CAN_RUN(td);
+  ...
+
+  // sched_throw() - Expulsa threads y selecciona un nuevo hilo de la cola para pasarlo a ejecución
+  if (td == NULL)
+  {
+  	mtx_lock_spin(&sched_lock);
+  	spinlock_exit();
+  	PCPU_SET(switchtime, cpu_ticks());
+  	PCPU_SET(switchticks, ticks);
+  }
+  else
+  {
+  	lock_profile_release_lock(&sched_lock.lock_object);
+  	MPASS(td->td_lock == &sched_lock);
+  	td->td_lastcpu = td->td_oncpu;
+  	td->td_oncpu = NOCPU;
+  	resource_expulse_thread(td, SW_VOL);
+  }
+  mtx_assert(&sched_lock, MA_OWNED);
+  KASSERT(curthread->td_md.md_spinlock_count == 1, ("invalid count"));
+  struct thread *newtd;
+  newtd = choosethread();
+  resource_execute_thread(newtd, PCPU_GET(cpuid));
+  cpu_throw(td, newtd);
   ```
 
     </details>
 
   <br/>
-
-### Correspondencia entre el nombre de las transiciones y su respectivo índice con el numero final de transición en el código (por procesador/global)
-
-| Código                   | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index GLOBAL |
-| ------------------------ | :---------: | :---------: | :---------: | :---------: | :----------: |
-| TRAN_ADDTOQUEUE          |      0      |      9      |     18      |     27      |              |
-| TRAN_UNQUEUE             |      1      |     10      |     19      |     28      |              |
-| TRAN_EXEC                |      2      |     11      |     20      |     29      |              |
-| TRAN_EXEC_EMPTY          |      3      |     12      |     21      |     30      |              |
-| TRAN_RETURN_VOL          |      4      |     13      |     22      |     31      |              |
-| TRAN_RETURN_INVOL        |      5      |     14      |     23      |     32      |              |
-| TRAN_FROM_GLOBAL_CPU     |      6      |     15      |     24      |     33      |              |
-| TRAN_REMOVE_QUEUE        |      7      |     16      |     25      |     34      |              |
-| TRAN_REMOVE_EMPTY_QUEUE  |      8      |     17      |     26      |     35      |              |
-| TRAN_REMOVE_GLOBAL_QUEUE |             |             |             |             |      36      |
-| TRAN_START_SMP           |             |             |             |             |      37      |
-| TRAN_THROW               |             |             |             |             |      38      |
-| TRAN_QUEUE_GLOBAL        |             |             |             |             |      39      |
-
-<br/>
 
 ---
 
