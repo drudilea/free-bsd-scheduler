@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+    <net id="Net-One" type="P/T net">
+        <token id="Default" enabled="true" red="0" green="0" blue="0"/>
+        <place id="AEjecutar[i]">
+            <graphics>
+                <position x="345.0" y="345.0"/>
+            </graphics>
+            <name>
+                <value>AEjecutar[i]</value>
+                <graphics>
+                    <offset x="10.0" y="-9.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,0</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="Cola[i]">
+            <graphics>
+                <position x="480.0" y="285.0"/>
+            </graphics>
+            <name>
+                <value>Cola[i]</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,0</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="ColaGlobal">
+            <graphics>
+                <position x="600.0" y="435.0"/>
+            </graphics>
+            <name>
+                <value>ColaGlobal</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,0</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="CPU[i]">
+            <graphics>
+                <position x="345.0" y="210.0"/>
+            </graphics>
+            <name>
+                <value>CPU[i]</value>
+                <graphics>
+                    <offset x="68.0" y="5.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,0</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="Ejecutando[i]">
+            <graphics>
+                <position x="255.0" y="210.0"/>
+            </graphics>
+            <name>
+                <value>Ejecutando[i]</value>
+                <graphics>
+                    <offset x="1.0" y="0.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,1</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="ModoSMP">
+            <graphics>
+                <position x="195.0" y="495.0"/>
+            </graphics>
+            <name>
+                <value>ModoSMP</value>
+                <graphics>
+                    <offset x="3.0" y="44.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,0</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="ModoUnSoloHilo">
+            <graphics>
+                <position x="345.0" y="495.0"/>
+            </graphics>
+            <name>
+                <value>ModoUnSoloHilo</value>
+                <graphics>
+                    <offset x="75.0" y="47.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,1</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <place id="NoPuedeEncolar[i]">
+            <graphics>
+                <position x="645.0" y="285.0"/>
+            </graphics>
+            <name>
+                <value>NoPuedeEncolar[i]</value>
+                <graphics>
+                    <offset x="102.0" y="-15.0"/>
+                </graphics>
+            </name>
+            <initialMarking>
+                <value>Default,0</value>
+                <graphics>
+                    <offset x="0.0" y="0.0"/>
+                </graphics>
+            </initialMarking>
+            <capacity>
+                <value>0</value>
+            </capacity>
+        </place>
+        <transition id="ComenzarSMP">
+            <graphics>
+                <position x="270.0" y="495.0"/>
+            </graphics>
+            <name>
+                <value>ComenzarSMP</value>
+                <graphics>
+                    <offset x="40.0" y="45.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="Descartar">
+            <graphics>
+                <position x="735.0" y="285.0"/>
+            </graphics>
+            <name>
+                <value>Descartar</value>
+                <graphics>
+                    <offset x="43.0" y="-7.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="DesdeGlobal[i]">
+            <graphics>
+                <position x="435.0" y="435.0"/>
+            </graphics>
+            <name>
+                <value>DesdeGlobal[i]</value>
+                <graphics>
+                    <offset x="42.0" y="31.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>270</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="DesdeGlobal[i+n]">
+            <graphics>
+                <position x="585.0" y="540.0"/>
+            </graphics>
+            <name>
+                <value>DesdeGlobal[i+n]</value>
+                <graphics>
+                    <offset x="-5.0" y="35.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="Desencolar[i]">
+            <graphics>
+                <position x="345.0" y="285.0"/>
+            </graphics>
+            <name>
+                <value>Desencolar[i]</value>
+                <graphics>
+                    <offset x="12.0" y="1.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="Ejecutar[i]">
+            <graphics>
+                <position x="345.0" y="435.0"/>
+            </graphics>
+            <name>
+                <value>Ejecutar[i]</value>
+                <graphics>
+                    <offset x="-1.0" y="32.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="EjecutarVacio[i]">
+            <graphics>
+                <position x="255.0" y="345.0"/>
+            </graphics>
+            <name>
+                <value>EjecutarVacio[i]</value>
+                <graphics>
+                    <offset x="42.0" y="42.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="Encolar[i]">
+            <graphics>
+                <position x="555.0" y="285.0"/>
+            </graphics>
+            <name>
+                <value>Encolar[i]</value>
+                <graphics>
+                    <offset x="36.0" y="36.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="Encolar[i+n]">
+            <graphics>
+                <position x="585.0" y="495.0"/>
+            </graphics>
+            <name>
+                <value>Encolar[i+n]</value>
+                <graphics>
+                    <offset x="-5.0" y="35.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="Remover[i]">
+            <graphics>
+                <position x="525.0" y="225.0"/>
+            </graphics>
+            <name>
+                <value>Remover[i]</value>
+                <graphics>
+                    <offset x="23.0" y="-3.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="RemoverGlobal">
+            <graphics>
+                <position x="600.0" y="375.0"/>
+            </graphics>
+            <name>
+                <value>RemoverGlobal</value>
+                <graphics>
+                    <offset x="87.0" y="2.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="RemoverVacia[i]">
+            <graphics>
+                <position x="585.0" y="225.0"/>
+            </graphics>
+            <name>
+                <value>RemoverVacia[i]</value>
+                <graphics>
+                    <offset x="75.0" y="-2.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="RetornoInvoluntario[i]">
+            <graphics>
+                <position x="390.0" y="105.0"/>
+            </graphics>
+            <name>
+                <value>RetornoInvoluntario[i]</value>
+                <graphics>
+                    <offset x="104.0" y="-3.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="RetornoVoluntario[i]">
+            <graphics>
+                <position x="300.0" y="105.0"/>
+            </graphics>
+            <name>
+                <value>RetornoVoluntario[i]</value>
+                <graphics>
+                    <offset x="38.0" y="-5.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="TransicionGlobal">
+            <graphics>
+                <position x="690.0" y="435.0"/>
+            </graphics>
+            <name>
+                <value>TransicionGlobal</value>
+                <graphics>
+                    <offset x="59.0" y="-20.0"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <arc id="Addtoqueue to Cantq" source="Encolar[i]" target="NoPuedeEncolar[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="566" y="291" curvePoint="false"/>
+            <arcpath id="001" x="583" y="284" curvePoint="true"/>
+            <arcpath id="002" x="642" y="294" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Addtoqueue to Queue" source="Encolar[i]" target="Cola[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="551" y="297" curvePoint="false"/>
+            <arcpath id="001" x="506" y="297" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Cantq to Addtoqueue" source="NoPuedeEncolar[i]" target="Encolar[i]">
+            <graphics/>
+            <inscription>
+                <value/>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value/>
+            </tagged>
+            <arcpath id="000" x="644" y="305" curvePoint="false"/>
+            <arcpath id="001" x="605" y="313" curvePoint="true"/>
+            <arcpath id="002" x="581" y="297" curvePoint="false"/>
+            <type value="inhibitor"/>
+        </arc>
+        <arc id="Cantq to Exec" source="NoPuedeEncolar[i]" target="Ejecutar[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="648" y="309" curvePoint="false"/>
+            <arcpath id="001" x="530" y="410" curvePoint="true"/>
+            <arcpath id="002" x="371" y="447" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Cantq to Execempty" source="NoPuedeEncolar[i]" target="EjecutarVacio[i]">
+            <graphics/>
+            <inscription>
+                <value/>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value/>
+            </tagged>
+            <arcpath id="000" x="647" y="308" curvePoint="false"/>
+            <arcpath id="001" x="530" y="373" curvePoint="true"/>
+            <arcpath id="002" x="290" y="373" curvePoint="true"/>
+            <arcpath id="003" x="266" y="361" curvePoint="false"/>
+            <type value="inhibitor"/>
+        </arc>
+        <arc id="ComenzarSMP to ModoSMP" source="ComenzarSMP" target="ModoSMP">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="266" y="507" curvePoint="false"/>
+            <arcpath id="001" x="221" y="507" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="CPU to Fromglobal" source="CPU[i]" target="DesdeGlobal[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="366" y="233" curvePoint="false"/>
+            <arcpath id="001" x="412" y="305" curvePoint="true"/>
+            <arcpath id="002" x="452" y="442" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="CPU to Unqueue" source="CPU[i]" target="Desencolar[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="356" y="236" curvePoint="false"/>
+            <arcpath id="001" x="356" y="291" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Execempty to Executing" source="EjecutarVacio[i]" target="Ejecutando[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="266" y="351" curvePoint="false"/>
+            <arcpath id="001" x="266" y="236" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Exec to Executing" source="Ejecutar[i]" target="Ejecutando[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="341" y="447" curvePoint="false"/>
+            <arcpath id="001" x="215" y="403" curvePoint="true"/>
+            <arcpath id="002" x="230" y="245" curvePoint="true"/>
+            <arcpath id="003" x="254" y="229" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Executing to ReturnCPU" source="Ejecutando[i]" target="RetornoVoluntario[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="272" y="208" curvePoint="false"/>
+            <arcpath id="001" x="306" y="121" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Executing to T9" source="Ejecutando[i]" target="RetornoInvoluntario[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="280" y="216" curvePoint="false"/>
+            <arcpath id="001" x="358" y="167" curvePoint="true"/>
+            <arcpath id="002" x="396" y="121" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Fromglobal to Toexec" source="DesdeGlobal[i]" target="AEjecutar[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="442" y="441" curvePoint="false"/>
+            <arcpath id="001" x="390" y="373" curvePoint="true"/>
+            <arcpath id="002" x="370" y="363" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Globalqueue to Fromglobal" source="ColaGlobal" target="DesdeGlobal[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="597" y="446" curvePoint="false"/>
+            <arcpath id="001" x="462" y="446" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Globalqueue to Removeglobal" source="ColaGlobal" target="RemoverGlobal">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="611" y="432" curvePoint="false"/>
+            <arcpath id="001" x="611" y="391" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="ModoUnSoloHilo to ComenzarSMP" source="ModoUnSoloHilo" target="ComenzarSMP">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="342" y="507" curvePoint="false"/>
+            <arcpath id="001" x="296" y="507" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="ModoUnSoloHilo to DesdeGlobal[i+n]" source="ModoUnSoloHilo" target="DesdeGlobal[i+n]">
+            <graphics/>
+            <inscription>
+                <value/>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value/>
+            </tagged>
+            <arcpath id="000" x="371" y="509" curvePoint="false"/>
+            <arcpath id="001" x="581" y="552" curvePoint="false"/>
+            <type value="inhibitor"/>
+        </arc>
+        <arc id="ModoUnSoloHilo to Ejecutar[i]" source="ModoUnSoloHilo" target="Ejecutar[i]">
+            <graphics/>
+            <inscription>
+                <value/>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value/>
+            </tagged>
+            <arcpath id="000" x="356" y="492" curvePoint="false"/>
+            <arcpath id="001" x="356" y="451" curvePoint="false"/>
+            <type value="inhibitor"/>
+        </arc>
+        <arc id="ModoUnSoloHilo to Encolar[i]" source="ModoUnSoloHilo" target="Encolar[i]">
+            <graphics/>
+            <inscription>
+                <value/>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value/>
+            </tagged>
+            <arcpath id="000" x="371" y="507" curvePoint="false"/>
+            <arcpath id="001" x="484" y="472" curvePoint="true"/>
+            <arcpath id="002" x="566" y="301" curvePoint="false"/>
+            <type value="inhibitor"/>
+        </arc>
+        <arc id="ModoUnSoloHilo to Encolar[i+n]" source="ModoUnSoloHilo" target="Encolar[i+n]">
+            <graphics/>
+            <inscription>
+                <value/>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value/>
+            </tagged>
+            <arcpath id="000" x="372" y="507" curvePoint="false"/>
+            <arcpath id="001" x="581" y="507" curvePoint="false"/>
+            <type value="inhibitor"/>
+        </arc>
+        <arc id="NoPuedeEncolar[i] to Descartar" source="NoPuedeEncolar[i]" target="Descartar">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="671" y="297" curvePoint="false"/>
+            <arcpath id="001" x="731" y="297" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="NoPuedeEncolar[i] to Remover[i]" source="NoPuedeEncolar[i]" target="Remover[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="644" y="288" curvePoint="false"/>
+            <arcpath id="001" x="598" y="261" curvePoint="true"/>
+            <arcpath id="002" x="551" y="237" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="NoPuedeEncolar[i] to RemoverVacia[i]" source="NoPuedeEncolar[i]" target="RemoverVacia[i]">
+            <graphics/>
+            <inscription>
+                <value/>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value/>
+            </tagged>
+            <arcpath id="000" x="646" y="286" curvePoint="false"/>
+            <arcpath id="001" x="601" y="242" curvePoint="false"/>
+            <type value="inhibitor"/>
+        </arc>
+        <arc id="Queue to Remove" source="Cola[i]" target="Remover[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="501" y="285" curvePoint="false"/>
+            <arcpath id="001" x="536" y="241" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Queue to T10" source="Cola[i]" target="RemoverVacia[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="506" y="295" curvePoint="false"/>
+            <arcpath id="001" x="560" y="274" curvePoint="true"/>
+            <arcpath id="002" x="591" y="241" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Queue to Unqueue" source="Cola[i]" target="Desencolar[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="477" y="297" curvePoint="false"/>
+            <arcpath id="001" x="371" y="297" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="ReturnCPU to CPU" source="RetornoVoluntario[i]" target="CPU[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="316" y="122" curvePoint="false"/>
+            <arcpath id="001" x="326" y="172" curvePoint="true"/>
+            <arcpath id="002" x="349" y="209" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="T9 to CPU" source="RetornoInvoluntario[i]" target="CPU[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="406" y="122" curvePoint="false"/>
+            <arcpath id="001" x="394" y="162" curvePoint="true"/>
+            <arcpath id="002" x="364" y="209" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="TG to Globalqueue" source="TransicionGlobal" target="ColaGlobal">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="686" y="447" curvePoint="false"/>
+            <arcpath id="001" x="626" y="447" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Toexec to Exec" source="AEjecutar[i]" target="Ejecutar[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="356" y="371" curvePoint="false"/>
+            <arcpath id="001" x="356" y="441" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Toexec to Execempty" source="AEjecutar[i]" target="EjecutarVacio[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="342" y="357" curvePoint="false"/>
+            <arcpath id="001" x="281" y="357" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="Unqueue to Toexec" source="Desencolar[i]" target="AEjecutar[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="356" y="301" curvePoint="false"/>
+            <arcpath id="001" x="356" y="342" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+    </net>
+</pnml>
