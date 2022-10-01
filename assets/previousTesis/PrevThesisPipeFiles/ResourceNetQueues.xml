@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="Cantq0">
+<graphics>
+<position x="285.0" y="232.0"/>
+</graphics>
+<name>
+<value>Cantq0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="Cantq1">
+<graphics>
+<position x="405.0" y="337.0"/>
+</graphics>
+<name>
+<value>Cantq1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="Cantq2">
+<graphics>
+<position x="532.0" y="232.0"/>
+</graphics>
+<name>
+<value>Cantq2</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="Cantq3">
+<graphics>
+<position x="405.0" y="135.0"/>
+</graphics>
+<name>
+<value>Cantq3</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="Addtoqueue0">
+<graphics>
+<position x="179.0" y="232.0"/>
+</graphics>
+<name>
+<value>Addtoqueue0</value>
+<graphics>
+<offset x="48.0" y="34.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="Addtoqueue1">
+<graphics>
+<position x="405.0" y="420.0"/>
+</graphics>
+<name>
+<value>Addtoqueue1</value>
+<graphics>
+<offset x="51.0" y="33.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="Addtoqueue2">
+<graphics>
+<position x="630.0" y="232.0"/>
+</graphics>
+<name>
+<value>Addtoqueue2</value>
+<graphics>
+<offset x="49.0" y="34.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="Addtoqueue3">
+<graphics>
+<position x="405.0" y="53.0"/>
+</graphics>
+<name>
+<value>Addtoqueue3</value>
+<graphics>
+<offset x="50.0" y="34.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="Throw">
+<graphics>
+<position x="405.0" y="232.0"/>
+</graphics>
+<name>
+<value>Throw</value>
+<graphics>
+<offset x="30.0" y="34.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="Addtoqueue0 to Cantq0" source="Addtoqueue0" target="Cantq0">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="205" y="244" curvePoint="false"/>
+<arcpath id="001" x="282" y="244" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Addtoqueue1 to Cantq1" source="Addtoqueue1" target="Cantq1">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="416" y="426" curvePoint="false"/>
+<arcpath id="001" x="416" y="363" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Addtoqueue2 to Cantq2" source="Addtoqueue2" target="Cantq2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="626" y="244" curvePoint="false"/>
+<arcpath id="001" x="558" y="244" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Addtoqueue3 to Cantq3" source="Addtoqueue3" target="Cantq3">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="416" y="69" curvePoint="false"/>
+<arcpath id="001" x="416" y="132" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Cantq0 to Addtoqueue0" source="Cantq0" target="Addtoqueue0">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="284" y="252" curvePoint="false"/>
+<arcpath id="001" x="228" y="289" curvePoint="false"/>
+<arcpath id="002" x="190" y="248" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="Cantq0 to Throw" source="Cantq0" target="Throw">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="311" y="244" curvePoint="false"/>
+<arcpath id="001" x="401" y="244" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Cantq1 to Addtoqueue1" source="Cantq1" target="Addtoqueue1">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="426" y="360" curvePoint="false"/>
+<arcpath id="001" x="469" y="409" curvePoint="false"/>
+<arcpath id="002" x="431" y="432" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="Cantq1 to Throw" source="Cantq1" target="Throw">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="416" y="334" curvePoint="false"/>
+<arcpath id="001" x="416" y="248" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Cantq2 to Addtoqueue2" source="Cantq2" target="Addtoqueue2">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="556" y="235" curvePoint="false"/>
+<arcpath id="001" x="612" y="199" curvePoint="false"/>
+<arcpath id="002" x="641" y="238" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="Cantq2 to Throw" source="Cantq2" target="Throw">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="529" y="244" curvePoint="false"/>
+<arcpath id="001" x="431" y="244" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Cantq3 to Addtoqueue3" source="Cantq3" target="Addtoqueue3">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="405" y="137" curvePoint="false"/>
+<arcpath id="001" x="357" y="94" curvePoint="false"/>
+<arcpath id="002" x="401" y="65" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="Cantq3 to Throw" source="Cantq3" target="Throw">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="416" y="161" curvePoint="false"/>
+<arcpath id="001" x="416" y="238" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="CPU 0">
+<graphics>
+<position x="106.0" y="156.0"/>
+</graphics>
+<name>
+<value>CPU 0</value>
+<graphics>
+<offset x="32.0" y="-7.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="CPU 1">
+<graphics>
+<position x="108.0" y="342.0"/>
+</graphics>
+<name>
+<value>CPU 1</value>
+<graphics>
+<offset x="34.0" y="47.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="CPU 2">
+<graphics>
+<position x="313.0" y="340.0"/>
+</graphics>
+<name>
+<value>CPU 2</value>
+<graphics>
+<offset x="34.0" y="47.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="CPU 3">
+<graphics>
+<position x="309.0" y="154.0"/>
+</graphics>
+<name>
+<value>CPU 3</value>
+<graphics>
+<offset x="29.0" y="-12.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="CPU 0 a 1">
+<graphics>
+<position x="107.0" y="245.0"/>
+</graphics>
+<name>
+<value>CPU 0 a 1</value>
+<graphics>
+<offset x="-9.0" y="17.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="CPU 1 a 2">
+<graphics>
+<position x="206.0" y="341.0"/>
+</graphics>
+<name>
+<value>CPU 1 a 2</value>
+<graphics>
+<offset x="37.0" y="47.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="CPU 2 a 3">
+<graphics>
+<position x="311.0" y="234.0"/>
+</graphics>
+<name>
+<value>CPU 2 a 3</value>
+<graphics>
+<offset x="94.0" y="21.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="CPU 3 a 0">
+<graphics>
+<position x="207.0" y="155.0"/>
+</graphics>
+<name>
+<value>CPU 3 a 0</value>
+<graphics>
+<offset x="37.0" y="-16.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="CPU 0 a 1 to CPU 1" source="CPU 0 a 1" target="CPU 1">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="118" y="261" curvePoint="false"/>
+<arcpath id="001" x="119" y="339" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU 0 to CPU 0 a 1" source="CPU 0" target="CPU 0 a 1">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="118" y="182" curvePoint="false"/>
+<arcpath id="001" x="118" y="251" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU 1 a 2 to CPU 2" source="CPU 1 a 2" target="CPU 2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="222" y="353" curvePoint="false"/>
+<arcpath id="001" x="310" y="352" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU 1 to CPU 1 a 2" source="CPU 1" target="CPU 1 a 2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="134" y="353" curvePoint="false"/>
+<arcpath id="001" x="212" y="353" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU 2 a 3 to CPU 3" source="CPU 2 a 3" target="CPU 3">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="322" y="240" curvePoint="false"/>
+<arcpath id="001" x="321" y="180" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU 2 to CPU 2 a 3" source="CPU 2" target="CPU 2 a 3">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="324" y="337" curvePoint="false"/>
+<arcpath id="001" x="322" y="250" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU 3 a 0 to CPU 0" source="CPU 3 a 0" target="CPU 0">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="213" y="167" curvePoint="false"/>
+<arcpath id="001" x="132" y="167" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU 3 to CPU 3 a 0" source="CPU 3" target="CPU 3 a 0">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="306" y="166" curvePoint="false"/>
+<arcpath id="001" x="223" y="167" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>
