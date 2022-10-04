@@ -3,13 +3,8 @@
 #include <sys/module.h>
 #include <sys/systm.h>
 #include <sys/kernel.h>
+#include <sys/sched_petri.h>
 // clang-format on
-
-void hello_debug_unload(void);
-void hello_debug_unload(void) /* needed for testing remote debugging */
-{
-  uprintf("Bye Bye hello_debug_unload\n");
-}
 
 /* The function called at load/unload. */
 static int event_handler(struct module *module, int event, void *arg) {
@@ -17,6 +12,8 @@ static int event_handler(struct module *module, int event, void *arg) {
   switch (event) {
   case MOD_LOAD:
     uprintf("Hello chicos tesis! \n");
+    toggle_active_cpu(0);
+    set_print_transition(1000);
     break;
   case MOD_UNLOAD:
     uprintf("Bye Bye chicos tesis !\n");
@@ -28,10 +25,13 @@ static int event_handler(struct module *module, int event, void *arg) {
 
   return (e);
 }
+
 /* The second argument of DECLARE_MODULE. */
-static moduledata_t hello_conf = {
-    "hello",       /* module name */
-    event_handler, /* event handler */
-    NULL           /* extra data */
+static moduledata_t toggle_active_cpu_conf = {
+    "toggle_active_cpu", /* module name */
+    event_handler,       /* event handler */
+    NULL                 /* extra data */
 };
-DECLARE_MODULE(hello, hello_conf, SI_SUB_DRIVERS, SI_ORDER_MIDDLE);
+/* TODO: Test SI_SUB_EXEC as third argument */
+DECLARE_MODULE(toggle_active_cpu, toggle_active_cpu_conf, SI_SUB_DRIVERS,
+               SI_ORDER_MIDDLE);
