@@ -70,3 +70,13 @@ pkg install htop
 ```
 
 You’ll need to enter **y** to confirm the installation. That’s it!
+
+---
+
+## <h2 id="gcc"> gcc </h2>
+
+```bash
+pkg install lang/gcc
+```
+
+You’ll need to enter **y** to confirm the installation
