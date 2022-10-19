@@ -69,4 +69,9 @@ Rama asociada a la iteración
 
 ## Análisis de resultados
 
+Como primer resultado, la nueva implementación falla ya que al disparar la transición para suspender el procesador 1, se disparan transiciones asociadas a este procesador, las cuales no estaban sensibilizadas.
+Creemos que podría ser un problema asociado al lock del scheduler, por lo cual decidimos cambiar el lugar de disparo de la transición, dentro del método `resource_fire_net` para que se dispare con el lock correspondiente al hilo que está corriendo en el scheduler.
+
+[Commit asociado](https://github.com/drudilea/freebsd-src/commit/494d3368411fad6b300e6ca7a1184df0588766a8)
+
 ## Próximos pasos
