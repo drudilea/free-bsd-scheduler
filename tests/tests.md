@@ -59,3 +59,17 @@ Correspondencia entre el nombre de las plazas del modelo con el nombre de las pl
 | TRAN_START_SMP           |             |             |             |             |  37   |
 | TRAN_THROW               |             |             |             |             |  38   |
 | TRAN_QUEUE_GLOBAL        |             |             |             |             |  39   |
+
+## Jerárquicas
+
+| hierarchical_transitions | hierarchical_corresponse |
+| ------------------------ | ------------------------ |
+| TRAN_ADDTOQUEUE          | TRAN_ON_QUEUE            |
+| TRAN_EXEC                | TRAN_SET_RUNNING         |
+| TRAN_EXEC_EMPTY          | TRAN_SET_RUNNING         |
+| TRAN_RETURN_INVOL        | TRAN_SWITCH_OUT          |
+| TRAN_RETURN_VOL          | TRAN_TO_WAIT_CHANNEL     |
+| TRAN_REMOVE_QUEUE        | TRAN_REMOVE              |
+| TRAN_REMOVE_EMPTY_QUEUE  | TRAN_REMOVE              |
+| TRAN_QUEUE_GLOBAL        | TRAN_ON_QUEUE            |
+| TRAN_REMOVE_GLOBAL_QUEUE | TRAN_REMOVE              |

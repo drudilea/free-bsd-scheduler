@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="CAN_RUN">
+<graphics>
+<position x="255.0" y="165.0"/>
+</graphics>
+<name>
+<value>CAN_RUN</value>
+<graphics>
+<offset x="73.0" y="51.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="CPU_RUN_QUEUE">
+<graphics>
+<position x="255.0" y="300.0"/>
+</graphics>
+<name>
+<value>CPU_RUN_QUEUE</value>
+<graphics>
+<offset x="103.0" y="50.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="INACTIVE">
+<graphics>
+<position x="255.0" y="30.0"/>
+</graphics>
+<name>
+<value>INACTIVE</value>
+<graphics>
+<offset x="69.0" y="38.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="INHIBITED">
+<graphics>
+<position x="75.0" y="285.0"/>
+</graphics>
+<name>
+<value>INHIBITED</value>
+<graphics>
+<offset x="68.0" y="45.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="RUNNING">
+<graphics>
+<position x="255.0" y="450.0"/>
+</graphics>
+<name>
+<value>RUNNING</value>
+<graphics>
+<offset x="74.0" y="43.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="T0_INIT">
+<graphics>
+<position x="255.0" y="105.0"/>
+</graphics>
+<name>
+<value>T0_INIT</value>
+<graphics>
+<offset x="76.0" y="20.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T1_ON_QUEUE">
+<graphics>
+<position x="255.0" y="225.0"/>
+</graphics>
+<name>
+<value>T1_ON_QUEUE</value>
+<graphics>
+<offset x="108.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T2_SET_RUNNING">
+<graphics>
+<position x="255.0" y="375.0"/>
+</graphics>
+<name>
+<value>T2_SET_RUNNING</value>
+<graphics>
+<offset x="134.0" y="18.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T3_SWITCH_OUT">
+<graphics>
+<position x="135.0" y="270.0"/>
+</graphics>
+<name>
+<value>T3_SWITCH_OUT</value>
+<graphics>
+<offset x="111.0" y="6.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T4_TO_WAIT_CHANNEL">
+<graphics>
+<position x="75.0" y="450.0"/>
+</graphics>
+<name>
+<value>T4_TO_WAIT_CHANNEL</value>
+<graphics>
+<offset x="86.0" y="42.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T5_WAKEUP">
+<graphics>
+<position x="75.0" y="165.0"/>
+</graphics>
+<name>
+<value>T5_WAKEUP</value>
+<graphics>
+<offset x="39.0" y="4.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="T6_REMOVE">
+<graphics>
+<position x="360.0" y="300.0"/>
+</graphics>
+<name>
+<value>T6_REMOVE</value>
+<graphics>
+<offset x="88.0" y="4.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="Can_run to Onqueue" source="CAN_RUN" target="T1_ON_QUEUE">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="266" y="191" curvePoint="false"/>
+<arcpath id="001" x="266" y="231" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Inactive to Init" source="INACTIVE" target="T0_INIT">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="266" y="56" curvePoint="false"/>
+<arcpath id="001" x="266" y="111" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Inhibited to Wakeup" source="INHIBITED" target="T5_WAKEUP">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="86" y="282" curvePoint="false"/>
+<arcpath id="001" x="86" y="181" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Init to Can_run" source="T0_INIT" target="CAN_RUN">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="266" y="121" curvePoint="false"/>
+<arcpath id="001" x="266" y="162" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Onqueue to Runq" source="T1_ON_QUEUE" target="CPU_RUN_QUEUE">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="266" y="241" curvePoint="false"/>
+<arcpath id="001" x="266" y="297" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Remove to Can_run" source="T6_REMOVE" target="CAN_RUN">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="371" y="306" curvePoint="false"/>
+<arcpath id="001" x="315" y="192" curvePoint="true"/>
+<arcpath id="002" x="281" y="181" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Running to Switchout" source="RUNNING" target="T3_SWITCH_OUT">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="252" y="457" curvePoint="false"/>
+<arcpath id="001" x="151" y="380" curvePoint="true"/>
+<arcpath id="002" x="146" y="286" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Running to Towait" source="RUNNING" target="T4_TO_WAIT_CHANNEL">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="252" y="460" curvePoint="false"/>
+<arcpath id="001" x="101" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Runq to Remove" source="CPU_RUN_QUEUE" target="T6_REMOVE">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="281" y="309" curvePoint="false"/>
+<arcpath id="001" x="356" y="312" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Runq to Setrunning" source="CPU_RUN_QUEUE" target="T2_SET_RUNNING">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="266" y="326" curvePoint="false"/>
+<arcpath id="001" x="266" y="381" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Setrunning to Running" source="T2_SET_RUNNING" target="RUNNING">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="266" y="391" curvePoint="false"/>
+<arcpath id="001" x="266" y="447" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Switchout to Can_run" source="T3_SWITCH_OUT" target="CAN_RUN">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="146" y="276" curvePoint="false"/>
+<arcpath id="001" x="187" y="195" curvePoint="true"/>
+<arcpath id="002" x="252" y="180" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Towait to Inhibited" source="T4_TO_WAIT_CHANNEL" target="INHIBITED">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="86" y="456" curvePoint="false"/>
+<arcpath id="001" x="86" y="311" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Wakeup to Can_run" source="T5_WAKEUP" target="CAN_RUN">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="101" y="177" curvePoint="false"/>
+<arcpath id="001" x="252" y="177" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>
