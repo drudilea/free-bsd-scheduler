@@ -20,7 +20,7 @@ Para definir los nombres de las ramas, establecimos 3 casos principales por los 
 
 - Feature: Estas ramas se utilizan para los casos en los que se agrega nuevo codigo o funcionalidades no existentes.
 
-Con esots tres casos principales, se define la estrategia de nombrado de ramas de la siguente forma:
+Con estos tres casos principales, se define la estrategia de nombrado de ramas de la siguente forma:
 
 ```
 DrudiGoldmanPI/<CAUSA>_<DESCRIPCION>
