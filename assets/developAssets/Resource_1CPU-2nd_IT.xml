@@ -1,0 +1,1193 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="PLACE_CANTQ[i]">
+<graphics>
+<position x="540.0" y="240.0"/>
+</graphics>
+<name>
+<value>PLACE_CANTQ[i]</value>
+<graphics>
+<offset x="109.00000000000004" y="36.833333333333336"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_CPU[i]">
+<graphics>
+<position x="240.0" y="165.0"/>
+</graphics>
+<name>
+<value>PLACE_CPU[i]</value>
+<graphics>
+<offset x="18.000000000000018" y="34.99999999999999"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_EXECUTING[i]">
+<graphics>
+<position x="150.0" y="165.0"/>
+</graphics>
+<name>
+<value>PLACE_EXECUTING[i]</value>
+<graphics>
+<offset x="1.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_GLOBAL_QUEUE">
+<graphics>
+<position x="495.0" y="390.0"/>
+</graphics>
+<name>
+<value>PLACE_GLOBAL_QUEUE</value>
+<graphics>
+<offset x="100.83333333333333" y="45.00000000000001"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_QUEUE[i]">
+<graphics>
+<position x="375.0" y="240.0"/>
+</graphics>
+<name>
+<value>PLACE_QUEUE[i]</value>
+<graphics>
+<offset x="69.1666666666667" y="-8.333333333333334"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_SMP_NOT_READY">
+<graphics>
+<position x="240.0" y="450.0"/>
+</graphics>
+<name>
+<value>PLACE_SMP_NOT_READY</value>
+<graphics>
+<offset x="103.33333333333331" y="45.33333333333333"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_SMP_READY">
+<graphics>
+<position x="90.0" y="450.0"/>
+</graphics>
+<name>
+<value>PLACE_SMP_READY</value>
+<graphics>
+<offset x="68.00000000000007" y="43.166666666666664"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_SUSPENDED[i]">
+<graphics>
+<position x="420.0" y="105.0"/>
+</graphics>
+<name>
+<value>PLACE_SUSPENDED[i]</value>
+<graphics>
+<offset x="2.1666666666666003" y="10.5"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="PLACE_TOEXEC[i]">
+<graphics>
+<position x="240.0" y="300.0"/>
+</graphics>
+<name>
+<value>PLACE_TOEXEC[i]</value>
+<graphics>
+<offset x="120.83333333333327" y="11.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="TRAN_ADDTOQUEUE[i]">
+<graphics>
+<position x="450.0" y="240.0"/>
+</graphics>
+<name>
+<value>TRAN_ADDTOQUEUE[i]</value>
+<graphics>
+<offset x="77.83333333333327" y="46.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_ADDTOQUEUE[i+n]">
+<graphics>
+<position x="480.0" y="450.0"/>
+</graphics>
+<name>
+<value>TRAN_ADDTOQUEUE[i+n]</value>
+<graphics>
+<offset x="94.99999999999997" y="26.66666666666667"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_EXEC_EMPTY[i]">
+<graphics>
+<position x="150.0" y="300.0"/>
+</graphics>
+<name>
+<value>TRAN_EXEC_EMPTY[i]</value>
+<graphics>
+<offset x="71.0" y="43.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_EXEC_IDLE[i]">
+<graphics>
+<position x="190.0" y="240.0"/>
+</graphics>
+<name>
+<value>TRAN_EXEC_IDLE[i]</value>
+<graphics>
+<offset x="19.999999999999996" y="32.499999999999986"/>
+</graphics>
+</name>
+<orientation>
+<value>270</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_EXEC[i]">
+<graphics>
+<position x="240.0" y="390.0"/>
+</graphics>
+<name>
+<value>TRAN_EXEC[i]</value>
+<graphics>
+<offset x="-1.0" y="32.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_FROM_GLOBAL_CPU[i]">
+<graphics>
+<position x="330.0" y="390.0"/>
+</graphics>
+<name>
+<value>TRAN_FROM_GLOBAL_CPU[i]</value>
+<graphics>
+<offset x="114.0" y="40.0"/>
+</graphics>
+</name>
+<orientation>
+<value>270</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_FROM_GLOBAL_CPU[i+n]">
+<graphics>
+<position x="480.0" y="495.0"/>
+</graphics>
+<name>
+<value>TRAN_FROM_GLOBAL_CPU[i+n]</value>
+<graphics>
+<offset x="114.16666666666671" y="33.33333333333332"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_QUEUE_GLOBAL">
+<graphics>
+<position x="585.0" y="390.0"/>
+</graphics>
+<name>
+<value>TRAN_QUEUE_GLOBAL</value>
+<graphics>
+<offset x="96.5" y="-0.8333333333333345"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_REMOVE_EMPTY_QUEUE[i]">
+<graphics>
+<position x="480.0" y="180.0"/>
+</graphics>
+<name>
+<value>TRAN_REMOVE_EMPTY_QUEUE[i]</value>
+<graphics>
+<offset x="167.0" y="3.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_REMOVE_GLOBAL_QUEUE">
+<graphics>
+<position x="495.0" y="330.0"/>
+</graphics>
+<name>
+<value>TRAN_REMOVE_GLOBAL_QUEUE</value>
+<graphics>
+<offset x="177.0" y="9.5"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_REMOVE_QUEUE[i]">
+<graphics>
+<position x="420.0" y="180.0"/>
+</graphics>
+<name>
+<value>TRAN_REMOVE_QUEUE[i]</value>
+<graphics>
+<offset x="29.833333333333332" y="2.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_RETURN_INVOL[i]">
+<graphics>
+<position x="285.0" y="60.0"/>
+</graphics>
+<name>
+<value>TRAN_RETURN_INVOL[i]</value>
+<graphics>
+<offset x="104.0" y="-3.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_RETURN_VOL[i]">
+<graphics>
+<position x="195.0" y="60.0"/>
+</graphics>
+<name>
+<value>TRAN_RETURN_VOL[i]</value>
+<graphics>
+<offset x="38.0" y="-5.0"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_START_SMP">
+<graphics>
+<position x="165.0" y="450.0"/>
+</graphics>
+<name>
+<value>TRAN_START_SMP</value>
+<graphics>
+<offset x="76.66666666666664" y="1.6666666666666563"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_SUSPEND_PROC[i]">
+<graphics>
+<position x="420.0" y="45.0"/>
+</graphics>
+<name>
+<value>TRAN_SUSPEND_PROC[i]</value>
+<graphics>
+<offset x="122.0" y="-1.0"/>
+</graphics>
+</name>
+<orientation>
+<value>270</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_THROW">
+<graphics>
+<position x="630.0" y="240.0"/>
+</graphics>
+<name>
+<value>TRAN_THROW</value>
+<graphics>
+<offset x="61.833333333333385" y="1.0000000000000018"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_UNQUEUE[i]">
+<graphics>
+<position x="240.0" y="240.0"/>
+</graphics>
+<name>
+<value>TRAN_UNQUEUE[i]</value>
+<graphics>
+<offset x="84.16666666666663" y="-1.6666666666666667"/>
+</graphics>
+</name>
+<orientation>
+<value>90</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="TRAN_WAKEUP_PROC[i]">
+<graphics>
+<position x="495.0" y="75.0"/>
+</graphics>
+<name>
+<value>TRAN_WAKEUP_PROC[i]</value>
+<graphics>
+<offset x="105.50000000000003" y="44.83333333333333"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="Addtoqueue to Cantq" source="TRAN_ADDTOQUEUE[i]" target="PLACE_CANTQ[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="466" y="247" curvePoint="false"/>
+<arcpath id="001" x="485" y="237" curvePoint="true"/>
+<arcpath id="002" x="537" y="249" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Addtoqueue to Queue" source="TRAN_ADDTOQUEUE[i]" target="PLACE_QUEUE[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="446" y="252" curvePoint="false"/>
+<arcpath id="001" x="401" y="252" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Cantq to Addtoqueue" source="PLACE_CANTQ[i]" target="TRAN_ADDTOQUEUE[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="540" y="260" curvePoint="false"/>
+<arcpath id="001" x="507" y="265" curvePoint="true"/>
+<arcpath id="002" x="476" y="252" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="Cantq to Exec" source="PLACE_CANTQ[i]" target="TRAN_EXEC[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="543" y="264" curvePoint="false"/>
+<arcpath id="001" x="432" y="362" curvePoint="true"/>
+<arcpath id="002" x="266" y="402" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Cantq to Execempty" source="PLACE_CANTQ[i]" target="TRAN_EXEC_EMPTY[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="542" y="264" curvePoint="false"/>
+<arcpath id="001" x="432" y="325" curvePoint="true"/>
+<arcpath id="002" x="192" y="325" curvePoint="true"/>
+<arcpath id="003" x="176" y="312" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="ComenzarSMP to ModoSMP" source="TRAN_START_SMP" target="PLACE_SMP_READY">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="161" y="462" curvePoint="false"/>
+<arcpath id="001" x="116" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU to Fromglobal" source="PLACE_CPU[i]" target="TRAN_FROM_GLOBAL_CPU[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="263" y="186" curvePoint="false"/>
+<arcpath id="001" x="315" y="257" curvePoint="true"/>
+<arcpath id="002" x="341" y="396" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="CPU to Unqueue" source="PLACE_CPU[i]" target="TRAN_UNQUEUE[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="251" y="191" curvePoint="false"/>
+<arcpath id="001" x="251" y="246" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Execempty to Executing" source="TRAN_EXEC_EMPTY[i]" target="PLACE_EXECUTING[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="161" y="306" curvePoint="false"/>
+<arcpath id="001" x="161" y="191" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Exec to Executing" source="TRAN_EXEC[i]" target="PLACE_EXECUTING[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="236" y="402" curvePoint="false"/>
+<arcpath id="001" x="117" y="355" curvePoint="true"/>
+<arcpath id="002" x="132" y="197" curvePoint="true"/>
+<arcpath id="003" x="150" y="185" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Executing to ReturnCPU" source="PLACE_EXECUTING[i]" target="TRAN_RETURN_VOL[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="167" y="163" curvePoint="false"/>
+<arcpath id="001" x="201" y="76" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Executing to T9" source="PLACE_EXECUTING[i]" target="TRAN_RETURN_INVOL[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="176" y="172" curvePoint="false"/>
+<arcpath id="001" x="260" y="120" curvePoint="true"/>
+<arcpath id="002" x="291" y="76" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Fromglobal to Toexec" source="TRAN_FROM_GLOBAL_CPU[i]" target="PLACE_TOEXEC[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="334" y="396" curvePoint="false"/>
+<arcpath id="001" x="292" y="325" curvePoint="true"/>
+<arcpath id="002" x="265" y="316" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Globalqueue to Fromglobal" source="PLACE_GLOBAL_QUEUE" target="TRAN_FROM_GLOBAL_CPU[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="492" y="401" curvePoint="false"/>
+<arcpath id="001" x="357" y="401" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Globalqueue to Removeglobal" source="PLACE_GLOBAL_QUEUE" target="TRAN_REMOVE_GLOBAL_QUEUE">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="506" y="387" curvePoint="false"/>
+<arcpath id="001" x="506" y="346" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="ModoUnSoloHilo to ComenzarSMP" source="PLACE_SMP_NOT_READY" target="TRAN_START_SMP">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="237" y="462" curvePoint="false"/>
+<arcpath id="001" x="191" y="462" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="ModoUnSoloHilo to DesdeGlobal[i+n]" source="PLACE_SMP_NOT_READY" target="TRAN_FROM_GLOBAL_CPU[i+n]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="266" y="465" curvePoint="false"/>
+<arcpath id="001" x="476" y="507" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="ModoUnSoloHilo to Ejecutar[i]" source="PLACE_SMP_NOT_READY" target="TRAN_EXEC[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="251" y="447" curvePoint="false"/>
+<arcpath id="001" x="251" y="406" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="ModoUnSoloHilo to Encolar[i]" source="PLACE_SMP_NOT_READY" target="TRAN_ADDTOQUEUE[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="266" y="462" curvePoint="false"/>
+<arcpath id="001" x="387" y="425" curvePoint="true"/>
+<arcpath id="002" x="461" y="256" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="ModoUnSoloHilo to Encolar[i+n]" source="PLACE_SMP_NOT_READY" target="TRAN_ADDTOQUEUE[i+n]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="267" y="462" curvePoint="false"/>
+<arcpath id="001" x="476" y="462" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="NoPuedeEncolar[i] to Descartar" source="PLACE_CANTQ[i]" target="TRAN_THROW">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="566" y="252" curvePoint="false"/>
+<arcpath id="001" x="626" y="252" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="NoPuedeEncolar[i] to Remover[i]" source="PLACE_CANTQ[i]" target="TRAN_REMOVE_QUEUE[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="541" y="241" curvePoint="false"/>
+<arcpath id="001" x="500" y="214" curvePoint="true"/>
+<arcpath id="002" x="446" y="192" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="NoPuedeEncolar[i] to RemoverVacia[i]" source="PLACE_CANTQ[i]" target="TRAN_REMOVE_EMPTY_QUEUE[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="541" y="241" curvePoint="false"/>
+<arcpath id="001" x="496" y="197" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="PLACE_CPU[i] to TRAN_EXEC_IDLE[i]" source="PLACE_CPU[i]" target="TRAN_EXEC_IDLE[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="243" y="189" curvePoint="false"/>
+<arcpath id="001" x="202" y="247" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="PLACE_QUEUE[i] to TRAN_EXEC_IDLE[i]" source="PLACE_QUEUE[i]" target="TRAN_EXEC_IDLE[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="374" y="259" curvePoint="false"/>
+<arcpath id="001" x="262" y="278" curvePoint="true"/>
+<arcpath id="002" x="217" y="251" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="PLACE_SUSPENDED[i] to TRAN_ADDTOQUEUE[i]" source="PLACE_SUSPENDED[i]" target="TRAN_ADDTOQUEUE[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="442" y="127" curvePoint="false"/>
+<arcpath id="001" x="457" y="155" curvePoint="true"/>
+<arcpath id="002" x="456" y="246" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="PLACE_SUSPENDED[i] to TRAN_FROM_GLOBAL_CPU[i]" source="PLACE_SUSPENDED[i]" target="TRAN_FROM_GLOBAL_CPU[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="417" y="120" curvePoint="false"/>
+<arcpath id="001" x="355" y="160" curvePoint="true"/>
+<arcpath id="002" x="348" y="397" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="PLACE_SUSPENDED[i] to TRAN_SUSPEND_PROC[i]" source="PLACE_SUSPENDED[i]" target="TRAN_SUSPEND_PROC[i]">
+<graphics/>
+<inscription>
+<value/>
+<graphics/>
+</inscription>
+<tagged>
+<value/>
+</tagged>
+<arcpath id="000" x="425" y="104" curvePoint="false"/>
+<arcpath id="001" x="422" y="74" curvePoint="true"/>
+<arcpath id="002" x="427" y="61" curvePoint="false"/>
+<type value="inhibitor"/>
+</arc>
+<arc id="PLACE_SUSPENDED[i] to TRAN_WAKEUP_PROC[i]" source="PLACE_SUSPENDED[i]" target="TRAN_WAKEUP_PROC[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="445" y="111" curvePoint="false"/>
+<arcpath id="001" x="501" y="87" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Queue to Remove" source="PLACE_QUEUE[i]" target="TRAN_REMOVE_QUEUE[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="396" y="240" curvePoint="false"/>
+<arcpath id="001" x="431" y="196" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Queue to T10" source="PLACE_QUEUE[i]" target="TRAN_REMOVE_EMPTY_QUEUE[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="401" y="250" curvePoint="false"/>
+<arcpath id="001" x="462" y="227" curvePoint="true"/>
+<arcpath id="002" x="486" y="196" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Queue to Unqueue" source="PLACE_QUEUE[i]" target="TRAN_UNQUEUE[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="372" y="252" curvePoint="false"/>
+<arcpath id="001" x="266" y="252" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="ReturnCPU to CPU" source="TRAN_RETURN_VOL[i]" target="PLACE_CPU[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="211" y="77" curvePoint="false"/>
+<arcpath id="001" x="229" y="125" curvePoint="true"/>
+<arcpath id="002" x="245" y="163" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="T9 to CPU" source="TRAN_RETURN_INVOL[i]" target="PLACE_CPU[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="301" y="77" curvePoint="false"/>
+<arcpath id="001" x="297" y="115" curvePoint="true"/>
+<arcpath id="002" x="260" y="165" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="TG to Globalqueue" source="TRAN_QUEUE_GLOBAL" target="PLACE_GLOBAL_QUEUE">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="581" y="402" curvePoint="false"/>
+<arcpath id="001" x="521" y="402" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Toexec to Exec" source="PLACE_TOEXEC[i]" target="TRAN_EXEC[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="251" y="326" curvePoint="false"/>
+<arcpath id="001" x="251" y="396" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Toexec to Execempty" source="PLACE_TOEXEC[i]" target="TRAN_EXEC_EMPTY[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="237" y="312" curvePoint="false"/>
+<arcpath id="001" x="176" y="312" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="TRAN_EXEC_IDLE[i] to PLACE_TOEXEC[i]" source="TRAN_EXEC_IDLE[i]" target="PLACE_TOEXEC[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="202" y="257" curvePoint="false"/>
+<arcpath id="001" x="241" y="300" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="TRAN_SUSPEND_PROC[i] to PLACE_SUSPENDED[i]" source="TRAN_SUSPEND_PROC[i]" target="PLACE_SUSPENDED[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="437" y="62" curvePoint="false"/>
+<arcpath id="001" x="453" y="82" curvePoint="true"/>
+<arcpath id="002" x="440" y="104" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="Unqueue to Toexec" source="TRAN_UNQUEUE[i]" target="PLACE_TOEXEC[i]">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="251" y="256" curvePoint="false"/>
+<arcpath id="001" x="251" y="297" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>
