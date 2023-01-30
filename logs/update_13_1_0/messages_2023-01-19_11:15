@@ -1,0 +1,1535 @@
+Jan 19 07:59:36 utama kernel: pin_thread_to_cpu - THREAD 100301 pinned/anchored to CPU1 
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100249 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100249 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100249 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100249 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100249 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100015 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100249 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P2 Transition OK: 30 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100301 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100301 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100301 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100015 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100301 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P2 Transition OK: 30 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100015 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100251 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100251 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100041 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100251 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100251 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P1 Transition OK: 18 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100630 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100630 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100630 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100251 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100251 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100251 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P2 Transition OK: 30 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100107 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100041 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100110 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100116 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100116 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100114 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 3 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100114 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100114 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100116 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100116 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100114 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100114 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100116 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100114 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100115 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100115 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100115 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100115 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& REMOVE_EMPTY_QUEUE_P1 Transition OK: 21 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100115 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100084 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100084 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100084 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100084 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100084 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P1 Transition OK: 18 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100251 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100251 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100315 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100315 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100251 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P1 Transition OK: 18 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100630 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100630 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100631 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100041 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100136 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100136 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100136 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100136 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100107 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100139 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100136 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100107 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100315 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100315 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100315 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100315 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100315 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100315 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100315 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100315 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100145 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100145 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100061 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100061 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100061 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100155 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100041 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100112 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100112 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100112 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100112 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100112 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100110 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100041 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 3 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100110 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100041 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100041 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100041 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P1 Transition OK: 18 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 3 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100631 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100631 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100139 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100139 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100139 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100631 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100631 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100139 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100631 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100631 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100145 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100155 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100631 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100139 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100139 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100139 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100630 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100630 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P1 Transition OK: 18 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100061 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100061 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100630 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P0 Transition OK:  4 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100061 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100003 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100145 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100297 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100252 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100145 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100252 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100252 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100297 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100061 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100155 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100252 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100155 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100297 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100008 is pinned or bounded to cpu 2 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100008 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100041 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100041 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100009 is pinned or bounded to cpu 3 
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100009 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P3 Transition OK: 38 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100207 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100041 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100009 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100206 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100008 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100207 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100206 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100133 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100133 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100134 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 3 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100134 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100134 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100133 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100133 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100132 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100132 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100134 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100134 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100255 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100132 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100132 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100133 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100133 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100133 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100134 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100134 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100134 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100172 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 3 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100172 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100172 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100132 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100133 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100133 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100133 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100172 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100172 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100206 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100133 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100133 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100134 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100134 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100132 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100132 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100207 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100207 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100172 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P3 Transition OK: 40 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P1 Transition OK: 18 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100255 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 3 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100255 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100132 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100132 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100134 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100207 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100207 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100134 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100134 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P3 Transition OK: 41 - Thread 100006 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P3 Transition OK: 37 - Thread 100255 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P3 Transition OK: 39 - Thread 100255 - CPU  3 &#
+Jan 19 07:59:36 utama kernel: Thread 100172 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100172 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100207 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P0 Transition OK:  6 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100297 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100297 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100133 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100133 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100132 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100172 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P1 Transition OK: 14 - Thread 100172 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P2 Transition OK: 26 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100132 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100132 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: Thread 100207 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 1 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 0 # #& ADDTOQUEUE_P1 Transition OK: 12 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100061 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 2 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P2 Transition OK: 24 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_INVOL_P2 Transition OK: 30 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: Thread 100297 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 3 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P3 Transition OK: 36 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& THROW Transition OK: 50 - Thread 100297 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P2 Transition OK: 25 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100172 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P1 Transition OK: 13 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P1 Transition OK: 17 - Thread 100207 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P1 Transition OK: 16 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P1 Transition OK: 15 - Thread 100004 - CPU  1 &#
+Jan 19 07:59:36 utama kernel: Thread 100060 is NOT pinned or bounded
+Jan 19 07:59:36 utama kernel: Transition ADDTOQUEUE from CPU 0 is sensitized
+Jan 19 07:59:36 utama kernel: -1, 100301, -1, -1, 
+Jan 19 07:59:36 utama kernel: cpu_available? 1 # #& ADDTOQUEUE_P0 Transition OK:  0 - Thread 100060 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P2 Transition OK: 29 - Thread 100061 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_IDLE_P2 Transition OK: 28 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P2 Transition OK: 27 - Thread 100005 - CPU  2 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100133 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100134 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_P0 Transition OK:  2 - Thread 100134 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100134 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100132 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100132 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& RETURN_VOL_P0 Transition OK:  5 - Thread 100132 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& UNQUEUE_P0 Transition OK:  1 - Thread 100060 - CPU  0 &#
+Jan 19 07:59:36 utama kernel: #& EXEC_EMPTY_P0 Transition OK:  3 - Thread 100060 - CPU  0 &#
