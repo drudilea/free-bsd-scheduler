@@ -31,34 +31,37 @@ Correspondencia entre el nombre de las plazas del modelo con el nombre de las pl
 
 | Código              | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index |
 | ------------------- | :---------: | :---------: | :---------: | :---------: | :---: |
-| PLACE_CANTQ         |      0      |      5      |     10      |     15      |       |
-| PLACE_QUEUE         |      1      |      6      |     11      |     16      |       |
-| PLACE_CPU           |      2      |      7      |     12      |     17      |       |
-| PLACE_TOEXEC        |      3      |      8      |     13      |     18      |       |
-| PLACE_EXECUTING     |      4      |      9      |     14      |     19      |       |
+| PLACE_CANTQ         |      0      |      6      |     12      |     18      |       |
+| PLACE_QUEUE         |      1      |      7      |     13      |     19      |       |
+| PLACE_CPU           |      2      |      8      |     14      |     20      |       |
+| PLACE_TOEXEC        |      3      |      9      |     15      |     21      |       |
+| PLACE_EXECUTING     |      4      |     10      |     16      |     22      |       |
+| PLACE_SUSPENDED     |      5      |     11      |     17      |     23      |       |
 |                     |             |             |             |             |       |
-| PLACE_GLOBAL_QUEUE  |             |             |             |             |  20   |
-| PLACE_SMP_NOT_READY |             |             |             |             |  21   |
-| PLACE_SMP_READY     |             |             |             |             |  22   |
+| PLACE_GLOBAL_QUEUE  |             |             |             |             |  24   |
+| PLACE_SMP_NOT_READY |             |             |             |             |  25   |
+| PLACE_SMP_READY     |             |             |             |             |  26   |
 
 ## Transiciones
 
 | Código                   | index PROC0 | index PROC1 | index PROC2 | index PROC3 | index |
 | ------------------------ | :---------: | :---------: | :---------: | :---------: | :---: |
-| TRAN_ADDTOQUEUE          |      0      |      9      |     18      |     27      |       |
-| TRAN_UNQUEUE             |      1      |     10      |     19      |     28      |       |
-| TRAN_EXEC                |      2      |     11      |     20      |     29      |       |
-| TRAN_EXEC_EMPTY          |      3      |     12      |     21      |     30      |       |
-| TRAN_RETURN_VOL          |      4      |     13      |     22      |     31      |       |
-| TRAN_RETURN_INVOL        |      5      |     14      |     23      |     32      |       |
-| TRAN_FROM_GLOBAL_CPU     |      6      |     15      |     24      |     33      |       |
-| TRAN_REMOVE_QUEUE        |      7      |     16      |     25      |     34      |       |
-| TRAN_REMOVE_EMPTY_QUEUE  |      8      |     17      |     26      |     35      |       |
+| TRAN_ADDTOQUEUE          |      0      |     11      |     22      |     33      |       |
+| TRAN_UNQUEUE             |      1      |     12      |     23      |     34      |       |
+| TRAN_EXEC                |      2      |     13      |     24      |     35      |       |
+| TRAN_EXEC_EMPTY          |      3      |     14      |     25      |     36      |       |
+| TRAN_RETURN_VOL          |      4      |     15      |     26      |     37      |       |
+| TRAN_RETURN_INVOL        |      5      |     16      |     27      |     38      |       |
+| TRAN_FROM_GLOBAL_CPU     |      6      |     17      |     28      |     39      |       |
+| TRAN_REMOVE_QUEUE        |      7      |     18      |     29      |     40      |       |
+| TRAN_REMOVE_EMPTY_QUEUE  |      8      |     19      |     30      |     41      |       |
+| TRAN_SUSPEND_PROC        |      9      |     20      |     31      |     42      |       |
+| TRAN_WAKEUP_PROC         |     10      |     21      |     32      |     43      |       |
 |                          |             |             |             |             |       |
-| TRAN_REMOVE_GLOBAL_QUEUE |             |             |             |             |  36   |
-| TRAN_START_SMP           |             |             |             |             |  37   |
-| TRAN_THROW               |             |             |             |             |  38   |
-| TRAN_QUEUE_GLOBAL        |             |             |             |             |  39   |
+| TRAN_REMOVE_GLOBAL_QUEUE |             |             |             |             |  44   |
+| TRAN_START_SMP           |             |             |             |             |  45   |
+| TRAN_THROW               |             |             |             |             |  46   |
+| TRAN_QUEUE_GLOBAL        |             |             |             |             |  47   |
 
 ## Jerárquicas
 

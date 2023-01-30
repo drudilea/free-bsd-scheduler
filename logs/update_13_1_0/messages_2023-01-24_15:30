@@ -1,0 +1,786 @@
+Jan 24 10:21:02 uxmal newsyslog[572]: logfile first created
+Jan 24 10:21:03 uxmal syslogd: kernel boot file is /boot/kernel/kernel
+Jan 24 10:21:03 uxmal kernel: ---<<BOOT>>---
+Jan 24 10:21:03 uxmal kernel: Copyright (c) 1992-2021 The FreeBSD Project.
+Jan 24 10:21:03 uxmal kernel: Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+Jan 24 10:21:03 uxmal kernel: 	The Regents of the University of California. All rights reserved.
+Jan 24 10:21:03 uxmal kernel: FreeBSD is a registered trademark of The FreeBSD Foundation.
+Jan 24 10:21:03 uxmal kernel: FreeBSD 13.1-RELEASE releng/13.1-n250148-fc952ac2212 GENERIC amd64
+Jan 24 10:21:03 uxmal kernel: FreeBSD clang version 13.0.0 (git@github.com:llvm/llvm-project.git llvmorg-13.0.0-0-gd7b669b3a303)
+Jan 24 10:21:03 uxmal kernel: VT(vga): text 80x25
+Jan 24 10:21:03 uxmal kernel: CPU: QEMU Virtual CPU version 2.5+ (1392.64-MHz K8-class CPU)
+Jan 24 10:21:03 uxmal kernel:   Origin="AuthenticAMD"  Id=0x60fb1  Family=0xf  Model=0x6b  Stepping=1
+Jan 24 10:21:03 uxmal kernel:   Features=0x1783fbfd<FPU,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,MMX,FXSR,SSE,SSE2,HTT>
+Jan 24 10:21:03 uxmal kernel:   Features2=0x80002001<SSE3,CX16,HV>
+Jan 24 10:21:03 uxmal kernel:   AMD Features=0x20100800<SYSCALL,NX,LM>
+Jan 24 10:21:03 uxmal kernel:   AMD Features2=0x7<LAHF,CMP,SVM>
+Jan 24 10:21:03 uxmal kernel:   SVM: NAsids=16
+Jan 24 10:21:03 uxmal kernel: Hypervisor: Origin = "TCGTCGTCGTCG"
+Jan 24 10:21:03 uxmal kernel: real memory  = 2147483648 (2048 MB)
+Jan 24 10:21:03 uxmal kernel: avail memory = 2038628352 (1944 MB)
+Jan 24 10:21:03 uxmal kernel: Event timer "LAPIC" quality 100
+Jan 24 10:21:03 uxmal kernel: ACPI APIC Table: <BOCHS  BXPC    >
+Jan 24 10:21:03 uxmal kernel: FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs
+Jan 24 10:21:03 uxmal kernel: FreeBSD/SMP: 1 package(s) x 4 core(s)
+Jan 24 10:21:03 uxmal kernel: random: unblocking device.
+Jan 24 10:21:03 uxmal kernel: ioapic0 <Version 2.0> irqs 0-23
+Jan 24 10:21:03 uxmal kernel: Launching APs: 3 2 1
+Jan 24 10:21:03 uxmal kernel: random: entropy device external interface
+Jan 24 10:21:03 uxmal kernel: kbd1 at kbdmux0
+Jan 24 10:21:03 uxmal kernel: vtvga0: <VT VGA driver>
+Jan 24 10:21:03 uxmal kernel: smbios0: <System Management BIOS> at iomem 0xf5a40-0xf5a5e
+Jan 24 10:21:03 uxmal kernel: smbios0: Version: 2.8, BCD Revision: 2.8
+Jan 24 10:21:03 uxmal kernel: aesni0: No AES or SHA support.
+Jan 24 10:21:03 uxmal kernel: acpi0: <BOCHS BXPC>
+Jan 24 10:21:03 uxmal kernel: acpi0: Power Button (fixed)
+Jan 24 10:21:03 uxmal kernel: cpu0: <ACPI CPU> on acpi0
+Jan 24 10:21:03 uxmal kernel: atrtc0: <AT realtime clock> port 0x70-0x77 irq 8 on acpi0
+Jan 24 10:21:03 uxmal kernel: atrtc0: registered as a time-of-day clock, resolution 1.000000s
+Jan 24 10:21:03 uxmal kernel: Event timer "RTC" frequency 32768 Hz quality 0
+Jan 24 10:21:03 uxmal kernel: hpet0: <High Precision Event Timer> iomem 0xfed00000-0xfed003ff on acpi0
+Jan 24 10:21:03 uxmal kernel: Timecounter "HPET" frequency 100000000 Hz quality 950
+Jan 24 10:21:03 uxmal kernel: Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+Jan 24 10:21:03 uxmal kernel: acpi_timer0: <24-bit timer at 3.579545MHz> port 0x608-0x60b on acpi0
+Jan 24 10:21:03 uxmal kernel: pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+Jan 24 10:21:03 uxmal kernel: pci0: <ACPI PCI bus> on pcib0
+Jan 24 10:21:03 uxmal kernel: isab0: <PCI-ISA bridge> at device 1.0 on pci0
+Jan 24 10:21:03 uxmal kernel: isa0: <ISA bus> on isab0
+Jan 24 10:21:03 uxmal kernel: atapci0: <Intel PIIX3 WDMA2 controller> port 0x1f0-0x1f7,0x3f6,0x170-0x177,0x376,0xc040-0xc04f at device 1.1 on pci0
+Jan 24 10:21:03 uxmal kernel: ata0: <ATA channel> at channel 0 on atapci0
+Jan 24 10:21:03 uxmal kernel: ata1: <ATA channel> at channel 1 on atapci0
+Jan 24 10:21:03 uxmal kernel: pci0: <bridge> at device 1.3 (no driver attached)
+Jan 24 10:21:03 uxmal kernel: vgapci0: <VGA-compatible display> mem 0xfd000000-0xfdffffff,0xfebf0000-0xfebf0fff at device 2.0 on pci0
+Jan 24 10:21:03 uxmal kernel: vgapci0: Boot video device
+Jan 24 10:21:03 uxmal kernel: em0: <Intel(R) Legacy PRO/1000 MT 82540EM> port 0xc000-0xc03f mem 0xfebc0000-0xfebdffff irq 11 at device 3.0 on pci0
+Jan 24 10:21:03 uxmal kernel: em0: Using 1024 TX descriptors and 1024 RX descriptors
+Jan 24 10:21:03 uxmal kernel: em0: Ethernet address: 52:54:00:12:34:56
+Jan 24 10:21:03 uxmal kernel: em0: netmap queues/slots: TX 1/1024, RX 1/1024
+Jan 24 10:21:03 uxmal kernel: acpi_syscontainer0: <System Container> on acpi0
+Jan 24 10:21:03 uxmal kernel: acpi_syscontainer1: <System Container> port 0xaf00-0xaf0b on acpi0
+Jan 24 10:21:03 uxmal kernel: acpi_syscontainer2: <System Container> port 0xafe0-0xafe3 on acpi0
+Jan 24 10:21:03 uxmal kernel: acpi_syscontainer3: <System Container> port 0xae00-0xae17 on acpi0
+Jan 24 10:21:03 uxmal kernel: atkbdc0: <Keyboard controller (i8042)> port 0x60,0x64 irq 1 on acpi0
+Jan 24 10:21:03 uxmal kernel: atkbd0: <AT Keyboard> irq 1 on atkbdc0
+Jan 24 10:21:03 uxmal kernel: kbd0 at atkbd0
+Jan 24 10:21:03 uxmal kernel: atkbd0: [GIANT-LOCKED]
+Jan 24 10:21:03 uxmal kernel: psm0: <PS/2 Mouse> irq 12 on atkbdc0
+Jan 24 10:21:03 uxmal kernel: psm0: [GIANT-LOCKED]
+Jan 24 10:21:03 uxmal kernel: WARNING: Device "psm" is Giant locked and may be deleted before FreeBSD 14.0.
+Jan 24 10:21:03 uxmal kernel: psm0: model IntelliMouse Explorer, device ID 4
+Jan 24 10:21:03 uxmal kernel: fdc0: <floppy drive controller (FDE)> port 0x3f2-0x3f5,0x3f7 irq 6 drq 2 on acpi0
+Jan 24 10:21:03 uxmal kernel: fdc0: does not respond
+Jan 24 10:21:03 uxmal kernel: device_attach: fdc0 attach returned 6
+Jan 24 10:21:03 uxmal kernel: ppc0: <Parallel port> port 0x378-0x37f irq 7 on acpi0
+Jan 24 10:21:03 uxmal kernel: ppc0: Generic chipset (NIBBLE-only) in COMPATIBLE mode
+Jan 24 10:21:03 uxmal kernel: ppbus0: <Parallel port bus> on ppc0
+Jan 24 10:21:03 uxmal kernel: lpt0: <Printer> on ppbus0
+Jan 24 10:21:03 uxmal kernel: lpt0: Interrupt-driven port
+Jan 24 10:21:03 uxmal kernel: ppi0: <Parallel I/O> on ppbus0
+Jan 24 10:21:03 uxmal kernel: uart0: <16550 or compatible> port 0x3f8-0x3ff irq 4 flags 0x10 on acpi0
+Jan 24 10:21:03 uxmal kernel: orm0: <ISA Option ROM> at iomem 0xe8000-0xeffff pnpid ORM0000 on isa0
+Jan 24 10:21:03 uxmal kernel: vga0: <Generic ISA VGA> at port 0x3c0-0x3df iomem 0xa0000-0xbffff pnpid PNP0900 on isa0
+Jan 24 10:21:03 uxmal kernel: attimer0: <AT timer> at port 0x40 on isa0
+Jan 24 10:21:03 uxmal kernel: Timecounter "i8254" frequency 1193182 Hz quality 0
+Jan 24 10:21:03 uxmal kernel: Event timer "i8254" frequency 1193182 Hz quality 100
+Jan 24 10:21:03 uxmal kernel: attimer0: non-PNP ISA device will be removed from GENERIC in FreeBSD 14.
+Jan 24 10:21:03 uxmal kernel: fdc0: No FDOUT register!
+Jan 24 10:21:03 uxmal kernel: Timecounters tick every 10.000 msec
+Jan 24 10:21:03 uxmal kernel: ZFS filesystem version: 5
+Jan 24 10:21:03 uxmal kernel: ZFS storage pool version: features support (5000)
+Jan 24 10:21:03 uxmal kernel: usb_needs_explore_all: no devclass
+Jan 24 10:21:03 uxmal kernel: Trying to mount root from zfs:zroot/ROOT/default []...
+Jan 24 10:21:03 uxmal kernel: ada0 at ata0 bus 0 scbus0 target 0 lun 0
+Jan 24 10:21:03 uxmal kernel: ada0: <QEMU HARDDISK 2.5+> ATA-7 device
+Jan 24 10:21:03 uxmal kernel: ada0: Serial Number QM00001
+Jan 24 10:21:03 uxmal kernel: ada0: 16.700MB/s transfers (WDMA2, PIO 8192bytes)
+Jan 24 10:21:03 uxmal kernel: ada0: 20480MB (41943040 512 byte sectors)
+Jan 24 10:21:03 uxmal kernel: cd0 at ata1 bus 0 scbus1 target 0 lun 0
+Jan 24 10:21:03 uxmal kernel: cd0: <QEMU QEMU DVD-ROM 2.5+> Removable CD-ROM SCSI device
+Jan 24 10:21:03 uxmal kernel: cd0: Serial Number QM00003
+Jan 24 10:21:03 uxmal kernel: cd0: 16.700MB/s transfers (WDMA2, ATAPI 12bytes, PIO 65534bytes)
+Jan 24 10:21:03 uxmal kernel: cd0: Attempt to query device size failed: NOT READY, Medium not present
+Jan 24 10:21:03 uxmal kernel: intsmb0: <Intel PIIX4 SMBUS Interface> irq 9 at device 1.3 on pci0
+Jan 24 10:21:03 uxmal kernel: intsmb0: intr IRQ 9 enabled revision 0
+Jan 24 10:21:03 uxmal kernel: smbus0: <System Management Bus> on intsmb0
+Jan 24 10:21:03 uxmal kernel: lo0: link state changed to UP
+Jan 24 10:21:03 uxmal kernel: em0: link state changed to UP
+Jan 24 10:21:56 uxmal login[861]: ROOT LOGIN (root) ON ttyv0
+Jan 24 10:22:31 uxmal pkg-static[885]: pkg-1.19.0 installed
+Jan 24 10:35:40 uxmal pkg[910]: perl5-5.32.1_3 installed
+Jan 24 10:35:40 uxmal pkg[910]: indexinfo-0.3.1 installed
+Jan 24 10:35:40 uxmal pkg[910]: p5-TimeDate-2.33,1 installed
+Jan 24 10:35:40 uxmal pkg[910]: p5-HTTP-Date-6.05 installed
+Jan 24 10:35:40 uxmal pkg[910]: p5-URI-5.17 installed
+Jan 24 10:35:40 uxmal pkg[910]: p5-Encode-Locale-1.05 installed
+Jan 24 10:35:41 uxmal pkg[910]: libunistring-1.1 installed
+Jan 24 10:35:41 uxmal pkg[910]: p5-LWP-MediaTypes-6.04 installed
+Jan 24 10:35:41 uxmal pkg[910]: p5-IO-HTML-1.004 installed
+Jan 24 10:35:41 uxmal pkg[910]: p5-Clone-0.46 installed
+Jan 24 10:35:41 uxmal pkg[910]: p5-Socket6-0.29 installed
+Jan 24 10:35:42 uxmal pkg[910]: libidn2-2.3.4 installed
+Jan 24 10:35:42 uxmal pkg[910]: p5-HTML-Tagset-3.20_1 installed
+Jan 24 10:35:42 uxmal pkg[910]: gettext-runtime-0.21.1 installed
+Jan 24 10:35:43 uxmal pkg[910]: p5-HTTP-Message-6.44 installed
+Jan 24 10:35:43 uxmal pkg[910]: p5-Net-SSLeay-1.92 installed
+Jan 24 10:35:43 uxmal pkg[910]: libnghttp2-1.48.0 installed
+Jan 24 10:35:44 uxmal pkg[910]: mpdecimal-2.5.1 installed
+Jan 24 10:35:44 uxmal pkg[910]: p5-GSSAPI-0.28_2 installed
+Jan 24 10:35:44 uxmal pkg[910]: p5-IO-Socket-INET6-2.72_1 installed
+Jan 24 10:35:44 uxmal pkg[910]: p5-HTML-Parser-3.80 installed
+Jan 24 10:35:44 uxmal pkg[910]: p5-Mozilla-CA-20221114 installed
+Jan 24 10:35:45 uxmal pkg[910]: libffi-3.4.4 installed
+Jan 24 10:35:45 uxmal pkg[910]: readline-8.2.0 installed
+Jan 24 10:35:45 uxmal pkg[910]: p5-Digest-HMAC-1.04 installed
+Jan 24 10:35:46 uxmal pkg[910]: libssh2-1.10.0_1,3 installed
+Jan 24 10:35:47 uxmal pkg[910]: libpsl-0.21.1_6 installed
+Jan 24 10:35:47 uxmal pkg[910]: p5-IO-Socket-SSL-2.078 installed
+Jan 24 10:36:15 uxmal pkg[910]: python39-3.9.16 installed
+Jan 24 10:36:15 uxmal pkg[910]: p5-CGI-4.54 installed
+Jan 24 10:36:17 uxmal pkg[910]: pcre2-10.40 installed
+Jan 24 10:36:20 uxmal pkg[910]: curl-7.87.0 installed
+Jan 24 10:36:20 uxmal pkg[910]: p5-Error-0.17029 installed
+Jan 24 10:36:20 uxmal pkg[910]: expat-2.5.0 installed
+Jan 24 10:36:20 uxmal pkg[910]: p5-Authen-SASL-2.16_1 installed
+Jan 24 10:36:26 uxmal pkg[910]: git-2.39.1 installed
+Jan 24 10:51:21 uxmal syslogd: kernel boot file is /boot/kernel/kernel
+Jan 24 10:51:21 uxmal kernel: ---<<BOOT>>---
+Jan 24 10:51:21 uxmal kernel: Copyright (c) 1992-2021 The FreeBSD Project.
+Jan 24 10:51:21 uxmal kernel: Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+Jan 24 10:51:21 uxmal kernel: 	The Regents of the University of California. All rights reserved.
+Jan 24 10:51:21 uxmal kernel: FreeBSD is a registered trademark of The FreeBSD Foundation.
+Jan 24 10:51:21 uxmal kernel: FreeBSD 13.1-RELEASE releng/13.1-n250148-fc952ac2212 GENERIC amd64
+Jan 24 10:51:21 uxmal kernel: FreeBSD clang version 13.0.0 (git@github.com:llvm/llvm-project.git llvmorg-13.0.0-0-gd7b669b3a303)
+Jan 24 10:51:21 uxmal kernel: VT(vga): text 80x25
+Jan 24 10:51:21 uxmal kernel: CPU: QEMU Virtual CPU version 2.5+ (1392.41-MHz K8-class CPU)
+Jan 24 10:51:21 uxmal kernel:   Origin="AuthenticAMD"  Id=0x60fb1  Family=0xf  Model=0x6b  Stepping=1
+Jan 24 10:51:21 uxmal kernel:   Features=0x1783fbfd<FPU,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,MMX,FXSR,SSE,SSE2,HTT>
+Jan 24 10:51:21 uxmal kernel:   Features2=0x80002001<SSE3,CX16,HV>
+Jan 24 10:51:21 uxmal kernel:   AMD Features=0x20100800<SYSCALL,NX,LM>
+Jan 24 10:51:21 uxmal kernel:   AMD Features2=0x7<LAHF,CMP,SVM>
+Jan 24 10:51:21 uxmal kernel:   SVM: NAsids=16
+Jan 24 10:51:21 uxmal kernel: Hypervisor: Origin = "TCGTCGTCGTCG"
+Jan 24 10:51:21 uxmal kernel: real memory  = 2147483648 (2048 MB)
+Jan 24 10:51:21 uxmal kernel: avail memory = 2038628352 (1944 MB)
+Jan 24 10:51:21 uxmal kernel: Event timer "LAPIC" quality 100
+Jan 24 10:51:21 uxmal kernel: ACPI APIC Table: <BOCHS  BXPC    >
+Jan 24 10:51:21 uxmal kernel: FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs
+Jan 24 10:51:21 uxmal kernel: FreeBSD/SMP: 1 package(s) x 4 core(s)
+Jan 24 10:51:21 uxmal kernel: random: unblocking device.
+Jan 24 10:51:21 uxmal kernel: ioapic0 <Version 2.0> irqs 0-23
+Jan 24 10:51:21 uxmal kernel: Launching APs: 3 1 2
+Jan 24 10:51:21 uxmal kernel: random: entropy device external interface
+Jan 24 10:51:21 uxmal kernel: kbd1 at kbdmux0
+Jan 24 10:51:21 uxmal kernel: vtvga0: <VT VGA driver>
+Jan 24 10:51:21 uxmal kernel: smbios0: <System Management BIOS> at iomem 0xf5a40-0xf5a5e
+Jan 24 10:51:21 uxmal kernel: smbios0: Version: 2.8, BCD Revision: 2.8
+Jan 24 10:51:21 uxmal kernel: aesni0: No AES or SHA support.
+Jan 24 10:51:21 uxmal kernel: acpi0: <BOCHS BXPC>
+Jan 24 10:51:21 uxmal kernel: acpi0: Power Button (fixed)
+Jan 24 10:51:21 uxmal kernel: cpu0: <ACPI CPU> on acpi0
+Jan 24 10:51:21 uxmal kernel: atrtc0: <AT realtime clock> port 0x70-0x77 irq 8 on acpi0
+Jan 24 10:51:21 uxmal kernel: atrtc0: registered as a time-of-day clock, resolution 1.000000s
+Jan 24 10:51:21 uxmal kernel: Event timer "RTC" frequency 32768 Hz quality 0
+Jan 24 10:51:21 uxmal kernel: hpet0: <High Precision Event Timer> iomem 0xfed00000-0xfed003ff on acpi0
+Jan 24 10:51:21 uxmal kernel: Timecounter "HPET" frequency 100000000 Hz quality 950
+Jan 24 10:51:21 uxmal kernel: Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+Jan 24 10:51:21 uxmal kernel: acpi_timer0: <24-bit timer at 3.579545MHz> port 0x608-0x60b on acpi0
+Jan 24 10:51:21 uxmal kernel: pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+Jan 24 10:51:21 uxmal kernel: pci0: <ACPI PCI bus> on pcib0
+Jan 24 10:51:21 uxmal kernel: isab0: <PCI-ISA bridge> at device 1.0 on pci0
+Jan 24 10:51:21 uxmal kernel: isa0: <ISA bus> on isab0
+Jan 24 10:51:21 uxmal kernel: atapci0: <Intel PIIX3 WDMA2 controller> port 0x1f0-0x1f7,0x3f6,0x170-0x177,0x376,0xc040-0xc04f at device 1.1 on pci0
+Jan 24 10:51:21 uxmal kernel: ata0: <ATA channel> at channel 0 on atapci0
+Jan 24 10:51:21 uxmal kernel: ata1: <ATA channel> at channel 1 on atapci0
+Jan 24 10:51:21 uxmal kernel: pci0: <bridge> at device 1.3 (no driver attached)
+Jan 24 10:51:21 uxmal kernel: vgapci0: <VGA-compatible display> mem 0xfd000000-0xfdffffff,0xfebf0000-0xfebf0fff at device 2.0 on pci0
+Jan 24 10:51:21 uxmal kernel: vgapci0: Boot video device
+Jan 24 10:51:21 uxmal kernel: em0: <Intel(R) Legacy PRO/1000 MT 82540EM> port 0xc000-0xc03f mem 0xfebc0000-0xfebdffff irq 11 at device 3.0 on pci0
+Jan 24 10:51:21 uxmal kernel: em0: Using 1024 TX descriptors and 1024 RX descriptors
+Jan 24 10:51:21 uxmal kernel: em0: Ethernet address: 52:54:00:12:34:56
+Jan 24 10:51:21 uxmal kernel: em0: netmap queues/slots: TX 1/1024, RX 1/1024
+Jan 24 10:51:21 uxmal kernel: acpi_syscontainer0: <System Container> on acpi0
+Jan 24 10:51:21 uxmal kernel: acpi_syscontainer1: <System Container> port 0xaf00-0xaf0b on acpi0
+Jan 24 10:51:21 uxmal kernel: acpi_syscontainer2: <System Container> port 0xafe0-0xafe3 on acpi0
+Jan 24 10:51:21 uxmal kernel: acpi_syscontainer3: <System Container> port 0xae00-0xae17 on acpi0
+Jan 24 10:51:21 uxmal kernel: atkbdc0: <Keyboard controller (i8042)> port 0x60,0x64 irq 1 on acpi0
+Jan 24 10:51:21 uxmal kernel: atkbd0: <AT Keyboard> irq 1 on atkbdc0
+Jan 24 10:51:21 uxmal kernel: kbd0 at atkbd0
+Jan 24 10:51:21 uxmal kernel: atkbd0: [GIANT-LOCKED]
+Jan 24 10:51:21 uxmal kernel: psm0: <PS/2 Mouse> irq 12 on atkbdc0
+Jan 24 10:51:21 uxmal kernel: psm0: [GIANT-LOCKED]
+Jan 24 10:51:21 uxmal kernel: WARNING: Device "psm" is Giant locked and may be deleted before FreeBSD 14.0.
+Jan 24 10:51:21 uxmal kernel: psm0: model IntelliMouse Explorer, device ID 4
+Jan 24 10:51:21 uxmal kernel: fdc0: <floppy drive controller (FDE)> port 0x3f2-0x3f5,0x3f7 irq 6 drq 2 on acpi0
+Jan 24 10:51:21 uxmal kernel: fdc0: does not respond
+Jan 24 10:51:21 uxmal kernel: device_attach: fdc0 attach returned 6
+Jan 24 10:51:21 uxmal kernel: ppc0: <Parallel port> port 0x378-0x37f irq 7 on acpi0
+Jan 24 10:51:21 uxmal kernel: ppc0: Generic chipset (NIBBLE-only) in COMPATIBLE mode
+Jan 24 10:51:21 uxmal kernel: ppbus0: <Parallel port bus> on ppc0
+Jan 24 10:51:21 uxmal kernel: lpt0: <Printer> on ppbus0
+Jan 24 10:51:21 uxmal kernel: lpt0: Interrupt-driven port
+Jan 24 10:51:21 uxmal kernel: ppi0: <Parallel I/O> on ppbus0
+Jan 24 10:51:21 uxmal kernel: uart0: <16550 or compatible> port 0x3f8-0x3ff irq 4 flags 0x10 on acpi0
+Jan 24 10:51:21 uxmal kernel: orm0: <ISA Option ROM> at iomem 0xe8000-0xeffff pnpid ORM0000 on isa0
+Jan 24 10:51:21 uxmal kernel: vga0: <Generic ISA VGA> at port 0x3c0-0x3df iomem 0xa0000-0xbffff pnpid PNP0900 on isa0
+Jan 24 10:51:21 uxmal kernel: attimer0: <AT timer> at port 0x40 on isa0
+Jan 24 10:51:21 uxmal kernel: Timecounter "i8254" frequency 1193182 Hz quality 0
+Jan 24 10:51:21 uxmal kernel: Event timer "i8254" frequency 1193182 Hz quality 100
+Jan 24 10:51:21 uxmal kernel: attimer0: non-PNP ISA device will be removed from GENERIC in FreeBSD 14.
+Jan 24 10:51:21 uxmal kernel: fdc0: No FDOUT register!
+Jan 24 10:51:21 uxmal kernel: Timecounters tick every 10.000 msec
+Jan 24 10:51:21 uxmal kernel: ZFS filesystem version: 5
+Jan 24 10:51:21 uxmal kernel: ZFS storage pool version: features support (5000)
+Jan 24 10:51:21 uxmal kernel: usb_needs_explore_all: no devclass
+Jan 24 10:51:21 uxmal kernel: Trying to mount root from zfs:zroot/ROOT/default []...
+Jan 24 10:51:21 uxmal kernel: ada0 at ata0 bus 0 scbus0 target 0 lun 0
+Jan 24 10:51:21 uxmal kernel: ada0: <QEMU HARDDISK 2.5+> ATA-7 device
+Jan 24 10:51:21 uxmal kernel: ada0: Serial Number QM00001
+Jan 24 10:51:21 uxmal kernel: ada0: 16.700MB/s transfers (WDMA2, PIO 8192bytes)
+Jan 24 10:51:21 uxmal kernel: ada0: 20480MB (41943040 512 byte sectors)
+Jan 24 10:51:21 uxmal kernel: cd0 at ata1 bus 0 scbus1 target 0 lun 0
+Jan 24 10:51:21 uxmal kernel: cd0: <QEMU QEMU DVD-ROM 2.5+> Removable CD-ROM SCSI device
+Jan 24 10:51:21 uxmal kernel: cd0: Serial Number QM00003
+Jan 24 10:51:21 uxmal kernel: cd0: 16.700MB/s transfers (WDMA2, ATAPI 12bytes, PIO 65534bytes)
+Jan 24 10:51:21 uxmal kernel: cd0: Attempt to query device size failed: NOT READY, Medium not present
+Jan 24 10:51:21 uxmal kernel: intsmb0: <Intel PIIX4 SMBUS Interface> irq 9 at device 1.3 on pci0
+Jan 24 10:51:21 uxmal kernel: intsmb0: intr IRQ 9 enabled revision 0
+Jan 24 10:51:21 uxmal kernel: smbus0: <System Management Bus> on intsmb0
+Jan 24 10:51:21 uxmal kernel: lo0: link state changed to UP
+Jan 24 10:51:21 uxmal kernel: em0: link state changed to UP
+Jan 24 10:51:26 uxmal login[814]: ROOT LOGIN (root) ON ttyv0
+Jan 24 10:52:38 uxmal pkg[828]: nano-7.1 installed
+Jan 24 11:01:11 uxmal pkg[853]: fish-3.5.1 installed
+Jan 24 12:11:57 uxmal pkg[1004]: htop-3.2.1 installed
+Jan 24 12:13:19 uxmal pkg[1009]: screen-4.9.0_6 installed
+Jan 24 12:22:27 uxmal shutdown[1100]: power-down by root: 
+Jan 24 12:22:29 uxmal kernel: , 1084.
+Jan 24 12:22:31 uxmal kernel: .
+Jan 24 12:22:31 uxmal syslogd: exiting on signal 15
+Jan 24 12:25:06 uxmal syslogd: kernel boot file is /boot/kernel/kernel
+Jan 24 12:25:06 uxmal kernel: ---<<BOOT>>---
+Jan 24 12:25:06 uxmal kernel: Copyright (c) 1992-2021 The FreeBSD Project.
+Jan 24 12:25:06 uxmal kernel: Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+Jan 24 12:25:06 uxmal kernel: 	The Regents of the University of California. All rights reserved.
+Jan 24 12:25:06 uxmal kernel: FreeBSD is a registered trademark of The FreeBSD Foundation.
+Jan 24 12:25:06 uxmal kernel: FreeBSD 13.1-RELEASE releng/13.1-n250148-fc952ac2212 GENERIC amd64
+Jan 24 12:25:06 uxmal kernel: FreeBSD clang version 13.0.0 (git@github.com:llvm/llvm-project.git llvmorg-13.0.0-0-gd7b669b3a303)
+Jan 24 12:25:06 uxmal kernel: VT(vga): text 80x25
+Jan 24 12:25:06 uxmal kernel: CPU: QEMU Virtual CPU version 2.5+ (1392.57-MHz K8-class CPU)
+Jan 24 12:25:06 uxmal kernel:   Origin="AuthenticAMD"  Id=0x60fb1  Family=0xf  Model=0x6b  Stepping=1
+Jan 24 12:25:06 uxmal kernel:   Features=0x1783fbfd<FPU,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,MMX,FXSR,SSE,SSE2,HTT>
+Jan 24 12:25:06 uxmal kernel:   Features2=0x80002001<SSE3,CX16,HV>
+Jan 24 12:25:06 uxmal kernel:   AMD Features=0x20100800<SYSCALL,NX,LM>
+Jan 24 12:25:06 uxmal kernel:   AMD Features2=0x7<LAHF,CMP,SVM>
+Jan 24 12:25:06 uxmal kernel:   SVM: NAsids=16
+Jan 24 12:25:06 uxmal kernel: Hypervisor: Origin = "TCGTCGTCGTCG"
+Jan 24 12:25:06 uxmal kernel: real memory  = 2147483648 (2048 MB)
+Jan 24 12:25:06 uxmal kernel: avail memory = 2038628352 (1944 MB)
+Jan 24 12:25:06 uxmal kernel: Event timer "LAPIC" quality 100
+Jan 24 12:25:06 uxmal kernel: ACPI APIC Table: <BOCHS  BXPC    >
+Jan 24 12:25:06 uxmal kernel: FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs
+Jan 24 12:25:06 uxmal kernel: FreeBSD/SMP: 1 package(s) x 4 core(s)
+Jan 24 12:25:06 uxmal kernel: random: unblocking device.
+Jan 24 12:25:06 uxmal kernel: ioapic0 <Version 2.0> irqs 0-23
+Jan 24 12:25:06 uxmal kernel: Launching APs: 3 1 2
+Jan 24 12:25:06 uxmal kernel: random: entropy device external interface
+Jan 24 12:25:06 uxmal kernel: kbd1 at kbdmux0
+Jan 24 12:25:06 uxmal kernel: vtvga0: <VT VGA driver>
+Jan 24 12:25:06 uxmal kernel: smbios0: <System Management BIOS> at iomem 0xf5a40-0xf5a5e
+Jan 24 12:25:06 uxmal kernel: smbios0: Version: 2.8, BCD Revision: 2.8
+Jan 24 12:25:06 uxmal kernel: aesni0: No AES or SHA support.
+Jan 24 12:25:06 uxmal kernel: acpi0: <BOCHS BXPC>
+Jan 24 12:25:06 uxmal kernel: acpi0: Power Button (fixed)
+Jan 24 12:25:06 uxmal kernel: cpu0: <ACPI CPU> on acpi0
+Jan 24 12:25:06 uxmal kernel: atrtc0: <AT realtime clock> port 0x70-0x77 irq 8 on acpi0
+Jan 24 12:25:06 uxmal kernel: atrtc0: registered as a time-of-day clock, resolution 1.000000s
+Jan 24 12:25:06 uxmal kernel: Event timer "RTC" frequency 32768 Hz quality 0
+Jan 24 12:25:06 uxmal kernel: hpet0: <High Precision Event Timer> iomem 0xfed00000-0xfed003ff on acpi0
+Jan 24 12:25:06 uxmal kernel: Timecounter "HPET" frequency 100000000 Hz quality 950
+Jan 24 12:25:06 uxmal kernel: Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+Jan 24 12:25:06 uxmal kernel: acpi_timer0: <24-bit timer at 3.579545MHz> port 0x608-0x60b on acpi0
+Jan 24 12:25:06 uxmal kernel: pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+Jan 24 12:25:06 uxmal kernel: pci0: <ACPI PCI bus> on pcib0
+Jan 24 12:25:06 uxmal kernel: isab0: <PCI-ISA bridge> at device 1.0 on pci0
+Jan 24 12:25:06 uxmal kernel: isa0: <ISA bus> on isab0
+Jan 24 12:25:06 uxmal kernel: atapci0: <Intel PIIX3 WDMA2 controller> port 0x1f0-0x1f7,0x3f6,0x170-0x177,0x376,0xc040-0xc04f at device 1.1 on pci0
+Jan 24 12:25:06 uxmal kernel: ata0: <ATA channel> at channel 0 on atapci0
+Jan 24 12:25:06 uxmal kernel: ata1: <ATA channel> at channel 1 on atapci0
+Jan 24 12:25:06 uxmal kernel: pci0: <bridge> at device 1.3 (no driver attached)
+Jan 24 12:25:06 uxmal kernel: vgapci0: <VGA-compatible display> mem 0xfd000000-0xfdffffff,0xfebf0000-0xfebf0fff at device 2.0 on pci0
+Jan 24 12:25:06 uxmal kernel: vgapci0: Boot video device
+Jan 24 12:25:06 uxmal kernel: em0: <Intel(R) Legacy PRO/1000 MT 82540EM> port 0xc000-0xc03f mem 0xfebc0000-0xfebdffff irq 11 at device 3.0 on pci0
+Jan 24 12:25:06 uxmal kernel: em0: Using 1024 TX descriptors and 1024 RX descriptors
+Jan 24 12:25:06 uxmal kernel: em0: Ethernet address: 52:54:00:12:34:56
+Jan 24 12:25:06 uxmal kernel: em0: netmap queues/slots: TX 1/1024, RX 1/1024
+Jan 24 12:25:06 uxmal kernel: acpi_syscontainer0: <System Container> on acpi0
+Jan 24 12:25:06 uxmal kernel: acpi_syscontainer1: <System Container> port 0xaf00-0xaf0b on acpi0
+Jan 24 12:25:06 uxmal kernel: acpi_syscontainer2: <System Container> port 0xafe0-0xafe3 on acpi0
+Jan 24 12:25:06 uxmal kernel: acpi_syscontainer3: <System Container> port 0xae00-0xae17 on acpi0
+Jan 24 12:25:06 uxmal kernel: atkbdc0: <Keyboard controller (i8042)> port 0x60,0x64 irq 1 on acpi0
+Jan 24 12:25:06 uxmal kernel: atkbd0: <AT Keyboard> irq 1 on atkbdc0
+Jan 24 12:25:06 uxmal kernel: kbd0 at atkbd0
+Jan 24 12:25:06 uxmal kernel: atkbd0: [GIANT-LOCKED]
+Jan 24 12:25:06 uxmal kernel: psm0: <PS/2 Mouse> irq 12 on atkbdc0
+Jan 24 12:25:06 uxmal kernel: psm0: [GIANT-LOCKED]
+Jan 24 12:25:06 uxmal kernel: WARNING: Device "psm" is Giant locked and may be deleted before FreeBSD 14.0.
+Jan 24 12:25:06 uxmal kernel: psm0: model IntelliMouse Explorer, device ID 4
+Jan 24 12:25:06 uxmal kernel: fdc0: <floppy drive controller (FDE)> port 0x3f2-0x3f5,0x3f7 irq 6 drq 2 on acpi0
+Jan 24 12:25:06 uxmal kernel: fdc0: does not respond
+Jan 24 12:25:06 uxmal kernel: device_attach: fdc0 attach returned 6
+Jan 24 12:25:06 uxmal kernel: ppc0: <Parallel port> port 0x378-0x37f irq 7 on acpi0
+Jan 24 12:25:06 uxmal kernel: ppc0: Generic chipset (NIBBLE-only) in COMPATIBLE mode
+Jan 24 12:25:06 uxmal kernel: ppbus0: <Parallel port bus> on ppc0
+Jan 24 12:25:06 uxmal kernel: lpt0: <Printer> on ppbus0
+Jan 24 12:25:06 uxmal kernel: lpt0: Interrupt-driven port
+Jan 24 12:25:06 uxmal kernel: ppi0: <Parallel I/O> on ppbus0
+Jan 24 12:25:06 uxmal kernel: uart0: <16550 or compatible> port 0x3f8-0x3ff irq 4 flags 0x10 on acpi0
+Jan 24 12:25:06 uxmal kernel: orm0: <ISA Option ROM> at iomem 0xe8000-0xeffff pnpid ORM0000 on isa0
+Jan 24 12:25:06 uxmal kernel: vga0: <Generic ISA VGA> at port 0x3c0-0x3df iomem 0xa0000-0xbffff pnpid PNP0900 on isa0
+Jan 24 12:25:06 uxmal kernel: attimer0: <AT timer> at port 0x40 on isa0
+Jan 24 12:25:06 uxmal kernel: Timecounter "i8254" frequency 1193182 Hz quality 0
+Jan 24 12:25:06 uxmal kernel: Event timer "i8254" frequency 1193182 Hz quality 100
+Jan 24 12:25:06 uxmal kernel: attimer0: non-PNP ISA device will be removed from GENERIC in FreeBSD 14.
+Jan 24 12:25:06 uxmal kernel: fdc0: No FDOUT register!
+Jan 24 12:25:06 uxmal kernel: Timecounters tick every 10.000 msec
+Jan 24 12:25:06 uxmal kernel: ZFS filesystem version: 5
+Jan 24 12:25:06 uxmal kernel: ZFS storage pool version: features support (5000)
+Jan 24 12:25:06 uxmal kernel: usb_needs_explore_all: no devclass
+Jan 24 12:25:06 uxmal kernel: Trying to mount root from zfs:zroot/ROOT/default []...
+Jan 24 12:25:06 uxmal kernel: ada0 at ata0 bus 0 scbus0 target 0 lun 0
+Jan 24 12:25:06 uxmal kernel: ada0: <QEMU HARDDISK 2.5+> ATA-7 device
+Jan 24 12:25:06 uxmal kernel: ada0: Serial Number QM00001
+Jan 24 12:25:06 uxmal kernel: ada0: 16.700MB/s transfers (WDMA2, PIO 8192bytes)
+Jan 24 12:25:06 uxmal kernel: ada0: 20480MB (41943040 512 byte sectors)
+Jan 24 12:25:06 uxmal kernel: cd0 at ata1 bus 0 scbus1 target 0 lun 0
+Jan 24 12:25:06 uxmal kernel: cd0: <QEMU QEMU DVD-ROM 2.5+> Removable CD-ROM SCSI device
+Jan 24 12:25:06 uxmal kernel: cd0: Serial Number QM00003
+Jan 24 12:25:06 uxmal kernel: cd0: 16.700MB/s transfers (WDMA2, ATAPI 12bytes, PIO 65534bytes)
+Jan 24 12:25:06 uxmal kernel: cd0: Attempt to query device size failed: NOT READY, Medium not present
+Jan 24 12:25:06 uxmal kernel: intsmb0: <Intel PIIX4 SMBUS Interface> irq 9 at device 1.3 on pci0
+Jan 24 12:25:06 uxmal kernel: intsmb0: intr IRQ 9 enabled revision 0
+Jan 24 12:25:06 uxmal kernel: smbus0: <System Management Bus> on intsmb0
+Jan 24 12:25:06 uxmal kernel: lo0: link state changed to UP
+Jan 24 12:25:06 uxmal kernel: em0: link state changed to UP
+Jan 24 12:25:30 uxmal login[824]: ROOT LOGIN (root) ON ttyv0
+Jan 24 12:31:53 uxmal shutdown[872]: power-down by root: 
+Jan 24 12:31:53 uxmal kernel: .
+Jan 24 12:31:54 uxmal kernel: , 753
+Jan 24 12:31:55 uxmal kernel: .
+Jan 24 12:31:55 uxmal syslogd: exiting on signal 15
+Jan 24 12:33:08 uxmal syslogd: kernel boot file is /boot/kernel/kernel
+Jan 24 12:33:08 uxmal kernel: ---<<BOOT>>---
+Jan 24 12:33:08 uxmal kernel: Copyright (c) 1992-2021 The FreeBSD Project.
+Jan 24 12:33:08 uxmal kernel: Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+Jan 24 12:33:08 uxmal kernel: 	The Regents of the University of California. All rights reserved.
+Jan 24 12:33:08 uxmal kernel: FreeBSD is a registered trademark of The FreeBSD Foundation.
+Jan 24 12:33:08 uxmal kernel: FreeBSD 13.1-RELEASE releng/13.1-n250148-fc952ac2212 GENERIC amd64
+Jan 24 12:33:08 uxmal kernel: FreeBSD clang version 13.0.0 (git@github.com:llvm/llvm-project.git llvmorg-13.0.0-0-gd7b669b3a303)
+Jan 24 12:33:08 uxmal kernel: VT(vga): text 80x25
+Jan 24 12:33:08 uxmal kernel: CPU: QEMU Virtual CPU version 2.5+ (1392.31-MHz K8-class CPU)
+Jan 24 12:33:08 uxmal kernel:   Origin="AuthenticAMD"  Id=0x60fb1  Family=0xf  Model=0x6b  Stepping=1
+Jan 24 12:33:08 uxmal kernel:   Features=0x1783fbfd<FPU,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,MMX,FXSR,SSE,SSE2,HTT>
+Jan 24 12:33:08 uxmal kernel:   Features2=0x80002001<SSE3,CX16,HV>
+Jan 24 12:33:08 uxmal kernel:   AMD Features=0x20100800<SYSCALL,NX,LM>
+Jan 24 12:33:08 uxmal kernel:   AMD Features2=0x7<LAHF,CMP,SVM>
+Jan 24 12:33:08 uxmal kernel:   SVM: NAsids=16
+Jan 24 12:33:08 uxmal kernel: Hypervisor: Origin = "TCGTCGTCGTCG"
+Jan 24 12:33:08 uxmal kernel: real memory  = 2147483648 (2048 MB)
+Jan 24 12:33:08 uxmal kernel: avail memory = 2038632448 (1944 MB)
+Jan 24 12:33:08 uxmal kernel: Event timer "LAPIC" quality 100
+Jan 24 12:33:08 uxmal kernel: ACPI APIC Table: <BOCHS  BXPC    >
+Jan 24 12:33:08 uxmal kernel: FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs
+Jan 24 12:33:08 uxmal kernel: FreeBSD/SMP: 1 package(s) x 4 core(s)
+Jan 24 12:33:08 uxmal kernel: random: unblocking device.
+Jan 24 12:33:08 uxmal kernel: ioapic0 <Version 2.0> irqs 0-23
+Jan 24 12:33:08 uxmal kernel: Launching APs: 1 2 3
+Jan 24 12:33:08 uxmal kernel: random: entropy device external interface
+Jan 24 12:33:08 uxmal kernel: kbd1 at kbdmux0
+Jan 24 12:33:08 uxmal kernel: vtvga0: <VT VGA driver>
+Jan 24 12:33:08 uxmal kernel: smbios0: <System Management BIOS> at iomem 0xf5a40-0xf5a5e
+Jan 24 12:33:08 uxmal kernel: smbios0: Version: 2.8, BCD Revision: 2.8
+Jan 24 12:33:08 uxmal kernel: aesni0: No AES or SHA support.
+Jan 24 12:33:08 uxmal kernel: acpi0: <BOCHS BXPC>
+Jan 24 12:33:08 uxmal kernel: acpi0: Power Button (fixed)
+Jan 24 12:33:08 uxmal kernel: cpu0: <ACPI CPU> on acpi0
+Jan 24 12:33:08 uxmal kernel: atrtc0: <AT realtime clock> port 0x70-0x77 irq 8 on acpi0
+Jan 24 12:33:08 uxmal kernel: atrtc0: registered as a time-of-day clock, resolution 1.000000s
+Jan 24 12:33:08 uxmal kernel: Event timer "RTC" frequency 32768 Hz quality 0
+Jan 24 12:33:08 uxmal kernel: hpet0: <High Precision Event Timer> iomem 0xfed00000-0xfed003ff on acpi0
+Jan 24 12:33:08 uxmal kernel: Timecounter "HPET" frequency 100000000 Hz quality 950
+Jan 24 12:33:08 uxmal kernel: Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+Jan 24 12:33:08 uxmal kernel: acpi_timer0: <24-bit timer at 3.579545MHz> port 0x608-0x60b on acpi0
+Jan 24 12:33:08 uxmal kernel: pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+Jan 24 12:33:08 uxmal kernel: pci0: <ACPI PCI bus> on pcib0
+Jan 24 12:33:08 uxmal kernel: isab0: <PCI-ISA bridge> at device 1.0 on pci0
+Jan 24 12:33:08 uxmal kernel: isa0: <ISA bus> on isab0
+Jan 24 12:33:08 uxmal kernel: atapci0: <Intel PIIX3 WDMA2 controller> port 0x1f0-0x1f7,0x3f6,0x170-0x177,0x376,0xc040-0xc04f at device 1.1 on pci0
+Jan 24 12:33:08 uxmal kernel: ata0: <ATA channel> at channel 0 on atapci0
+Jan 24 12:33:08 uxmal kernel: ata1: <ATA channel> at channel 1 on atapci0
+Jan 24 12:33:08 uxmal kernel: pci0: <bridge> at device 1.3 (no driver attached)
+Jan 24 12:33:08 uxmal kernel: vgapci0: <VGA-compatible display> mem 0xfd000000-0xfdffffff,0xfebf0000-0xfebf0fff at device 2.0 on pci0
+Jan 24 12:33:08 uxmal kernel: vgapci0: Boot video device
+Jan 24 12:33:08 uxmal kernel: em0: <Intel(R) Legacy PRO/1000 MT 82540EM> port 0xc000-0xc03f mem 0xfebc0000-0xfebdffff irq 11 at device 3.0 on pci0
+Jan 24 12:33:08 uxmal kernel: em0: Using 1024 TX descriptors and 1024 RX descriptors
+Jan 24 12:33:08 uxmal kernel: em0: Ethernet address: 52:54:00:12:34:56
+Jan 24 12:33:08 uxmal kernel: em0: netmap queues/slots: TX 1/1024, RX 1/1024
+Jan 24 12:33:08 uxmal kernel: acpi_syscontainer0: <System Container> on acpi0
+Jan 24 12:33:08 uxmal kernel: acpi_syscontainer1: <System Container> port 0xaf00-0xaf0b on acpi0
+Jan 24 12:33:08 uxmal kernel: acpi_syscontainer2: <System Container> port 0xafe0-0xafe3 on acpi0
+Jan 24 12:33:08 uxmal kernel: acpi_syscontainer3: <System Container> port 0xae00-0xae17 on acpi0
+Jan 24 12:33:08 uxmal kernel: atkbdc0: <Keyboard controller (i8042)> port 0x60,0x64 irq 1 on acpi0
+Jan 24 12:33:08 uxmal kernel: atkbd0: <AT Keyboard> irq 1 on atkbdc0
+Jan 24 12:33:08 uxmal kernel: kbd0 at atkbd0
+Jan 24 12:33:08 uxmal kernel: atkbd0: [GIANT-LOCKED]
+Jan 24 12:33:08 uxmal kernel: psm0: <PS/2 Mouse> irq 12 on atkbdc0
+Jan 24 12:33:08 uxmal kernel: psm0: [GIANT-LOCKED]
+Jan 24 12:33:08 uxmal kernel: WARNING: Device "psm" is Giant locked and may be deleted before FreeBSD 14.0.
+Jan 24 12:33:08 uxmal kernel: psm0: model IntelliMouse Explorer, device ID 4
+Jan 24 12:33:08 uxmal kernel: fdc0: <floppy drive controller (FDE)> port 0x3f2-0x3f5,0x3f7 irq 6 drq 2 on acpi0
+Jan 24 12:33:08 uxmal kernel: fdc0: does not respond
+Jan 24 12:33:08 uxmal kernel: device_attach: fdc0 attach returned 6
+Jan 24 12:33:08 uxmal kernel: ppc0: <Parallel port> port 0x378-0x37f irq 7 on acpi0
+Jan 24 12:33:08 uxmal kernel: ppc0: Generic chipset (NIBBLE-only) in COMPATIBLE mode
+Jan 24 12:33:08 uxmal kernel: ppbus0: <Parallel port bus> on ppc0
+Jan 24 12:33:08 uxmal kernel: lpt0: <Printer> on ppbus0
+Jan 24 12:33:08 uxmal kernel: lpt0: Interrupt-driven port
+Jan 24 12:33:08 uxmal kernel: ppi0: <Parallel I/O> on ppbus0
+Jan 24 12:33:08 uxmal kernel: uart0: <16550 or compatible> port 0x3f8-0x3ff irq 4 flags 0x10 on acpi0
+Jan 24 12:33:08 uxmal kernel: orm0: <ISA Option ROM> at iomem 0xe8000-0xeffff pnpid ORM0000 on isa0
+Jan 24 12:33:08 uxmal kernel: vga0: <Generic ISA VGA> at port 0x3c0-0x3df iomem 0xa0000-0xbffff pnpid PNP0900 on isa0
+Jan 24 12:33:08 uxmal kernel: attimer0: <AT timer> at port 0x40 on isa0
+Jan 24 12:33:08 uxmal kernel: Timecounter "i8254" frequency 1193182 Hz quality 0
+Jan 24 12:33:08 uxmal kernel: Event timer "i8254" frequency 1193182 Hz quality 100
+Jan 24 12:33:08 uxmal kernel: attimer0: non-PNP ISA device will be removed from GENERIC in FreeBSD 14.
+Jan 24 12:33:08 uxmal kernel: fdc0: No FDOUT register!
+Jan 24 12:33:08 uxmal kernel: Timecounters tick every 10.000 msec
+Jan 24 12:33:08 uxmal kernel: ZFS filesystem version: 5
+Jan 24 12:33:08 uxmal kernel: ZFS storage pool version: features support (5000)
+Jan 24 12:33:08 uxmal kernel: usb_needs_explore_all: no devclass
+Jan 24 12:33:08 uxmal kernel: Trying to mount root from zfs:zroot/ROOT/default []...
+Jan 24 12:33:08 uxmal kernel: ada0 at ata0 bus 0 scbus0 target 0 lun 0
+Jan 24 12:33:08 uxmal kernel: ada0: <QEMU HARDDISK 2.5+> ATA-7 device
+Jan 24 12:33:08 uxmal kernel: ada0: Serial Number QM00001
+Jan 24 12:33:08 uxmal kernel: ada0: 16.700MB/s transfers (WDMA2, PIO 8192bytes)
+Jan 24 12:33:08 uxmal kernel: ada0: 20480MB (41943040 512 byte sectors)
+Jan 24 12:33:08 uxmal kernel: cd0 at ata1 bus 0 scbus1 target 0 lun 0
+Jan 24 12:33:08 uxmal kernel: cd0: <QEMU QEMU DVD-ROM 2.5+> Removable CD-ROM SCSI device
+Jan 24 12:33:08 uxmal kernel: cd0: Serial Number QM00003
+Jan 24 12:33:08 uxmal kernel: cd0: 16.700MB/s transfers (WDMA2, ATAPI 12bytes, PIO 65534bytes)
+Jan 24 12:33:08 uxmal kernel: cd0: Attempt to query device size failed: NOT READY, Medium not present
+Jan 24 12:33:08 uxmal kernel: intsmb0: <Intel PIIX4 SMBUS Interface> irq 9 at device 1.3 on pci0
+Jan 24 12:33:08 uxmal kernel: intsmb0: intr IRQ 9 enabled revision 0
+Jan 24 12:33:08 uxmal kernel: smbus0: <System Management Bus> on intsmb0
+Jan 24 12:33:08 uxmal kernel: lo0: link state changed to UP
+Jan 24 12:33:08 uxmal kernel: em0: link state changed to UP
+Jan 24 12:33:13 uxmal login[808]: ROOT LOGIN (root) ON ttyv0
+Jan 24 15:27:31 uxmal reboot[79793]: rebooted by root
+Jan 24 15:27:31 uxmal syslogd: exiting on signal 15
+Jan 24 15:29:39 uxmal syslogd: kernel boot file is /boot/kernel.monopoly/kernel
+Jan 24 15:29:39 uxmal kernel: Waiting (max 60 seconds) for system process `vnlru' to stop... done
+Jan 24 15:29:39 uxmal kernel: Waiting (max 60 seconds) for system process `syncer' to stop... 
+Jan 24 15:29:39 uxmal kernel: Syncing disks, vnodes remaining... 0 0 0 0 0 done
+Jan 24 15:29:39 uxmal kernel: All buffers synced.
+Jan 24 15:29:39 uxmal kernel: Uptime: 2h54m52s
+Jan 24 15:29:39 uxmal kernel: Rebooting...
+Jan 24 15:29:39 uxmal kernel: cpu_reset: Stopping other CPUs
+Jan 24 15:29:39 uxmal kernel: ---<<BOOT>>---
+Jan 24 15:29:39 uxmal kernel: Copyright (c) 1992-2021 The FreeBSD Project.
+Jan 24 15:29:39 uxmal kernel: Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+Jan 24 15:29:39 uxmal kernel: 	The Regents of the University of California. All rights reserved.
+Jan 24 15:29:39 uxmal kernel: FreeBSD is a registered trademark of The FreeBSD Foundation.
+Jan 24 15:29:39 uxmal kernel: FreeBSD 13.1-RELEASE DrudiGoldmanPI/testing_cpuMonopolized-13.1.0-n250164-06e089bf0b71 GENERIC amd64
+Jan 24 15:29:39 uxmal kernel: FreeBSD clang version 13.0.0 (git@github.com:llvm/llvm-project.git llvmorg-13.0.0-0-gd7b669b3a303)
+Jan 24 15:29:39 uxmal kernel: VT(vga): text 80x25
+Jan 24 15:29:39 uxmal kernel: CPU: QEMU Virtual CPU version 2.5+ (1392.34-MHz K8-class CPU)
+Jan 24 15:29:39 uxmal kernel:   Origin="AuthenticAMD"  Id=0x60fb1  Family=0xf  Model=0x6b  Stepping=1
+Jan 24 15:29:39 uxmal kernel:   Features=0x1783fbfd<FPU,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,MMX,FXSR,SSE,SSE2,HTT>
+Jan 24 15:29:39 uxmal kernel:   Features2=0x80002001<SSE3,CX16,HV>
+Jan 24 15:29:39 uxmal kernel:   AMD Features=0x20100800<SYSCALL,NX,LM>
+Jan 24 15:29:39 uxmal kernel:   AMD Features2=0x7<LAHF,CMP,SVM>
+Jan 24 15:29:39 uxmal kernel:   SVM: NAsids=16
+Jan 24 15:29:39 uxmal kernel: Hypervisor: Origin = "TCGTCGTCGTCG"
+Jan 24 15:29:39 uxmal kernel: real memory  = 2147483648 (2048 MB)
+Jan 24 15:29:39 uxmal kernel: avail memory = 2036555776 (1942 MB)
+Jan 24 15:29:39 uxmal kernel: Event timer "LAPIC" quality 100
+Jan 24 15:29:39 uxmal kernel: ACPI APIC Table: <BOCHS  BXPC    >
+Jan 24 15:29:39 uxmal kernel: FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs
+Jan 24 15:29:39 uxmal kernel: FreeBSD/SMP: 1 package(s) x 4 core(s)
+Jan 24 15:29:39 uxmal kernel: random: unblocking device.
+Jan 24 15:29:39 uxmal kernel: 
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CPU_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> CPU_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> CPU_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> CPU_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> EXECUTING_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> EXECUTING_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> EXECUTING_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> EXECUTING_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> GLOBAL_QUEUE &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> SMP_NOT_READY &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SMP_READY &#
+Jan 24 15:29:39 uxmal kernel: ioapic0 <Version 2.0> irqs 0-23
+Jan 24 15:29:39 uxmal kernel: Launching APs: 1 3 2
+Jan 24 15:29:39 uxmal kernel: random: entropy device external interface
+Jan 24 15:29:39 uxmal kernel: kbd1 at kbdmux0
+Jan 24 15:29:39 uxmal kernel: vtvga0: <VT VGA driver>
+Jan 24 15:29:39 uxmal kernel: smbios0: <System Management BIOS> at iomem 0xf5a40-0xf5a5e
+Jan 24 15:29:39 uxmal kernel: smbios0: Version: 2.8, BCD Revision: 2.8
+Jan 24 15:29:39 uxmal kernel: aesni0: No AES or SHA support.
+Jan 24 15:29:39 uxmal kernel: acpi0: <BOCHS BXPC>
+Jan 24 15:29:39 uxmal kernel: acpi0: Power Button (fixed)
+Jan 24 15:29:39 uxmal kernel: cpu0: <ACPI CPU> on acpi0
+Jan 24 15:29:39 uxmal kernel: atrtc0: <AT realtime clock> port 0x70-0x77 irq 8 on acpi0
+Jan 24 15:29:39 uxmal kernel: atrtc0: registered as a time-of-day clock, resolution 1.000000s
+Jan 24 15:29:39 uxmal kernel: Event timer "RTC" frequency 32768 Hz quality 0
+Jan 24 15:29:39 uxmal kernel: hpet0: <High Precision Event Timer> iomem 0xfed00000-0xfed003ff on acpi0
+Jan 24 15:29:39 uxmal kernel: Timecounter "HPET" frequency 100000000 Hz quality 950
+Jan 24 15:29:39 uxmal kernel: Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+Jan 24 15:29:39 uxmal kernel: acpi_timer0: <24-bit timer at 3.579545MHz> port 0x608-0x60b on acpi0
+Jan 24 15:29:39 uxmal kernel: pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+Jan 24 15:29:39 uxmal kernel: pci0: <ACPI PCI bus> on pcib0
+Jan 24 15:29:39 uxmal kernel: isab0: <PCI-ISA bridge> at device 1.0 on pci0
+Jan 24 15:29:39 uxmal kernel: isa0: <ISA bus> on isab0
+Jan 24 15:29:39 uxmal kernel: atapci0: <Intel PIIX3 WDMA2 controller> port 0x1f0-0x1f7,0x3f6,0x170-0x177,0x376,0xc040-0xc04f at device 1.1 on pci0
+Jan 24 15:29:39 uxmal kernel: ata0: <ATA channel> at channel 0 on atapci0
+Jan 24 15:29:39 uxmal kernel: ata1: <ATA channel> at channel 1 on atapci0
+Jan 24 15:29:39 uxmal kernel: pci0: <bridge> at device 1.3 (no driver attached)
+Jan 24 15:29:39 uxmal kernel: vgapci0: <VGA-compatible display> mem 0xfd000000-0xfdffffff,0xfebf0000-0xfebf0fff at device 2.0 on pci0
+Jan 24 15:29:39 uxmal kernel: vgapci0: Boot video device
+Jan 24 15:29:39 uxmal kernel: em0: <Intel(R) Legacy PRO/1000 MT 82540EM> port 0xc000-0xc03f mem 0xfebc0000-0xfebdffff irq 11 at device 3.0 on pci0
+Jan 24 15:29:39 uxmal kernel: em0: Using 1024 TX descriptors and 1024 RX descriptors
+Jan 24 15:29:39 uxmal kernel: em0: Ethernet address: 52:54:00:12:34:56
+Jan 24 15:29:39 uxmal kernel: em0: netmap queues/slots: TX 1/1024, RX 1/1024
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer0: <System Container> on acpi0
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer1: <System Container> port 0xaf00-0xaf0b on acpi0
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer2: <System Container> port 0xafe0-0xafe3 on acpi0
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer3: <System Container> port 0xae00-0xae17 on acpi0
+Jan 24 15:29:39 uxmal kernel: atkbdc0: <Keyboard controller (i8042)> port 0x60,0x64 irq 1 on acpi0
+Jan 24 15:29:39 uxmal kernel: atkbd0: <AT Keyboard> irq 1 on atkbdc0
+Jan 24 15:29:39 uxmal kernel: kbd0 at atkbd0
+Jan 24 15:29:39 uxmal kernel: atkbd0: [GIANT-LOCKED]
+Jan 24 15:29:39 uxmal kernel: psm0: <PS/2 Mouse> irq 12 on atkbdc0
+Jan 24 15:29:39 uxmal kernel: psm0: [GIANT-LOCKED]
+Jan 24 15:29:39 uxmal kernel: WARNING: Device "psm" is Giant locked and may be deleted before FreeBSD 14.0.
+Jan 24 15:29:39 uxmal kernel: psm0: model IntelliMouse Explorer, device ID 4
+Jan 24 15:29:39 uxmal kernel: fdc0: <floppy drive controller (FDE)> port 0x3f2-0x3f5,0x3f7 irq 6 drq 2 on acpi0
+Jan 24 15:29:39 uxmal kernel: fdc0: does not respond
+Jan 24 15:29:39 uxmal kernel: device_attach: fdc0 attach returned 6
+Jan 24 15:29:39 uxmal kernel: ppc0: <Parallel port> port 0x378-0x37f irq 7 on acpi0
+Jan 24 15:29:39 uxmal kernel: ppc0: Generic chipset (NIBBLE-only) in COMPATIBLE mode
+Jan 24 15:29:39 uxmal kernel: ppbus0: <Parallel port bus> on ppc0
+Jan 24 15:29:39 uxmal kernel: lpt0: <Printer> on ppbus0
+Jan 24 15:29:39 uxmal kernel: lpt0: Interrupt-driven port
+Jan 24 15:29:39 uxmal kernel: ppi0: <Parallel I/O> on ppbus0
+Jan 24 15:29:39 uxmal kernel: uart0: <16550 or compatible> port 0x3f8-0x3ff irq 4 flags 0x10 on acpi0
+Jan 24 15:29:39 uxmal kernel: orm0: <ISA Option ROM> at iomem 0xe8000-0xeffff pnpid ORM0000 on isa0
+Jan 24 15:29:39 uxmal kernel: vga0: <Generic ISA VGA> at port 0x3c0-0x3df iomem 0xa0000-0xbffff pnpid PNP0900 on isa0
+Jan 24 15:29:39 uxmal kernel: attimer0: <AT timer> at port 0x40 on isa0
+Jan 24 15:29:39 uxmal kernel: Timecounter "i8254" frequency 1193182 Hz quality 0
+Jan 24 15:29:39 uxmal kernel: Event timer "i8254" frequency 1193182 Hz quality 100
+Jan 24 15:29:39 uxmal kernel: attimer0: non-PNP ISA device will be removed from GENERIC in FreeBSD 14.
+Jan 24 15:29:39 uxmal kernel: fdc0: No FDOUT register!
+Jan 24 15:29:39 uxmal kernel: Timecounters tick every 10.000 msec
+Jan 24 15:29:39 uxmal kernel: ZFS filesystem version: 5
+Jan 24 15:29:39 uxmal kernel: ZFS storage pool version: features support (5000)
+Jan 24 15:29:39 uxmal kernel: usb_needs_explore_all: no devclass
+Jan 24 15:29:39 uxmal kernel: ada0 at ata0 bus 0 scbus0 target 0 lun 0
+Jan 24 15:29:39 uxmal kernel: ada0: <QEMU HARDDISK 2.5+> ATA-7 device
+Jan 24 15:29:39 uxmal kernel: ada0: Serial Number QM00001
+Jan 24 15:29:39 uxmal kernel: ada0: 16.700MB/s transfers (WDMA2, PIO 8192bytes)
+Jan 24 15:29:39 uxmal kernel: ada0: 20480MB (41943040 512 byte sectors)
+Jan 24 15:29:39 uxmal kernel: cd0 at ata1 bus 0 scbus1 target 0 lun 0
+Jan 24 15:29:39 uxmal kernel: cd0: <QEMU QEMU DVD-ROM 2.5+> Removable CD-ROM SCSI device
+Jan 24 15:29:39 uxmal kernel: cd0: Serial Number QM00003
+Jan 24 15:29:39 uxmal kernel: cd0: 16.700MB/s transfers (WDMA2, ATAPI 12bytes, PIO 65534bytes)
+Jan 24 15:29:39 uxmal kernel: cd0: Attempt to query device size failed: NOT READY, Medium not present
+Jan 24 15:29:39 uxmal kernel: Trying to mount root from zfs:zroot/ROOT/default []...
+Jan 24 15:29:39 uxmal kernel: 
+Jan 24 15:29:39 uxmal syslogd: last message repeated 1 times
+Jan 24 15:29:39 uxmal kernel: Fatal trap 12: page fault while in kernel mode
+Jan 24 15:29:39 uxmal kernel: cpuid = 2; apic id = 02
+Jan 24 15:29:39 uxmal kernel: fault virtual address	= 0x0
+Jan 24 15:29:39 uxmal kernel: fault code		= supervisor write data, page not present
+Jan 24 15:29:39 uxmal kernel: instruction pointer	= 0x20:0xffffffff80c293e0
+Jan 24 15:29:39 uxmal kernel: stack pointer	        = 0x28:0xfffffe005130fd20
+Jan 24 15:29:39 uxmal kernel: frame pointer	        = 0x28:0xfffffe005130fd20
+Jan 24 15:29:39 uxmal kernel: code segment		= base 0x0, limit 0xfffff, type 0x1b
+Jan 24 15:29:39 uxmal kernel: 			= DPL 0, pres 1, long 1, def32 0, gran 1
+Jan 24 15:29:39 uxmal kernel: processor eflags	= interrupt enabled, IOPL = 0
+Jan 24 15:29:39 uxmal kernel: current process		= 12 (swi4: clock (0))
+Jan 24 15:29:39 uxmal kernel: trap number		= 12
+Jan 24 15:29:39 uxmal kernel: panic: page fault
+Jan 24 15:29:39 uxmal kernel: cpuid = 2
+Jan 24 15:29:39 uxmal kernel: time = 2
+Jan 24 15:29:39 uxmal kernel: KDB: stack backtrace:
+Jan 24 15:29:39 uxmal kernel: db_trace_self_wrapper() at db_trace_self_wrapper+0x2b/frame 0xfffffe005130fae0
+Jan 24 15:29:39 uxmal kernel: vpanic() at vpanic+0x17f/frame 0xfffffe005130fb30
+Jan 24 15:29:39 uxmal kernel: panic() at panic+0x43/frame 0xfffffe005130fb90
+Jan 24 15:29:39 uxmal kernel: trap_fatal() at trap_fatal+0x385/frame 0xfffffe005130fbf0
+Jan 24 15:29:39 uxmal kernel: trap_pfault() at trap_pfault+0x4f/frame 0xfffffe005130fc50
+Jan 24 15:29:39 uxmal kernel: calltrap() at calltrap+0x8/frame 0xfffffe005130fc50
+Jan 24 15:29:39 uxmal kernel: --- trap 0xc, rip = 0xffffffff80c293e0, rsp = 0xfffffe005130fd20, rbp = 0xfffffe005130fd20 ---
+Jan 24 15:29:39 uxmal kernel: _rm_runlock() at _rm_runlock+0x30/frame 0xfffffe005130fd20
+Jan 24 15:29:39 uxmal kernel: pffasttimo() at pffasttimo+0x6c/frame 0xfffffe005130fda0
+Jan 24 15:29:39 uxmal kernel: softclock_call_cc() at softclock_call_cc+0x13d/frame 0xfffffe005130fe40
+Jan 24 15:29:39 uxmal kernel: softclock() at softclock+0x79/frame 0xfffffe005130fe60
+Jan 24 15:29:39 uxmal kernel: ithread_loop() at ithread_loop+0x25a/frame 0xfffffe005130fef0
+Jan 24 15:29:39 uxmal kernel: fork_exit() at fork_exit+0x7e/frame 0xfffffe005130ff30
+Jan 24 15:29:39 uxmal kernel: fork_trampoline() at fork_trampoline+0xe/frame 0xfffffe005130ff30
+Jan 24 15:29:39 uxmal kernel: --- trap 0, rip = 0xffffffff80bbb13f, rsp = 0, rbp = 0 ---
+Jan 24 15:29:39 uxmal kernel: mi_startup() at mi_startup+0xdf
+Jan 24 15:29:39 uxmal kernel: Uptime: 2s
+Jan 24 15:29:39 uxmal kernel: Automatic reboot in 15 seconds - press a key on the console to abort
+Jan 24 15:29:39 uxmal kernel: --> Press a key on the console to reboot,
+Jan 24 15:29:39 uxmal kernel: --> or switch off the system now.
+Jan 24 15:29:39 uxmal kernel: Rebooting...
+Jan 24 15:29:39 uxmal kernel: cpu_reset: Restarting BSP
+Jan 24 15:29:39 uxmal kernel: cpu_reset_proxy: Stopped CPU 2
+Jan 24 15:29:39 uxmal kernel: ---<<BOOT>>---
+Jan 24 15:29:39 uxmal kernel: Copyright (c) 1992-2021 The FreeBSD Project.
+Jan 24 15:29:39 uxmal kernel: Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+Jan 24 15:29:39 uxmal kernel: 	The Regents of the University of California. All rights reserved.
+Jan 24 15:29:39 uxmal kernel: FreeBSD is a registered trademark of The FreeBSD Foundation.
+Jan 24 15:29:39 uxmal kernel: FreeBSD 13.1-RELEASE DrudiGoldmanPI/testing_cpuMonopolized-13.1.0-n250164-06e089bf0b71 GENERIC amd64
+Jan 24 15:29:39 uxmal kernel: FreeBSD clang version 13.0.0 (git@github.com:llvm/llvm-project.git llvmorg-13.0.0-0-gd7b669b3a303)
+Jan 24 15:29:39 uxmal kernel: VT(vga): text 80x25
+Jan 24 15:29:39 uxmal kernel: CPU: QEMU Virtual CPU version 2.5+ (1392.30-MHz K8-class CPU)
+Jan 24 15:29:39 uxmal kernel:   Origin="AuthenticAMD"  Id=0x60fb1  Family=0xf  Model=0x6b  Stepping=1
+Jan 24 15:29:39 uxmal kernel:   Features=0x1783fbfd<FPU,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,MMX,FXSR,SSE,SSE2,HTT>
+Jan 24 15:29:39 uxmal kernel:   Features2=0x80002001<SSE3,CX16,HV>
+Jan 24 15:29:39 uxmal kernel:   AMD Features=0x20100800<SYSCALL,NX,LM>
+Jan 24 15:29:39 uxmal kernel:   AMD Features2=0x7<LAHF,CMP,SVM>
+Jan 24 15:29:39 uxmal kernel:   SVM: NAsids=16
+Jan 24 15:29:39 uxmal kernel: Hypervisor: Origin = "TCGTCGTCGTCG"
+Jan 24 15:29:39 uxmal kernel: real memory  = 2147483648 (2048 MB)
+Jan 24 15:29:39 uxmal kernel: avail memory = 2036551680 (1942 MB)
+Jan 24 15:29:39 uxmal kernel: Event timer "LAPIC" quality 100
+Jan 24 15:29:39 uxmal kernel: ACPI APIC Table: <BOCHS  BXPC    >
+Jan 24 15:29:39 uxmal kernel: FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs
+Jan 24 15:29:39 uxmal kernel: FreeBSD/SMP: 1 package(s) x 4 core(s)
+Jan 24 15:29:39 uxmal kernel: random: unblocking device.
+Jan 24 15:29:39 uxmal kernel: 
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CANTQ_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> QUEUE_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> CPU_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> CPU_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> CPU_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> CPU_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> TOEXEC_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> EXECUTING_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> EXECUTING_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> EXECUTING_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> EXECUTING_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P0 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P1 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P2 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SUSPENDED_P3 &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> GLOBAL_QUEUE &#
+Jan 24 15:29:39 uxmal kernel: #& 1 -> SMP_NOT_READY &#
+Jan 24 15:29:39 uxmal kernel: #& 0 -> SMP_READY &#
+Jan 24 15:29:39 uxmal kernel: ioapic0 <Version 2.0> irqs 0-23
+Jan 24 15:29:39 uxmal kernel: Launching APs: 3 2 1
+Jan 24 15:29:39 uxmal kernel: random: entropy device external interface
+Jan 24 15:29:39 uxmal kernel: kbd1 at kbdmux0
+Jan 24 15:29:39 uxmal kernel: vtvga0: <VT VGA driver>
+Jan 24 15:29:39 uxmal kernel: smbios0: <System Management BIOS> at iomem 0xf5a40-0xf5a5e
+Jan 24 15:29:39 uxmal kernel: smbios0: Version: 2.8, BCD Revision: 2.8
+Jan 24 15:29:39 uxmal kernel: aesni0: No AES or SHA support.
+Jan 24 15:29:39 uxmal kernel: acpi0: <BOCHS BXPC>
+Jan 24 15:29:39 uxmal kernel: acpi0: Power Button (fixed)
+Jan 24 15:29:39 uxmal kernel: cpu0: <ACPI CPU> on acpi0
+Jan 24 15:29:39 uxmal kernel: atrtc0: <AT realtime clock> port 0x70-0x77 irq 8 on acpi0
+Jan 24 15:29:39 uxmal kernel: atrtc0: registered as a time-of-day clock, resolution 1.000000s
+Jan 24 15:29:39 uxmal kernel: Event timer "RTC" frequency 32768 Hz quality 0
+Jan 24 15:29:39 uxmal kernel: hpet0: <High Precision Event Timer> iomem 0xfed00000-0xfed003ff on acpi0
+Jan 24 15:29:39 uxmal kernel: Timecounter "HPET" frequency 100000000 Hz quality 950
+Jan 24 15:29:39 uxmal kernel: Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+Jan 24 15:29:39 uxmal kernel: acpi_timer0: <24-bit timer at 3.579545MHz> port 0x608-0x60b on acpi0
+Jan 24 15:29:39 uxmal kernel: pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+Jan 24 15:29:39 uxmal kernel: pci0: <ACPI PCI bus> on pcib0
+Jan 24 15:29:39 uxmal kernel: isab0: <PCI-ISA bridge> at device 1.0 on pci0
+Jan 24 15:29:39 uxmal kernel: isa0: <ISA bus> on isab0
+Jan 24 15:29:39 uxmal kernel: atapci0: <Intel PIIX3 WDMA2 controller> port 0x1f0-0x1f7,0x3f6,0x170-0x177,0x376,0xc040-0xc04f at device 1.1 on pci0
+Jan 24 15:29:39 uxmal kernel: ata0: <ATA channel> at channel 0 on atapci0
+Jan 24 15:29:39 uxmal kernel: ata1: <ATA channel> at channel 1 on atapci0
+Jan 24 15:29:39 uxmal kernel: pci0: <bridge> at device 1.3 (no driver attached)
+Jan 24 15:29:39 uxmal kernel: vgapci0: <VGA-compatible display> mem 0xfd000000-0xfdffffff,0xfebf0000-0xfebf0fff at device 2.0 on pci0
+Jan 24 15:29:39 uxmal kernel: vgapci0: Boot video device
+Jan 24 15:29:39 uxmal kernel: em0: <Intel(R) Legacy PRO/1000 MT 82540EM> port 0xc000-0xc03f mem 0xfebc0000-0xfebdffff irq 11 at device 3.0 on pci0
+Jan 24 15:29:39 uxmal kernel: em0: Using 1024 TX descriptors and 1024 RX descriptors
+Jan 24 15:29:39 uxmal kernel: em0: Ethernet address: 52:54:00:12:34:56
+Jan 24 15:29:39 uxmal kernel: em0: netmap queues/slots: TX 1/1024, RX 1/1024
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer0: <System Container> on acpi0
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer1: <System Container> port 0xaf00-0xaf0b on acpi0
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer2: <System Container> port 0xafe0-0xafe3 on acpi0
+Jan 24 15:29:39 uxmal kernel: acpi_syscontainer3: <System Container> port 0xae00-0xae17 on acpi0
+Jan 24 15:29:39 uxmal kernel: atkbdc0: <Keyboard controller (i8042)> port 0x60,0x64 irq 1 on acpi0
+Jan 24 15:29:39 uxmal kernel: atkbd0: <AT Keyboard> irq 1 on atkbdc0
+Jan 24 15:29:39 uxmal kernel: kbd0 at atkbd0
+Jan 24 15:29:39 uxmal kernel: atkbd0: [GIANT-LOCKED]
+Jan 24 15:29:39 uxmal kernel: psm0: <PS/2 Mouse> irq 12 on atkbdc0
+Jan 24 15:29:39 uxmal kernel: psm0: [GIANT-LOCKED]
+Jan 24 15:29:39 uxmal kernel: WARNING: Device "psm" is Giant locked and may be deleted before FreeBSD 14.0.
+Jan 24 15:29:39 uxmal kernel: psm0: model IntelliMouse Explorer, device ID 4
+Jan 24 15:29:39 uxmal kernel: fdc0: <floppy drive controller (FDE)> port 0x3f2-0x3f5,0x3f7 irq 6 drq 2 on acpi0
+Jan 24 15:29:39 uxmal kernel: fdc0: does not respond
+Jan 24 15:29:39 uxmal kernel: device_attach: fdc0 attach returned 6
+Jan 24 15:29:39 uxmal kernel: ppc0: <Parallel port> port 0x378-0x37f irq 7 on acpi0
+Jan 24 15:29:39 uxmal kernel: ppc0: Generic chipset (NIBBLE-only) in COMPATIBLE mode
+Jan 24 15:29:39 uxmal kernel: ppbus0: <Parallel port bus> on ppc0
+Jan 24 15:29:39 uxmal kernel: lpt0: <Printer> on ppbus0
+Jan 24 15:29:39 uxmal kernel: lpt0: Interrupt-driven port
+Jan 24 15:29:39 uxmal kernel: ppi0: <Parallel I/O> on ppbus0
+Jan 24 15:29:39 uxmal kernel: uart0: <16550 or compatible> port 0x3f8-0x3ff irq 4 flags 0x10 on acpi0
+Jan 24 15:29:39 uxmal kernel: orm0: <ISA Option ROM> at iomem 0xe8000-0xeffff pnpid ORM0000 on isa0
+Jan 24 15:29:39 uxmal kernel: vga0: <Generic ISA VGA> at port 0x3c0-0x3df iomem 0xa0000-0xbffff pnpid PNP0900 on isa0
+Jan 24 15:29:39 uxmal kernel: attimer0: <AT timer> at port 0x40 on isa0
+Jan 24 15:29:39 uxmal kernel: Timecounter "i8254" frequency 1193182 Hz quality 0
+Jan 24 15:29:39 uxmal kernel: Event timer "i8254" frequency 1193182 Hz quality 100
+Jan 24 15:29:39 uxmal kernel: attimer0: non-PNP ISA device will be removed from GENERIC in FreeBSD 14.
+Jan 24 15:29:39 uxmal kernel: fdc0: No FDOUT register!
+Jan 24 15:29:39 uxmal kernel: Timecounters tick every 10.000 msec
+Jan 24 15:29:39 uxmal kernel: ZFS filesystem version: 5
+Jan 24 15:29:39 uxmal kernel: ZFS storage pool version: features support (5000)
+Jan 24 15:29:39 uxmal kernel: usb_needs_explore_all: no devclass
+Jan 24 15:29:39 uxmal kernel: Trying to mount root from zfs:zroot/ROOT/default []...
+Jan 24 15:29:39 uxmal kernel: ada0 at ata0 bus 0 scbus0 target 0 lun 0
+Jan 24 15:29:39 uxmal kernel: ada0: <QEMU HARDDISK 2.5+> ATA-7 device
+Jan 24 15:29:39 uxmal kernel: ada0: Serial Number QM00001
+Jan 24 15:29:39 uxmal kernel: ada0: 16.700MB/s transfers (WDMA2, PIO 8192bytes)
+Jan 24 15:29:39 uxmal kernel: ada0: 20480MB (41943040 512 byte sectors)
+Jan 24 15:29:39 uxmal kernel: cd0 at ata1 bus 0 scbus1 target 0 lun 0
+Jan 24 15:29:39 uxmal kernel: cd0: <QEMU QEMU DVD-ROM 2.5+> Removable CD-ROM SCSI device
+Jan 24 15:29:39 uxmal kernel: cd0: Serial Number QM00003
+Jan 24 15:29:39 uxmal kernel: cd0: 16.700MB/s transfers (WDMA2, ATAPI 12bytes, PIO 65534bytes)
+Jan 24 15:29:39 uxmal kernel: cd0: Attempt to query device size failed: NOT READY, Medium not present
+Jan 24 15:29:39 uxmal kernel: intsmb0: <Intel PIIX4 SMBUS Interface> irq 9 at device 1.3 on pci0
+Jan 24 15:29:39 uxmal kernel: intsmb0: intr IRQ 9 enabled revision 0
+Jan 24 15:29:39 uxmal kernel: smbus0: <System Management Bus> on intsmb0
+Jan 24 15:29:39 uxmal kernel: lo0: link state changed to UP
+Jan 24 15:29:39 uxmal kernel: em0: link state changed to UP
+Jan 24 15:29:46 uxmal login[825]: ROOT LOGIN (root) ON ttyv0

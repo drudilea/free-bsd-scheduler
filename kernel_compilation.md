@@ -56,6 +56,12 @@ más rápido del kernel. Estas son las siguientes:
 make NO_KERNELCLEAN=yes NO_KERNELDEPEND=yes MODULES_WITH_WORLD=yes buildkernel KERNCONF=PI_KERNELCONF
 ```
 
+Otra opción puede ser
+
+```bash
+make -DNO_CLEAN kernel KERNCONF=PI_KERNELCONF
+```
+
 - **NO_KERNELCLEAN:** evita que se eliminen los archivos ya compilados
   que no necesitan ser recompilados
 - **NO_KERNELDEPEND:** evita revisar el árbol de dependencias. Utilizar
