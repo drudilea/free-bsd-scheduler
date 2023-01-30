@@ -50,6 +50,29 @@ La imágen utilizada corresponde con la versión utilizada en el trabajo integra
 
 ---
 
+## QEMU VM
+
+```bash
+# First time to install the OS
+qemu-system-x86_64 -m 2G -smp 4 -cdrom FreeBSD-13.1-RELEASE-amd64-disc1.iso -hda freebsd-13.1.0-amd64.qcow2 -boot d
+
+# After the OS is installed for running the VM
+qemu-system-x86_64 \
+-m 2G \
+-smp 4 \
+-hda freebsd-13.1.0-amd64.qcow2 \
+-boot c \
+-device e1000,netdev=net0 \
+-netdev user,id=net0,hostfwd=tcp::5555-:22
+
+# -m 2G \   # RAM
+# -smp 4 \  # Number of processors
+# -hda freebsd-13.1.0-amd64.qcow2 \ # Hard disk image
+# -boot c \ # Boot from hard disk
+# -device e1000,netdev=net0 \ # Creates a virtual e1000 network device
+# -netdev user,id=net0,hostfwd=tcp::5555-:22 \  # Creates one user typed backend, forwarding local port 5555 to guest port 22
+```
+
 ## Documentación
 
 - [Imágen de disco FreeBSD 11.0][freebsd 11.0]
