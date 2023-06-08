@@ -14,10 +14,11 @@ static int event_handler(struct module *module, int event, void *arg)
   {
   case MOD_LOAD:
     uprintf("Hello chicos tesis! \n");
-    pin_thread_to_cpu(0);
+    toggle_pin_thread_to_cpu(100420, 2);
     set_print_transition(1000);
     break;
   case MOD_UNLOAD:
+    toggle_pin_thread_to_cpu(100420, 2);
     uprintf("Bye Bye chicos tesis !\n");
     break;
   default:
