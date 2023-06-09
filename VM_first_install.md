@@ -21,6 +21,7 @@ La imágen utilizada corresponde con la versión utilizada en el trabajo integra
 ---
 
 ## Instalación del SO
+>[Recomendamos seguir esta guía para la instalación del sistema operativo](https://forums.freebsd.org/threads/beginners-guide-how-to-set-up-a-freebsd-desktop-from-scratch.61659/)
 
 1. Abrir la máquina virtual instalada, y hacer click en el ícono para crear una nueva máquina virtual.
 

@@ -1,0 +1,1175 @@
+Feb 21 07:00:02 flandria syslogd: kernel boot file is /boot/kernel/kernel
+Feb 21 07:00:02 flandria kernel: ---<<BOOT>>---
+Feb 21 07:00:02 flandria kernel: Copyright (c) 1992-2021 The FreeBSD Project.
+Feb 21 07:00:02 flandria kernel: Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+Feb 21 07:00:02 flandria kernel: 	The Regents of the University of California. All rights reserved.
+Feb 21 07:00:02 flandria kernel: FreeBSD is a registered trademark of The FreeBSD Foundation.
+Feb 21 07:00:02 flandria kernel: FreeBSD 13.1-RELEASE DrudiGoldmanPI/testing_petriNetScheduler-13.1.0-n250159-4264c8416692 PI_KERNELCONF amd64
+Feb 21 07:00:02 flandria kernel: FreeBSD clang version 13.0.0 (git@github.com:llvm/llvm-project.git llvmorg-13.0.0-0-gd7b669b3a303)
+Feb 21 07:00:02 flandria kernel: VT(vga): text 80x25
+Feb 21 07:00:02 flandria kernel: CPU: AMD Ryzen 7 4800H with Radeon Graphics          (2894.72-MHz K8-class CPU)
+Feb 21 07:00:02 flandria kernel:   Origin="AuthenticAMD"  Id=0x860f01  Family=0x17  Model=0x60  Stepping=1
+Feb 21 07:00:02 flandria kernel:   Features=0x1783fbff<FPU,VME,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,MMX,FXSR,SSE,SSE2,HTT>
+Feb 21 07:00:02 flandria kernel:   Features2=0x5ed82203<SSE3,PCLMULQDQ,SSSE3,CX16,SSE4.1,SSE4.2,MOVBE,POPCNT,AESNI,XSAVE,OSXSAVE,AVX,RDRAND>
+Feb 21 07:00:02 flandria kernel:   AMD Features=0x2a500800<SYSCALL,NX,MMX+,FFXSR,RDTSCP,LM>
+Feb 21 07:00:02 flandria kernel:   AMD Features2=0x1f3<LAHF,CMP,CR8,ABM,SSE4A,MAS,Prefetch>
+Feb 21 07:00:02 flandria kernel:   Structured Extended Features=0x840021<FSGSBASE,AVX2,RDSEED,CLFLUSHOPT>
+Feb 21 07:00:02 flandria kernel:   TSC: P-state invariant
+Feb 21 07:00:02 flandria kernel: real memory  = 4831838208 (4608 MB)
+Feb 21 07:00:02 flandria kernel: avail memory = 4116545536 (3925 MB)
+Feb 21 07:00:02 flandria kernel: Event timer "LAPIC" quality 100
+Feb 21 07:00:02 flandria kernel: ACPI APIC Table: <VBOX   VBOXAPIC>
+Feb 21 07:00:02 flandria kernel: FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs
+Feb 21 07:00:02 flandria kernel: FreeBSD/SMP: 1 package(s) x 4 core(s)
+Feb 21 07:00:02 flandria kernel: random: registering fast source Intel Secure Key RNG
+Feb 21 07:00:02 flandria kernel: random: fast provider: "Intel Secure Key RNG"
+Feb 21 07:00:02 flandria kernel: random: unblocking device.
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: ioapic0: MADT APIC ID 4 != hw id 0
+Feb 21 07:00:02 flandria kernel: ioapic0 <Version 2.0> irqs 0-23
+Feb 21 07:00:02 flandria kernel: Launching APs: 2 1 3
+Feb 21 07:00:02 flandria kernel: !! ADDTOQUEUE_P1 - Non sensitized transition:  9 - Thread 100008 - CPU  3 - FROM sched_add!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! ADDTOQUEUE_P2 - Non sensitized transition: 18 - Thread 100009 - CPU  3 - FROM sched_add!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! UNQUEUE_P2 - Non sensitized transition: 19 - Thread 100009 - CPU  2 - FROM sched_choose!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! EXEC_EMPTY_P2 - Non sensitized transition: 21 - Thread 100009 - CPU  2 - FROM resource_execute_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! RETURN_VOL_P2 - Non sensitized transition: 22 - Thread 100009 - CPU  2 - FROM resource_expulse_thread!!
+Feb 21 07:00:02 flandria kernel: !! UNQUEUE_P1 - Non sensitized transition: 10 - Thread 100008 - CPU  1 - FROM sched_choose!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! EXEC_EMPTY_P1 - Non sensitized transition: 12 - Thread 100008 - CPU  1 - FROM resource_execute_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! RETURN_VOL_P1 - Non sensitized transition: 13 - Thread 100008 - CPU  1 - FROM resource_expulse_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: random: entropy device external interface
+Feb 21 07:00:02 flandria kernel: kbd1 at kbdmux0
+Feb 21 07:00:02 flandria kernel: vtvga0: <VT VGA driver>
+Feb 21 07:00:02 flandria kernel: smbios0: <System Management BIOS> at iomem 0xfff60-0xfff7e
+Feb 21 07:00:02 flandria kernel: smbios0: Version: 2.5, BCD Revision: 2.5
+Feb 21 07:00:02 flandria kernel: aesni0: <AES-CBC,AES-CCM,AES-GCM,AES-ICM,AES-XTS>
+Feb 21 07:00:02 flandria kernel: acpi0: <VBOX VBOXXSDT>
+Feb 21 07:00:02 flandria kernel: acpi0: Power Button (fixed)
+Feb 21 07:00:02 flandria kernel: acpi0: Sleep Button (fixed)
+Feb 21 07:00:02 flandria kernel: cpu0: <ACPI CPU> on acpi0
+Feb 21 07:00:02 flandria kernel: attimer0: <AT timer> port 0x40-0x43,0x50-0x53 on acpi0
+Feb 21 07:00:02 flandria kernel: Timecounter "i8254" frequency 1193182 Hz quality 0
+Feb 21 07:00:02 flandria kernel: Event timer "i8254" frequency 1193182 Hz quality 100
+Feb 21 07:00:02 flandria kernel: Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+Feb 21 07:00:02 flandria kernel: acpi_timer0: <32-bit timer at 3.579545MHz> port 0x4008-0x400b on acpi0
+Feb 21 07:00:02 flandria kernel: pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+Feb 21 07:00:02 flandria kernel: pci0: <ACPI PCI bus> on pcib0
+Feb 21 07:00:02 flandria kernel: isab0: <PCI-ISA bridge> at device 1.0 on pci0
+Feb 21 07:00:02 flandria kernel: isa0: <ISA bus> on isab0
+Feb 21 07:00:02 flandria kernel: atapci0: <Intel PIIX4 UDMA33 controller> port 0x1f0-0x1f7,0x3f6,0x170-0x177,0x376,0xd000-0xd00f at device 1.1 on pci0
+Feb 21 07:00:02 flandria kernel: ata0: <ATA channel> at channel 0 on atapci0
+Feb 21 07:00:02 flandria kernel: ata1: <ATA channel> at channel 1 on atapci0
+Feb 21 07:00:02 flandria kernel: vgapci0: <VGA-compatible display> port 0xd010-0xd01f mem 0xe0000000-0xe0ffffff,0xf0000000-0xf01fffff irq 18 at device 2.0 on pci0
+Feb 21 07:00:02 flandria kernel: vgapci0: Boot video device
+Feb 21 07:00:02 flandria kernel: em0: <Intel(R) Legacy PRO/1000 MT 82540EM> port 0xd020-0xd027 mem 0xf0200000-0xf021ffff irq 19 at device 3.0 on pci0
+Feb 21 07:00:02 flandria kernel: em0: Using 1024 TX descriptors and 1024 RX descriptors
+Feb 21 07:00:02 flandria kernel: em0: Ethernet address: 08:00:27:43:d4:63
+Feb 21 07:00:02 flandria kernel: em0: netmap queues/slots: TX 1/1024, RX 1/1024
+Feb 21 07:00:02 flandria kernel: pcm0: <Intel ICH (82801AA)> port 0xd100-0xd1ff,0xd200-0xd23f irq 21 at device 5.0 on pci0
+Feb 21 07:00:02 flandria kernel: pcm0: <SigmaTel STAC9700/83/84 AC97 Codec>
+Feb 21 07:00:02 flandria kernel: ohci0: <Apple KeyLargo/Intrepid USB controller> mem 0xf0804000-0xf0804fff irq 22 at device 6.0 on pci0
+Feb 21 07:00:02 flandria kernel: usbus0 on ohci0
+Feb 21 07:00:02 flandria kernel: usbus0: 12Mbps Full Speed USB v1.0
+Feb 21 07:00:02 flandria kernel: pci0: <bridge> at device 7.0 (no driver attached)
+Feb 21 07:00:02 flandria kernel: battery0: <ACPI Control Method Battery> on acpi0
+Feb 21 07:00:02 flandria kernel: acpi_acad0: <AC Adapter> on acpi0
+Feb 21 07:00:02 flandria kernel: atkbdc0: <Keyboard controller (i8042)> port 0x60,0x64 irq 1 on acpi0
+Feb 21 07:00:02 flandria kernel: atkbd0: <AT Keyboard> irq 1 on atkbdc0
+Feb 21 07:00:02 flandria kernel: kbd0 at atkbd0
+Feb 21 07:00:02 flandria kernel: atkbd0: [GIANT-LOCKED]
+Feb 21 07:00:02 flandria kernel: psm0: <PS/2 Mouse> irq 12 on atkbdc0
+Feb 21 07:00:02 flandria kernel: psm0: [GIANT-LOCKED]
+Feb 21 07:00:02 flandria kernel: WARNING: Device "psm" is Giant locked and may be deleted before FreeBSD 14.0.
+Feb 21 07:00:02 flandria kernel: psm0: model IntelliMouse Explorer, device ID 4
+Feb 21 07:00:02 flandria kernel: orm0: <ISA Option ROM> at iomem 0xc0000-0xc7fff pnpid ORM0000 on isa0
+Feb 21 07:00:02 flandria kernel: vga0: <Generic ISA VGA> at port 0x3c0-0x3df iomem 0xa0000-0xbffff pnpid PNP0900 on isa0
+Feb 21 07:00:02 flandria kernel: atrtc0: <AT realtime clock> at port 0x70 irq 8 on isa0
+Feb 21 07:00:02 flandria kernel: atrtc0: registered as a time-of-day clock, resolution 1.000000s
+Feb 21 07:00:02 flandria kernel: Event timer "RTC" frequency 32768 Hz quality 0
+Feb 21 07:00:02 flandria kernel: Timecounter "TSC-low" frequency 1447294004 Hz quality 0
+Feb 21 07:00:02 flandria kernel: Timecounters tick every 10.000 msec
+Feb 21 07:00:02 flandria kernel: Trying to mount root from ufs:/dev/ada0p2 [rw]...
+Feb 21 07:00:02 flandria kernel: ugen0.1: <Apple OHCI root HUB> at usbus0
+Feb 21 07:00:02 flandria kernel: uhub0 on usbus0
+Feb 21 07:00:02 flandria kernel: uhub0: <Apple OHCI root HUB, class 9/0, rev 1.00/1.00, addr 1> on usbus0
+Feb 21 07:00:02 flandria kernel: uhub0: 12 ports with 12 removable, self powered
+Feb 21 07:00:02 flandria kernel: ada0 at ata0 bus 0 scbus0 target 0 lun 0
+Feb 21 07:00:02 flandria kernel: ada0: <VBOX HARDDISK 1.0> ATA-6 device
+Feb 21 07:00:02 flandria kernel: ada0: Serial Number VB21464cb8-0ba59db0
+Feb 21 07:00:02 flandria kernel: ada0: 33.300MB/s transfers (UDMA2, PIO 65536bytes)
+Feb 21 07:00:02 flandria kernel: ada0: 25600MB (52428800 512 byte sectors)
+Feb 21 07:00:02 flandria kernel: !! TRAN_WAKEUP - NON SENSITIZED THREAD transition:  5 - Thread 100009 -> State 2 !!
+Feb 21 07:00:02 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CAN_RUN &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> RUNQ &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:00:02 flandria kernel: intsmb0: <Intel PIIX4 SMBUS Interface> irq 23 at device 7.0 on pci0
+Feb 21 07:00:02 flandria kernel: intsmb0: intr IRQ 9 enabled revision 0
+Feb 21 07:00:02 flandria kernel: smbus0: <System Management Bus> on intsmb0
+Feb 21 07:00:02 flandria kernel: lo0: link state changed to UP
+Feb 21 07:00:02 flandria kernel: !! TRAN_WAKEUP - NON SENSITIZED THREAD transition:  5 - Thread 100008 -> State 2 !!
+Feb 21 07:00:02 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CAN_RUN &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> RUNQ &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:00:02 flandria kernel: em0: link state changed to UP
+Feb 21 07:00:02 flandria kernel: !! FROM_GLOBAL_CPU_P1 - Non sensitized transition: 15 - Thread 100107 - CPU  1 - FROM sched_choose!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! EXEC_EMPTY_P1 - Non sensitized transition: 12 - Thread 100107 - CPU  1 - FROM resource_execute_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! TRAN_TO_WAIT_CHANNEL - NON SENSITIZED THREAD transition:  4 - Thread 100107 -> State 0 !!
+Feb 21 07:00:02 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CAN_RUN &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> RUNQ &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:00:02 flandria kernel: !! ADDTOQUEUE_P2 - Non sensitized transition: 18 - Thread 100009 - CPU  2 - FROM sched_add!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! UNQUEUE_P2 - Non sensitized transition: 19 - Thread 100009 - CPU  2 - FROM sched_choose!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! EXEC_EMPTY_P2 - Non sensitized transition: 21 - Thread 100009 - CPU  2 - FROM resource_execute_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! RETURN_VOL_P2 - Non sensitized transition: 22 - Thread 100009 - CPU  2 - FROM resource_expulse_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 2 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! ADDTOQUEUE_P3 - Non sensitized transition: 27 - Thread 100010 - CPU  3 - FROM sched_add!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! UNQUEUE_P3 - Non sensitized transition: 28 - Thread 100010 - CPU  3 - FROM sched_choose!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 3 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! EXEC_EMPTY_P3 - Non sensitized transition: 30 - Thread 100010 - CPU  3 - FROM resource_execute_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 3 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! RETURN_VOL_P3 - Non sensitized transition: 31 - Thread 100010 - CPU  3 - FROM resource_expulse_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! TRAN_WAKEUP - NON SENSITIZED THREAD transition:  5 - Thread 100009 -> State 2 !!
+Feb 21 07:00:02 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CAN_RUN &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> RUNQ &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:00:02 flandria kernel: !! ADDTOQUEUE_P2 - Non sensitized transition: 18 - Thread 100009 - CPU  2 - FROM sched_add!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! UNQUEUE_P2 - Non sensitized transition: 19 - Thread 100009 - CPU  2 - FROM sched_choose!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! EXEC_EMPTY_P2 - Non sensitized transition: 21 - Thread 100009 - CPU  2 - FROM resource_execute_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:02 flandria kernel: !! RETURN_VOL_P2 - Non sensitized transition: 22 - Thread 100009 - CPU  2 - FROM resource_expulse_thread!!
+Feb 21 07:00:02 flandria kernel: 
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:02 flandria kernel: #& 2 -> GLOBAL_QUEUE &#
+Feb 21 07:00:02 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:02 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:11 flandria kernel: !! TRAN_WAKEUP - NON SENSITIZED THREAD transition:  5 - Thread 100010 -> State 2 !!
+Feb 21 07:00:11 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:00:11 flandria kernel: #& 1 -> CAN_RUN &#
+Feb 21 07:00:11 flandria kernel: #& 0 -> RUNQ &#
+Feb 21 07:00:11 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:00:11 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:00:42 flandria kernel: !! EXEC_EMPTY_P0 - Non sensitized transition:  3 - Thread 100003 - CPU  0 - FROM resource_execute_thread!!
+Feb 21 07:00:42 flandria kernel: 
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> CPU_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> CPU_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> EXECUTING_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> EXECUTING_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:42 flandria kernel: !! RETURN_INVOL_P0 - Non sensitized transition:  5 - Thread 100003 - CPU  0 - FROM resource_expulse_thread!!
+Feb 21 07:00:42 flandria kernel: 
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> CPU_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> EXECUTING_P0 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:00:42 flandria kernel: #& 2 -> GLOBAL_QUEUE &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:00:42 flandria kernel: !! TRAN_ON_QUEUE - NON SENSITIZED THREAD transition:  1 - Thread 100003 -> State 2 !!
+Feb 21 07:00:42 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> CAN_RUN &#
+Feb 21 07:00:42 flandria kernel: #& 1 -> RUNQ &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:00:42 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:04:08 flandria kernel: !! TRAN_WAKEUP - NON SENSITIZED THREAD transition:  5 - Thread 100009 -> State 2 !!
+Feb 21 07:04:08 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> CAN_RUN &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> RUNQ &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:04:08 flandria kernel: !! ADDTOQUEUE_P2 - Non sensitized transition: 18 - Thread 100009 - CPU  2 - FROM sched_add!!
+Feb 21 07:04:08 flandria kernel: 
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:08 flandria kernel: !! UNQUEUE_P2 - Non sensitized transition: 19 - Thread 100009 - CPU  2 - FROM sched_choose!!
+Feb 21 07:04:08 flandria kernel: 
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:08 flandria kernel: !! EXEC_EMPTY_P2 - Non sensitized transition: 21 - Thread 100009 - CPU  2 - FROM resource_execute_thread!!
+Feb 21 07:04:08 flandria kernel: 
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:08 flandria kernel: !! RETURN_VOL_P2 - Non sensitized transition: 22 - Thread 100009 - CPU  2 - FROM resource_expulse_thread!!
+Feb 21 07:04:08 flandria kernel: 
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:08 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:08 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:37 flandria kernel: !! ADDTOQUEUE_P3 - Non sensitized transition: 27 - Thread 100010 - CPU  3 - FROM sched_add!!
+Feb 21 07:04:37 flandria kernel: 
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:37 flandria kernel: !! UNQUEUE_P3 - Non sensitized transition: 28 - Thread 100010 - CPU  3 - FROM sched_choose!!
+Feb 21 07:04:37 flandria kernel: 
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:37 flandria kernel: !! EXEC_EMPTY_P3 - Non sensitized transition: 30 - Thread 100010 - CPU  3 - FROM resource_execute_thread!!
+Feb 21 07:04:37 flandria kernel: 
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:37 flandria kernel: !! RETURN_VOL_P3 - Non sensitized transition: 31 - Thread 100010 - CPU  3 - FROM resource_expulse_thread!!
+Feb 21 07:04:37 flandria kernel: 
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:37 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:37 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:42 flandria sshd[812]: error: PAM: Authentication error for root from 192.168.0.14
+Feb 21 07:04:43 flandria syslogd: last message repeated 2 times
+Feb 21 07:04:43 flandria kernel: !! TRAN_WAKEUP - NON SENSITIZED THREAD transition:  5 - Thread 100010 -> State 2 !!
+Feb 21 07:04:43 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:04:43 flandria kernel: #& 1 -> CAN_RUN &#
+Feb 21 07:04:43 flandria kernel: #& 0 -> RUNQ &#
+Feb 21 07:04:43 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:04:43 flandria kernel: #& 0 -> INHIBITED &#
+Feb 21 07:04:53 flandria kernel: !! ADDTOQUEUE_P2 - Non sensitized transition: 18 - Thread 100075 - CPU  2 - FROM sched_add!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! UNQUEUE_P2 - Non sensitized transition: 19 - Thread 100075 - CPU  2 - FROM sched_choose!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! EXEC_EMPTY_P2 - Non sensitized transition: 21 - Thread 100075 - CPU  2 - FROM resource_execute_thread!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! RETURN_VOL_P2 - Non sensitized transition: 22 - Thread 100075 - CPU  2 - FROM resource_expulse_thread!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 2 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! ADDTOQUEUE_P3 - Non sensitized transition: 27 - Thread 100010 - CPU  3 - FROM sched_add!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! UNQUEUE_P3 - Non sensitized transition: 28 - Thread 100010 - CPU  3 - FROM sched_choose!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! EXEC_EMPTY_P3 - Non sensitized transition: 30 - Thread 100010 - CPU  3 - FROM resource_execute_thread!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! RETURN_VOL_P3 - Non sensitized transition: 31 - Thread 100010 - CPU  3 - FROM resource_expulse_thread!!
+Feb 21 07:04:53 flandria kernel: 
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CANTQ_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> QUEUE_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> CPU_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CPU_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> TOEXEC_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P0 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P1 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> EXECUTING_P2 &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> EXECUTING_P3 &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> GLOBAL_QUEUE &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> SMP_NOT_READY &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> SMP_READY &#
+Feb 21 07:04:53 flandria kernel: !! TRAN_WAKEUP - NON SENSITIZED THREAD transition:  5 - Thread 100075 -> State 2 !!
+Feb 21 07:04:53 flandria kernel: #& 0 -> INACTIVE &#
+Feb 21 07:04:53 flandria kernel: #& 1 -> CAN_RUN &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> RUNQ &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> RUNNING &#
+Feb 21 07:04:53 flandria kernel: #& 0 -> INHIBITED &#

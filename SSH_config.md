@@ -72,5 +72,5 @@ scp -P 2222 free-bsd-wiki/tests/marking_transition.txt root@127.0.0.1:/root/free
 
 ```bash
 #scp [-P] <port> <user>@<virtual-machine-ip>:<file-path> <host-file-path>
-scp -P 2222 root@127.0.0.1:/root/free-bsd-wiki/dmesgOutput.txt free-bsd-wiki/tests/
+scp -P 2222 root@127.0.0.1:/root/free-bsd-wiki/dmesgOutput.txt free-bsd-wiki/tests/messages_$(date +"%Y-%m-%d_%H:%M")
 ```

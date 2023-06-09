@@ -80,3 +80,29 @@ pkg install lang/gcc
 ```
 
 You’ll need to enter **y** to confirm the installation
+
+---
+
+## <h2 id="fish"> fish shell</h2>
+
+```bash
+pkg install fish
+```
+
+Set fish as default shell
+
+```bash
+whereis fish
+# fish: /usr/local/bin/fish /usr/local/share/man/man1/fish.1.gz
+
+chsh -s /usr/local/bin/fish
+```
+---
+
+
+## <h2 id="screen"> Screen </h2>
+
+```bash
+pkg install screen
+```
+
