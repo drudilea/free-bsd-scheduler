@@ -1,0 +1,73 @@
+\section{Introducción}
+La planificación a corto plazo de un sistema operativo es la parte del sistema que se encarga de tomar decisiones sobre qué tareas se deben ejecutar y en qué orden. El objetivo principal de la misma es hacer un uso eficiente de los recursos de CPU disponibles y minimizar el tiempo de respuesta de los procesos.\par
+
+El sistema operativo elegido para realizar este proyecto y las modificaciones pertinentes, es FreeBSD. Éste es un sistema operativo libre y de código abierto, basado en Unix, que se utiliza principalmente en servidores y estaciones de trabajo. Es conocido por su escalabilidad y robustez, así como por su capacidad de adaptarse y personalizarse según las necesidades del usuario.\par
+
+
+El planificador de bajo nivel se ejecuta cada vez que un hilo se bloquea y se debe seleccionar un nuevo hilo para ejecutar. Para ser eficiente, al ejecutarse miles de veces por segundo, debe tomar decisiones rápidamente con la menor cantidad de información posible. Para simplificar su tarea, el kernel mantiene un conjunto de colas de ejecución para cada CPU. Cuando una tarea se bloquea en una CPU, la responsabilidad del planificador de bajo nivel es seleccionar el hilo de la cola de ejecución de mayor prioridad y que no esté vacía para esa CPU.\par
+
+Todos los hilos ejecutables reciben una prioridad y una CPU, asignadas por el planificador. A la hora de la seleccion de un nuevo hilo, el planificador elige el primer hilo de la cola del respectivo CPU. Si varios hilos residen en una cola, el sistema los ejecuta en modo round-robin; es decir, en el orden en que se encuentran en la cola, con porciones de tiempo iguales permitidas. Si un hilo se bloquea, no se coloca en ninguna cola de ejecución, en su lugar, se coloca en una turnstile queue o cola de espera. Una vez que el evento o recurso que están esperando se vuelve disponible, el hilo se mueve a una cola de ejecución de un CPU para ser planificado nuevamente. Si un hilo agota la porción de tiempo permitido, se coloca al final de la cola de la que provino, y se selecciona el hilo al frente de la cola para ejecutarse.\par
+
+\subsection{Oportunidad}
+El proyecto integrador previo estableció una base sólida para la comprensión integral del funcionamiento de los sistemas operativos y demostró la relevancia de la planificación en el rendimiento del sistema. Este logro requirió un compromiso considerable y una laboriosa inversión de tiempo en la construcción de modelos, así como en el análisis de los resultados obtenidos.\par
+
+No obstante, dada la continua evolución tecnológica y la evolución de las necesidades de los usuarios, se hace imperativo mantener una constante actualización y refinamiento de dicha implementación.\par
+
+En este contexto, la presente oportunidad de trabajo se centra en la incorporación de nuevas funcionalidades y mejoras al planificador a corto plazo del sistema operativo. El objetivo principal radica en alcanzar niveles superiores de eficiencia y desempeño en las operaciones que se ejecutan en el sistema. Para ello, aprovecharemos el conocimiento y las ventajas que ofrecen las Redes de Petri, herramientas que nos permitirán introducir innovaciones de manera efectiva, al tiempo que conservamos las características fundamentales del sistema base.\par
+
+
+\subsection{Motivación}
+La investigación previa en el área de la planificación a corto plazo de sistemas operativos, permitió encontrar una solución efectiva para reducir el indeterminismo en este tipo de sistemas. En concreto, la implementación del planificador a corto plazo de FreeBSD utilizando Redes de Petri, ha demostrado muchas ventajas mediante esta técnica de modelado.\par
+
+Por otro lado, la administración eficiente de la energía es un tema de interés en la actualidad, debido al aumento de la demanda de energía y al impacto ambiental. En este sentido, el uso de técnicas de ahorro de energía en los sistemas operativos es esencial para reducir los costos y minimizar dicho impacto.\par
+
+En este trabajo integrador, se propone avanzar con la implementación de funcionalidades de ahorro de energía y aumento de eficiencia en relación con el uso de CPUs y la priorización de hilos. A través del uso de la Red de Petri existente del planificador 4BSD, se desarrollará un algoritmo que permita el encendido y apagado de procesadores y la monopolización de procesadores por parte de hilos según sea necesario; de manera eficiente y sin comprometer el rendimiento del sistema. Intentamos contribuir a la mejora de la eficiencia energética en los sistemas operativos y a futuras investigaciones en el campo de la administración de energía de dichos sistemas. Además, profundizaremos en el uso de las Redes de Petri como herramienta de modelado y análisis en el ámbito de los sistemas operativos.\par
+
+\subsection{Objetivo}
+
+Objetivos principales:
+
+\begin{itemize}
+    \item Actualizar el modelado e implementación del planificador del sistema operativo FreeBSD mediante Redes de Petri. Se realizó para la versión 11 del mismo (FreeBSD se encuentra cursando la versión 13). Hacerlo compatible con las últimas versiones nos permite aprovechar las nuevas funcionalidades disponibles, acortar brechas de seguridad y evitar que se vuelva obsoleto con el paso del tiempo; al mismo tiempo que nos mantiene cerca de la comunidad, aspecto muy importante en el desarrollo de cualquier proyecto informático.
+    \item Desarrollar una funcionalidad que permita encender y apagar procesadores según las necesidades del sistema en diferentes momentos. De esta forma el sistema podrá decidir cómo manejar los procesadores con el fin de reducir el consumo energético de los mismos.
+    \item Desarrollar un mecanismo que le brinde a cualquier hilo la posibilidad de ejecutarse en un procesador, evitando que otros hilos se encolen en éste. Mediante esta funcionalidad, se prioriza la ejecución del hilo correspondiente y se acelera su finalización, lo que a su vez evita pérdidas de rendimiento causadas por cambios de contexto.
+\end{itemize}
+
+Objetivos secundarios:
+\begin{itemize}
+    \item Analizar y aprender exhaustivamente acerca del código fuente del sistema operativo FreeBSD.
+    \item Profundizar los conocimientos en la depuración del kernel y las diferentes herramientas de debugging.
+    \item Mejorar la documentación del proyecto, estrategia de ramas y commits en el repositorio de desarrollo priorizando las buenas prácticas de programación. Esto permitirá dejar mejores bases para quienes decidan continuar con la investigación.
+    \item Automatizar y documentar los procesos repetitivos que se llevan a cabo en los diferentes estadíos del proyecto, como por ejemplo la instalación de máquinas virtuales, paquetes que nos ayudaran a la hora del desarrollo, configuraciones de red, instalación y compilación de kernel, entre otras.
+    \item Compartir e interactuar con la comunidad de FreeBSD a través de foros y listas de difusión.
+\end{itemize}
+
+\subsection{Alcance}
+La fase inicial del proyecto se enfocará en la actualización de la implementación existente para adecuarse a las versiones más recientes del sistema operativo FreeBSD. Este proceso permitirá no solo comprender las evoluciones experimentadas por el planificador a lo largo del tiempo, sino también evaluar la viabilidad de mantener la implementación actual en términos de futura mantenibilidad. En este contexto, el alcance de esta etapa está definido por su propia naturaleza.\par
+
+Una vez finalizada la mencionada actualización, se procederá a la incorporación de las dos nuevas funcionalidades diseñadas para optimizar la eficiencia de los procesadores, las cuales fueron detalladas previamente en el presente documento. En este punto, el alcance presenta una mayor complejidad, dado que se trata de dos funcionalidades susceptibles de ser implementadas de diversas formas y con potenciales aplicaciones variadas. Por lo tanto, se ha tomado la decisión de delimitar el alcance de la implementación a dos módulos independientes, los cuales podrán ser activados o desactivados según sea necesario.\par
+
+Ambos módulos requerirán una activación o desactivación manual, regida por la carga o descarga de un módulo de kernel que incluirá parámetros pertinentes para orientar la acción correspondiente.\par
+
+En complemento, se llevarán a cabo pruebas exhaustivas para evaluar el correcto funcionamiento de estas nuevas implementaciones. Dado que esta representa la primera aproximación a la incorporación de estas funcionalidades, se reconoce que las pruebas no alcanzarán un nivel de profundidad absoluto en lo que respecta a mejoras de rendimiento y eficiencia energética.\par
+
+\subsection{Modelo de Desarrollo}
+El enfoque adoptado para la ejecución de este proyecto integrador se estructuró en base a tres objetivos primordiales, previamente expuestos en este informe. A partir de estos objetivos fundamentales, se derivaron metas y alcances más específicos, diseñados para facilitar la iteración ágil y precisa. Si bien en la narrativa del informe se detallarán estos como tres módulos distintos, es esencial destacar que en el proceso de desarrollo, estos evolucionaron de manera incremental.
+
+\subsection{Requerimientos Generales}
+
+\subsubsection{Requerimientos funcionales}
+\begin{itemize}
+    \item Actualización de la implementación existente del planificador a corto plazo de FreeBSD para asegurar su compatibilidad con las últimas versiones del sistema operativo.
+    \item Pruebas para validar la correcta integración del modelo a las nuevas versiones de FreeBSD y evaluar el correcto funcionamiento de los nuevos desarrollos.
+    \item Implementación de dos nuevas funcionalidades específicas en el planificador a corto plazo de FreeBSD mediante Redes de Petri.
+    \item Pruebas para validar la correcta implementación de las nuevas funcionalidades desarrolladas.
+\end{itemize}
+
+\subsubsection{Requerimientos no funcionales}
+\begin{itemize}
+    \item La implementación del planificador a corto plazo de FreeBSD mediante Redes de Petri debe ser fácilmente mantenible en el futuro.
+    \item Se espera que el planificador a corto plazo de FreeBSD tenga un rendimiento mejorado después de estos nuevos desarrollos.
+    \item La implementación del planificador a corto plazo de FreeBSD mediante Redes de Petri debe ser segura y no comprometer la seguridad del sistema operativo.
+    \item Las nuevas funcionalidades implementadas en el planificador a corto plazo de FreeBSD deben ser fáciles de usar y comprender para los usuarios finales. Para ello es necesario formular documentación sobre cada punto del trabajo.
+\end{itemize}
