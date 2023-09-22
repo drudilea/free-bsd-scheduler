@@ -14,7 +14,7 @@ El kernel del sistema operativo soporta la ilusión de ejecución concurrente de
 \subsubsection{Estructura de los procesos}
 Cada proceso en el sistema recibe un identificador único llamado identificador de proceso (PID). Los PID son el mecanismo común utilizado por las aplicaciones y el kernel para hacer referencia a los procesos. Existen dos identificadores que son de especial importancia para cada proceso: el PID del proceso en sí, y el PID del proceso padre.\par
 
-La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process_state}. El objetivo es permitir múltiples hilos que compartan un espacio de direcciones y otros recursos.  Algunas de estas categorías son:\par
+La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process_state}. El objetivo es permitir múltiples hilos que compartan un espacio de direcciones y otros recursos. Algunas de estas categorías son:\par
 
 \begin{itemize}
     \item Identificación del grupo de procesos: el grupo de procesos y la sesión a la que pertenece el mismo.
@@ -68,3 +68,25 @@ El scheduler se encarga de planificar aquellos hilos correspondientes a procesos
     \item \uppercase{runq}: En la cola de ejecución, esperando su turno para ser ejecutados.
     \item \uppercase{running}: En ejecución.
 \end{itemize}
+
+\subsection{Planificación}
+
+Planificar es decidir cómo, cuándo y por cuánto tiempo vamos a correr los hilos que se encuentran en nuestro sistema; tanto los hilos propios del sistema operativo, como de aplicaciones que se encuentran en ejecución.\par
+
+En este sentido, la planificación es fundamental para equilibrar la utilización de los recursos con el tiempo necesario para completar los programas. FreeBSD implementa por defecto, un planificador \textit{compartido por tiempo}, el cual calcula la prioridad de los procesos de manera periódica. Este cálculo se realiza en base a datos previos, como la cantidad de tiempo utilizado de CPU o la cantidad de recursos de memoria que el proceso mantiene o requiere para su ejecución. No obstante, algunas tareas requieren un control más preciso sobre el proceso, como el caso de la planificación de tiempo real. FreeBSD también implementa esta funcionalidad mediante una cola separada para los hilos en cuestión, los cuales no se ven interrumpidos por otros hilos a menos que tengan igual o mayor prioridad.\par
+
+Además, el \textit{kernel} de FreeBSD cuenta con una cola de hilos de mínima prioridad que se ejecutan únicamente cuando ningún otro hilo en las colas de mayor prioridad está en un estado de posible ejecución.\par
+
+En cuanto al método de planificación por tiempo, FreeBSD favorece a los programas interactivos. Asigna una prioridad alta a cada hilo y permite que se ejecute por un periodo fijo de tiempo, conocido como \textit{time slice}. A medida que el hilo se ejecuta, su prioridad disminuye, mientras que aquellos suspendidos por E/S mantienen su prioridad. Por su parte, los hilos que se mantienen inactivos mejoran su prioridad en la cola.\par
+
+\subsubsection{Elección del planificador}
+
+La planificación a corto plazo en FreeBSD ha experimentado una notable evolución a lo largo de los años. Desde sus inicios con el planificador 4BSD hasta el actual planificador ULE, se han implementado cambios significativos que han contribuido a mejorar la eficiencia y el rendimiento del sistema.\par
+
+Aunque el planificador ULE es el predeterminado en las versiones actuales de FreeBSD, este trabajo se basa en el trabajo previo realizado en el marco del proyecto integrador, que se centró en el planificador 4BSD\@. Para entender con mayor detalle y contexto dicha elección, visitar la sección 2.3.3.\ del proyecto integrador previo\cite{bib1}.
+
+En este momento, nuestro enfoque principal no radica en realizar un cambio inmediato en el sistema operativo ni en contribuir directamente a la comunidad de FreeBSD\@. En su lugar, estamos dando inicio a una fase de investigación e implementación centrada en este tipo de planificadores.\par
+
+Al mismo tiempo, el planificador 4BSD ha sido mantenido por la comunidad de FreeBSD durante décadas y no hay planes inmediatos para dejar de darle soporte. Esto significa que todavía sigue siendo una opción estable y confiable para el desarrollo de nuestro proyecto.\par
+
+\subsubsection{Funcionamiento del planificador 4BSD}
