@@ -1,0 +1,53 @@
+\subsection{Módulo de actualizaciones}
+Se inició el proceso de desarrollo del proyecto en sí mismo, que se dividió en módulos. En cada módulo se establecieron objetivos cortos y alcanzables, buscando lograr avances concretos en cada etapa.
+
+En la etapa inicial de nuestro trabajo, nos centramos en una tarea crucial dentro de cualquier proyecto de software: mantenerlo actualizado en los diferentes lanzamientos del Sistema Operativo. Esta práctica nos brinda una serie de beneficios significativos en términos de rendimiento, estabilidad y compatibilidad, lo que a su vez resulta en un sistema operativo más eficiente y confiable en general. Además, al llevar a cabo este proceso de actualización, abrimos la posibilidad de contribuir al proyecto de FreeBSD en colaboración con futuros trabajos realizados por estudiantes de nuestra misma universidad. Comenzamos nuestro trabajo en la versión 11 (realizado por Nicolas Papp y Tomas Turina) y continuamos hasta alcanzar la última versión estable, la 13.1, que representa el estado actual del sistema operativo.\par
+
+Para comprender mejor los cambios significativos entre las versiones, hemos dividido el módulo en tres partes progresivas: actualización a la versión máxima del 11, actualización del 11 al 12 y actualización del 12 al 13.\par
+
+
+\subsubsection{Actualización a la versión máxima del release 11}
+
+En esta primera iteración se buscó llevar los cambios del proyecto integrador previo realizados en la versión 11.0.0 del sistema operativo FreeBSD a la última versión de éste release, es decir, al 11.4.0.\par
+
+Durante dicha actualización, nos encontramos con un cambio significativo que tuvo un impacto relevante en nuestra tesis: la modificación en la función maybe\_preempt. En la versión anterior, esta función se encargaba de determinar si un nuevo hilo debía tomar el control del procesador inmediatamente, reemplazando al hilo actual en ejecución. En caso afirmativo, se realizaba el cambio de contexto y comenzaba su ejecución, sustituyendo al hilo que se encontraba en el procesador.\par
+
+En la versión más reciente, se introdujo una nueva estrategia, posponer el cambio de contexto para un momento más adecuado mediante un sistema de banderas. En lugar de realizar el cambio de contexto de manera inmediata, se implementó un mecanismo donde el hilo recién encolado establece la bandera td\_owepreempt en 1, indicando que se necesita desalojar al que se encuentra en ejecución, en favor de dicho hilo.\par
+
+Este cambio en la función maybe\_preempt proporciona una mayor flexibilidad y control sobre el reemplazo inmediato de hilos en el planificador de FreeBSD. En el contexto de nuestra tesis, este ajuste fue relevante, ya que tuvimos que tener en cuenta esta nueva lógica al analizar y evaluar el comportamiento del planificador.\par
+
+
+\subsubsection{Actualización a versión 12}
+
+Tras analizar las diferencias entre la versión 11.4.0 (último release de la 11) y la versión 12.3.0 (último release de la 12), se determinó que los cambios eran mínimos sobre los archivos de relevancia para nuestro proyecto del planificador mediante el uso de Redes de Petri; por esta razón, no se llevó a cabo la actualización. En su lugar, nos enfocamos en las actualizaciones posteriores que presentaban cambios más significativos en el planificador, permitiéndonos un análisis más profundo y enriquecedor de nuestra investigación.\par
+
+
+\subsubsection{Actualización a versión 13}
+
+La versión 13 trae con ella varios cambios significativos en el código del scheduler. Los cambios principales, y que mayor tiempo de análisis e investigación tomaron, fueron los cambios dentro de la función sched\_switch(), la función encargada de realizar el cambio de contexto entre hilos en el planificador de tipo 4BSD.\par
+
+El primero de ellos (appendix diff) ya se encuentra los parámetro de dicha función: newtd se utilizaba para indicar explícitamente el hilo que se iba a ejecutar a continuación. Sin embargo, en la versión nueva, el parámetro newtd se eliminó. La eliminación de éste parámetro y la inclusión de la lógica de selección del hilo dentro de sched\_switch simplifica el código y puede permitir una mayor flexibilidad en la selección del hilo y adaptarse mejor a posibles cambios o mejoras en la política de planificación en futuras versiones de FreeBSD.\par
+
+El segundo cambio (appendix diff) fue el que más problemas trajo a la hora de la actualización con los cambios de la Red de Petri al release 13 y se trató principalmente sobre la reorganización de los locks tomados por los hilos, con la finalidad de mejorar la eficiencia y evitar interrupciones innecesarias en el camino crítico de ejecución.\par
+
+
+\subsubsection{Resultados}
+
+Durante la actualización a las diferentes versiones del sistema operativo FreeBSD, se logró garantizar el funcionamiento correcto de todas las versiones, lo cual fue un logro significativo. Esto permitió no solo mantener el proyecto al día, sino también adentrarnos en el código del sistema operativo y comprender su funcionamiento de manera más integral.\par
+
+Se tuvo la oportunidad de leer y analizar el código fuente en profundidad. Esto nos permitió adquirir un conocimiento detallado del proyecto y nos familiarizó con su estructura y características particulares. Esta inmersión en el código nos brindó una base sólida para abordar tareas posteriores de manera más eficiente y efectiva.\par
+
+Durante el proceso de actualización, también se identificaron y documentaron algunos problemas menores que se trasladaban de versiones anteriores del proyecto. Estos problemas fueron registrados tanto en un repositorio de documentación específico como en este documento, con el propósito de mantener un registro detallado y accesible para futuros trabajos.\par
+
+
+\subsubsection{Próximos pasos}
+
+Como se desarrolló previamente, es de suma importancia mantener el proyecto continuamente actualizado con las últimas versiones del sistema operativo.\par
+
+Para lograr este objetivo, es fundamental estar al tanto de las actualizaciones necesarias y evitar quedarse rezagado con respecto al release más reciente.\par
+
+La tarea de mantener el software actualizado en proyectos de código abierto como FreeBSD, nos permite trabajar con un sistema operativo más eficiente, seguro y compatible con las tecnologías más recientes. Y no menor, es necesario destacar que facilita la integración con la comunidad de desarrolladores y usuarios.\par
+
+Al mantener el proyecto actualizado, se está en sintonía con las últimas características, mejoras y correcciones de errores introducidas por la comunidad, lo cual brinda la oportunidad de contribuir al desarrollo colaborativo y recibir retroalimentación valiosa.\par
+
+Sugerimos que los trabajos futuros en el ámbito del proyecto consideren la importancia que tiene este apartado y se comprometan a dedicar el tiempo y los recursos necesarios para llevarlo a cabo de manera regular.\par

@@ -1,15 +1,30 @@
-\section{Introducción}
+\section{Desarrollo}
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsection{Introducción}
+En el marco de este trabajo de investigación, implementamos mejoras en el planificador a corto plazo basado en Redes de Petri para el sistema operativo FreeBSD. Este proyecto supuso un gran desafío, ya que implicó comprender y depurar el código previo y los archivos del código fuente de FreeBSD relacionados con el funcionamiento del scheduler 4BSD, que había sido desarrollado por estudiantes de nuestra misma institución en un proyecto integrador previo. Fue un proceso arduo de lectura y relectura constante, con el objetivo de adquirir un panorama general y detallado sobre el funcionamiento del scheduler.\par
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsection{Metodologías de trabajo}
+Luego de superar la fase inicial, dedicamos un tiempo a planificar la forma en que íbamos a abordar el desarrollo del proyecto. Creíamos crucial establecer una estructura organizada para avanzar de manera sistemática y dejar registros detallados de nuestras actividades en cada etapa del proyecto, lo cual podría ser útil para trabajos futuros.\par
+Durante esta fase, nos enfocamos en documentar los procesos de instalación y depuración, establecer una estrategia de ramas estandarizada en el repositorio fork de FreeBSD y definir un repositorio externo donde alojar todos los recursos que podrían ser útiles para cualquier persona que desee involucrarse en la implementación del proyecto. Estas tareas fueron de gran importancia para asegurarnos de que estábamos trabajando de manera ordenada y eficiente, y para crear un recurso valioso para la comunidad.\par
 
-Para realizar el análisis, construimos el conjunto de componentes ilustrados en la Figura \ref{fig:TechIndicatorsArchitecture}.  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsubsection{Estrategia de ramificación}
+Definir una estrategia de ramificación o branch strategy en los proyectos es importante porque ayuda a mantener el control sobre el flujo de trabajo, a mantener la organización del proyecto y a asegurar que las modificaciones se integren sin problemas en la rama principal del código. Una estrategia de ramificación bien definida establece un conjunto de reglas claras y consistentes para crear y fusionar ramas de código.\par
 
-\section{Metodología}
+Al mismo tiempo, ayuda a mantener un historial completo y bien organizado de las modificaciones realizadas al código, lo que puede ser útil para fines de seguimiento y continuidad del proyecto. Por esta razón, definimos el prefijo de branches conformado por los apellidos de los integrantes del grupo de trabajo, en nuestro caso, por ejemplo, DrudiGoldmanPI/. Esto también nos ayuda a encontrar con mayor facilidad todos los cambios realizados en este proyecto integrador.\par
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\textcolor{red}{Mostrar las branch strategies}
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsubsection{Conventional commits}
+Los Conventional Commits son una herramienta esencial para mantener una estructura y formato consistente en los mensajes de confirmación del código. En el contexto de un trabajo de tesis, su importancia radica en que el trabajo probablemente seguirá avanzando con el tiempo por otros alumnos o personas que deseen seguir el mismo camino.\par
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. \cite{Hsu2016215}. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+El uso de Conventional Commits ayuda a mantener una estructura bien organizada de los pequeños pasos que se fueron dando en cada una de las ramas, lo que permite a cualquier persona que consulte el repositorio tener una comprensión clara y rápida del progreso del proyecto y de los cambios que se realizaron en cada paso.\par
+
+\subsubsection{Pruebas del kernel}
+La depuración del kernel es una tarea crucial en el desarrollo de sistemas operativos, ya que permite encontrar y corregir errores que de otra manera podrían pasar desapercibidos. En nuestro trabajo, la herramienta protagonista en este ámbito, fue KGDB.\par
+
+kgdb permite la depuración de archivos de núcleo del kernel. Cuando se produce un kernel panic o una falla del sistema, podemos utilizar esta herramienta para analizar el dump core y encontrar la causa subyacente del problema. Dentro de  este modo, podemos examinar el estado del sistema en el momento de la falla y determinar qué parte del código del kernel causó la falla.\par
+
+
+
+
+

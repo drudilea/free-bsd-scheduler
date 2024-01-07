@@ -3,6 +3,7 @@
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[svgnames]{xcolor}
+\usepackage{ellipsis}
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -13,6 +14,7 @@
 \usepackage{ragged2e}
 \usepackage{geometry}
 \usepackage{makeidx}
+\usepackage{microtype}
 \makeindex
 
 \pagestyle{plain}
@@ -32,6 +34,9 @@
 \pagestyle{plain}
 \setlength{\parskip}{0.5em}
 
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
+
 
 \begin{document}
 
@@ -50,6 +55,10 @@
 \newpage
 
 \input{chapter03}
+\input{chapter03a}
+\input{chapter03b}
+\input{chapter03c}
+\input{chapter03d}
 \newpage
 
 \input{chapter04}
