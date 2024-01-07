@@ -1,0 +1,41 @@
+\subsection{Tareas Extra}
+
+Durante el proceso de desarrollo de los módulos, se fueron trabajando además algunas otras problemáticas encontradas.
+
+
+\subsubsection{Solución del problema de afinidad (procesadores sobrecargados)}
+
+La primera de ellas, y la más crucial, fue un problema encontrado con la afinidad de los procesos.
+
+El síntoma ocurría durante nuestras pruebas de estrés; nos dimos cuenta de que los procesadores nunca alcanzaban el 100\% de su capacidad. Descubrimos que esto se debía a un problema de asignación de CPU que generaba una sobrecarga (overhead). El sistema operativo realizaba demasiados cambios de contexto entre los hilos, debido a un cambio en el código en relación con la afinidad, la limitación y la fijación a núcleos específicos.
+
+Estos cambios provocaban que el planificador eligiera los procesadores de forma aleatoria para encolar los hilos, sin considerar las indicaciones que podrían mejorar el rendimiento en la asignación de recursos y los cambios de contexto.
+
+\textcolor{red}{IMAGEN DEL HTOP}
+
+A continuación, se dejan algunas pruebas de estrés realizadas previa y posteriormente a la implementación de la mejora. Si se observa detalladamente el programa htop en cada uno de los casos, se puede ver que en el primero, el promedio de uso de los procesadores es de un 78,62\% y el cálculo de todos los números primos hasta 100.000 tomó once segundos realizarlo (ocho veces, una por cada subproceso).
+
+En la segunda imagen, se muestran los resultados obtenidos al hacer los cambios correspondientes para mantener las funcionalidades de afinidad, limitación (bound) y la fijación a núcleos específicos (pin) en el planificador.
+
+Los cambios fueron positivos, logrando un uso pleno de los procesadores, que se mantuvieron al 100\% durante todas las pruebas de estrés realizadas y redujeron el tiempo de cálculo en un 63,63\%, completando la tarea en cuatro segundos.
+
+\textcolor{red}{SEGUNDA IMAGEN DEL HTOP}
+
+
+\subsubsection{Problema del uso de la placa de red en el sistema operativo}
+
+Durante el desarrollo del proyecto integrador nos encontramos con otro problema recurrente relacionado a la placa de red del sistema operativo en sus diferentes versiones.
+
+Precisamente este problema surgió al utilizar SSH para facilitar la conexión con la máquina virtual. De todas formas, se observó que el problema no se producía si se iniciaba la máquina virtual con la placa de red desactivada evitando así el uso de la funcionalidad SSH.
+
+El problema en sí, consiste en un kernel panic relacionado a un error por page fault. Esto quiere decir que el sistema ingresa en un estado de pánico en el cual no se permite seguir interactuando con el mismo; se imprime una mínima información relacionada al error en la consola y luego se reinicia. Durante el booteo del sistema, luego de este error, se crea un archivo con la información del sistema previo al kernel panic; ésto se conoce como crash dump file.
+
+Luego de un análisis exhaustivo sobre el problema, decidimos hacer uso del foro oficial de FreeBSD para recibir ayuda de la comunidad. Una vez planteada la situación que enfrentábamos, obtuvimos diferentes puntos de vista y posibles soluciones al problema, que desafortunadamente no nos llevó a la resolución del problema.
+
+\textcolor{red}{Agregar link al hilo del blog  en el anexo}
+
+Igualmente, gracias a esta comunidad, pudimos aprender en profundidad acerca de los diferentes debuggers para el kernel del sistema operativo, a interpretar correctamente la información contenida en estos crash dumps files generados, y encontramos en FreeBSD una comunidad muy interesada con el proyecto del planificador mediante Redes de Petri y dispuesta a ayudar a solucionar problemáticas en este tipo de casos.
+
+\textcolor{red}{IMAGEN DE KGBD}
+
+Creemos que este es un punto a investigar y mejorar a futuro, ya que, si bien no es bloqueante, contribuye a una mejor experiencia al desarrollar y trabajar con el proyecto.
