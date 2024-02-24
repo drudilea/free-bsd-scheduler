@@ -1,28 +1,31 @@
 \section{Base Teórica}
 
-La planificación es un componente fundamental del sistema operativo que se encarga de asignar tiempo de procesamiento a los diferentes hilos y procesos que se ejecutan en un sistema. En este capítulo se presentará la información necesaria para comprender la planificación a corto plazo, con un enfoque específico en el sistema operativo FreeBSD y su planificador 4BSD. Se describirán los conceptos fundamentales de procesos e hilos, incluyendo su estructura y estados, y se explicará cómo el planificador toma decisiones sobre cuál hilo o proceso debe ejecutarse en un momento dado. Además, se examinarán en detalle las operaciones de cambio de contexto, encolado, elección del procesador y remoción de hilos de la cola, que son funciones clave del planificador 4BSD. Con esta base teórica, se sentarán las bases para entender cómo funciona el planificador de FreeBSD y cómo puede ser mejorado.
+La planificación es un componente esencial de cualquier sistema operativo, encargado de asignar tiempo de procesamiento a los diferentes hilos y procesos en ejecución. En este capítulo, nos sumergiremos en la comprensión de la planificación a corto plazo, con especial atención en el contexto del sistema operativo FreeBSD y su planificador 4BSD. Como ya se detalló previamente en el capítulo 1, este trabajo se basa y extiende directamente desde investigaciones previas\cite{bib1}, donde se introdujo el concepto de Redes de Petri, para el modelado de procesos.\par
 
+Exploraremos los conceptos fundamentales de procesos e hilos, detallando su estructura, estados y dinámicas de ejecución. Además, nos adentraremos en el funcionamiento interno del planificador, desglosando las operaciones esenciales como el cambio de contexto, el encolado de procesos, la selección de procesador y la remoción de hilos de la cola. Estos aspectos son esenciales para comprender cómo el planificador 4BSD toma decisiones en tiempo real sobre la ejecución de procesos y la administración de recursos.\par
+
+Al profundizar en esta base teórica, no solo sentaremos las bases para entender el funcionamiento del planificador de FreeBSD, sino que también estableceremos una sólida conexión con los avances y las decisiones tomadas en trabajos anteriores. Esto nos permitirá visualizar el progreso continuo y las oportunidades de mejora que surgieron a partir de esos primeros cambios implementados en el sistema operativo.\par
 
 \subsection{Procesos e hilos}
 
 En sistemas operativos, los procesos son entidades aisladas que representan la ejecución de una tarea o aplicación en particular. Cada proceso cuenta con su propio espacio de direcciones, que es un área reservada de memoria virtual donde se aloja el código del programa, las variables y los recursos necesarios para su ejecución. Además, disponen de acceso a los recursos del kernel a través de llamadas a sistemas.\par
 
-Cada proceso puede alojar uno o varios hilos de ejecución. Estos son subunidades dentro de un proceso que pueden ejecutarse de manera independiente, y comparten los recursos del mismo. Cada hilo se corresponde con un procesador virtual que cuenta con su propio contexto y un stack de ejecución que se aloja en el espacio de direcciones del proceso.\par
+Dentro de cada proceso, puede haber uno o varios hilos de ejecución. Estos hilos son unidades de ejecución independientes que comparten los recursos del proceso padre. Cada hilo se asocia con un procesador virtual, que tiene su propio contexto y un stack de ejecución alojado en el espacio de direcciones del proceso.\par
 
-El kernel del sistema operativo soporta la ilusión de ejecución concurrente de múltiples procesos al repartir los recursos del sistema entre los procesadores que están listos para ejecutar.\par
+El kernel del sistema operativo crea la ilusión de ejecución concurrente de múltiples procesos, distribuyendo los recursos del sistema entre los procesadores listos para ejecutar tareas.\par
 
 \subsubsection{Estructura de los procesos}
-Cada proceso en el sistema recibe un identificador único llamado identificador de proceso (PID). Los PID son el mecanismo común utilizado por las aplicaciones y el kernel para hacer referencia a los procesos. Existen dos identificadores que son de especial importancia para cada proceso: el PID del proceso en sí, y el PID del proceso padre.\par
+Cada proceso en el sistema recibe un identificador único llamado \textit{identificador de proceso} (PID). Los PID son el mecanismo común utilizado por las aplicaciones y el kernel para hacer referencia a los procesos. Existen dos identificadores que son de especial importancia para cada proceso: el PID del proceso en sí, y el PID del proceso padre.
 
-La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process_state}. El objetivo es permitir múltiples hilos que compartan un espacio de direcciones y otros recursos. Algunas de estas categorías son:\par
+La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process_state}. Esta estructura tiene como objetivo facilitar la gestión de múltiples hilos que comparten un espacio de direcciones y otros recursos dentro del proceso. Algunas de las categorías que componen esta estructura son las siguientes:
 
 \begin{itemize}
-    \item Identificación del grupo de procesos: el grupo de procesos y la sesión a la que pertenece el mismo.
-    \item Credenciales de usuario: los identificadores de usuario y grupo.
-    \item Gestión de memoria: la estructura que describe el espacio de direcciones virtuales utilizado por el proceso.
+    \item Identificación del grupo de procesos: el grupo de procesos y la sesión a la que pertenece el mismo son elementos importantes para la gestión y el control de los procesos en el sistema.
+    \item Credenciales de usuario: los identificadores de usuario y grupo determinan los permisos de acceso a los recursos del sistema.
+    \item Gestión de memoria: esta parte de la estructura es crucial para asignar y gestionar el espacio de direcciones virtuales del proceso, así como para administrar otros aspectos relacionados con la memoria.
     \item Descriptores de archivos: una matriz de punteros que indica los archivos abiertos por el proceso e información relevante de los mismos.
     \item Vector de llamadas al sistema: estructura de datos que mapea las llamadas al sistema con las funciones correspondientes en el kernel del sistema operativo.
-    \item Contabilidad de recursos: estructura que describe la utilización de los recursos del sistema..
+    \item Contabilidad de recursos: estructura que describe la utilización de los recursos del sistema por parte del proceso.
     \item Estadísticas: estadísticas del proceso sobre su ejecución, temporizadores y profiling.
     \item Acciones de señal: la acción a tomar cuando se envía una señal a un proceso.
     \item Estructura de hilo: el contenido de la estructura de hilos del proceso.
@@ -30,17 +33,17 @@ La estructura simplificada de un proceso se puede observar en la Figura \ref{fig
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{images/processStructure.png}
+    \includegraphics[width=0.5\textwidth]{images/processStructure.png}
     \caption{Estructura simplificada de un proceso.}
     \label{fig:process_state}
 \end{figure}
 
-\subsubsection{Estructura de hilos}
-Un hilo, en el contexto de un proceso en un sistema operativo, es una entidad de ejecución que representa una secuencia independiente de instrucciones dentro de ese proceso. Cada hilo tiene su propio contador de programa, registros de CPU y pila de ejecución, lo que le permite ejecutar código de manera concurrente dentro del mismo proceso. Aunque los hilos comparten recursos como el espacio de direcciones y otros recursos del proceso principal, también pueden comunicarse y cooperar entre sí para llevar a cabo tareas específicas de manera más eficiente.\par
+\subsubsection{Estructura de los hilos}
+Un hilo, en sistemas operativos modernos, constituye una unidad fundamental de ejecución dentro de un proceso. Se trata de una entidad independiente que representa una secuencia de instrucciones ejecutables dentro del contexto de un proceso. Cada hilo posee su propio contador de programa, registros de CPU y pila de ejecución, lo que le permite ejecutar código de manera concurrente dentro del mismo proceso. Aunque los hilos comparten recursos como el espacio de direcciones y otros recursos del proceso principal, también pueden comunicarse y cooperar entre sí para llevar a cabo tareas específicas de manera más eficiente.\par
 
-FreeBSD adopta el modelo 1:1, en el que cada hilo de usuario se corresponde con un hilo a nivel de kernel para mejorar la eficiencia de las aplicaciones.\par
+En el caso de FreeBSD, el sistema adopta el modelo 1:1, donde cada hilo de usuario se corresponde con un hilo a nivel de kernel para mejorar la eficiencia de las aplicaciones.\par
 
-La estructura de un hilo, que se muestra en la Figura \ref{fig:process_state}, solo contiene la información necesaria para ejecutarse en el kernel del sistema operativo:
+La estructura de un hilo, que se muestra en la Figura \ref{fig:process_state}, contiene la información necesaria para ejecutarse en el kernel del sistema operativo:
 
 \begin{itemize}
     \item Información para la planificación: se refiere a la prioridad del hilo en modo kernel y en modo usuario, la cantidad de tiempo que ha pasado suspendido y el uso reciente de la CPU. Además, se indica el estado de ejecución del hilo, banderas de estado adicionales; y si el hilo se encuentra suspendido, información sobre el canal y evento por el cual espera.
@@ -51,7 +54,20 @@ La estructura de un hilo, que se muestra en la Figura \ref{fig:process_state}, s
 
 \subsubsection{Estados de los procesos e hilos}
 
-En FreeBSD, los procesos pueden encontrarse en uno de tres estados:
+\textcolor{red}{NOS QUEDAMOS ACA}
+
+Los procesos en FreeBSD pueden adoptar varios estados, cada uno indicando su actividad y situación actual:
+
+\begin{itemize}
+    \item \uppercase{New}: Cuando se crea un proceso mediante la llamada al sistema fork(), se inicia en este estado. En este estado, el proceso aún no ha sido completamente configurado y está a la espera de los recursos necesarios para comenzar su ejecución.
+    \item \uppercase{Normal}: Una vez que se han asignado los recursos necesarios, el proceso pasa a este estado, lo que indica que está listo para ejecutarse. Los procesos en este estado pueden cambiar entre los siguientes subestados:
+        \begin{itemize}
+            \item \uppercase{Runnable}: El proceso está listo para ser ejecutado o actualmente se está ejecutando en el procesador.
+            \item \uppercase{Sleeping}: El proceso está temporalmente suspendido, esperando la ocurrencia de un evento, como la llegada de datos o una señal, antes de poder continuar su ejecución.
+            \item \uppercase{Stopped}: El proceso está temporalmente detenido, ya sea por una senal enviada desde otro proceso o por el proceso padre.
+        \end{itemize}
+    \item \uppercase{Zombie}: Después de que un proceso ha completado su ejecución, entra en este estado. En este estado, el proceso aún tiene una entrada en la tabla de procesos del sistema, pero todos sus recursos han sido liberados y está a la espera de que su proceso padre recoja su estado de salida.
+\end{itemize}
 
 \begin{itemize}
     \item \uppercase{New}: Cuando se crea un proceso con la llamada al sistema fork.
