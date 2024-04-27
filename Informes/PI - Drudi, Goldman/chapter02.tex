@@ -17,7 +17,7 @@ El kernel del sistema operativo crea la ilusión de ejecución concurrente de m�
 \subsubsection{Estructura de los procesos}
 Cada proceso en el sistema recibe un identificador único llamado \textit{identificador de proceso} (PID). Los PID son el mecanismo común utilizado por las aplicaciones y el kernel para hacer referencia a los procesos. Existen dos identificadores que son de especial importancia para cada proceso: el PID del proceso en sí, y el PID del proceso padre.
 
-La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process_state}. Esta estructura tiene como objetivo facilitar la gestión de múltiples hilos que comparten un espacio de direcciones y otros recursos dentro del proceso. Algunas de las categorías que componen esta estructura son las siguientes:
+La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process-state}. Esta estructura tiene como objetivo facilitar la gestión de múltiples hilos que comparten un espacio de direcciones y otros recursos dentro del proceso. Algunas de las categorías que componen esta estructura son las siguientes:
 
 \begin{itemize}
     \item Identificación del grupo de procesos: el grupo de procesos y la sesión a la que pertenece el mismo son elementos importantes para la gestión y el control de los procesos en el sistema.
@@ -35,16 +35,16 @@ La estructura simplificada de un proceso se puede observar en la Figura \ref{fig
     \centering
     \includegraphics[width=0.5\textwidth]{images/processStructure.png}
     \caption{Estructura simplificada de un proceso.}
-    \label{fig:process_state}
+    \label{fig:process-state}
 \end{figure}
 
-Cada proceso cuenta con los punteros \textit{p_pptr}, \textit{p_children} y \textit{p_sibling}, utilizados para establecer la relacion entre procesos. Cuando se crea un proceso hijo, se agrega a la lista \textit{p_children} de su padre. El proceso hijo también mantiene un enlace a su padre mediante su puntero \textit{p_pptr}. Si un proceso tiene más de un hijo activo al mismo tiempo, los hijos están asociados entre sí a través de las entradas de la lista \textit{p_sibling}. La Figura \ref{fig:process_hierarchy} muestra un ejemplo de jerarquia de procesos.
+Cada proceso cuenta con los punteros \textit{p\_pptr}, \textit{p\_children} y \textit{p\_sibling}, utilizados para establecer la relacion entre procesos. Cuando se crea un proceso hijo, se agrega a la lista \textit{p\_children} de su padre. El proceso hijo también mantiene un enlace a su padre mediante su puntero \textit{p\_pptr}. Si un proceso tiene más de un hijo activo al mismo tiempo, los hijos están asociados entre sí a través de las entradas de la lista \textit{p\_sibling}. La Figura \ref{fig:process-hierarchy} muestra un ejemplo de jerarquia de procesos.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/process_hierarchy.jpeg}
+    \includegraphics[width=0.5\textwidth]{images/process-hierarchy.jpeg}
     \caption{Jerarquía de grupo de procesos.}
-    \label{fig:process_hierarchy}
+    \label{fig:process-hierarchy}
 \end{figure}
 
 
@@ -53,7 +53,7 @@ Un hilo, en sistemas operativos modernos, constituye una unidad fundamental de e
 
 En el caso de FreeBSD, el sistema adopta el modelo 1:1, donde cada hilo de usuario se corresponde con un hilo a nivel de kernel para mejorar la eficiencia de las aplicaciones.\par
 
-La estructura de un hilo, que se muestra en la Figura \ref{fig:process_state}, contiene la información necesaria para ejecutarse en el kernel del sistema operativo:
+La estructura de un hilo, que se muestra en la Figura \ref{fig:process-state}, contiene la información necesaria para ejecutarse en el kernel del sistema operativo:
 
 \begin{itemize}
     \item Información para la planificación: se refiere a la prioridad del hilo en modo kernel y en modo usuario, la cantidad de tiempo que ha pasado suspendido y el uso reciente de la CPU. Además, se indica el estado de ejecución del hilo, banderas de estado adicionales; y si el hilo se encuentra suspendido, información sobre el canal y evento por el cual espera.
