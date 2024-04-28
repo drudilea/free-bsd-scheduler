@@ -33,7 +33,7 @@ La estructura simplificada de un proceso se puede observar en la Figura \ref{fig
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/processStructure.png}
+    \includegraphics[width=0.5\textwidth]{./images/processStructure.png}
     \caption{Estructura simplificada de un proceso.}
     \label{fig:process-state}
 \end{figure}
@@ -42,7 +42,7 @@ Cada proceso cuenta con los punteros \textit{p\_pptr}, \textit{p\_children} y \t
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/process-hierarchy.jpeg}
+    \includegraphics[width=0.5\textwidth]{./images/process-hierarchy.jpeg}
     \caption{Jerarquía de grupo de procesos.}
     \label{fig:process-hierarchy}
 \end{figure}
@@ -76,11 +76,16 @@ En la tabla \ref{tabla:estados-proceso}, se proporciona una descripción concisa
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{@{}ll@{}}
-    \textbf{Estado} & \textbf{Características} \ \midrule
-    NEW & En fase de creación, aún sin recursos asignados \
-    NORMAL & Ejecución activa, sus hilos alternaran entre \textit{RUNNABLE}, \textit{SLEEPING} o \textit{STOPPED} \
-    ZOMBIE & En fase de finalización \ \bottomrule
+    \begin{tabular}{|c|l|}
+        \hline
+        \textbf{Estado} & \textbf{Características} \\
+        \hline
+        NEW & En fase de creación, aún sin recursos asignados \\
+        \hline
+        NORMAL & Ejecución activa, sus hilos alternaran entre \textit{RUNNABLE}, \textit{SLEEPING} o \textit{STOPPED} \\
+        \hline
+        ZOMBIE & En fase de finalización \\
+        \hline
     \end{tabular}
     \caption{Descripción de los estados del proceso en FreeBSD}
     \label{tabla:estados-proceso}
@@ -88,11 +93,11 @@ En la tabla \ref{tabla:estados-proceso}, se proporciona una descripción concisa
 
 En FreeBSD, el sistema organiza las estructuras de procesos en dos listas principales: \textit{zombproc} y \textit{allproc}. Los procesos en estado ZOMBIE se encuentran en la lista \textit{zombproc}, mientras que los procesos activos están en la lista \textit{allproc}. Esta distinción permite optimizar las operaciones del sistema, como la llamada al sistema \textit{wait} que busca procesos terminados, así como las operaciones del planificador que identifican procesos listos para ejecutarse.
 
-Los hilos de un proceso, por su lado, excluyendo los que están en ejecución, se distribuyen en tres colas principales: \textit{run_queue}, \textit{sleep_queue} y \textit{turnstile_queue}. Los hilos listos para ejecutarse se ubican en la \textit{run_queue}, mientras que aquellos que están bloqueados esperando eventos se encuentran en la \textit{sleep_queue} o en la \textit{turnstile_queue}. Es importante destacar que las colas \textit{run_queue} están organizadas según la prioridad de planificación de hilos establecida por el planificador 4BSD. La diferencia entre la \textit{turnstile_queue} y la \textit{sleep_queue}, radica en que esta última se utiliza para hilos bloqueados con locks de tipo \textit{sleepable}, mientras que la \textit{turnstile_queue} alberga hilos bloqueados con locks de tipo \textit{non-sleepable}.
+Los hilos de un proceso, por su lado, excluyendo los que están en ejecución, se distribuyen en tres colas principales: \textit{run\_queue}, \textit{sleep\_queue} y \textit{turnstile\_queue}. Los hilos listos para ejecutarse se ubican en la \textit{run\_queue}, mientras que aquellos que están bloqueados esperando eventos se encuentran en la \textit{sleep\_queue} o en la \textit{turnstile\_queue}. Es importante destacar que las colas \textit{run\_queue} están organizadas según la prioridad de planificación de hilos establecida por el planificador 4BSD. La diferencia entre la \textit{turnstile\_queue} y la \textit{sleep\_queue}, radica en que esta última se utiliza para hilos bloqueados con locks de tipo \textit{sleepable}, mientras que la \textit{turnstile\_queue} alberga hilos bloqueados con locks de tipo \textit{non-sleepable}.
 
 \subsubsection{Prioridad de los hilos}
 
-Las prioridades de los hilos son un componente importante para la planificación. Estas prioridades, que van desde 0 hasta 255 (donde 0 denota la prioridad más alta), determinarán el orden en que se ejecutarán los hilos. En la Tabla \ref{tabla:prio_hilos}, se describen los diferentes rangos de prioridades.
+Las prioridades de los hilos son un componente importante para la planificación. Estas prioridades, que van desde 0 hasta 255 (donde 0 denota la prioridad más alta), determinarán el orden en que se ejecutarán los hilos. En la Tabla \ref{tabla:prio-hilos}, se describen los diferentes rangos de prioridades.
 
 Las prioridades en el rango de 0 a 47 son asignadas de forma predeterminada por el sistema y se destinan a las tareas de interrupción.\par
 
@@ -120,7 +125,7 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
         \hline
     \end{tabular}
     \caption{Clases de hilos por rango de prioridad.}
-    \label{tabla:prio_hilos}
+    \label{tabla:prio-hilos}
 \end{table}
 
 
@@ -133,8 +138,6 @@ En este sentido, la planificación es fundamental para equilibrar la utilizació
 Además, el \textit{kernel} de FreeBSD cuenta con una cola de hilos de mínima prioridad que se ejecutan únicamente cuando ningún otro hilo en las colas de mayor prioridad está en un estado de posible ejecución.\par
 
 En cuanto al método de planificación por tiempo, FreeBSD favorece a los programas interactivos. Asigna una prioridad alta a cada hilo y permite que se ejecute por un periodo fijo de tiempo, conocido como \textit{time slice}. A medida que el hilo se ejecuta, su prioridad disminuye, mientras que aquellos suspendidos por E/S mantienen su prioridad. Por su parte, los hilos que se mantienen inactivos mejoran su prioridad en la cola.\par
-
-TIENE QUE SER MAS LARGA. VER COMO ALARGAR.
 
 \subsection{Conceptos del proyecto integrador previo}
 
@@ -154,7 +157,7 @@ El proyecto integrador del cual partimos, consiste en modelar el planificador 4B
 
 Las decisiones de encolado de los hilos en una CPU se toman a partir de la información representada en el modelo; así como también los estados globales y los de cada hilo.\par
 
-\textcolor{red}{agregar alguito pa no pasar tan duracell}
+\textcolor{red}{TODO: Agregar un poco mas para mejorar}
 
 \subsubsection{Elección del planificador}
 
