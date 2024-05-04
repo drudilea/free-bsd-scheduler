@@ -10,4 +10,6 @@
 *.fdb*
 *.fls
 *.toc
+*.ilg
+*.ind
 
