@@ -35,7 +35,7 @@ Un detalle que se debe tener en cuenta es que éste desarrollo, si bien evita qu
 
 Ésta aclaración se puede observar en la Red de Petri directamente, ya que la nueva plaza de suspensión sólo inhibe la transición de desencolado de la cola global y la transición encargada de agregar hilos a la cola del procesador, pero no interviene en las transiciones relacionadas a la ejecución de hilos, ni en la de desencolado propia del procesador (TRAN\_UNQUEUE).\par
 
-\textcolor{red}{IMAGEN DE LA RED DE UN SOLO PROCESADOR CON EL SUSPEND PROC PERO SIN EL IDLE}
+% TODO{IMAGEN DE LA RED DE UN SOLO PROCESADOR CON EL SUSPEND PROC PERO SIN EL IDLE}
 
 Como primer paso para la implementación a nivel código de esta funcionalidad, fue la modificación de las matrices (matriz base e incidencia) para dar soporte al cambio realizado en la red.\par
 
@@ -151,7 +151,7 @@ El problema surgía al intentar disparar la transición TRAN\_UNQUEUE del proces
 
 Para resolver esta problemática decidimos agregar una nueva transición (TRAN\_EXEC\_IDLE) que permite ejecutar el idlethread cuando no exista ningún hilo en la cola del procesador, incluyendo de esta forma, el caso en que el CPU se encuentre suspendido. Una vez aplicados estos cambios, el sistema representó fielmente el proceso interno llevado a cabo por el planificador.\par
 
-\textcolor{red}{IMAGEN DE LA RED DE UN SOLO PROCESADOR CON EL SUSPEND PROC CON EL IDLE}
+% TODO{IMAGEN DE LA RED DE UN SOLO PROCESADOR CON EL SUSPEND PROC CON EL IDLE}
 
 Para desarrollar esta actualización dentro del código se decidió realizar modificaciones de la Red de Petri de recursos, en las matrices base y de inhibición.\par
 

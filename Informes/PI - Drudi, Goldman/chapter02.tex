@@ -105,7 +105,7 @@ Las prioridades de los hilos en tiempo real se encuentran en el intervalo de 48 
 
 Los hilos con prioridades entre 120 y 223 pertenecen a la clase de hilos de tiempo compartido. Están destinados a ejecutar tareas de usuario convencionales y sus prioridades son ajustadas de manera automática por el kernel en función del uso de la CPU.\par
 
-Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la clase "IDLE" pueden ejecutarse. Estos hilos tienen la finalidad de mantener el sistema en un estado inactivo, consumiendo recursos mínimos y estando listos para responder a tareas prioritarias.\par
+Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la clase \"IDLE\" pueden ejecutarse. Estos hilos tienen la finalidad de mantener el sistema en un estado inactivo, consumiendo recursos mínimos y estando listos para responder a tareas prioritarias.\par
 
 \begin{table}[H]
     \centering
@@ -131,13 +131,23 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
 
 \subsection{Planificación}
 
-Planificar es decidir cómo, cuándo y por cuánto tiempo vamos a correr los hilos que se encuentran en nuestro sistema; tanto los hilos propios del sistema operativo, como de aplicaciones que se encuentran en ejecución.\par
+La planificación en sistemas operativos, implica decidir el orden y la duración de la ejecución de procesos e hilos del sistema. En este sentido, es el componente clave para optimizar el uso de recursos y el tiempo de ejecución de los programas.\par
 
-En este sentido, la planificación es fundamental para equilibrar la utilización de los recursos con el tiempo necesario para completar los programas. FreeBSD implementa por defecto, un planificador \textit{compartido por tiempo}, el cual calcula la prioridad de los procesos de manera periódica. Este cálculo se realiza en base a datos previos, como la cantidad de tiempo utilizado de CPU o la cantidad de recursos de memoria que el proceso mantiene o requiere para su ejecución. No obstante, algunas tareas requieren un control más preciso sobre el proceso, como el caso de la planificación de tiempo real. FreeBSD también implementa esta funcionalidad mediante una cola separada para los hilos en cuestión, los cuales no se ven interrumpidos por otros hilos a menos que tengan igual o mayor prioridad.\par
+FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinámicamente la prioridad de los procesos. Este cálculo se realiza en función de varios parámetros, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
 
-Además, el \textit{kernel} de FreeBSD cuenta con una cola de hilos de mínima prioridad que se ejecutan únicamente cuando ningún otro hilo en las colas de mayor prioridad está en un estado de posible ejecución.\par
+La política de planificación asigna inicialmente una prioridad de ejecución alta a cada hilo y permite que ese hilo se ejecute durante un intervalo de tiempo fijo, o \textit{time slice}. A los hilos que se ejecutan durante la duración de su \textit{time slice} se les decrementa la prioridad; mientras que los hilos que ceden la CPU (generalmente debido a operaciones de entrada/salida) pueden mantener su prioridad. Por otro lado, los hilos inactivos incrementan su prioridad.\par
 
-En cuanto al método de planificación por tiempo, FreeBSD favorece a los programas interactivos. Asigna una prioridad alta a cada hilo y permite que se ejecute por un periodo fijo de tiempo, conocido como \textit{time slice}. A medida que el hilo se ejecuta, su prioridad disminuye, mientras que aquellos suspendidos por E/S mantienen su prioridad. Por su parte, los hilos que se mantienen inactivos mejoran su prioridad en la cola.\par
+Esta forma de planificación beneficia especialmente a los programas interactivos. Los procesos que demandan una gran cantidad de tiempo de CPU ven reducida rápidamente su prioridad, mientras que los procesos interactivos que permanecen mayormente inactivos conservan una prioridad elevada. Esto permite que, cuando estén listos para ejecutarse, puedan desplazar a los procesos de baja prioridad que llevan ejecutándose durante un largo periodo de tiempo. Por ejemplo, supongamos que un editor de texto realiza una búsqueda dentro del documento, lo que conlleva un aumento temporal en el uso de recursos computacionales. Durante este período, la prioridad del editor puede verse momentáneamente reducida para dar prioridad a otros procesos más urgentes. Sin embargo, una vez completada la búsqueda y sin actividad adicional del usuario, el editor recuperará su prioridad en la cola de planificación del sistema operativo.\par
+
+Algunas tareas requieren un control más preciso sobre el proceso, como el caso de la planificación de tiempo real. FreeBSD también implementa esta funcionalidad mediante una cola separada para los hilos en cuestión, los cuales no se ven interrumpidos por otros hilos a menos que tengan igual o mayor prioridad. Además, el \textit{kernel} de FreeBSD cuenta con otra cola de hilos de mínima prioridad que se ejecutan únicamente cuando ningún hilo en las colas de mayor prioridad está en un estado de posible ejecución.\par
+
+\subsubsection{Multilevel Feedback Queue Scheduling}
+% https://www.geeksforgeeks.org/multilevel-feedback-queue-scheduling-mlfq-cpu-scheduling/
+
+% Pag 120 del PDF de 4.4BSD (no el de freebsd)
+
+% multilevel feedback queue: A queueing scheme in which requests are partitioned into multiple prioritized subqueues, with requests moving between subqueues based on dynamically varying criteria. The 4.4BSD kernel uses a multilevel- feedback-queueing scheme for scheduling the execution of processes.
+
 
 \subsection{Conceptos del proyecto integrador previo}
 
@@ -157,17 +167,17 @@ El proyecto integrador del cual partimos, consiste en modelar el planificador 4B
 
 Las decisiones de encolado de los hilos en una CPU se toman a partir de la información representada en el modelo; así como también los estados globales y los de cada hilo.\par
 
-\textcolor{red}{TODO: Agregar un poco mas para mejorar}
+% TODO{TODO: Agregar un poco mas para mejorar}
 
 \subsubsection{Elección del planificador}
 
-La planificación a corto plazo en FreeBSD ha experimentado una notable evolución a lo largo de los años. Desde sus inicios con el planificador 4BSD hasta el actual planificador ULE, se han implementado cambios significativos que han contribuido a mejorar la eficiencia y el rendimiento del sistema.\par
+La planificación a corto plazo en FreeBSD ha experimentado una evolución constante desde sus primeras versiones basadas en el sistema operativo 4.4BSD\cite{bib3}. A lo largo de su historia, FreeBSD ha confiado en dos planificadores para gestionar la asignación de recursos del sistema, siendo el planificador 4BSD uno de los más notables. Este planificador, inicialmente diseñado para sistemas monoprocesador, ha sido adaptado y optimizado para entornos multiprocesador, convirtiéndose en un componente fundamental de la arquitectura del sistema operativo.\par
 
-Aunque el planificador ULE es el predeterminado en las versiones actuales de FreeBSD, este trabajo se basa en el trabajo previo realizado en el marco del proyecto integrador, que se centró en el planificador 4BSD\@. Para entender con mayor detalle y contexto dicha elección, visitar la sección 2.3.3.\ del proyecto integrador previo\cite{bib1}.
+Aunque el planificador 4BSD es más simple en comparación con los más modernos, ha demostrado ser rápido y eficiente para satisfacer las necesidades de muchos usuarios. Sin embargo, con el objetivo de mejorar aún más el rendimiento y la capacidad de respuesta del sistema, se introdujo el planificador ULE en la versión 5.0 de FreeBSD. El ULE ofrece características avanzadas que lo hacen más adecuado para entornos con cargas de trabajo más complejas y exigentes.\par
 
-En este momento, nuestro enfoque principal no radica en realizar un cambio inmediato en el sistema operativo ni en contribuir directamente a la comunidad de FreeBSD\@. En su lugar, estamos continuando con la fase de investigación e implementación centrada en este tipo de planificadores.\par
+A pesar de que el planificador ULE se ha convertido en el predeterminado en las versiones más recientes de FreeBSD (a partir de la versión 8.0), el planificador 4BSD sigue siendo una opción estable y confiable. La comunidad de FreeBSD continúa manteniendo y brindando soporte para el planificador 4BSD, asegurando su disponibilidad para aquellos que prefieren su simplicidad y eficiencia. Además, no hay planes inmediatos por parte del equipo de desarrollo de FreeBSD para dejar de darle soporte.\par
 
-Al mismo tiempo, el planificador 4BSD ha sido mantenido por la comunidad de FreeBSD durante décadas y no hay planes inmediatos para dejar de darle soporte. Esto significa que todavía sigue siendo una opción estable y confiable para el desarrollo de nuestro proyecto.\par
+Nuestro proyecto se basa en el trabajo previo realizado en el marco del proyecto integrador, que se centró en el planificador 4BSD. Para obtener una comprensión más detallada y contextualizada de esta elección, se puede consultar las secciones de \textit{Alcance} (1.4) y  \textit{Diferencias entre el planificador ULE y el 4BSD} (2.3.3) del proyecto integrador previo\cite{bib1}. Aunque nuestro enfoque principal no radica en realizar cambios inmediatos en el sistema operativo ni en contribuir directamente a la comunidad de FreeBSD, continuamos con la fase de investigación e implementación centrada en este tipo de planificadores.\par
 
 
 --- PLANIFICADOR
@@ -187,7 +197,7 @@ En lo que respecta a las prioridades, el planificador 4BSD las ajusta periódica
 
 intro en donde se explica que todas las funciones de aca abajo basicamente fueron las que tuvieron que cambiar para la planificacion con RdP
 
-\textcolor{red}{Encolado (add)}
+% TODO{Encolado (add)}
 El sistema usa 64 colas, seleccionando una cola para un determinado hilo y dividiendo la prioridad del hilo por 4. Para ahorrar tiempo, los hilos en cada cola no se vuelven a dividir en prioridades.\par
 
 Estas colas pueden ser de tipo run queue, turnstile queue o sleep queue. Los hilos en estado RUNNABLE se ubican en las colas de tipo run queue; mientras que los que están bloqueados o esperando un evento, son posicionados en los otros dos tipos de colas.\par
@@ -217,7 +227,7 @@ Si el procesador al que se agrega el hilo es diferente al que está ejecutando l
 
 En caso de que el hilo se agregara a la cola del CPU actual, se llama a las funciones correspondientes para saber si este hilo tiene mayor prioridad que el que está en ejecución actualmente y debe reemplazarlo, esto se conoce como preemption.
 
-\textcolor{red}{Cambios de contexto (switch y throw)}
+% TODO{Cambios de contexto (switch y throw)}
 Al hablar de cambios de contexto de los hilos, se hace referencia a dos funciones en particular.\par
 
 La función sched\_switch() se encarga de expulsar al hilo que recibe por parámetro (hilo actual en ejecución), o en caso de que el hilo continúe en estado RUNNING por alguna razón, se vuelve a poner en cola a través de la función sched\_add().\par
@@ -230,7 +240,7 @@ La función cpu\_switch() guarda el contexto del hilo anterior y restaura el con
 
 Otra de las funciones que se encargan del cambio de contexto es sched\_throw(), la cual se encarga de cambiar un hilo por otro en el mismo CPU que se está ejecutando. Recibe un hilo como parámetro (el cual puede ser nulo), y lo expulsa del planificador. Luego a través de la misma función utilizada anteriormente, choosethread(), obtiene un nuevo hilo y continúa con su ejecución.\par
 
-\textcolor{red}{Elección de hilos (choose)}
+% TODO{Elección de hilos (choose)}
 La elección del próximo hilo a ejecutar se hace a través de la función sched\_choose() previamente invocada por la función choosethread() nombrada anteriormente.
 
 El funcionamiento consiste en elegir al hilo con mayor prioridad dentro de alguna de las colas no vacías del CPU o de la cola global. Cada hilo habilitado para ser ejecutado, es decir en estado RUNNABLE, tiene una prioridad asignada.
@@ -241,7 +251,7 @@ Una vez elegido el hilo, se procede a removerlo de la cola correspondiente, ya s
 
 Para el caso en que ambos hilos sean nulos, es decir, no hay hilos para ejecutar, se simula una ejecución con el idlethread y se retorna el mismo.
 
-\textcolor{red}{Remoción de hilos de la cola (rem)}
+% TODO{Remoción de hilos de la cola (rem)}
 A diferencia de la función anterior, en la que al elegir un hilo para correr, éste era removido de la cola en la que estaba ubicado, la función sched\_rem() se utiliza para quitar un hilo (especificado por parámetro) de una cola por dos razones principales.\par
 
 Una de estas es el ajuste de prioridad que consiste en otorgarle una nueva prioridad al hilo por lo que es necesario removerlo de la cola en la que se encuentra y luego volver a encolarlo a través de la función sched\_add() en la posición correspondiente.\par
@@ -254,7 +264,7 @@ El otro motivo por el cual se querría hacer uso de esta función es en caso de 
 \subsubsection{Modelado del hilo}
 Uno de los modelos representados a través de la Red de Petri, es el de los estados de un hilo. En la figura es posible observar esta representación.\par
 
-\textcolor{red}{Agregar red de petri del hilo}
+% TODO{Agregar red de petri del hilo}
 
 \begin{itemize}
     \item \textbf{T0\_INIT}: El paso del estado INACTIVE a CAN\_RUN. Esto sucede cuando el hilo se agrega al planificador. Esto sucede generalmente en el momento de creación de un proceso o cuando el mismo realiza un fork. Esta tarea no corresponde al scheduler, por lo que inicialmente un hilo en el planificador se encuentra inicializado en el estado CAN\_RUN. Esta transición nunca se dispara, solo se la incorpora al modelo de modo representativo.
@@ -271,7 +281,7 @@ Uno de los modelos representados a través de la Red de Petri, es el de los esta
 
 Para modelar el planificador se hace un modelo específico para un procesador y se extiende para los demás. En este proyecto se consideran cuatro procesadores.
 
-\textcolor{red}{Agregar red de petri de 1 procesador}
+% TODO{Agregar red de petri de 1 procesador}
 
 Transiciones
 \begin{itemize}

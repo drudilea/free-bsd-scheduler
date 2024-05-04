@@ -6,7 +6,7 @@ Ambos mecanismos desarrollados proporcionan al sistema operativo y a la red las 
 
 Como se detalló en la sección de desarrollo de este informe, previo a  la implementación de los módulos mencionados llevamos a cabo una actualización del código del kernel, para incorporar al último lanzamiento estable de FreeBSD, las modificaciones realizadas en el proyecto integrador previo. Decidimos incluir los resultados de esta actualización al final de este capítulo, dado que consideramos que los módulos son más propensos a un análisis detallado y a comprender sus resultados. En contraste, las actualizaciones simplemente requieren que el sistema continúe funcionando correctamente.\par
 
-\textcolor{red}{ESCRIBIR ALGO SOBRE LAS HERRAMIENTAS QUE SE IMPLEMENTARAN A LA HORA DE LOS ANÁLISIS.}
+% TODO{ESCRIBIR ALGO SOBRE LAS HERRAMIENTAS QUE SE IMPLEMENTARAN A LA HORA DE LOS ANÁLISIS.}
 
 
 \subsection{Resultados de la Implementación del Módulo de Encendido/Apagado de Procesadores}
@@ -46,15 +46,15 @@ Este enfoque nos permitió no solo corroborar la funcionalidad adecuada de la im
 
 En relación a los resultados obtenidos durante esta evaluación, observamos que, al suspender uno de los procesadores del sistema, este continuó funcionando de manera estable. Se puede apreciar que la carga del procesador suspendido se mantuvo en cero, mientras que los demás procesadores continuaron ejecutando los cálculos. Esto demuestra de manera concluyente que el sistema fue capaz de adaptarse sin dificultades a la reducción de recursos de procesamiento.\par
 
-\textcolor{red}{IMAGEN CON PROCESADOR SUSPENDIDO}
+% TODO{IMAGEN CON PROCESADOR SUSPENDIDO}
 
-En relación al tiempo necesario para completar el cálculo del programa, notamos que dicho tiempo aumentó proporcionalmente a la disminución en el número de procesadores activos, destacando la correlación entre la disponibilidad de recursos de procesamiento y el tiempo total requerido para finalizar el programa. En la \textcolor{red}{FIGURA TANTO} podemos comprobar el funcionamiento del sistema con la inhabilitación simultánea de dos procesadores.\par
+En relación al tiempo necesario para completar el cálculo del programa, notamos que dicho tiempo aumentó proporcionalmente a la disminución en el número de procesadores activos, destacando la correlación entre la disponibilidad de recursos de procesamiento y el tiempo total requerido para finalizar el programa. En la % TODO{FIGURA TANTO} podemos comprobar el funcionamiento del sistema con la inhabilitación simultánea de dos procesadores.\par
 
-\textcolor{red}{IMAGEN CON DOS PROCESADORES SUSPENDIDOS}
+% TODO{IMAGEN CON DOS PROCESADORES SUSPENDIDOS}
 
-\textcolor{red}{TABLA CON LOS TIEMPOS DE EJECUCION CON TODOS LOS PROC, CON 3 Y CON 2 + explicacion + diciendo que el objetivo no es tener apagos los procesadores en tiempos de estres, sino que se muestra solo para ejemplificar, y que la parte del kernel que en un futuro haga uso del modulo para reducir los gastos energeticos, tiene que entender cuando conviene apagar. (Medio como conclusion del modulo)}
+% TODO{TABLA CON LOS TIEMPOS DE EJECUCION CON TODOS LOS PROC, CON 3 Y CON 2 + explicacion + diciendo que el objetivo no es tener apagos los procesadores en tiempos de estres, sino que se muestra solo para ejemplificar, y que la parte del kernel que en un futuro haga uso del modulo para reducir los gastos energeticos, tiene que entender cuando conviene apagar. (Medio como conclusion del modulo)}
 
-\textcolor{red}{branch con el codigo}
+% TODO{branch con el codigo}
 
 
 \subsection{Resultados del módulo de Monopolización de Núcleos}
@@ -62,7 +62,7 @@ La implementación del módulo de Monopolización de Núcleos en FreeBSD constit
 \subsubsection{Estado Normal del Sistema}
 En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutaran hilos de clase IDLE en caso de inactividad del sistema.\par
 
-\textcolor{red}{ENCONTRAR UNA FORMA DE MOSTRAR COMO LOS HILOS SE PLANIFICAN SIN TENER EN CUENTA LA MONOPOLIZACION, CAMBIANDO SU EJECUCION ENTRE LOS DISTINTOS NUCLEOS}
+% TODO{ENCONTRAR UNA FORMA DE MOSTRAR COMO LOS HILOS SE PLANIFICAN SIN TENER EN CUENTA LA MONOPOLIZACION, CAMBIANDO SU EJECUCION ENTRE LOS DISTINTOS NUCLEOS}
 
 
 \subsubsection{Comportamiento con el Módulo Habilitado}
@@ -72,19 +72,19 @@ Siguiendo un procedimiento similar al empleado con el módulo de encendido y apa
 
 En este momento, nos enfocamos en los procesadores que ejecutan cada subproceso y cómo pueden variar según las decisiones del planificador.
 
-\textcolor{red}{2 imágenes con los subprocesos, que se pueda ver una comparación de cómo cambia el CPU para alguno de los subprocesos, es decir, subproceso 1 primer imagen corre en el cpu 1, segunda imagen ese mismo subproceso corre en cpu 3}
+% TODO{2 imágenes con los subprocesos, que se pueda ver una comparación de cómo cambia el CPU para alguno de los subprocesos, es decir, subproceso 1 primer imagen corre en el cpu 1, segunda imagen ese mismo subproceso corre en cpu 3}
 
 Con el programa en ejecución y el monitoreo activado, el siguiente paso implica la configuración del módulo; en otras palabras, es el momento de actualizar las variables dentro del código del módulo. La primera variable a considerar es el identificador del subproceso que deseamos anclar a un núcleo específico, obtenido previamente del programa de monitoreo. Una vez que tenemos el identificador, procedemos a seleccionar en qué núcleo asociaremos este hilo, compilando y cargando el módulo de kernel adecuado.\par
 
 Los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. En este caso, hemos seleccionado el hilo con el identificador  878172 y el CPU 2. Como era de esperar, tras la ejecución del módulo, este subproceso estuvo vinculado al CPU durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
 
-\textcolor{red}{Imagen con el hilo asociado al núcleo, quizás también podemos tener un link a video para mostrar hasta que termina de ejecutarse, y con la desactivación del módulo para ver como el cpu vuelve a estar disponible para los otros procesos}
+% TODO{Imagen con el hilo asociado al núcleo, quizás también podemos tener un link a video para mostrar hasta que termina de ejecutarse, y con la desactivación del módulo para ver como el cpu vuelve a estar disponible para los otros procesos}
 
 Un caso relevante es el estado del sistema una vez que el programa de estrés ha concluido pero el módulo permanece activado. En estas condiciones, se puede observar cómo el CPU al que se había anclado el hilo permanece “reservado”, sin ejecutar ningún hilo que no posea el ID especificado, mientras que los procesos restantes solo se ejecutan en los núcleos liberados. Con esto en mente, se puede identificar una similitud con el funcionamiento del módulo de encendido/apagado al desactivar un núcleo.\par
 
 Al desactivar el módulo, el sistema continúa operando según lo esperado, con todos sus núcleos disponibles, tal como lo haría en su estado normal.
 
-\textcolor{red}{branch con el codigo}
+% TODO{branch con el codigo}
 
 \subsection{Resultados de las actualizaciones en la versión del S.O.}
 En esta sección, se expondrán los resultados derivados de las actualizaciones implementadas en el marco del proyecto integrador previo. Es relevante subrayar que estas actualizaciones se llevaron a cabo con el propósito de sincronizar el proyecto con la versión más reciente y estable del sistema operativo (versión 13.1). Dado que la implementación original demostró su eficacia en la versión 11, el énfasis principal en esta sección se dirigirá a garantizar la continuidad de dicho rendimiento.\par
@@ -95,7 +95,7 @@ A pesar de la necesidad de revisar numerosos conflictos generados entre el códi
 
 El código correspondiente a esta etapa se encuentra en una rama específica del repositorio del proyecto. Debido a la estructura de ramas y modalidad de trabajo que se planteó para la realización de este trabajo integrador, también podemos encontrar una rama por cada actualización que se fue realizando progresivamente desde la 11 hasta la 13.1.\par
 
-\textcolor{red}{MOSTRAR ALGUNAS IMAGENES DEL PROYECTO CORRIENDO CON LA VERSION 13.1 Y UTILIZANDO LA RED}
+% TODO{MOSTRAR ALGUNAS IMAGENES DEL PROYECTO CORRIENDO CON LA VERSION 13.1 Y UTILIZANDO LA RED}
 
-\subsection{Resultados del tareas extra \textcolor{red}{OPCIONAL - VER SI LO AGREGAMOS}}
+\subsection{Resultados del tareas extra % TODO{OPCIONAL - VER SI LO AGREGAMOS}}
 
