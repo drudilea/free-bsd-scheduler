@@ -133,33 +133,46 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
 
 La planificación en sistemas operativos, implica decidir el orden y la duración de la ejecución de procesos e hilos del sistema. En este sentido, es el componente clave para optimizar el uso de recursos y el tiempo de ejecución de los programas.\par
 
-FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinámicamente la prioridad de los procesos. Este cálculo se realiza en función de varios parámetros, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
+% TODO: Explicitar cual calculo aca abajo.
+FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinámicamente la prioridad de los procesos. El cálculo se realiza en función de varios parámetros de comportamiento previo de dicho proceso, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
 
 La política de planificación asigna inicialmente una prioridad de ejecución alta a cada hilo y permite que ese hilo se ejecute durante un intervalo de tiempo fijo, o \textit{time slice}. A los hilos que se ejecutan durante la duración de su \textit{time slice} se les decrementa la prioridad; mientras que los hilos que ceden la CPU (generalmente debido a operaciones de entrada/salida) pueden mantener su prioridad. Por otro lado, los hilos inactivos incrementan su prioridad.\par
 
-Esta forma de planificación beneficia especialmente a los programas interactivos. Los procesos que demandan una gran cantidad de tiempo de CPU ven reducida rápidamente su prioridad, mientras que los procesos interactivos que permanecen mayormente inactivos conservan una prioridad elevada. Esto permite que, cuando estén listos para ejecutarse, puedan desplazar a los procesos de baja prioridad que llevan ejecutándose durante un largo periodo de tiempo. Por ejemplo, supongamos que un editor de texto realiza una búsqueda dentro del documento, lo que conlleva un aumento temporal en el uso de recursos computacionales. Durante este período, la prioridad del editor puede verse momentáneamente reducida para dar prioridad a otros procesos más urgentes. Sin embargo, una vez completada la búsqueda y sin actividad adicional del usuario, el editor recuperará su prioridad en la cola de planificación del sistema operativo.\par
+Esta forma de planificación beneficia especialmente a los programas interactivos. Los procesos que demandan una gran cantidad de tiempo de CPU ven reducida rápidamente su prioridad, mientras que los procesos interactivos que permanecen mayormente inactivos conservan una prioridad elevada. Esto permite que, cuando estén listos para ejecutarse, puedan desplazar a los procesos de baja prioridad que llevan ejecutándose durante un largo período de tiempo. Por ejemplo, supongamos que un editor de texto realiza una búsqueda dentro de un documento, lo que conlleva un aumento temporal en el uso de recursos computacionales. Durante este período, la prioridad del editor puede verse momentáneamente reducida para dar prioridad a otros procesos más urgentes. Sin embargo, una vez completada la búsqueda y sin actividad adicional del usuario, el editor recuperará su prioridad en la cola de planificación del sistema operativo.\par
 
 Algunas tareas requieren un control más preciso sobre el proceso, como el caso de la planificación de tiempo real. FreeBSD también implementa esta funcionalidad mediante una cola separada para los hilos en cuestión, los cuales no se ven interrumpidos por otros hilos a menos que tengan igual o mayor prioridad. Además, el \textit{kernel} de FreeBSD cuenta con otra cola de hilos de mínima prioridad que se ejecutan únicamente cuando ningún hilo en las colas de mayor prioridad está en un estado de posible ejecución.\par
+% TODO: Ver si hablamos del thrashing (pagina 106 del PDF del libro viejo (4.4BSD book))
 
-\subsubsection{Multilevel Feedback Queue Scheduling}
-% https://www.geeksforgeeks.org/multilevel-feedback-queue-scheduling-mlfq-cpu-scheduling/
+\subsubsection{\textit{Multilevel Feedback Queue Scheduling}}
 
-% Pag 120 del PDF de 4.4BSD (no el de freebsd)
+El planificador 4BSD, utiliza un algoritmo de planificación basado en colas de retroalimentación multinivel \textit{Multilevel Feedback Queue}. Todos los hilos en estado \textit{RUNNABLE} reciben una prioridad que determina en qué cola de ejecución se colocan. Al seleccionar un nuevo hilo para ejecutar, el sistema escanea las colas de ejecución de mayor a menor prioridad y elige aquel que se encuentra en la primera cola no vacía. Si varios hilos residen en una cola, el sistema los ejecuta en orden circular (\textit{Round Robin}); es decir, en el orden en que se encuentran en la cola, con igual cantidad de tiempo permitido.\par
 
-% multilevel feedback queue: A queueing scheme in which requests are partitioned into multiple prioritized subqueues, with requests moving between subqueues based on dynamically varying criteria. The 4.4BSD kernel uses a multilevel- feedback-queueing scheme for scheduling the execution of processes.
+Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (\textit{run\_queue}); en su lugar, se coloca en una \textit{turnstile\_queue} o en una \textit{sleep\_queue}. Cuando el hilo agota el \textit{time slice}, se coloca al final de la cola de la que provino y se selecciona el hilo que se encuentra al comienzo de la misma para ejecutarse.\par
 
+Cuanto más corto sea el \textit{time slice}, mejor será la respuesta interactiva. Sin embargo, cuanto más largos sean los cuántums de tiempo, mayor será el rendimiento del sistema, ya que habrá menos sobrecarga debida a los cambios de contexto y se limpiarán menos a menudo las cachés del procesador. El \textit{time slice} utilizado por 4BSD es de 0.1 segundo. Este valor se encontró empíricamente como el cuántum más largo que podía usarse sin pérdida de la respuesta deseada para trabajos interactivos como los editores.\par
+
+\subsubsection{Colas de ejecución de hilos y Cambios de Contexto}
+
+El \textit{kernel} cuenta con un conjunto único de colas de ejecución para manejar todas las clases de hilos mencionadas anteriormente en la sección "Prioridad de los hilos". La cantidad de colas utilizadas para mantener la colección de hilos \textit{RUNNABLE} impacta en el costo de su gestión. Mantener una sola cola ordenada simplifica la operación de búsqueda y selección del próximo hilo listo, pero otras operaciones se vuelven más costosas. Por otro lado, si se utilizara una cola por cada nivel de prioridad, la selección del próximo hilo listo sería demasiado costosa, dado que habría que buscar entre 256 de ellas. FreeBSD emplea 64 colas de ejecución para los hilos listos, de modo que para ubicar un hilo en una cola, se divide la prioridad del mismo por 4, y el resultado indica la cola donde debería ser ubicado. Con el fin de optimizar el tiempo, los hilos en cada cola no son reordenados según sus prioridades.\par
+
+Las colas de ejecución contienen todos los hilos listos en la memoria principal, excepto el hilo que se está ejecutando actualmente. La Figura \ref{fig:queueing-structure} muestra cómo se organiza cada cola como una lista doblemente enlazada de estructuras de hilo. La cabecera de cada cola de ejecución se mantiene en un arreglo. Asociado con este arreglo existe un vector de bits que se utiliza para identificar las colas de ejecución no vacías.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./images/queueing-structure.jpg}
+    \caption{Estructura de colas para hilos \textit{RUNNABLE}}
+    \label{fig:queueing-structure}
+\end{figure}
+
+El código de cambio de contexto se divide en dos partes: una parte independiente de la máquina, que reside en \textit{mi\_switch()}, y otra parte dependiente de la máquina, que reside en \textit{cpu\_switch()}.\par
+
+Los \textbf{cambios de contexto voluntarios}, es decir, cuando un hilo decide ceder la CPU de forma deliberada, ocurren cuando dicho hilo llama a la rutina \textit{sleep()}, colocándolo en una cola de espera e invocando \textit{mi\_switch()} para programar el siguiente hilo a ejecutar.\par
+
+La rutina \textit{mi\_switch()} no puede ser llamada desde el código que se ejecuta a nivel de interrupción, ya que debe ser invocada dentro del contexto del hilo en ejecución. Por ello, para \textbf{cambios de contexto involuntarios}, se activa la bandera TDF\_NEEDRESCHED del hilo en ejecución y luego se envía una trampa de sistema asíncrona (AST). Una AST es una trampa que se le entrega al hilo que se estaba ejecutando previo a una interrupción, para que en lugar de reanudar su ejecución (al volver de la interrupción), se llame a la rutina \textit{mi\_switch()}.\par
 
 \subsection{Conceptos del proyecto integrador previo}
 
-% El scheduler se encarga de planificar aquellos hilos correspondientes a procesos en estado NORMAL. Los hilos que conforman un proceso pueden encontrarse en diferentes estados:
-
-% \begin{itemize}
-%     \item \uppercase{inactive}: En proceso de creación y aún no han sido inicializados.
-%     \item \uppercase{inhibited}: Esperando por algún recurso del sistema o evento antes de poder ejecutarse.
-%     \item \uppercase{can\_run}: Inicializados y disponibles para ser agregados a alguna cola de ejecución.
-%     \item \uppercase{runq}: En la cola de ejecución, esperando su turno para ser ejecutados.
-%     \item \uppercase{running}: En ejecución.
-% \end{itemize}
+En esta sección, revisaremos los conceptos clave abordados en el proyecto integrador previo. Estos conceptos proporcionan un fundamento crucial para nuestro trabajo actual, permitiéndonos construir sobre los conocimientos y avances previos en el campo.
 
 \subsubsection{Introducción}
 
@@ -195,7 +208,7 @@ En lo que respecta a las prioridades, el planificador 4BSD las ajusta periódica
 
 \subsubsection*{Funciones basicas del planificador}
 
-intro en donde se explica que todas las funciones de aca abajo basicamente fueron las que tuvieron que cambiar para la planificacion con RdP
+% TODO intro en donde se explica que todas las funciones de aca abajo basicamente fueron las que tuvieron que cambiar para la planificacion con RdP
 
 % TODO{Encolado (add)}
 El sistema usa 64 colas, seleccionando una cola para un determinado hilo y dividiendo la prioridad del hilo por 4. Para ahorrar tiempo, los hilos en cada cola no se vuelven a dividir en prioridades.\par
