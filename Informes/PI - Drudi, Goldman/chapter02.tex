@@ -159,6 +159,7 @@ Las colas de ejecución contienen todos los hilos listos en la memoria principal
 
 \begin{figure}[H]
     \centering
+    \vspace*{0.2in}
     \includegraphics[width=0.8\textwidth]{./images/queueing-structure.jpg}
     \caption{Estructura de colas para hilos \textit{RUNNABLE}}
     \label{fig:queueing-structure}
@@ -170,12 +171,25 @@ Los \textbf{cambios de contexto voluntarios}, es decir, cuando un hilo decide ce
 
 La rutina \textit{mi\_switch()} no puede ser llamada desde el código que se ejecuta a nivel de interrupción, ya que debe ser invocada dentro del contexto del hilo en ejecución. Por ello, para \textbf{cambios de contexto involuntarios}, se activa la bandera TDF\_NEEDRESCHED del hilo en ejecución y luego se envía una trampa de sistema asíncrona (AST). Una AST es una trampa que se le entrega al hilo que se estaba ejecutando previo a una interrupción, para que en lugar de reanudar su ejecución (al volver de la interrupción), se llame a la rutina \textit{mi\_switch()}.\par
 
+\subsubsection{Planificador 4BSD para sistemas multiprocesador}
+
+El planificador 4BSD en FreeBSD está diseñado para gestionar la carga de trabajo en sistemas multiprocesador mediante un enfoque que equilibra la carga de los procesadores. Para lograr esto, el planificador emplea tanto las colas de ejecución específicas de cada CPU como una cola de ejecución global. Tanto la cola global como las específicas de cada CPU están estructuradas como colas de múltiples niveles con realimentación (Multilevel Feedback Queue), lo que permite priorizar y gestionar los hilos de manera eficiente según su comportamiento y necesidades de tiempo de CPU.
+
+La cola de ejecución global contiene hilos que pueden ser ejecutados por cualquier CPU del sistema. Sirve como un \textit{pool} central de hilos listos para ejecutarse, permitiendo una distribución flexible de la carga de trabajo. Cuando una CPU queda inactiva, revisa tanto su propia cola de ejecución como la cola de ejecución global, seleccionando el hilo con mayor prioridad para ejecutarlo. En los casos en donde la cola de ejecución propia está vacía, la CPU tomará un hilo de la cola global, garantizando que todas las CPUs tengan trabajo disponible si hay suficientes hilos listos para ejecutarse.
+
+Por otro lado, cada CPU en el sistema tiene su propia cola de ejecución. Estas colas contienen hilos que están designados para ejecutarse en CPUs específicas. Para optimizar el rendimiento, el planificador 4BSD considera varias restricciones y preferencias de afinidad cuando decide dónde colocar un hilo cuando termina su \textit{time slice} o debe abandonar por otras razones.
+
+Algunos hilos pueden estar vinculados a un conjunto específico de CPUs debido a consideraciones de rendimiento. El planificador 4BSD respeta esta afinidad al determinar en qué CPU encolar el hilo mediante un mecanismo de iteración sobre las CPUs asignadas al hilo, excluyendo aquellas para las que no existe afinidad. Luego, selecciona la CPU cuya cola tenga la menor cantidad de hilos listos para ejecutarse.\par
+
+La función de \textit{bounding}, por otro lado, implica restringir un hilo a un procesador específico. Por ejemplo, al ejecutar el método \textit{kern\_reboot} en FreeBSD, encargado de preparar el sistema para un reinicio, apagado o parada, es necesario vincular primero dicho hilo al procesador 0. Esto garantiza que el código se ejecute en la CPU 0, una práctica crucial en sistemas que solo permiten la ejecución de instrucciones en dicha CPU.\par
+
+Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particular. Cuando un hilo está anclado, el planificador se asegura de encolarlo siempre en el último procesador en el que se ejecutó. En el contexto del kernel de FreeBSD, esto se realiza para mantener la coherencia de caché o para garantizar la eficiencia de la ejecución de tareas críticas evitando la migración del hilo entre CPUs durante su ejecución. El método que ancla un hilo, es el que finalmente libera al hilo de esta restricción.\par
+
 \subsection{Conceptos del proyecto integrador previo}
 
 En el contexto del proyecto integrador previo, se llevó a cabo un análisis detallado del comportamiento del \textit{scheduler} de un sistema operativo, con un enfoque específico en el proceso de asignación de tiempo de procesador. El objetivo fundamental fue identificar oportunidades de mejora en su funcionamiento, migrando de una visión estadística a un sistema más complejo implementado mediante Redes de Petri, en donde las decisiones de encolado de los hilos en una CPU se derivan de la información representada en el modelo, incluidos los estados globales y los de cada hilo.\par
 
 En las secciones siguientes, se presentan los puntos clave abordados en este estudio, incluyendo la naturaleza de las modificaciones realizadas. Además, se resaltan los puntos de interés surgidos durante este análisis, los cuales orientarán el desarrollo de los distintos módulos destinados a ampliar las funcionalidades de planificación como la gestión del encendido y apagado de procesadores, así como la monopolización de los mismos por parte de los hilos.\par
-
 
 \subsubsection{Elección del planificador}
 
@@ -192,14 +206,16 @@ Nuestro proyecto se basa en el trabajo previo que se centró en el planificador 
 
 % https://github.com/drudilea/freebsd-src/compare/release/11.0.0...drudilea:freebsd-src:DrudiGoldmanPI/update_petriNetScheduler-11.0.0
 
-Como se explico previamente, planificar es decidir sobre el orden y la duracion de la ejecucion de los distintos hilos del sistema. Desde siempre, los sistemas operativos han basado sus decisiones a estadisticas sobre el funcionamiento previo, es decir, tomando tales decisiones, me fue de tal manera.
+Como se explicó previamente, la planificación en sistemas operativos consiste en decidir el orden y la duración de la ejecución de los distintos hilos del sistema. Tradicionalmente, los sistemas operativos han basado estas decisiones en estadísticas del comportamiento previo, utilizando datos históricos para optimizar el rendimiento.
 
-Los puntos claves donde hay que tomar decisiones son los momentos en donde se decide que un hilo tiene que frenar su uso del CPU para dejarselo a otro y asi lograr la ilusion de que todos ellos se ejecutan de forma concurrente. Basado en lo explicado sobre el funcionamiento del planificador 4BSD, esto se reduce a la des-encolar un hilo de una queue de hilos RUNNABLE y pasarlo a ejecucion, dejando el hilo que se encontraba haciendo uso de dicha cpu en una de estas colas de ejecucion.
+Los puntos clave para la toma de decisiones se encuentran en los momentos en que un hilo debe ceder el uso de la CPU a otro, creando la ilusión de concurrencia en la ejecución de múltiples hilos. En el contexto del planificador 4BSD de FreeBSD, esto implica desencolar un hilo de la cola de hilos RUNNABLE y pasarlo a ejecución, mientras que el hilo que estaba utilizando la CPU se reencola en una de las colas de ejecución.
 
-Es aqui donde se encontró una oportunidad de mejora. Modelar este sistema de encolado y desencolado de los hilos mediante una Red de Petri.
+En este punto es donde se centró el trabajo integrador previo: modelar el sistema de encolado y desencolado de hilos utilizando una Red de Petri. Esta técnica permite representar de manera precisa y formal los estados y transiciones de los hilos, mejorando así la eficiencia y previsibilidad del planificador.
 
 % El planificador tradicional 4BSD cuenta con una cola por procesador + una cola global. Ver en el codigo viejo (link de arriba), cuando es que querias que un hilo se vaya a la cola global y porque; y cuando una cola especifica de procesador.
 
+
+% - Hablar un poco del file sched_4bsd.c
 % - Donde  fue el cambio PRINCIPAL (decision del encolado)
 % - Funciones principales modificadas para adaptarse a la red de petri (en terminos de planificacion)
 % - Funciones principales modificadas para adaptarse a la red de petri (en terminos de codigo)
