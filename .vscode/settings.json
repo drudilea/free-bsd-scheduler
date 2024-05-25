@@ -1,6 +1,17 @@
 {
     "latex-workshop.latex.tools": [
         {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
             "name": "latexmk",
             "command": "latexmk",
             "args": [
@@ -9,17 +20,6 @@
                 "-file-line-error",
                 "-pdf",
                 "-outdir=%OUTDIR%",
-                "%DOC%"
-            ],
-            "env": {}
-        },
-        {
-            "name": "xelatex",
-            "command": "xelatex",
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
                 "%DOC%"
             ],
             "env": {}
@@ -46,15 +46,15 @@
     ],
     "latex-workshop.latex.recipes": [
         {
-            "name": "latexmk 🔃",
-            "tools": [
-                "latexmk"
-            ]
-        },
-        {
             "name": "pdfLaTeX",
             "tools": [
                 "pdflatex"
+            ]
+        },
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
             ]
         },
         {
