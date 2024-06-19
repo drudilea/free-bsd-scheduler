@@ -46,15 +46,15 @@
     ],
     "latex-workshop.latex.recipes": [
         {
-            "name": "pdfLaTeX",
-            "tools": [
-                "pdflatex"
-            ]
-        },
-        {
             "name": "latexmk 🔃",
             "tools": [
                 "latexmk"
+            ]
+        },
+        {
+            "name": "pdfLaTeX",
+            "tools": [
+                "pdflatex"
             ]
         },
         {
