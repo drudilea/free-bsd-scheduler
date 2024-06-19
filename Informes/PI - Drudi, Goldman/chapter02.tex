@@ -208,65 +208,88 @@ Nuestro proyecto se basa en el trabajo previo que se centró en el planificador 
 
 Como se explicó previamente, la planificación en sistemas operativos consiste en decidir el orden y la duración de la ejecución de los distintos hilos del sistema. Tradicionalmente, los sistemas operativos han basado estas decisiones en estadísticas del comportamiento previo, utilizando datos históricos para optimizar el rendimiento.
 
-Los puntos clave para la toma de decisiones se encuentran en los momentos en que un hilo debe ceder el uso de la CPU a otro, creando la ilusión de concurrencia en la ejecución de múltiples hilos. En el contexto del planificador 4BSD de FreeBSD, esto implica desencolar un hilo de la cola de hilos RUNNABLE y pasarlo a ejecución, mientras que el hilo que estaba utilizando la CPU se reencola en una de las colas de ejecución.
+Un aspecto importante de esta planificación ocurre cuando un hilo debe ceder la CPU a otro. En el contexto del planificador 4BSD, esto implica retirar un hilo de la cola de ejecución (RUNNABLE) y ponerlo en ejecución, mientras que el hilo que estaba en ejecución vuelve a encolarse. Aquí es donde se enfocó el trabajo anterior: en modelar el sistema de encolado y desencolado de hilos utilizando redes de Petri. Esta técnica permite representar de manera precisa y formal los estados y transiciones de los hilos, mejorando así la eficiencia y previsibilidad del planificador.
 
-En este punto es donde se centró el trabajo integrador previo: modelar el sistema de encolado y desencolado de hilos utilizando una Red de Petri. Esta técnica permite representar de manera precisa y formal los estados y transiciones de los hilos, mejorando así la eficiencia y previsibilidad del planificador.
+Las modificaciones realizadas en el código del planificador 4BSD se centraron en adaptar las funciones principales para que se ajusten al uso de redes de Petri. Estos cambios se llevaron a cabo en el archivo \textit{sched\_4bsd.c}, que contiene las funciones principales del planificador 4BSD.
 
-% El planificador tradicional 4BSD cuenta con una cola por procesador + una cola global. Ver en el codigo viejo (link de arriba), cuando es que querias que un hilo se vaya a la cola global y porque; y cuando una cola especifica de procesador.
-
-
-% - Hablar un poco del file sched_4bsd.c
-% - Donde  fue el cambio PRINCIPAL (decision del encolado)
-% - Funciones principales modificadas para adaptarse a la red de petri (en terminos de planificacion)
-% - Funciones principales modificadas para adaptarse a la red de petri (en terminos de codigo)
-
-
-% \subsubsection{Puntos de interes para nuestra tesis}
+Para comprender la naturaleza de los cambios realizados en el trabajo previo, detallaremos los resultados finales en términos de modelado de sistemas mediante redes de Petri.
 
 \subsubsection{Modelado del hilo}
-Uno de los modelos representados a través de la Red de Petri, es el de los estados de un hilo. En la figura es posible observar esta representación.\par
 
-% TODO{Agregar red de petri del hilo}
+Uno de los modelos representados mediante redes de Petri es el de los estados de un hilo, como se muestra en la Figura \ref{fig:threadModel}.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{images/Thread_Net.png}
+    \caption{Modelo del hilo.}
+    \label{fig:threadModel}
+\end{figure}
+
+Las plazas de la Red de Petri la Figura \ref{fig:threadModel} se corresponden a los estados posibles del hilo, siendo posible encontrarse en un solo estado a la vez. Las transiciones, por otro lado, representan los eventos que pueden llevar al hilo de un estado a otro. A continuación, se detallan las transiciones que se modelaron en la Red de Petri para el hilo:
 
 \begin{itemize}
-    \item \textbf{T0\_INIT}: El paso del estado INACTIVE a CAN\_RUN. Esto sucede cuando el hilo se agrega al planificador. Esto sucede generalmente en el momento de creación de un proceso o cuando el mismo realiza un fork. Esta tarea no corresponde al scheduler, por lo que inicialmente un hilo en el planificador se encuentra inicializado en el estado CAN\_RUN. Esta transición nunca se dispara, solo se la incorpora al modelo de modo representativo.
-    \item \textbf{T1\_ON\_QUEUE}: El hilo se pone en una cola local de una determinada CPU o en la cola global dependiendo de la disponibilidad. Esta cola organiza los hilos de acuerdo a sus prioridades de ejecución.
-    \item \textbf{T2\_SET\_RUNNING}: El hilo se quita de la cola y pasa a ejecutar las instrucciones del programa que tiene asignadas. En este instante el procesador se encuentra ocupado por dicho hilo.
-    \item \textbf{T3\_SWITCH\_OUT}: El scheduler interrumpe el hilo y lo vuelve a colocar en una cola. El planificador toma otro hilo de la cola (el de mayor prioridad) y realiza un cambio de contexto.
-    \item \textbf{T4\_TO\_WAIT\_CHANNEL}: Algún evento, semáforo o espera bloquea al hilo. Se agrega en una sleep queue o turnstile, en la cual el hilo queda a la espera de un evento que le quitará el bloqueo.
-    \item \textbf{T5\_WAKEUP}: Se desbloquea el hilo y puede volver a encolarse nuevamente. El evento que lo desbloquea se genera fuera del scheduler. El hilo queda a la espera para poder cambiar de estado cuando corresponda.
-    \item \textbf{T6\_REMOVE}: Se ejecutará cada vez que un hilo deba ser expulsado de la cola en que se encuentra actualmente.
+    \item \textbf{T0\_INIT}: Transición del estado INACTIVE a CAN\_RUN, que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al scheduler, por lo que inicialmente un hilo en el planificador se inicializa en el estado CAN\_RUN. Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
+    \item \textbf{T1\_ON\_QUEUE}: El hilo se coloca en una cola local de una CPU específica o en la cola global, según la disponibilidad.
+    \item \textbf{T2\_SET\_RUNNING}: El hilo se retira de la cola y comienza a ejecutar las instrucciones del programa asignado, ocupando así el procesador.
+    \item \textbf{T3\_SWITCH\_OUT}: El planificador interrumpe el hilo y lo devuelve a su estado de CAN\_RUN, seleccionando otro hilo de mayor prioridad para ejecutar y realizando un cambio de contexto.
+    \item \textbf{T4\_TO\_WAIT\_CHANNEL}: El hilo se bloquea debido a algún evento, semáforo o espera, y se coloca en una cola de espera hasta que se desbloquee.
+    \item \textbf{T5\_WAKEUP}: El hilo se desbloquea y puede volver a encolarse. Este evento ocurre fuera del planificador, y el hilo espera cambiar de estado según corresponda.
+    \item \textbf{T6\_REMOVE}: Se ejecuta cuando un hilo debe eliminarse de la cola en la que se encuentra.
 \end{itemize}
 
 
 \subsubsection{Modelado del planificador}
 
-Para modelar el planificador se hace un modelo específico para un procesador y se extiende para los demás. En este proyecto se consideran cuatro procesadores.
+Por otro lado, se realizó el modelado de la red de Petri del planificador, o red de recursos, que se muestra en la Figura \ref{fig:schedulerModel}. En esta figura se detallan las plaza y transiciones de una sola CPU, siendo extensible a tantas CPUs como el sistema multiprocesador posea.
 
-% TODO Agregar red de petri de 1 procesador
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/Resource_1CPU.png}
+    \caption{Modelo del planificador.}
+    \label{fig:schedulerModel}
+\end{figure}
 
-Transiciones
+Las plazas del planificador, podemos separarlas en las siguientes categorías:
+
 \begin{itemize}
-    \item TRAN\_ADDTOQUEUE: Un hilo es agregado a la cola del CPU correspondiente. Se encuentra inhibida cuando todo el sistema se encuentra en modo monoprocesador (al inicio del sistema operativo); y cuando ya existe un hilo en la cola.
-    \item TRAN\_UNQUEUE: Se quita al hilo próximo a ejecutar de la cola del CPU. En este punto el hilo se encuentra listo para ser ejecutado.
-    \item TRAN\_EXEC: El hilo pasa a ejecución por lo que el recurso del procesador se encuentra ocupado. Esta transición elimina el token de la plaza de habilitación, permitiendo así que un nuevo hilo pueda ser encolado. A su vez, ésta transición se encuentra inhibida en el modo monoprocesador.
-    \item TRAN\_EXEC\_EMPTY: Esta transición se comporta de igual manera que la anterior, pero no depende de la plaza de habilitación. Su utilidad surge para los hilos provenientes de la cola global.
-    \item TRAN\_RETURN\_VOL: Representa un retorno del recurso procesador para que pueda ejecutar otro hilo de su cola. Más precisamente, se dispara cuando la interrupción de la ejecución se debe a que el hilo no puede continuar porque espera por un evento o un recurso.
-    \item TRAN\_RETURN\_INVOL: El funcionamiento es igual a la transición anterior, pero en este caso se dispara cuando la interrupción se produce porque el hilo consumió su tiempo asignado de CPU o bien finalizó su tarea.
-    \item TRAN\_FROM\_GLOBAL\_CPU: Representa el desencolado de un hilo desde la cola global.
-    \item TRAN\_REMOVE\_QUEUE: Expulsa un hilo de la cola y también resta un token de habilitación de la CPU, es decir, se premia a la misma para que pueda encolar.
-    \item TRAN\_REMOVE\_EMPTY\_QUEUE: Su funcionamiento es igual al anterior pero se ejecuta en los casos en que la plaza de habilitación no posea ningún token.
-    \item TRAN\_REMOVE\_GLOBAL\_QUEUE: Expulsa un hilo de la cola global. No premia al CPU.
-    \item TRAN\_START\_SMP: Se dispara cuando el sistema pasa de monoprocesador a multiprocesador.
-    \item TRAN\_THROW: Se ejecutará automáticamente cada vez que todas las plazas de habilitación de las CPU tengan al menos un token. El objetivo de esta transición consiste en habilitar las colas con la menor cantidad de hilos que estaban inhibidas, una vez que todas se han emparejado.
-    \item TRAN\_QUEUE\_GLOBAL: Agrega un hilo a la cola global.
+    \item \textbf{Plazas de la actividad del procesador}: Entre ellas encontramos las plazas PLACE\_CPU, PLACE\_TOEXEC y PLACE\_EXECUTING que representan el estado de ejecución de un hilo sobre el procesador en cuestion.
+    \item \textbf{Plazas de colas del procesador}: PLACE\_QUEUE y PLACE\_CANTQ, que representan las colas del procesador en cuestion, con un sistema diseñado para soportar la penalización de procesadores.
+    \item \textbf{Plazas globales o de sistema}: PLACE\_GLOBAL\_QUEUE, PLACE\_SMP\_READY y PLACE\_SMP\_NOT\_READY que representan las colas globales y el estado del sistema SMP en un determinado momento.
 \end{itemize}
+
+En cuanto a las transiciones de la red, podemos hacer la misma categorización:
+
+\begin{itemize}
+    \item \textbf{Transiciones de la actividad del procesador}:
+        \begin{itemize}
+            \item \textbf{TRAN\_UNQUEUE}: Esta transición elimina al hilo próximo a ejecutarse de la cola del CPU, dejándolo listo para su ejecución.
+            \item \textbf{TRAN\_EXEC}: El hilo pasa a ejecutarse, ocupando el recurso del procesador. Esta transición elimina el token de la plaza de habilitación, permitiendo que un nuevo hilo pueda ser encolado. Cabe destacar que esta transición está inhibida en modo monoprocesador ya que en este modo los hilos que se planifican, son buscados en la cola global.
+            \item \textbf{TRAN\_EXEC\_EMPTY}: Similar a TRAN\_EXEC, esta transición permite la ejecución de hilos provenientes de la cola global.
+            \item \textbf{TRAN\_RETURN\_VOL}: Representa la liberación del recurso del procesador para permitir la ejecución de otro hilo de la cola. Se dispara cuando un hilo no puede continuar su ejecución debido a la espera de un evento o recurso.
+            \item \textbf{TRAN\_RETURN\_INVOL}: Al igual que TRAN\_RETURN\_VOL, esta transición se dispara cuando un hilo libera el procesador, pero en este caso, la interrupción se produce porque el hilo ha consumido su tiempo asignado de CPU o ha finalizado su tarea.
+        \end{itemize}
+    \item \textbf{Transiciones de colas del procesador}:
+        \begin{itemize}
+            \item \textbf{TRAN\_ADDTOQUEUE}: Un hilo se agrega a la cola del CPU correspondiente. Esta transición está inhibida cuando el sistema está en modo monoprocesador (al inicio del sistema operativo) y cuando ya existe un hilo en la cola. Esta última decisión recae en un sistema de colas y de penalización de procesadores implementada en el trabajo integrador previo.
+            \item \textbf{TRAN\_REMOVE\_QUEUE}: Expulsa un hilo de la cola y resta un token de habilitación de la CPU, dehinibiendo el encolado de otro hilo del sistema de penalización.
+            \item \textbf{TRAN\_REMOVE\_EMPTY\_QUEUE}: Funciona igual que TRAN\_REMOVE\_QUEUE, pero se ejecuta cuando la plaza de habilitación no tiene ningún token.
+            \item \textbf{TRAN\_THROW}: Esta transición se dispara automáticamente cuando todas las plazas de habilitación de las CPU tienen al menos un token. Su objetivo es habilitar las colas con la menor cantidad de hilos que estaban inhibidas, una vez que todas las colas se han nivelado.
+        \end{itemize}
+    \item \textbf{Transiciones globales o de sistema}:
+        \begin{itemize}
+            \item \textbf{TRAN\_FROM\_GLOBAL\_CPU}: Representa el desencolado de un hilo desde la cola global.
+            \item \textbf{TRAN\_REMOVE\_GLOBAL\_QUEUE}: Expulsa un hilo de la cola global sin afectar la habilitación de la CPU.
+            \item \textbf{TRAN\_START\_SMP}: Se dispara cuando el sistema cambia de monoprocesador a multiprocesador.
+            \item \textbf{TRAN\_QUEUE\_GLOBAL}: Agrega un hilo a la cola global.
+        \end{itemize}
+    \end{itemize}
 
 
 \subsubsection{Jerarquía de transiciones}
 Para llevar a cabo la conexión entre las redes de los hilos y la red de recursos de las CPU se utiliza el concepto de redes jerárquicas. Es decir que al dispararse cierta transición en la red de recursos, también debe dispararse su transición correspondiente en la red del hilo.
 
 Las jerarquías están definidas de la siguiente forma:
+
 \begin{itemize}
     \item Transiciones TRAN\_ADDTOQUEUE y TRAN\_QUEUE\_GLOBAL de la red de recursos son jerárquicas a la transición T1\_ON\_QUEUE del hilo.
     \item Transiciones TRAN\_EXEC y TRAN\_EXEC\_EMPTY de la red de recursos son jerárquicas a la transición T2\_SET\_RUNNING del hilo.
@@ -277,6 +300,68 @@ Las jerarquías están definidas de la siguiente forma:
 
 \subsubsection{Marcado inicial}
 La red de recursos se inicializará siempre con un token en la plaza que indica que el sistema se encuentra funcionando en modo monoprocesador. Además, se inicializan las plazas que representan a las CPU con un token, excepto la de la CPU0 ya que la misma, inicialmente se encuentra ejecutando el hilo inicial del sistema, por lo que esta última debe inicializarse con un token en la plaza de ejecución (PLACE\_EXECUTING\_0).
+
+
+
+\subsubsection{Métodos de interes para nuestra tesis}
+
+%%%%%%%%% Nuevo
+Las principales modificaciones realizadas en el planificador se encuentran en las siguientes funciones, donde se implementaron las transiciones correspondientes para asociar y ajustar el funcionamiento del planificador original, al modelo de la red de Petri:
+
+\begin{itemize}
+    \item Funciones de inicialización del planificador: Se añadieron funciones para inicializar la red de Petri, incluyendo el marcado inicial y la configuración de las transiciones y plazas en el modelo, representadas mediante variables.
+    \item Encolado de hilos: En la función que gestiona el encolado de hilos, se ajustó la lógica para alinearse con la red de Petri, permitiendo que un hilo sea encolado en la cola global o en la de un procesador específico.
+    \item Desencolado de hilos: En la función encargada de desencolar hilos, se integró el disparo de la transición correspondiente, permitiendo desencolar un hilo tanto de la cola global como de la cola de un procesador.
+    \item Selección del hilo a ejecutar: En la función que elige el próximo hilo a ejecutar, se gestionan los hilos de la cola global, las colas de los procesadores y el hilo IDLETHREAD, ejecutado en casos de ausencia de otros hilos listos.
+    \item Selección del Procesador: La función que selecciona el procesador adecuado para ejecutar un hilo fue completamente rediseñada para basarse en el estado de la red de Petri.
+    \item Expulsión de Hilos: Función donde se gestiona la expulsión de hilos del planificador.
+    \item Cambio de Contexto: Se añadieron las transiciones necesarias para tener en cuenta el cambio de contexto entre hilos debido a la preempción.
+\end{itemize}
+
+%%%%%%%%%
+
+Los puntos principales donde podemos encontrar las modificaciones realizadas son:
+% sched_setup y schedinit
+- En las funciones de inicio del planificador, se agregaron las funciones que inicializan la red de Petri, como es el marcado inicial y las transiciones y plazas que se encuentran en el modelo, representadas a traves de variables
+
+% sched_add
+- En la funcion encargada de encolar los hilos, se modifico la decision de encolado para que se ajuste a la red de Petri, es decir, se agrego la transicion correspondiente a la red de Petri para que se dispare cuando un hilo deba ser encolado, ya sea en la cola global o en la de un procesador en particular.
+
+% sched_rem
+- Dentro de la funcion encargada de desencolar los hilos, se agrego el disparo la transicion correspondiente para que un hilo sea desencolado, ya sea de la cola global o de la de un procesador.
+
+% sched_choose
+- En la funcion encargada de elegir que hilo se ejecutara a continuacion, se agregaron los disparos de las transiciones correpsondientes a la red de Petri. Esto incluye hilos provenientes de la cola global y de las colas de los procesadores, asi como tambien el hilo IDLETHREAD que se ejecutara cuando no haya ningun hilo listo para ejecutar.
+
+% sched_pickcpu
+- La funcion que elige cual procesador es el mejor candidato para ejecutar un hilo, se modifico completamente para basar la eleccion del mismo en el estado actual de la red de Petri
+
+% sched_throw
+- Se agregan las transiciones correspondientes cuando un hilo es expulsado del planificador
+
+% sched_switch
+- Se agregan las transiciones correspondientes cuando se cambia de contexto entre hilos debido a la preemption
+
+
+
+
+
+% Dentro de estas funciones, nos encontramos con:
+
+% \begin{itemize}
+%     \item \textit{sched\_setup()}: Función que inicializa el planificador 4BSD con las \textit{run queues}.
+%     \item 
+
+
+
+A continuación, se detallan los cambios más significativos realizados en el código del planificador:
+% - Hablar un poco del file sched_4bsd.c
+% - Donde  fue el cambio PRINCIPAL (decision del encolado)
+% - Funciones principales modificadas para adaptarse a la red de Petri (en terminos de planificacion)
+% - Funciones principales modificadas para adaptarse a la red de Petri (en terminos de codigo)
+
+
+
 
 
 
