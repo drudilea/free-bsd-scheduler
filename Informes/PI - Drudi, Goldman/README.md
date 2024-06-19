@@ -23,6 +23,20 @@ In this case we will explain the steps for a minimal installation
    sudo tlmgr update --self
    ```
 
+4. Other packages that might be needed are these (don't forget to check the console output in search of some more missing packages)
+
+   ```bash
+   sudo tlmgr install ellipsis
+   ```
+
+   ```bash
+   sudo tlmgr install here
+   ```
+
+   ```bash
+   sudo tlmgr install tocbibind
+   ```
+
 ## Common errors
 
 #### Error: "Formatting failed. Please refer to LaTeX Workshop Output for details." when running the formatter on save
