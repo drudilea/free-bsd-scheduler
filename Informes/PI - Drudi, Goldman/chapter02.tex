@@ -133,7 +133,6 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
 
 La planificación en sistemas operativos, implica decidir el orden y la duración de la ejecución de procesos e hilos del sistema. En este sentido, es el componente clave para optimizar el uso de recursos y el tiempo de ejecución de los programas.\par
 
-% TODO: Explicitar cual calculo aca abajo.
 FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinámicamente la prioridad de los procesos. El cálculo se realiza en función de varios parámetros de comportamiento previo de dicho proceso, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
 
 La política de planificación asigna inicialmente una prioridad de ejecución alta a cada hilo y permite que ese hilo se ejecute durante un intervalo de tiempo fijo, o \textit{time slice}. A los hilos que se ejecutan durante la duración de su \textit{time slice} se les decrementa la prioridad; mientras que los hilos que ceden la CPU (generalmente debido a operaciones de entrada/salida) pueden mantener su prioridad. Por otro lado, los hilos inactivos incrementan su prioridad.\par
@@ -141,7 +140,6 @@ La política de planificación asigna inicialmente una prioridad de ejecución a
 Esta forma de planificación beneficia especialmente a los programas interactivos. Los procesos que demandan una gran cantidad de tiempo de CPU ven reducida rápidamente su prioridad, mientras que los procesos interactivos que permanecen mayormente inactivos conservan una prioridad elevada. Esto permite que, cuando estén listos para ejecutarse, puedan desplazar a los procesos de baja prioridad que llevan ejecutándose durante un largo período de tiempo. Por ejemplo, supongamos que un editor de texto realiza una búsqueda dentro de un documento, lo que conlleva un aumento temporal en el uso de recursos computacionales. Durante este período, la prioridad del editor puede verse momentáneamente reducida para dar prioridad a otros procesos más urgentes. Sin embargo, una vez completada la búsqueda y sin actividad adicional del usuario, el editor recuperará su prioridad en la cola de planificación del sistema operativo.\par
 
 Algunas tareas requieren un control más preciso sobre el proceso, como el caso de la planificación de tiempo real. FreeBSD también implementa esta funcionalidad mediante una cola separada para los hilos en cuestión, los cuales no se ven interrumpidos por otros hilos a menos que tengan igual o mayor prioridad. Además, el \textit{kernel} de FreeBSD cuenta con otra cola de hilos de mínima prioridad que se ejecutan únicamente cuando ningún hilo en las colas de mayor prioridad está en un estado de posible ejecución.\par
-% TODO: Ver si hablamos del thrashing (pagina 106 del PDF del libro viejo (4.4BSD book))
 
 \subsubsection{\textit{Multilevel Feedback Queue Scheduling}}
 
@@ -204,8 +202,6 @@ Nuestro proyecto se basa en el trabajo previo que se centró en el planificador 
 
 \subsubsection{Análisis de modificaciones realizadas}
 
-% https://github.com/drudilea/freebsd-src/compare/release/11.0.0...drudilea:freebsd-src:DrudiGoldmanPI/update_petriNetScheduler-11.0.0
-
 Como se explicó previamente, la planificación en sistemas operativos consiste en decidir el orden y la duración de la ejecución de los distintos hilos del sistema. Tradicionalmente, los sistemas operativos han basado estas decisiones en estadísticas del comportamiento previo, utilizando datos históricos para optimizar el rendimiento.
 
 Un aspecto importante de esta planificación ocurre cuando un hilo debe ceder la CPU a otro. En el contexto del planificador 4BSD, esto implica retirar un hilo de la cola de ejecución (RUNNABLE) y ponerlo en ejecución, mientras que el hilo que estaba en ejecución vuelve a encolarse. Aquí es donde se enfocó el trabajo anterior: en modelar el sistema de encolado y desencolado de hilos utilizando redes de Petri. Esta técnica permite representar de manera precisa y formal los estados y transiciones de los hilos, mejorando así la eficiencia y previsibilidad del planificador.
@@ -218,7 +214,7 @@ Para comprender la naturaleza de los cambios realizados en el trabajo previo, de
 
 Uno de los modelos representados mediante redes de Petri es el de los estados de un hilo, como se muestra en la Figura \ref{fig:threadModel}.\par
 
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.45\textwidth]{images/Thread_Net.png}
     \caption{Modelo del hilo.}
@@ -242,7 +238,7 @@ Las plazas de la Red de Petri la Figura \ref{fig:threadModel} se corresponden a 
 
 Por otro lado, se realizó el modelado de la red de Petri del planificador, o red de recursos, que se muestra en la Figura \ref{fig:schedulerModel}. En esta figura se detallan las plaza y transiciones de una sola CPU, siendo extensible a tantas CPUs como el sistema multiprocesador posea.
 
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/Resource_1CPU.png}
     \caption{Modelo del planificador.}
@@ -305,7 +301,6 @@ La red de recursos se inicializará siempre con un token en la plaza que indica 
 
 \subsubsection{Métodos de interes para nuestra tesis}
 
-%%%%%%%%% Nuevo
 Las principales modificaciones realizadas en el planificador se encuentran en las siguientes funciones, donde se implementaron las transiciones correspondientes para asociar y ajustar el funcionamiento del planificador original, al modelo de la red de Petri:
 
 \begin{itemize}
@@ -317,121 +312,3 @@ Las principales modificaciones realizadas en el planificador se encuentran en la
     \item Expulsión de Hilos: Función donde se gestiona la expulsión de hilos del planificador.
     \item Cambio de Contexto: Se añadieron las transiciones necesarias para tener en cuenta el cambio de contexto entre hilos debido a la preempción.
 \end{itemize}
-
-%%%%%%%%%
-
-Los puntos principales donde podemos encontrar las modificaciones realizadas son:
-% sched_setup y schedinit
-- En las funciones de inicio del planificador, se agregaron las funciones que inicializan la red de Petri, como es el marcado inicial y las transiciones y plazas que se encuentran en el modelo, representadas a traves de variables
-
-% sched_add
-- En la funcion encargada de encolar los hilos, se modifico la decision de encolado para que se ajuste a la red de Petri, es decir, se agrego la transicion correspondiente a la red de Petri para que se dispare cuando un hilo deba ser encolado, ya sea en la cola global o en la de un procesador en particular.
-
-% sched_rem
-- Dentro de la funcion encargada de desencolar los hilos, se agrego el disparo la transicion correspondiente para que un hilo sea desencolado, ya sea de la cola global o de la de un procesador.
-
-% sched_choose
-- En la funcion encargada de elegir que hilo se ejecutara a continuacion, se agregaron los disparos de las transiciones correpsondientes a la red de Petri. Esto incluye hilos provenientes de la cola global y de las colas de los procesadores, asi como tambien el hilo IDLETHREAD que se ejecutara cuando no haya ningun hilo listo para ejecutar.
-
-% sched_pickcpu
-- La funcion que elige cual procesador es el mejor candidato para ejecutar un hilo, se modifico completamente para basar la eleccion del mismo en el estado actual de la red de Petri
-
-% sched_throw
-- Se agregan las transiciones correspondientes cuando un hilo es expulsado del planificador
-
-% sched_switch
-- Se agregan las transiciones correspondientes cuando se cambia de contexto entre hilos debido a la preemption
-
-
-
-
-
-% Dentro de estas funciones, nos encontramos con:
-
-% \begin{itemize}
-%     \item \textit{sched\_setup()}: Función que inicializa el planificador 4BSD con las \textit{run queues}.
-%     \item 
-
-
-
-A continuación, se detallan los cambios más significativos realizados en el código del planificador:
-% - Hablar un poco del file sched_4bsd.c
-% - Donde  fue el cambio PRINCIPAL (decision del encolado)
-% - Funciones principales modificadas para adaptarse a la red de Petri (en terminos de planificacion)
-% - Funciones principales modificadas para adaptarse a la red de Petri (en terminos de codigo)
-
-
-
-
-
-
-% LO DE ABAJO NO LO BORRAMOS PARA VER SI VA ALGO O NO (DEPRECATED)
-
-
-
-
-
-% TODO intro en donde se explica que todas las funciones de aca abajo basicamente fueron las que tuvieron que cambiar para la planificacion con RdP
-
-% TODO{Encolado (add)}
-El sistema usa 64 colas, seleccionando una cola para un determinado hilo y dividiendo la prioridad del hilo por 4. Para ahorrar tiempo, los hilos en cada cola no se vuelven a dividir en prioridades.\par
-
-Estas colas pueden ser de tipo run queue, turnstile queue o sleep queue. Los hilos en estado RUNNABLE se ubican en las colas de tipo run queue; mientras que los que están bloqueados o esperando un evento, son posicionados en los otros dos tipos de colas.\par
-
-Si un hilo agota su tiempo (o intervalo de tiempo) permitido, se coloca al final de la cola de la que procede, y el próximo hilo (ahora al principio de la cola) se selecciona para ejecutarse.\par
-
-Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (run queue). En su lugar, se coloca en una turnstile queue o en una sleep queue.\par
-
-Las operaciones relacionadas al encolado se realizan dentro de la función sched\_add(). Ésta función recibe como parámetros el hilo a encolar y flags con información acerca del mismo.\par
-
-Su primera tarea es corroborar que el hilo se encuentre en un estado permitido para ser encolado, es decir, en estado CAN\_RUN o RUNNING. Al pasar esta verificación, se adquiere el lock del planificador y se lo pasa al estado RUNQ para luego elegir en cuál cola de CPU va a ser asignado. Esto es posible a través de la función sched\_pickcpu(), la cual elige un CPU de la siguiente forma:
-
-\begin{enumerate}
-    \item Consulta si el hilo ya se había ejecutado en un procesador anterior y si es posible volverlo a encolar en el mismo. En caso de que sea verdadero, almacena este valor en una variable. En caso contrario, dentro de esa variable guarda el valor NOCPU (igual a -1).
-    \item Luego itera a través de cada CPU disponible en el sistema. En caso de que el CPU que se está iterando no permita el encolado, continúa con el siguiente.
-    \item Para el caso en que esté permitido el encolado para el CPU que se está iterando, existen dos opciones basadas en el valor de la variable inicializada en el primer punto.
-          \begin{enumerate}
-              \item En caso de que la variable haya sido inicializada con el valor NOCPU, se la sobreescribe con el CPU de la iteración en la que se encuentra el programa en ese momento.
-              \item En caso de que la variable haya sido inicializada con el valor del último CPU en el que había sido ejecutado el hilo, se consulta si la cola del CPU que se está iterando, tiene menor cantidad de procesos que la del CPU elegido en el punto 1. Caso afirmativo, se reemplaza el valor de la variable por el CPU que se está iterando, ya que esto significa que éste procesador contiene menos hilos en su cola de ejecución. Caso contrario, el valor de la variable no se sobreescribe.
-          \end{enumerate}
-    \item Al finalizar la iteración de cada CPU, se retorna el valor de la variable con el CPU más apropiado para el hilo.
-\end{enumerate}
-
-Una vez elegido el mejor CPU para el hilo, se procede a realizar los cambios de contexto necesarios para agregarlo a la cola del procesador correspondiente.
-
-Si el procesador al que se agrega el hilo es diferente al que está ejecutando la función en ese instante, éste último envía una señal IPI (inter-processor interrupt) para comunicar que existe este nuevo hilo en su cola.
-
-En caso de que el hilo se agregara a la cola del CPU actual, se llama a las funciones correspondientes para saber si este hilo tiene mayor prioridad que el que está en ejecución actualmente y debe reemplazarlo, esto se conoce como preemption.
-
-% TODO{Cambios de contexto (switch y throw)}
-Al hablar de cambios de contexto de los hilos, se hace referencia a dos funciones en particular.\par
-
-La función sched\_switch() se encarga de expulsar al hilo que recibe por parámetro (hilo actual en ejecución), o en caso de que el hilo continúe en estado RUNNING por alguna razón, se vuelve a poner en cola a través de la función sched\_add().\par
-
-Una vez finalizada la expulsión se solicita un nuevo hilo para ejecutar. Esto se hace a través de la función choosethread() y sched\_choose().\par
-
-Una vez obtenido el nuevo hilo, se verifica que éste no sea el mismo que fue puesto en cola anteriormente, si esto sucediera, sólo continúa la ejecución. Pero en caso de que sean dos hilos diferentes, se procede a realizar el cambio de contexto haciendo uso de la función cpu\_switch().\par
-
-La función cpu\_switch() guarda el contexto del hilo anterior y restaura el contexto del nuevo hilo. Así como también, se asegura de que el estado del nuevo hilo se marque como TD\_RUNNING (en ejecución).\par
-
-Otra de las funciones que se encargan del cambio de contexto es sched\_throw(), la cual se encarga de cambiar un hilo por otro en el mismo CPU que se está ejecutando. Recibe un hilo como parámetro (el cual puede ser nulo), y lo expulsa del planificador. Luego a través de la misma función utilizada anteriormente, choosethread(), obtiene un nuevo hilo y continúa con su ejecución.\par
-
-% TODO{Elección de hilos (choose)}
-La elección del próximo hilo a ejecutar se hace a través de la función sched\_choose() previamente invocada por la función choosethread() nombrada anteriormente.
-
-El funcionamiento consiste en elegir al hilo con mayor prioridad dentro de alguna de las colas no vacías del CPU o de la cola global. Cada hilo habilitado para ser ejecutado, es decir en estado RUNNABLE, tiene una prioridad asignada.
-
-La función comienza obteniendo el primer hilo de la cola global y el primero de la cola del CPU; guardando ambos en dos variables diferentes. Luego compara las prioridades de ambos y se queda con el de mayor prioridad.
-
-Una vez elegido el hilo, se procede a removerlo de la cola correspondiente, ya sea la global o la del CPU, y se retorna este hilo.
-
-Para el caso en que ambos hilos sean nulos, es decir, no hay hilos para ejecutar, se simula una ejecución con el idlethread y se retorna el mismo.
-
-% TODO{Remoción de hilos de la cola (rem)}
-A diferencia de la función anterior, en la que al elegir un hilo para correr, éste era removido de la cola en la que estaba ubicado, la función sched\_rem() se utiliza para quitar un hilo (especificado por parámetro) de una cola por dos razones principales.\par
-
-Una de estas es el ajuste de prioridad que consiste en otorgarle una nueva prioridad al hilo por lo que es necesario removerlo de la cola en la que se encuentra y luego volver a encolarlo a través de la función sched\_add() en la posición correspondiente.\par
-
-El otro motivo por el cual se querría hacer uso de esta función es en caso de que un hilo tenga afinidad con algún CPU, por lo que el procedimiento será igual al mencionado en el párrafo anterior, con el objetivo de que se encuentre en la cola correcta.\par
-
-
