@@ -1,30 +1,85 @@
 \section{Desarrollo}
 
 \subsection{Introducción}
-En el marco de este trabajo de investigación, implementamos mejoras en el planificador a corto plazo basado en Redes de Petri para el sistema operativo FreeBSD. Este proyecto supuso un gran desafío, ya que implicó comprender y depurar el código previo y los archivos del código fuente de FreeBSD relacionados con el funcionamiento del scheduler 4BSD, que había sido desarrollado por estudiantes de nuestra misma institución en un proyecto integrador previo. Fue un proceso arduo de lectura y relectura constante, con el objetivo de adquirir un panorama general y detallado sobre el funcionamiento del scheduler.\par
+En este capítulo, detallaremos el desarrollo de las mejoras implementadas en el planificador a corto plazo basado en Redes de Petri para el sistema operativo FreeBSD. El trabajo realizado se fundamenta en la colaboración y continuidad de proyectos previos desarrollados por estudiantes de nuestra institución.\par
+
+La comprensión y depuración del código existente, así como la adaptación de los archivos del código fuente de FreeBSD relacionados con el planificador 4BSD, fueron tareas esenciales en nuestro proceso de desarrollo. Este esfuerzo intenta reflejar buenas prácticas en ingeniería de software, siendo ésta, una prioridad durante las primeras etapas de desarrollo. Nuestro enfoque integró principios de trabajo en equipo y metodologías ágiles, permitiendo una iteración continua y mejorada sobre el código. A lo largo del desarrollo, se implementaron prácticas de gestión de versiones y estrategias de ramificación para garantizar la calidad y estabilidad del código en cada una de sus etapas. En las siguientes secciones, se detallarán las metodologías utilizadas y los módulos específicos desarrollados, subrayando la importancia de cada componente en el contexto del planificador 4BSD.\par
+
 
 \subsection{Metodologías de trabajo}
-Luego de superar la fase inicial, dedicamos un tiempo a planificar la forma en que íbamos a abordar el desarrollo del proyecto. Creíamos crucial establecer una estructura organizada para avanzar de manera sistemática y dejar registros detallados de nuestras actividades en cada etapa del proyecto, lo cual podría ser útil para trabajos futuros.\par
-Durante esta fase, nos enfocamos en documentar los procesos de instalación y depuración, establecer una estrategia de ramas estandarizada en el repositorio fork de FreeBSD y definir un repositorio externo donde alojar todos los recursos que podrían ser útiles para cualquier persona que desee involucrarse en la implementación del proyecto. Estas tareas fueron de gran importancia para asegurarnos de que estábamos trabajando de manera ordenada y eficiente, y para crear un recurso valioso para la comunidad.\par
+
+Para abordar el desarrollo de este proyecto de manera efectiva, establecimos una serie de metodologías de trabajo que nos permitieron mantener una organización rigurosa y una documentación detallada en cada etapa del proceso. Nuestro objetivo era no solo avanzar de manera sistemática, sino también crear un recurso valioso para futuros trabajos en este ámbito.
+
+La primera etapa consistió en una profunda revisión del informe del trabajo integrador previo, así como del código base de los archivos de interés en el planificador 4BSD. Este proceso se realizó de forma iterativa, asegurándonos de comprender y extender la documentacion de ambos componentes antes de proceder. Ampliar la documentación en esta etapa de análisis inicial, fue crucial para establecer una base sólida sobre la cual construir el resto del proyecto.
+
+Una vez completada la fase de comprensión y documentación, planificamos nuestras metodologías de trabajo, enfocándonos en estrategias que facilitaran la colaboración y la gestión eficiente del proyecto. Implementamos una estrategia de ramas estandarizada en el repositorio fork de FreeBSD, permitiendo un control preciso de las versiones y facilitando la integración continua. Además, creamos un repositorio externo dedicado a almacenar toda la documentación y los recursos necesarios para el desarrollo, garantizando un acceso fácil y organizado a la información relevante.
+
+Estas metodologías no solo nos permitieron trabajar de manera ordenada y eficiente, sino que también sentaron las bases para una colaboración efectiva y una fácil transición del conocimiento. En las siguientes secciones, se detallarán las estrategias específicas utilizadas.
 
 \subsubsection{Estrategia de ramificación}
-Definir una estrategia de ramificación o branch strategy en los proyectos es importante porque ayuda a mantener el control sobre el flujo de trabajo, a mantener la organización del proyecto y a asegurar que las modificaciones se integren sin problemas en la rama principal del código. Una estrategia de ramificación bien definida establece un conjunto de reglas claras y consistentes para crear y fusionar ramas de código.\par
+Definir una estrategia de ramificación o \textit{branch strategy} en los proyectos es fundamental para mantener el control sobre el flujo de trabajo, la organización del proyecto y asegurar que las modificaciones se integren sin problemas en la rama principal del código. Una estrategia bien definida establece un conjunto de reglas claras y consistentes para la creación y fusión de ramas de código.
 
-Al mismo tiempo, ayuda a mantener un historial completo y bien organizado de las modificaciones realizadas al código, lo que puede ser útil para fines de seguimiento y continuidad del proyecto. Por esta razón, definimos el prefijo de branches conformado por los apellidos de los integrantes del grupo de trabajo, en nuestro caso, por ejemplo, DrudiGoldmanPI/. Esto también nos ayuda a encontrar con mayor facilidad todos los cambios realizados en este proyecto integrador.\par
+Además, esta estrategia facilita el mantenimiento de un historial completo y bien organizado de las modificaciones realizadas al código, lo cual es esencial para el seguimiento y la continuidad del proyecto. En nuestro caso, definimos el prefijo de branches utilizando los apellidos de los integrantes del grupo de trabajo, como por ejemplo, \texttt{\textbf{DrudiGoldmanPI/}}. Este enfoque nos ayuda a identificar y localizar fácilmente todos los cambios realizados en este proyecto integrador.
 
-% TODO{Mostrar las branch strategies}
+Para definir los nombres de las ramas, establecimos tres casos principales por los cuales se crearían nuevas ramas:
 
-\subsubsection{Conventional commits}
-Los Conventional Commits son una herramienta esencial para mantener una estructura y formato consistente en los mensajes de confirmación del código. En el contexto de un trabajo de tesis, su importancia radica en que el trabajo probablemente seguirá avanzando con el tiempo por otros alumnos o personas que deseen seguir el mismo camino.\par
+\begin{itemize}
+    \item \textbf{Testing}: Ramas creadas para realizar pruebas y verificar que ciertas partes del código fuente funcionen según lo esperado. Este tipo de ramas se utilizan principalmente para la depuración mediante el uso de logs.
+    \item \textbf{Update}: Ramas dedicadas a la actualización del código base con las versiones más recientes de FreeBSD. Esto es especialmente relevante en la fase inicial del proyecto, cuando se deben integrar los cambios previos realizados en el proyecto integrador anterior.
+    \item \textbf{Feature}: Ramas utilizadas para el desarrollo de nuevas funcionalidades o la adición de código no existente previamente. Estas ramas permiten la implementación y prueba de nuevas características sin afectar la estabilidad de la rama principal.
+\end{itemize}
 
-El uso de Conventional Commits ayuda a mantener una estructura bien organizada de los pequeños pasos que se fueron dando en cada una de las ramas, lo que permite a cualquier persona que consulte el repositorio tener una comprensión clara y rápida del progreso del proyecto y de los cambios que se realizaron en cada paso.\par
+Con estos tres casos principales (o causas), se definió la estrategia de nombrado de ramas de la siguiente forma:
 
-\subsubsection{Pruebas del kernel}
-La depuración del kernel es una tarea crucial en el desarrollo de sistemas operativos, ya que permite encontrar y corregir errores que de otra manera podrían pasar desapercibidos. En nuestro trabajo, la herramienta protagonista en este ámbito, fue KGDB.\par
+\begin{center}
+    \texttt{\textbf{DrudiGoldmanPI/<CAUSA>\_<DESCRIPCION>-<VERSION\_FREEBSD>}}
+\end{center}
 
-kgdb permite la depuración de archivos de núcleo del kernel. Cuando se produce un kernel panic o una falla del sistema, podemos utilizar esta herramienta para analizar el dump core y encontrar la causa subyacente del problema. Dentro de  este modo, podemos examinar el estado del sistema en el momento de la falla y determinar qué parte del código del kernel causó la falla.\par
+Donde \texttt{\textbf{<DESCRIPCION>}} es una breve explicación del contenido de los cambios y \texttt{\textbf{<VERSION\_FREEBSD>}}, es la versión de FreeBSD que se utilizó para realizar los cambios.
 
+Por ejemplo, \textit{DrudiGoldmanPI/feature\_cpuMonopolized-13.1.0} es una ramas para la implementación del módulo de monopolización que se detallará posteriormente en esta seccion de desarrollo; y \textit{DrudiGoldmanPI/update\_petriNetScheduler-12.3.0} es una rama para la actualización del planificador 4BSD mediante Redes de Petri a la versión 12.3.0 del sistema operativo.
 
+\subsubsection{Conventional Commits}
+En nuestro proyecto, utilizamos la convención de \textit{Conventional Commits} para mantener un historial de cambios claro y consistente. Esta práctica facilita la lectura y comprensión de los cambios realizados, tanto para el equipo de desarrollo como para futuros colaboradores.
 
+Los mensajes de \textit{commit} siguen un formato estandarizado que describe de manera concisa el tipo de cambio, la versión del sistema operativo afectada y una breve descripción de la modificación. A continuación, se presentan algunos ejemplos extraídos de nuestro proyecto:
 
+\begin{itemize}
+    \item \texttt{feat(13.1.0): Move thread lock before resource\_expulse\_thread()}
+    \item \texttt{fix(13.1.0): Fix sched\_pickcpu for cases when resource\_choose\_cpu returns -1 (NOCPU)}
+    \item \texttt{refactor(13.1.0): Change kernel config file identifier}
+    \item \texttt{feat(12.3.0): Short term scheduler modeling with PN - Add PI code to release/12.3.0}
+\end{itemize}
 
+Los tipos de cambios más comunes que utilizamos incluyen:
+\begin{itemize}
+    \item \textbf{feat}: Para la adición de nuevas funcionalidades.
+    \item \textbf{fix}: Para la corrección de errores.
+    \item \textbf{refactor}: Para modificaciones que mejoran el código sin alterar su funcionalidad.
+\end{itemize}
+
+Para la integración de cambios, hemos adoptado la estrategia de \textit{squash merge}. Esta técnica permite consolidar todos los cambios de una rama en un único \textit{commit} bien detallado, lo cual simplifica el historial del proyecto y facilita el seguimiento de avances importantes. Cada \textit{squash merge} incluye un resumen comprensivo de todos los \textit{sub-commits} que forman parte del cambio, garantizando así una documentación clara y precisa del progreso del proyecto.
+
+\subsubsection{Repositorio de Documentación del Proyecto}
+
+El repositorio de la documentación del proyecto está organizado de manera estructurada y detallada, facilitando el acceso y la gestión de la información relevante para el desarrollo del mismo. A continuación, se presenta una descripción breve de su estructura principal:
+
+\begin{itemize}
+    \item \textbf{Archivos del Proyecto}
+    \begin{itemize}
+        \item \textbf{Archivos de Migraciones:} Contiene subdirectorios correspondientes a diferentes versiones de migración del sistema, incluyendo archivos de configuración y código fuente relevante.
+        \item \textbf{Logs:} Registro de eventos y mensajes generados durante pruebas y actualizaciones del sistema.
+        \item \textbf{Módulos:} Módulos de kernel adicionales para poner en funcionamiento los nuevos desarrollos.
+        \item \textbf{Otros:} Programas auxiliares para seguir el comportamiento de las transiciones de la Red de Petri.
+        \item \textbf{Programas de Test:} Programas utilizados para pruebas de rendimiento y funcionalidad.
+    \end{itemize}
+    \item \textbf{Documentación del Proyecto}
+    \begin{itemize}
+        \item \textbf{Uso del Repositorio:} Guías sobre cómo manejar las ramas y versiones del repositorio.
+        \item \textbf{Iteraciones:} Detalles de las distintas iteraciones del proyecto.
+    \end{itemize}
+\end{itemize}
+
+Esta organización meticulosa asegura que todos los aspectos del proyecto, desde el código fuente hasta la documentación y los informes, estén bien gestionados y accesibles para los miembros del equipo.
+
+Para más detalles, puede acceder al repositorio de documentación del proyecto en: \url{https://github.com/drudilea/free-bsd-scheduler}.
