@@ -38,7 +38,7 @@ La estructura simplificada de un proceso se puede observar en la Figura \ref{fig
     \label{fig:process-state}
 \end{figure}
 
-Cada proceso cuenta con los punteros \textit{p\_pptr}, \textit{p\_children} y \textit{p\_sibling}, utilizados para establecer la relacion entre procesos. Cuando se crea un proceso hijo, se agrega a la lista \textit{p\_children} de su padre. El proceso hijo también mantiene un enlace a su padre mediante su puntero \textit{p\_pptr}. Si un proceso tiene más de un hijo activo al mismo tiempo, los hijos están asociados entre sí a través de las entradas de la lista \textit{p\_sibling}. La Figura \ref{fig:process-hierarchy} muestra un ejemplo de jerarquia de procesos.
+Cada proceso cuenta con los punteros \textit{p\_pptr}, \textit{p\_children} y \textit{p\_sibling}, utilizados para establecer la relación entre procesos. Cuando se crea un proceso hijo, se agrega a la lista \textit{p\_children} de su padre. El proceso hijo también mantiene un enlace a su padre mediante su puntero \textit{p\_pptr}. Si un proceso tiene más de un hijo activo al mismo tiempo, los hijos están asociados entre sí a través de las entradas de la lista \textit{p\_sibling}. La Figura \ref{fig:process-hierarchy} muestra un ejemplo de jerarquía de procesos.
 
 \begin{figure}[H]
     \centering
@@ -133,7 +133,7 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
 
 La planificación en sistemas operativos, implica decidir el orden y la duración de la ejecución de procesos e hilos del sistema. En este sentido, es el componente clave para optimizar el uso de recursos y el tiempo de ejecución de los programas.\par
 
-FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinámicamente la prioridad de los procesos. El cálculo se realiza en función de varios parámetros de comportamiento previo de dicho proceso, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
+FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinamicamente la prioridad de los procesos. El cálculo se realiza en función de varios parámetros de comportamiento previo de dicho proceso, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
 
 La política de planificación asigna inicialmente una prioridad de ejecución alta a cada hilo y permite que ese hilo se ejecute durante un intervalo de tiempo fijo, o \textit{time slice}. A los hilos que se ejecutan durante la duración de su \textit{time slice} se les decrementa la prioridad; mientras que los hilos que ceden la CPU (generalmente debido a operaciones de entrada/salida) pueden mantener su prioridad. Por otro lado, los hilos inactivos incrementan su prioridad.\par
 
@@ -248,8 +248,8 @@ Por otro lado, se realizó el modelado de la red de Petri del planificador, o re
 Las plazas del planificador, podemos separarlas en las siguientes categorías:
 
 \begin{itemize}
-    \item \textbf{Plazas de la actividad del procesador}: Entre ellas encontramos las plazas PLACE\_CPU, PLACE\_TOEXEC y PLACE\_EXECUTING que representan el estado de ejecución de un hilo sobre el procesador en cuestion.
-    \item \textbf{Plazas de colas del procesador}: PLACE\_QUEUE y PLACE\_CANTQ, que representan las colas del procesador en cuestion, con un sistema diseñado para soportar la penalización de procesadores.
+    \item \textbf{Plazas de la actividad del procesador}: Entre ellas encontramos las plazas PLACE\_CPU, PLACE\_TOEXEC y PLACE\_EXECUTING que representan el estado de ejecución de un hilo sobre el procesador en cuestión.
+    \item \textbf{Plazas de colas del procesador}: PLACE\_QUEUE y PLACE\_CANTQ, que representan las colas del procesador en cuestión, con un sistema diseñado para soportar la penalización de procesadores.
     \item \textbf{Plazas globales o de sistema}: PLACE\_GLOBAL\_QUEUE, PLACE\_SMP\_READY y PLACE\_SMP\_NOT\_READY que representan las colas globales y el estado del sistema SMP en un determinado momento.
 \end{itemize}
 
@@ -267,7 +267,7 @@ En cuanto a las transiciones de la red, podemos hacer la misma categorización:
     \item \textbf{Transiciones de colas del procesador}:
         \begin{itemize}
             \item \textbf{TRAN\_ADDTOQUEUE}: Un hilo se agrega a la cola del CPU correspondiente. Esta transición está inhibida cuando el sistema está en modo monoprocesador (al inicio del sistema operativo) y cuando ya existe un hilo en la cola. Esta última decisión recae en un sistema de colas y de penalización de procesadores implementada en el trabajo integrador previo.
-            \item \textbf{TRAN\_REMOVE\_QUEUE}: Expulsa un hilo de la cola y resta un token de habilitación de la CPU, dehinibiendo el encolado de otro hilo del sistema de penalización.
+            \item \textbf{TRAN\_REMOVE\_QUEUE}: Expulsa un hilo de la cola y resta un token de habilitación de la CPU, desinhibiendo el encolado de otro hilo del sistema de penalización.
             \item \textbf{TRAN\_REMOVE\_EMPTY\_QUEUE}: Funciona igual que TRAN\_REMOVE\_QUEUE, pero se ejecuta cuando la plaza de habilitación no tiene ningún token.
             \item \textbf{TRAN\_THROW}: Esta transición se dispara automáticamente cuando todas las plazas de habilitación de las CPU tienen al menos un token. Su objetivo es habilitar las colas con la menor cantidad de hilos que estaban inhibidas, una vez que todas las colas se han nivelado.
         \end{itemize}
