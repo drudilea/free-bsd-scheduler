@@ -28,7 +28,7 @@ Al comparar las diferencias entre las versiones 11.4.0 y 12.3.0 (último \textit
 
 La versión 13 trajo con ella varios cambios significativos en el código del planificador. Los cambios principales, y que mayor tiempo de análisis e investigación tomaron, fueron los cambios dentro de la función \textit{sched\_switch()}, función encargada de realizar el cambio de contexto entre hilos en el planificador 4BSD.\par
 
-El primero de ellos (ver apéndice \ref{appendix:apA1}) ya se encuentra en la firma de la función y sus variables: previamente, \textit{newtd} era un parámetro de \textit{sched\_switch()} que se utilizaba para indicar explícitamente el hilo que se iba a ejecutar a continuación. Sin embargo, en la versión 13, el parámetro \textit{newtd} se eliminó y con ello se simplificó la lógica de selección del hilo (ver apéndice \ref{appendix:apA3}), teniendo que ajustar algunos disparos de la RdP que previamente eran necesarios para ajustar los recursos a estos desencolados en el planificador.\par
+El primero de ellos (ver apéndice \ref{appendix:apA1}) ya se encuentra en la firma de la función y sus variables: previamente, \textit{newtd} era un parámetro de \textit{sched\_switch()} que se utilizaba para indicar explícitamente el hilo que se iba a ejecutar a continuación. Sin embargo, en la versión 13, el parámetro \textit{newtd} se eliminó y con ello se simplificó la lógica de selección del hilo (ver apéndice \ref{appendix:apA3}), teniendo que ajustar algunos disparos en la Red de Petri que previamente eran necesarios para mantener la coherencia de los recursos relacionados, con estos desencolados en el planificador.\par
 
 En la versión 13 de FreeBSD, se realizó una reorganización significativa de los locks en la función \textit{sched\_switch()} (ver apéndice \ref{appendix:apA2}). Estos cambios introdujeron comportamientos inesperados en la red, como el disparo de transiciones no sensibilizadas que desajustaban el estado de la red y causaban fallos en el sistema. Después de depurar el código, identificamos que el problema principal era el manejo incorrecto de la transición RETURN\_VOL. Específicamente, el método \textit{resource\_expulse\_thread()} estaba disparando esta transición sin bloquear previamente el \textit{td\_lock}. Sin este bloqueo, no era posible cambiar el estado del hilo, lo que impedía que regresara al estado de \textit{CAN\_RUN} o listo para ejecutarse. Como resultado, ningún hilo podía ser ejecutado por los procesadores más de una vez, lo que bloqueaba el sistema. Tras realizar los ajustes necesarios, logramos resolver este problema y garantizar el correcto funcionamiento de la red.\par
 
@@ -38,17 +38,14 @@ Durante la actualización a las diferentes versiones del sistema operativo FreeB
 
 Se tuvo la oportunidad de leer y analizar el código fuente en profundidad. Esto nos permitió adquirir un conocimiento detallado del proyecto y nos familiarizó con su estructura y características particulares. Esta inmersión en el código nos brindó una base sólida para abordar tareas posteriores de manera más eficiente y efectiva.\par
 
-Durante el proceso de actualización, también se identificaron y documentaron algunos problemas menores que se trasladaban de versiones anteriores del proyecto. Estos problemas fueron registrados tanto en un repositorio de documentación específico como en este documento, con el propósito de mantener un registro detallado y accesible para futuros trabajos.\par
-
+Adicionalmente, durante el proceso de actualizaciones, se identificaron, realizaron y documentaron algunas mejoras respecto a versiones anteriores del proyecto. Dichas mejoras fueron registradas en el repositorio de documentación (apartado \ref{sect:wiki}); y algunas de ellas, en el presente documento, con el objetivo de mantener un registro detallado y accesible para trabajos futuros.\par
 
 \subsubsection{Próximos pasos}
 
-Como se desarrolló previamente, es de suma importancia mantener el proyecto continuamente actualizado con las últimas versiones del sistema operativo.\par
+Como se desarrolló previamente, sostenemos la importancia de mantener el proyecto actualizado con las últimas versiones del sistema operativo FreeBSD para asegurar su eficiencia, seguridad y compatibilidad con tecnologías mas recientes.
 
-Para lograr este objetivo, es fundamental estar al tanto de las actualizaciones necesarias y evitar quedarse rezagado con respecto al release más reciente.\par
+Para lograr este objetivo, es esencial monitorear continuamente las actualizaciones y aplicar los cambios necesarios de manera oportuna. Esto evitará el rezago respecto a \textit{releases} más recientes y garantizará que el proyecto se beneficie de las últimas mejoras y correcciones de errores.
 
-La tarea de mantener el software actualizado en proyectos de código abierto como FreeBSD, nos permite trabajar con un sistema operativo más eficiente, seguro y compatible con las tecnologías más recientes. Y no menor, es necesario destacar que facilita la integración con la comunidad de desarrolladores y usuarios.\par
+Mantener el software actualizado en proyectos de código abierto como FreeBSD no solo mejora el rendimiento y la seguridad, sino que también facilita una integración más estrecha con la comunidad de desarrolladores y usuarios. Estar al día con las actualizaciones permite recibir retroalimentación valiosa, contribuyendo al desarrollo colaborativo.
 
-Al mantener el proyecto actualizado, se está en sintonía con las últimas características, mejoras y correcciones de errores introducidas por la comunidad, lo cual brinda la oportunidad de contribuir al desarrollo colaborativo y recibir retroalimentación valiosa.\par
-
-Sugerimos que los trabajos futuros en el ámbito del proyecto consideren la importancia que tiene este apartado y se comprometan a dedicar el tiempo y los recursos necesarios para llevarlo a cabo de manera regular.\par
+Para futuros trabajos en este proyecto, se recomienda priorizar la importancia de este aspecto y comprometerse a dedicar los recursos y el tiempo necesarios para llevar a cabo las actualizaciones de manera regular.
