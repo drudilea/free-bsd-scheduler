@@ -11,10 +11,10 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: thesis_document/current/main.tex
           working_directory: thesis_document/current
+          root_file: main.tex
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
-          name: PDF
+          name: Proyecto Integrador - PDF
           path: thesis_document/current/main.pdf
