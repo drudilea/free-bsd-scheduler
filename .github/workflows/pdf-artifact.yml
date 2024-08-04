@@ -12,6 +12,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: thesis_document/current/main.tex
+          working_directory: thesis_document/current
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
