@@ -1,43 +1,36 @@
 \subsection{Módulo de encendido/apagado de los procesadores}
-Partiendo de un sistema operativo funcional y actualizado, el siguiente enfoque fue implementar una nueva característica que se encuentra dentro del área de ahorro energético y control de los núcleos del procesador.\par
 
-Más precisamente lo que se busca, es poder controlar el estado de cada núcleo del procesador en el que se está ejecutando el sistema operativo, es decir, tener el control para elegir cuál o cuáles núcleos permitirán encolar y ejecutar hilos de procesos en diferentes momentos temporales y a su vez, que ésto pueda cambiar dinámicamente de acuerdo a las necesidades del sistema o a definiciones especificadas por el desarrollador.\par
+Tras completar las actualizaciones del sistema operativo, el siguiente paso fue desarrollar una nueva funcionalidad enfocada en el control de los núcleos del procesador. Esta funcionalidad está diseñada para proporcionar una herramienta flexible que permita la gestión dinámica del encendido y apagado de los núcleos del procesador, con la expectativa de que futuros proyectos utilicen este módulo para optimizar el ahorro energético.
 
+Este módulo es especialmente útil en escenarios donde la carga de trabajo varía significativamente, permitiendo controlar los núcleos durante periodos de baja demanda y ajustarlos cuando la carga aumenta. Aunque aún no se ha implementado una estrategia de ahorro energético, esta herramienta abre la puerta a desarrollos futuros que podrían aprovechar esta capacidad para reducir el consumo de energía y mejorar la eficiencia del sistema.
 
 \subsubsection{Objetivos}
 
-Como objetivo general se propone crear una funcionalidad propia del scheduler para permitir habilitar o inhabilitar los diferentes núcleos del procesador, con el objetivo de trasfondo de ahorrar energía en contextos que así lo requieran.\par
+El objetivo general de esta sección, fue el desarrollo de una nueva funcionalidad dentro del \textit{scheduler} del sistema operativo FreeBSD que permita habilitar o deshabilitar los diferentes núcleos del procesador de manera dinámica y eficiente.
 
-A partir del objetivo mencionado anteriormente, podemos destacar diferentes situaciones inherentes al mismo, para dejar en evidencia las ventajas de éste módulo.\par
+Este objetivo principal se traduce en múltiples aplicaciones que pueden proporcionar ventajas significativas, tales como la optimización del uso de recursos de hardware bajo cargas de trabajo reducidas, la restricción de núcleos disponibles para aplicaciones específicas, y la capacidad de ajustar el estado de los procesadores en tiempo de ejecución. Estas aplicaciones subrayan la importancia de una solución flexible, que permita la adaptación dinámica del manejo de núcleos en diversas partes del sistema, respondiendo eficazmente a una variedad de situaciones operativas.
 
-Es necesario partir de la suposición de que ésta funcionalidad será utilizada en diversos casos. Por ejemplo, cuando el procesador tenga pocas tareas o que las mismas no precisen de una gran capacidad de procesamiento, por lo que podrían ser resueltas con menos núcleos que el total disponible en el sistema.\par
+\subsubsection{Primera Iteración: Implementación del Módulo de Encendido/Apagado mediante cambios en la Red de Petri}
 
-Otro escenario podría basarse simplemente en la decisión de restringir la cantidad de núcleos disponibles de un sistema, por lo cual se elegiría inhabilitar los demás y de ésta manera, obtener un ahorro en el consumo energético.\par
+Para iniciar la implementación del módulo de encendido/apagado de núcleos del procesador, se debatieron dos enfoques relacionados con la Red de Petri del sistema operativo. El primer enfoque proponía utilizar las plazas y transiciones ya existentes, estableciendo diferentes políticas a través de cambios en el código del \textit{scheduler}. El segundo enfoque, que fue el adoptado finalmente, implicaba la incorporación de nuevas plazas y transiciones en la Red de Petri para representar explícitamente el estado de los núcleos del procesador. Optamos por esta segunda opción porque nos permitió integrar el módulo de manera más fluida al sistema ya existente, sin hacer cambios drásticos en el núcleo del sistema operativo, y ampliando al mismo tiempo las capacidades de la Red de Petri. La principal ventaja de esta implementación, y motivador principal, fue que desde cualquier parte del sistema, simplemente disparando una transición, fuera posible activar o desactivar cualquier núcleo del procesador según sea necesario.
 
-La versatilidad de éste módulo, permitiría realizar estas decisiones mientras el sistema operativo se encuentra en funcionamiento, es decir que no sería necesario reiniciarlo para aplicar estos cambios.\par
+Con esta decisión en mente, el primer paso fue crear un indicador que permitiera conocer si cada procesador está encendido o apagado. Para esto, se añadió una nueva plaza en la Red de Petri, llamada \texttt{PLACE\_SUSPENDED}. La presencia o ausencia de un \textit{token} en esta plaza indica si un procesador está disponible para encolar y ejecutar hilos.
 
+La plaza \texttt{PLACE\_SUSPENDED} está acompañada de dos transiciones que manejan el \textit{token} correspondiente: \texttt{TRAN\_SUSPEND\_PROC} para deshabilitar el núcleo, y \texttt{TRAN\_WAKEUP\_PROC} para habilitarlo nuevamente. Se añadió un arco inhibidor a la transición que libera el recurso para asegurar que la plaza funcione como un recurso único. Una vez que un procesador está deshabilitado, solo la transición que lo habilita de nuevo queda sensibilizada.
 
-\subsubsection{Primera Iteración: Implementación del módulo de encendido/apagado mediante cambios en la Red}
+En resumen, la plaza \texttt{PLACE\_SUSPENDED} controla las transiciones de encolado tanto de la cola específica del CPU como de la cola global. Cuando el CPU está suspendido, impide que nuevos hilos se añadan a su cola y se ejecuten. Sin embargo, es importante destacar que este desarrollo no elimina los hilos que ya estaban en la cola del CPU antes de que se deshabilitara. Es decir, los hilos ya encolados seguirán siendo ejecutados, pero no podrán volver a la cola del CPU inhabilitado. Esta lógica está reflejada en la Red de Petri, donde la nueva plaza de suspensión solo afecta a las transiciones de encolado y desencolado, sin interferir en la ejecución de hilos ni en la transición específica de desencolado del procesador (\texttt{TRAN\_UNQUEUE}).
 
-Para comenzar con la implementación del módulo se debatió el enfoque que le daríamos al desarrollo, es decir, si el cambio que debíamos generar iba a ser en las funciones del scheduler directamente o en la Red de Petri. Básicamente definir quién tomaría las decisiones.\par
+\begin{figure}[H]
+    \centering
+    \vspace*{0.1in}
+    \includegraphics[width=0.8\textwidth]{./images/cpuOnOff-1st-iteration.png}
+    \caption{Primera iteración del módulo de encendido/apagado de núcleos del procesador.}
+    \label{fig:queueing-structure}
+\end{figure}
 
-Luego de observar con detenimiento el código, optamos por la modificación en la Red de Petri, ya que sería un cambio más favorable a futuro por los beneficios que se obtienen de un sistema de modelado como éste.\par
+Como primer paso para implementar esta funcionalidad a nivel de código, nos centramos en ajustar las matrices fundamentales que soportan el funcionamiento de la Red de Petri: la matriz base y la matriz de incidencia. Estas matrices son cruciales para la representación y el manejo de las transiciones y plazas en la Red de Petri.\par
 
-El primer acercamiento que se planteó fue el de crear algún indicador que permita conocer el estado de cada procesador, es decir, que tenga la información acerca de su estado, ya sea encendido o apagado.\par
-
-Para representar esta idea dentro de la Red de Petri, se creó una plaza a la que se le dió el nombre de PLACE\_SUSPENDED. En el caso en que la misma se encuentre sin ningún token, se puede deducir que el procesador puede ser utilizado normalmente o que está disponible; caso contrario, el procesador no debería ejecutar ningún hilo.\par
-
-La plaza de estado del procesador estará acompañada de dos transiciones encargadas de agregar o quitar el token correspondiente al estado del CPU en cuestión. La cantidad de tokens máxima que puede contener esta plaza, es de uno, ya que su funcionamiento refleja un comportamiento booleano. Para asegurar que esta lógica se cumpla, se agregó un arco inhibidor a la transición que aporta tokens a la plaza, es decir, una vez que agrega un token, ya no se disparará nuevamente hasta que este token sea eliminado por la transición correspondiente.\par
-
-Esta plaza es la encargada de inhabilitar las transiciones de encolado correspondientes, la propia del CPU y la global. De esta forma cuando el CPU se encuentra suspendido, internamente se evita que algún hilo pueda ingresar a la cola y luego ejecutarse.\par
-
-Un detalle que se debe tener en cuenta es que éste desarrollo, si bien evita que el procesador continúe encolando hilos, no elimina aquellos que ya se encontraban dentro de la cola asociada al CPU. En otras palabras, los hilos ya encolados, serán ejecutados en el momento correspondiente pero no podrán volver a la cola de este CPU inhabilitado.\par
-
-Ésta aclaración se puede observar en la Red de Petri directamente, ya que la nueva plaza de suspensión sólo inhibe la transición de desencolado de la cola global y la transición encargada de agregar hilos a la cola del procesador, pero no interviene en las transiciones relacionadas a la ejecución de hilos, ni en la de desencolado propia del procesador (TRAN\_UNQUEUE).\par
-
-% TODO{IMAGEN DE LA RED DE UN SOLO PROCESADOR CON EL SUSPEND PROC PERO SIN EL IDLE}
-
-Como primer paso para la implementación a nivel código de esta funcionalidad, fue la modificación de las matrices (matriz base e incidencia) para dar soporte al cambio realizado en la red.\par
+La matriz base, que define la estructura inicial de la Red de Petri, necesitaba ser actualizada para reflejar las nuevas plazas y transiciones introducidas. Específicamente, agregamos entradas para la nueva plaza \texttt{PLACE\_SUSPENDED} y las transiciones asociadas (\texttt{TRAN\_SUSPEND\_PROC} y \texttt{TRAN\_WAKEUP\_PROC}). Esta modificación asegura que la estructura de la red pueda manejar los cambios en el estado de los núcleos del procesador, permitiendo que el sistema registre y gestione correctamente los \textit{tokens} en la plaza de suspensión.\par
 
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{10pt}
@@ -57,7 +50,7 @@ Como primer paso para la implementación a nivel código de esta funcionalidad, 
         0 & 0 & 1 & 1 & -1 & -1 & 0 & 0 & 0 \\
         \hline
     \end{tabular}
-    \caption{Matriz base previa a la nueva funcionalidad.}
+    \caption{Matriz base inicial.}
     \label{tabla:matriz_base_pre}
 \end{table}
 
@@ -65,22 +58,27 @@ Como primer paso para la implementación a nivel código de esta funcionalidad, 
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 & 0 & -1 & 0 & 0 & 0 & 0 & -1 & 0 & 0 & 0 \\
+        1 & 0 & -1 & 0 & 0 & 0 & 0 & -1 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        1 & -1 & 0 & 0 & 0 & 0 & 0 & -1 & -1 & 0 & 0 \\
+        1 & -1 & 0 & 0 & 0 & 0 & 0 & -1 & -1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & -1 & 0 & 0 & 1 & 1 & -1 & 0 & 0 & 0 & 0 \\
+        0 & -1 & 0 & 0 & 1 & 1 & -1 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 1 & -1 & -1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 1 & -1 & -1 & 0 & 0 & 1 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 1 & 1 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 1 & -1 & -1 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 \\
+        \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}-1 \\
         \hline
     \end{tabular}
-    \caption{Matriz de incidencia base con modulo de encendido/apagado de procesadores.}
+    \caption{Matriz base: Primera iteración del módulo de encendido/apagado.}
     \label{tabla:matriz_base_post}
 \end{table}
+
+Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a las plazas y viceversa. Actualizar esta matriz implicó modificar las relaciones entre las nuevas transiciones y las plazas afectadas. Concretamente, tuvimos que ajustar las entradas para reflejar el impacto de las transiciones de habilitación y deshabilitación de los núcleos en las plazas correspondientes. Esto incluye la configuración de los arcos inhibidores que garantizan que los cambios en el estado del procesador se gestionen correctamente.\par
+
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{10pt}
 
 \begin{table}[H]
     \centering
@@ -97,7 +95,7 @@ Como primer paso para la implementación a nivel código de esta funcionalidad, 
         0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         \hline
     \end{tabular}
-    \caption{Matriz de incidencia previa a la nueva funcionalidad.}
+    \caption{Matriz de incidencia inicial.}
     \label{tabla:matriz_incidencia_pre}
 \end{table}
 
@@ -105,74 +103,69 @@ Como primer paso para la implementación a nivel código de esta funcionalidad, 
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
+        \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 \\
         \hline
     \end{tabular}
-    \caption{Matriz de incidencia con las modificaciones pertinentes.}
+    \caption{Matriz de incidencia: Primera iteración del módulo de encendido/apagado.}
     \label{tabla:matriz_incidencia_post}
 \end{table}
 
-Como complemento al cambio en las matrices, se agregó una función con la posibilidad de ser invocada desde un módulo de kernel, encargada de alternar el estado de un CPU elegido por el usuario que cargue el módulo en cuestión. Es decir, dentro de este módulo se elige el procesador a suspender o encender, luego se compila y carga el mismo.\par
+Como parte de los ajustes realizados en las matrices, se incorporó una nueva función, \textit{toggle\_active\_cpu}, al archivo de métodos auxiliares de la Red de Petri. Esta función puede ser invocada desde un módulo del kernel y está diseñada para alternar el estado de un CPU especificado como parámetro. La función verifica si la transición asociada está sensibilizada y, si es así, procede a dispararla. En resumen, esta adición permite seleccionar y alternar el estado de un procesador, que puede ser suspendido o activado según sea necesario, y se gestiona de manera externa al flujo principal del kernel, permitiendo así un control en tiempo real del estado de habilitación del CPU.\par
 
-Una vez implementada esta funcionalidad a nivel código, descubrimos que no funcionaba como se esperaba ya que recibimos alertas de transiciones no sensibilizadas con intentos de disparo.\par
+Tras la implementación de esta funcionalidad, nos encontramos con un problema inesperado: la funcionalidad no se comportaba como se había previsto. Específicamente, recibimos alertas indicando que algunas transiciones no estaban sensibilizadas durante los intentos de disparo. EL proceso de depuración reveló que el problema estaba relacionado con el comportamiento del \textit{scheduler} cuando no había hilos disponibles para ejecutar, ni en la cola local del procesador ni en la cola global.
 
-Para resolverlo comenzamos imprimiendo en la terminal, la información relacionada a los disparos y  de esta manera descubrimos que el problema a solucionar estaba relacionado con el funcionamiento del scheduler para el caso en que no existan hilos a ejecutar en la cola propia ni en la global.\par
+En la siguiente sección, se describe la solución implementada para superar esta dificultad.
 
-En el próximo apartado se explica cómo solucionamos esta problemática.\par
+\subsubsection{Segunda Iteración: Soporte del \textit{idlethread} en la Red de Petri}
 
+Durante la depuración realizada en la iteración anterior, se identificó un error en situaciones donde una CPU no tenía hilos listos para ejecutar. Para abordar este problema en la segunda iteración del módulo de encendido/apagado, es crucial entender el papel del \textit{idlethread}. En estos casos, el scheduler encola y ejecuta el \textit{idlethread}, una funcionalidad que ya estaba presente antes del inicio del proyecto integrador y que es característica del scheduler 4.4BSD utilizado en FreeBSD.\par
 
-\subsubsection{Segunda Iteración: Soporte para el idlethread en la Red}
+El \textit{idlethread} es un hilo \textit{dummy}, es decir, un hilo que no genera carga significativa para el procesador. Puede ser encolado, suspendido y ejecutado de manera similar a otros hilos. Cada núcleo de CPU tiene asociado su propio \textit{idlethread}, el cual ejecuta un bucle simple que generalmente consiste en poner la CPU en un estado de bajo consumo o realizar otras operaciones de ahorro energético. De esta manera, el \textit{idlethread} asegura que la CPU permanezca ocupada incluso cuando no hay tareas o hilos listos para ejecutarse. En lugar de dejar que un núcleo de CPU esté inactivo, FreeBSD utiliza el \textit{idlethread} para mantener el procesador ocupado, equilibrando así el consumo de energía y el rendimiento general del sistema.\par
 
-Partiendo de las impresiones en la terminal realizadas en el paso previo, se pudo identificar que se generaba un error en los casos en que un CPU no tenía hilos para ejecutar.\par
+Cuando no hay hilos o procesos ejecutables listos para ejecutarse en una CPU, el scheduler selecciona el \textit{idlethread} como el siguiente hilo a ejecutar. Dado que el \textit{idlethread} tiene la prioridad más baja, solo se programa cuando no hay tareas de mayor prioridad disponibles. En cualquier momento en que aparezca un hilo de mayor prioridad, el \textit{idlethread} será reemplazado por este nuevo hilo que requiere tiempo de procesador.\par
 
-Para resolver esta problemática, es necesario entender que en casos como éste, el scheduler 4BSD, encola y ejecuta el idlethread. Este funcionamiento ya existía previamente al inicio del proyecto integrador; es propio del sistema operativo.\par
+Nuestra Red de Petri no contemplaba el caso específico del \textit{idlethread}. Como resultado, en ausencia de hilos a planificar, se intentaban disparar transiciones \texttt{TRAN\_UNQUEUE} para los planificadores correspondientes, lo que provocaba fallas en el sistema de la red y desajustes en las plazas asociadas.\par
 
-El idlethread representa un hilo dummy, es decir un hilo que no genera una carga para el procesador que lo ejecute. Es posible encolarlo, suspenderlo y ejecutarlo como cualquier otro hilo.\par
+Para resolver esta problemática, decidimos añadir una nueva transición, \texttt{TRAN\_EXEC\_IDLE}, que permite la ejecución del \textit{idlethread} cuando no hay hilos en la cola del procesador, incluyendo el caso en que el CPU está suspendido. Tras implementar estos cambios, el modelo comenzó a representar con precisión el proceso interno del planificador.\par
 
-Cada núcleo del CPU tiene asociado su idlethread, el cual ejecuta continuamente un bucle simple que normalmente implica detener la CPU o ejecutar una instrucción de bajo consumo. De este modo, se asegura de que la CPU permanece ocupada incluso cuando no hay otras tareas o hilos listos para ejecutarse.\par
+\begin{figure}[H]
+    \centering
+    \vspace*{0.1in}
+    \includegraphics[width=0.8\textwidth]{./images/cpuOnOff-2nd-iteration.png}
+    \caption{Segunda iteración del módulo de encendido/apagado de núcleos del procesador.}
+    \label{fig:queueing-structure}
+\end{figure}
 
-En lugar de permitir que un núcleo de CPU permanezca libre, FreeBSD lo mantiene ocupado con el idlethread. Este enfoque tiene beneficios que van desde un menor consumo de energía hasta mejoras en la capacidad de respuesta y en el rendimiento general del sistema.\par
-
-Cuando no hay hilos o procesos ejecutables listos para ejecutarse en una CPU, el planificador selecciona el idlethread como el siguiente hilo a ejecutar. Este hilo es el que  tiene la prioridad más baja entre todos, por lo que sólo se programa cuando no hay otras tareas de mayor prioridad para ejecutar, y cualquier otro hilo lo reemplazará en caso de necesitar tiempo de procesador.\par
-
-Partiendo de esta base pudimos concluir que nuestra Red de Petri planteada como modelo del planificador, no estaba representando correctamente lo que sucedía internamente. Por esto se decidió hacer ajustes en la red de recursos para contemplar este caso.\par
-
-El problema surgía al intentar disparar la transición TRAN\_UNQUEUE del procesador suspendido ya que no existían hilos en la cola asociada al mismo. Pero el motivo por el cual se intentaba este disparo, es justamente por la funcionalidad ya integrada del idlethread, es decir, que el planificador desencola este hilo para mantener al núcleo del procesador activo. Por esto es que se observaba una inconsistencia con el modelo.\par
-
-Para resolver esta problemática decidimos agregar una nueva transición (TRAN\_EXEC\_IDLE) que permite ejecutar el idlethread cuando no exista ningún hilo en la cola del procesador, incluyendo de esta forma, el caso en que el CPU se encuentre suspendido. Una vez aplicados estos cambios, el sistema representó fielmente el proceso interno llevado a cabo por el planificador.\par
-
-% TODO{IMAGEN DE LA RED DE UN SOLO PROCESADOR CON EL SUSPEND PROC CON EL IDLE}
-
-Para desarrollar esta actualización dentro del código se decidió realizar modificaciones de la Red de Petri de recursos, en las matrices base y de inhibición.\par
+Una vez más, la implementación de estos cambios, comenzó por el cambio de las matrices base y de incidencia.
 
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 &  0 & -1 &  0 & 0 & 0 & 0 & 0 & -1 & 0 & 0 & 0 \\
+        1 &  0 & -1 &  0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & -1 & 0 & 0 & 0 \\
         \hline
-        1 & -1 &  0 &  0 & 0 & 0 & 0 & 0 & -1 & -1 & 0 & 0 \\
+        1 & -1 &  0 &  0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & -1 & -1 & 0 & 0 \\
         \hline
-        0 & -1 &  0 &  0 & -1 & 1 & 1 & -1 & 0 & 0 & 0 & 0 \\
+        0 & -1 &  0 &  0 & \cellcolor{lightgray}-1 & 1 & 1 & -1 & 0 & 0 & 0 & 0 \\
         \hline
-        0 &  1 & -1 & -1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 &  1 & -1 & -1 & \cellcolor{lightgray}1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
         \hline
-        0 &  0 &  1 &  1 & 0 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
+        0 &  0 &  1 &  1 & \cellcolor{lightgray}0 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
         \hline
-        0 &  0 &  0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 \\
+        0 &  0 &  0 &  0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 \\
         \hline
     \end{tabular}
-    \caption{Matriz base con las modificaciones pertinentes.}
+    \caption{Matriz base: Segunda iteración del módulo de encendido/apagado.}
     \label{tabla:matriz_base_post_2}
 \end{table}
 
@@ -180,22 +173,25 @@ Para desarrollar esta actualización dentro del código se decidió realizar mod
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        1 & 0 & 0 & 1 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
         \hline
-        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & \cellcolor{lightgray}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         \hline
-        1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
+        1 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
         \hline
     \end{tabular}
-    \caption{Matriz de incidencia con las modificaciones pertinentes.}
+    \caption{Matriz de incidencia: Segunda iteración del módulo de encendido/apagado.}
     \label{tabla:matriz_incidencia_post_2}
 \end{table}
+
+
+%% TODO ACA ME QUEDE: Esto de abajo hay que revisarlo
 
 Además de modificar el archivo base de la Red de Petri, se agregaron cambios dentro de la función sched\_choose (encargada de indicar cuál es el mejor hilo a ejecutar) del planificador para que en los casos de CPU suspendido, el hilo elegido para pasar a ejecución sea el idlethread hasta que el procesador se activado nuevamente.\par
 
