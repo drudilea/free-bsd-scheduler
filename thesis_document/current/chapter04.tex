@@ -48,7 +48,8 @@ En relación a los resultados obtenidos durante esta evaluación, observamos que
 
 % TODO{IMAGEN CON PROCESADOR SUSPENDIDO}
 
-En relación al tiempo necesario para completar el cálculo del programa, notamos que dicho tiempo aumentó proporcionalmente a la disminución en el número de procesadores activos, destacando la correlación entre la disponibilidad de recursos de procesamiento y el tiempo total requerido para finalizar el programa. En la % TODO{FIGURA TANTO} podemos comprobar el funcionamiento del sistema con la inhabilitación simultánea de dos procesadores.\par
+En relación al tiempo necesario para completar el cálculo del programa, notamos que dicho tiempo aumentó proporcionalmente a la disminución en el número de procesadores activos, destacando la correlación entre la disponibilidad de recursos de procesamiento y el tiempo total requerido para finalizar el programa. En la % TODO{FIGURA *}
+\textcolor{red}{FIGURA} podemos comprobar el funcionamiento del sistema con la inhabilitación simultánea de dos procesadores.\par
 
 % TODO{IMAGEN CON DOS PROCESADORES SUSPENDIDOS}
 
@@ -60,7 +61,7 @@ En relación al tiempo necesario para completar el cálculo del programa, notamo
 \subsection{Resultados del módulo de Monopolización de Núcleos}
 La implementación del módulo de Monopolización de Núcleos en FreeBSD constituyó el próximo paso en el desarrollo de este proyecto integrador. A continuación, se expondrán en detalle los resultados alcanzados al concluir dicho módulo.\par
 \subsubsection{Estado Normal del Sistema}
-En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutaran hilos de clase IDLE en caso de inactividad del sistema.\par
+En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutaran hilos de clase IDLE en caso de inactividad del sistema. Con el planificador funcionando normalmente, los subprocesos se distribuyen entre los núcleos disponibles, utilizando las políticas definidas por el mismo.\par
 
 % TODO{ENCONTRAR UNA FORMA DE MOSTRAR COMO LOS HILOS SE PLANIFICAN SIN TENER EN CUENTA LA MONOPOLIZACION, CAMBIANDO SU EJECUCION ENTRE LOS DISTINTOS NUCLEOS}
 
@@ -68,15 +69,17 @@ En este apartado se analizará el comportamiento general del sistema con el mód
 \subsubsection{Comportamiento con el Módulo Habilitado}
 Habiendo expuesto el comportamiento del sistema en su condición normal, se sienta una base para la posterior comparación con el desempeño del módulo.\par
 
-Siguiendo un procedimiento similar al empleado con el módulo de encendido y apagado, procedimos a ejecutar el programa de estrés, orientado al cálculo de números primos. Durante su ejecución, la herramienta de monitoreo (htop) permite la observación de los distintos subprocesos vinculados a este programa y la información específica de cada uno, incluyendo el identificador de cada hilo, el cual adquiere relevancia antes de activar el módulo.\par
+Siguiendo un procedimiento similar al empleado con el módulo de encendido y apagado, procedimos a ejecutar el programa de estrés, orientado al cálculo de números primos. Durante su ejecución, la herramienta de monitoreo (htop) permite la observación de los distintos subprocesos vinculados a este programa y la información específica de cada uno.\par
 
-En este momento, nos enfocamos en los procesadores que ejecutan cada subproceso y cómo pueden variar según las decisiones del planificador.
+Luego de haber activado el módulo podemos observar que los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. Como era de esperar, este subproceso estuvo vinculado al CPU durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
 
 % TODO{2 imágenes con los subprocesos, que se pueda ver una comparación de cómo cambia el CPU para alguno de los subprocesos, es decir, subproceso 1 primer imagen corre en el cpu 1, segunda imagen ese mismo subproceso corre en cpu 3}
 
-Con el programa en ejecución y el monitoreo activado, el siguiente paso implica la configuración del módulo; en otras palabras, es el momento de actualizar las variables dentro del código del módulo. La primera variable a considerar es el identificador del subproceso que deseamos anclar a un núcleo específico, obtenido previamente del programa de monitoreo. Una vez que tenemos el identificador, procedemos a seleccionar en qué núcleo asociaremos este hilo, compilando y cargando el módulo de kernel adecuado.\par
+% TODO{Mover a apendice}
+% Con el programa en ejecución y el monitoreo activado, el siguiente paso implica la configuración del módulo; en otras palabras, es el momento de actualizar las variables dentro del código del módulo. La primera variable a considerar es el identificador del subproceso que deseamos anclar a un núcleo específico, obtenido previamente del programa de monitoreo. Una vez que tenemos el identificador, procedemos a seleccionar en qué núcleo asociaremos este hilo, compilando y cargando el módulo de kernel adecuado.\par
 
-Los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. En este caso, hemos seleccionado el hilo con el identificador  878172 y el CPU 2. Como era de esperar, tras la ejecución del módulo, este subproceso estuvo vinculado al CPU durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
+% TODO{Mover a apendice}
+% Los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. En este caso, hemos seleccionado el hilo con el identificador  878172 y el CPU 2. Como era de esperar, tras la ejecución del módulo, este subproceso estuvo vinculado al CPU durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
 
 % TODO{Imagen con el hilo asociado al núcleo, quizás también podemos tener un link a video para mostrar hasta que termina de ejecutarse, y con la desactivación del módulo para ver como el cpu vuelve a estar disponible para los otros procesos}
 
@@ -84,7 +87,6 @@ Un caso relevante es el estado del sistema una vez que el programa de estrés ha
 
 Al desactivar el módulo, el sistema continúa operando según lo esperado, con todos sus núcleos disponibles, tal como lo haría en su estado normal.
 
-% TODO{branch con el codigo}
 
 \subsection{Resultados de las actualizaciones en la versión del S.O.}
 En esta sección, se expondrán los resultados derivados de las actualizaciones implementadas en el marco del proyecto integrador previo. Es relevante subrayar que estas actualizaciones se llevaron a cabo con el propósito de sincronizar el proyecto con la versión más reciente y estable del sistema operativo (versión 13.1). Dado que la implementación original demostró su eficacia en la versión 11, el énfasis principal en esta sección se dirigirá a garantizar la continuidad de dicho rendimiento.\par
@@ -98,5 +100,5 @@ El código correspondiente a esta etapa se encuentra en una rama específica del
 % TODO{MOSTRAR ALGUNAS IMAGENES DEL PROYECTO CORRIENDO CON LA VERSION 13.1 Y UTILIZANDO LA RED}
 
 % TODO{OPCIONAL - VER SI LO AGREGAMOS}
-\subsection{Resultados del tareas extra}
+% \subsection{Resultados del tareas extra}
 
