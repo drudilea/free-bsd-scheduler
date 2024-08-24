@@ -25,7 +25,7 @@ En resumen, la plaza \texttt{PLACE\_SUSPENDED} controla las transiciones de enco
     \vspace*{0.1in}
     \includegraphics[width=0.8\textwidth]{./images/cpuOnOff-1st-iteration.png}
     \caption{Primera iteración del módulo de encendido/apagado de núcleos del procesador.}
-    \label{fig:queueing-structure}
+    \label{fig:cpu-on-off-1st-iteration}
 \end{figure}
 
 Como primer paso para implementar esta funcionalidad a nivel de código, nos centramos en ajustar las matrices fundamentales que soportan el funcionamiento de la Red de Petri: la matriz base y la matriz de incidencia. Estas matrices son cruciales para la representación y el manejo de las transiciones y plazas en la Red de Petri.\par
@@ -127,26 +127,29 @@ Tras la implementación de esta funcionalidad, nos encontramos con un problema i
 En la siguiente sección, se describe la solución implementada para superar esta dificultad.
 
 \subsubsection{Segunda Iteración: Soporte del \textit{idlethread} en la Red de Petri}
+\label{ch:idlethread}
 
-Durante la depuración realizada en la iteración anterior, se identificó un error en situaciones donde una CPU no tenía hilos listos para ejecutar. Para abordar este problema en la segunda iteración del módulo de encendido/apagado, es crucial entender el papel del \textit{idlethread}. En estos casos, el scheduler encola y ejecuta el \textit{idlethread}, una funcionalidad que ya estaba presente antes del inicio del proyecto integrador y que es característica del scheduler 4.4BSD utilizado en FreeBSD.\par
+Durante la depuración realizada en la iteración anterior, se identificó un error en situaciones donde una CPU no tenía hilos listos para ejecutar. Para abordar este problema en la segunda iteración del módulo de encendido/apagado, es importante entender el papel del \textit{idlethread}. En estos casos, el planificador encola y ejecuta el \textit{idlethread}, una funcionalidad que ya estaba presente antes del inicio del proyecto integrador y que es característica del planificador 4.4BSD utilizado en FreeBSD.\par
 
-El \textit{idlethread} es un hilo \textit{dummy}, es decir, un hilo que no genera carga significativa para el procesador. Puede ser encolado, suspendido y ejecutado de manera similar a otros hilos. Cada núcleo de CPU tiene asociado su propio \textit{idlethread}, el cual ejecuta un bucle simple que generalmente consiste en poner la CPU en un estado de bajo consumo o realizar otras operaciones de ahorro energético. De esta manera, el \textit{idlethread} asegura que la CPU permanezca ocupada incluso cuando no hay tareas o hilos listos para ejecutarse.\par
+El \textit{idlethread} es un hilo \textit{dummy}, es decir, un hilo que no genera carga significativa para el procesador. Puede ser encolado, suspendido y ejecutado de manera similar a otros hilos. Cada núcleo de CPU tiene asociado su propio \textit{idlethread}, el cual ejecuta un bucle simple que generalmente consiste en poner la CPU en un estado de bajo consumo.
 
-Cuando no hay hilos o procesos ejecutables listos para ejecutarse en una CPU, el scheduler selecciona el \textit{idlethread} como el siguiente hilo a ejecutar. Dado que el \textit{idlethread} tiene la prioridad más baja, solo se programa cuando no hay tareas de mayor prioridad disponibles. En cualquier momento en que aparezca un hilo de mayor prioridad, el \textit{idlethread} será reemplazado por este nuevo hilo que requiere tiempo de procesador. Previamente a los cambios introducidos en la Red de Petri para este desarrollo, el modelo representaba correctamente este caso.\par
+Cuando no hay hilos o procesos listos para ejecutarse en una CPU, el planificador selecciona el \textit{idlethread} como el siguiente hilo. Dado que el \textit{idlethread} tiene la prioridad más baja, solo se programa cuando no hay tareas de mayor prioridad disponibles. En cualquier momento en que aparezca un hilo de mayor prioridad, el \textit{idlethread} será reemplazado por este nuevo hilo.
 
-Una vez agregadas las nuevas plazas y transiciones para el módulo de encendido/apagado, comenzamos a experimentar problemas con el \textit{idlethread} ya que nuestra funcionalidad bloquea el desencolado de la cola global y el encolado de la cola local del procesador. Por lo que la transición \texttt{TRAN\_UNQUEUE} para ejecutar el \textit{idlethread} no podía dispararse.\par
+En el trabajo integrador previo, el momento de la toma de decisión del encolado del \textit{idlethread} no estaba modelado en su totalidad, sino que se simulaban los disparos de transiciones utilizando la cola global, para mantener coherentes los estados en ambas redes (de recursos y de hilos). Es decir, en momentos de inactividad del CPU, se disparaban las transiciones de \texttt{TRAN\_QUEUE\_GLOBAL} y \texttt{TRAN\_FROM\_GLOBAL\_CPU} para encolar, desencolar y ejecutar el \textit{idlethread}.
 
-Para resolver esta problemática, decidimos añadir una nueva transición, \texttt{TRAN\_EXEC\_IDLE}, que permite la ejecución del \textit{idlethread} cuando no hay hilos en la cola del procesador, incluyendo el caso en que el CPU está suspendido. Tras implementar estos cambios, el modelo comenzó a representar con precisión el proceso interno del planificador.\par
+El problema con este enfoque en nuestro proyecto es que la decisión de inhabilitar el procesador mediante el modulo desarrollado, bloquea tanto el encolado como el desencolado, ya sea de la cola particular del procesador como de la cola global, lo que hace que el mecanismo utilizado en el proyecto integrador previo quede inutilizable, ya que se intentarán disparar transiciones no sensibilizadas. Por tanto, fue necesario ajustar el modelo de la red de Petri para incluir ahora el comportamiento específico del planificador en los momentos en que se tiene que hacer uso del \textit{idlethread}.
+
+La solución, detallada en la Figura \ref{fig:cpu-on-off-2nd-iteration}, consistió en agregar una nueva transición, \texttt{TRAN\_EXEC\_IDLE}, que permite la ejecución del \textit{idlethread} cuando no hay hilos en la cola del procesador, contemplando así el caso en que la CPU está suspendida. Tras implementar estos cambios, el modelo comenzó a representar con precisión el proceso interno del planificador.\par
 
 \begin{figure}[H]
     \centering
     \vspace*{0.1in}
     \includegraphics[width=0.8\textwidth]{./images/cpuOnOff-2nd-iteration.png}
     \caption{Segunda iteración del módulo de encendido/apagado de núcleos del procesador.}
-    \label{fig:queueing-structure}
+    \label{fig:cpu-on-off-2nd-iteration}
 \end{figure}
 
-Una vez más, la implementación de estos cambios, comenzó por el cambio de las matrices base y de incidencia.
+Una vez más, la implementación de estos cambios comenzó con la actualización de las matrices base y de incidencia. Después de realizar estos ajustes, se pudo proceder a incorporar las modificaciones correspondientes en el código del planificador. Dichos cambios incluyeron la implementación de la lógica detallada previamente, donde en casos de inactividad o inhabilitación manual de algún procesador, el flujo de ejecución de la red y, por tanto, de los procesos e hilos dentro de un núcleo, se comportará de manera esperada.\par
 
 \begin{table}[H]
     \centering
@@ -190,34 +193,22 @@ Una vez más, la implementación de estos cambios, comenzó por el cambio de las
     \label{tabla:matriz_incidencia_post_2}
 \end{table}
 
-
-%% TODO ACA ME QUEDE: Esto de abajo hay que revisarlo
-
-Además de modificar el archivo base de la Red de Petri, se agregaron cambios dentro de la función sched\_choose (encargada de indicar cuál es el mejor hilo a ejecutar) del planificador para que en los casos de CPU suspendido, el hilo elegido para pasar a ejecución sea el idlethread hasta que el procesador se activado nuevamente.\par
-
-Para lograr esto, se consulta directamente a través de una función, si la plaza de suspensión del procesador que se encuentra ejecutando el código, contiene algún token. En caso de que esto sea verdadero, estaríamos ante la presencia de un procesador suspendido. Caso contrario el funcionamiento es el habitual.\par
-
-
 \subsubsection{Resultados}
 
-Una vez finalizado el desarrollo de esta nueva funcionalidad pudimos comenzar a realizar las pruebas pertinentes.\par
+Con la finalización del desarrollo de esta nueva funcionalidad, se procedió a realizar las pruebas correspondientes.\par
 
-En resúmen, la funcionalidad propuesta para el planificador, que permite habilitar o inhabilitar núcleos del procesador, ha sido resuelta permitiendo así un control sobre los mismos que previamente no existía.\par
+En resumen, la funcionalidad propuesta para el planificador, que permite habilitar o inhabilitar núcleos del procesador, ha sido implementada con éxito, proporcionando un control que antes no estaba disponible.\par
 
-A su vez, se logró la versatilidad propuesta para este módulo, ya que es posible poner en funcionamiento esta mejora en tiempo real sin necesidad de reiniciar el sistema operativo.\par
+Además, se logró la versatilidad esperada para este módulo, ya que es posible activar esta mejora en tiempo real sin necesidad de reiniciar el sistema operativo.\par
 
-Los detalles de los resultados serán explicados con mayor profundidad en el capítulo de
-“Análisis de resultados”.\par
+Los detalles completos de los resultados se discutirán en profundidad en el capítulo \ref{ch:results} de \textit{Análisis de Resultados}.\par
 
-Un detalle a tener en cuenta es la imposibilidad de suspender el procesador cero. Esto es debido a que el sistema operativo utiliza este núcleo por defecto para tareas esenciales y al apagarlo, el sistema comienza a ralentizarse hasta que el kernel entra en pánico, resultando en un reinicio del mismo.\par
-
-Para evitar que esta situación pueda darse, se realizaron los cambios necesarios en el código para prohibir la elección del núcleo en cuestión.\par
-
+Es importante señalar que no es posible suspender el procesador cero. Esto se debe a que el sistema operativo utiliza este núcleo de forma predeterminada para tareas esenciales como la gestion de interrupciones, la gestión de memoria, entre otras; y al desactivarlo, el sistema experimenta un comportamiento inesperado. Para evitar esta situación, se realizaron ajustes en el código que impiden la selección de dicho núcleo para su suspensión.\par
 
 \subsubsection{Próximos pasos}
 
-La implementación de este módulo no tiene mejoras o impacto inmediato en el sistema;  debido a que es un módulo independiente, activado mediante una señal enviada en un momento elegido por el desarrollador.\par
+La implementación de este módulo independiente no tiene un impacto inmediato en el sistema, ya que se activa únicamente cuando el usuario envía una señal específica, en el momento que elija.\par
 
-Observando a futuro, creemos que el próximo enfoque debería apuntar a una integración de esta funcionalidad con elementos propios del sistema operativo, tales como hilos, procesos o programas que controlen los mismos.\par
+De cara al futuro, creemos que el siguiente paso debería enfocarse en integrar esta funcionalidad con otros elementos clave del sistema operativo, como hilos, procesos o programas que los gestionen. Esta integración permitiría ajustar el estado de los procesadores en tiempo real, respondiendo a las necesidades reales del sistema en su conjunto, y no solo a través de un módulo del kernel.\par
 
-De esta forma se cambiaría el estado de los procesadores en tiempo real y de acuerdo a necesidades reales del sistema en conjunto; no solo a través de un módulo de kernel.\par
+Otra mejora, relacionada con la estructura de la red de Petri de recursos desarrollada en la sección \ref{ch:idlethread}, sería asignar una plaza específica en la red para el \textit{idlethread}. Esto facilitaría la detección de los momentos en los que el \textit{idlethread} está en ejecución, proporcionando un mayor control sobre posibles acciones en estas situaciones.
