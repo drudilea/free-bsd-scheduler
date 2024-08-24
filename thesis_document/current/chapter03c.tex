@@ -1,60 +1,39 @@
 \subsection{Módulo de monopolización de hilos por parte de los procesadores}
 
-\textellipsis{\url{https://github.com/drudilea/freebsd-src/compare/DrudiGoldmanPI/feature_cpuOnOffModule-13.1.0\ldots drudilea:freebsd-src:DrudiGoldmanPI/testing_cpuMonopolized-13.1.0_titens}}
-
-Una vez finalizado el módulo de encendido/apagado del que se comentó en la sección previa, se plantearon diferentes formas posibles para la continuación del trabajo integrador. Una de ellas, fue la monopolización de hilos por parte de los procesadores. En este contexto, se ha introducido la capacidad de anclar hilos a una CPU específica, lo que implica que dicha CPU solo puede encolar y ejecutar ese hilo en particular.
-
-\
+Tras finalizar el módulo de encendido y apagado de procesadores, nos enfocamos en el desarrollo del módulo de monopolización de hilos por parte de los procesadores. Este módulo introduce la capacidad en el planificador de anclar hilos a una CPU específica, lo que implica que dicho núcleo solo puede encolar y ejecutar los hilos que están asociados a él.\par
 
 \subsubsection{Objetivos}
 
-El objetivo de este módulo es proporcionar al planificador 4BSD la capacidad de anclar hilos a procesadores específicos en cualquier momento durante la ejecución del sistema operativo. Esto permitirá definir políticas de asignación de recursos más precisas y adaptables a las necesidades del sistema y garantizar una distribución óptima de la carga de trabajo en el hardware disponible.\par
+El objetivo de este módulo es proporcionar al planificador 4BSD la capacidad de anclar hilos a procesadores específicos en cualquier momento durante la ejecución del sistema operativo. Esto permitirá definir políticas de asignación de recursos más precisas y adaptables a las necesidades del sistema.\par
 
-Es importante destacar que el módulo de monopolización de hilos se limitará a la funcionalidad de anclado en sí mismo, pero a partir de ello, se abre un abanico de posibilidades de mejora en el sistema operativo, tales como mayor flexibilidad al sistema para adaptarse a cambios en la carga de trabajo o a requisitos específicos de algunas tareas, asignación de hilos críticos o de alta prioridad a núcleos de procesadores específicos mejorando su tiempo de respuesta y reduciendo la posibilidad de conflictos de acceso a recursos.\par
+Es muy importante que este módulo, al igual que el desarrollado previamente, pueda ser cargado y activado en tiempo real, sin necesidad de reiniciar el sistema operativo. Esta flexibilidad facilitará su integración con funcionalidades del sistema operativo, como la adaptación dinámica a cambios en la carga de trabajo o la asignación de hilos críticos a núcleos específicos para mejorar el rendimiento, entre otras.\par
 
-Con la implementación exitosa de este módulo, se espera que el planificador 4BSD de FreeBSD obtenga una funcionalidad avanzada y altamente configurable, brindando una solución potente y flexible para la asignación y gestión de hilos en entornos de computación de alto rendimiento.\par
+\subsubsection{Primera Iteración: Desarrollo del Módulo de Monopolización a través de Políticas en la Red}
 
-\
+Para implementar el módulo de monopolización, se comenzó con una fase de investigación para explorar las posibles estrategias de desarrollo. Inicialmente, se consideró la opción de diseñarlo como un módulo independiente, similar al módulo de encendido/apagado. Sin embargo, pronto se identificó que, en última instancia, la decisión del planificador sobre a qué CPU encolar un hilo estaba estrechamente vinculada a los IDs de los hilos que se deseaban ejecutar.
 
-\subsubsection{Diseño de la implementación}
+Este enfoque llevó a concebir el problema en términos de políticas para la toma de decisiones relacionadas con las transiciones de encolado. La solución resultante se centró en integrar estas políticas directamente en el código del planificador. De este modo, se introdujo una lógica que mejoraba la capacidad del scheduler para determinar qué procesadores estaban disponibles para ejecutar los hilos solicitantes.
 
-La implementación del módulo de monopolización de hilos por parte de los procesadores en el planificador del sistema operativo FreeBSD requirió una etapa amplia de planificación y diseño. Durante esta fase, se exploraron diferentes soluciones con el objetivo de lograr la funcionalidad deseada.\par
 
-A grandes rasgos, se consideraron dos enfoques principales para la implementación. El primero, implicaba realizar modificaciones tanto en la Red de Petri de recursos como en el código del planificador. Esta opción requería adaptar la estructura de la Red para incorporar el concepto de monopolización y realizar los cambios correspondientes en el código para garantizar la correcta ejecución de los hilos monopolizados.\par
+El planificador 4BSD maneja los cambios de contexto cuando un hilo termina su ejecución o queda bloqueado. En este momento, el sistema seleccionará un nuevo hilo para ejecutar. El planificador evalúa los hilos disponibles y decide a cuál CPU asignarlo, considerando la afinidad del hilo y las políticas de planificación vigentes.
 
-El segundo enfoque consistía en ajustar únicamente el código del planificador sin modificar la Red. En este caso, se buscaba encontrar una manera de introducir la funcionalidad de monopolización dentro del código existente. Esto implicaba analizar y modificar las secciones pertinentes del código del planificador para asegurar que los hilos pudieran ser asignados y ejecutados de manera exclusiva en una CPU específica.\par
+El planificador 4BSD maneja los cambios de contexto cuando un hilo termina su ejecución o queda bloqueado, generando una interrupción para seleccionar un nuevo hilo. La función principal para gestionar estos cambios es \textit{mi\_switch()}, que invoca \textit{sched\_switch()}. Esta función se encarga de preparar el nuevo hilo para su ejecución y usa \textit{sched\_add()} para añadirlo a la cola de un procesador, considerando la afinidad y las políticas del planificador. Luego, \textit{sched\_choose()} selecciona el hilo a ejecutar y realiza el cambio de contexto si es necesario.
 
-La elección entre estos dos enfoques se basó en consideraciones técnicas y de viabilidad. Se evaluaron factores como la complejidad de las modificaciones requeridas y la compatibilidad con la Red existente. Tras un análisis y evaluación, se optó por la segunda opción.\par
-
-\
-
-\subsubsection{Implementación}
-
-Para comprender el desarrollo del módulo, es fundamental entender cómo el planificador 4BSD gestiona los cambios de contexto. Cuando un hilo en ejecución en el procesador agota su tiempo de ejecución o queda bloqueado por una operación de E/S, se genera una interrupción que indica la necesidad de cambiar el contexto y seleccionar un nuevo hilo para la ejecución. En este punto, se hace un llamado a la función mi\_switch( ), encargada de llevar a cabo el cambio de contexto en general.
-
-mi\_switch( ) llama a sched\_switch( ), método encargado de salvar el estado del hilo a expulsar en la estructura de control (en caso de que se opte por el cambio), y limpiar las banderas y contadores relacionados con la planificación en dicho hilo para que pueda ser correctamente reprogramado en el futuro.
-
-sched\_switch( ) hace un llamado a la función sched\_add( ) para agregar el hilo nuevamente a la cola de algún procesador. Lo realiza teniendo en cuenta su afinidad, sensibilidad en las transiciones de la red y las políticas específicas del planificador. De esta forma, se garantiza que el hilo se gestionará adecuadamente para su ejecución futura.
-
-Por último, el scheduler busca el nuevo hilo a ejecutar mediante sched\_choose( ), removiendolo de la run queue mediante el disparo de la transición correspondiente. Cabe destacar que en esta sección, donde elegimos el nuevo hilo, comparamos si es el mismo que queríamos sacar, y en base a esta comparación, realizamos o no el cambio de contexto mediante cpu\_switch( ).
-
-Como se detalló en el apartado de objetivos, en este módulo se busca brindarle la posibilidad al scheduler de anclar hilos determinados a los diferentes CPUs manejados por el sistema operativo, haciendo que dichos CPUs ejecuten ese y solo ese hilo en todo momento, hasta que se desee lo contrario. Para lograrlo, se realizaron cambios dentro de la función sched\_add( ) nombrada previamente.
-
-El módulo consiste básicamente en un arreglo (pinned\_threads\_per\_cpu) de tantos elementos como procesadores haya en el sistema, en donde la posición de cada elemento se corresponde con el ID del procesador. El valor de cada uno de los elementos del arreglo corresponde al ID del hilo que está tomando control de ese núcleo. Se utiliza el valor -1 en los casos en los que el procesador se encuentra libre para cualquier hilo.
+Para integrar el módulo de monopolización, modificamos \textit{sched\_add()} para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que un CPU ejecute siempre el mismo hilo hasta que se decida lo contrario. Implementamos un arreglo llamado \textit{pinned\_threads\_per\_cpu}, que almacena el ID del hilo asignado a cada CPU. Si un CPU está libre, el valor correspondiente en el arreglo es -1. Este ajuste facilita la asignación precisa de hilos a CPUs y asegura que cada procesador ejecute los hilos de manera eficiente según las políticas establecidas.
 
 En el siguiente ejemplo, se detalla un caso en el que el hilo con ID 100101 tomó control sobre el CPU1 y donde el resto de los procesadores se encuentran funcionando normalmente.
 
-int pinned\_threads\_per\_cpu[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
+int \textit{pinned\_threads\_per\_cpu}[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
 
 Al momento de encolar el hilo, se busca cuál de los procesadores disponibles sería la mejor opción para continuar la ejecución del mismo. Ésta decisión se toma dentro del método resource\_choose\_cpu desarrollado en el trabajo integrador previo y extendido actualmente, para hacer uso de este nuevo arreglo de hilos asociados a procesadores. Recibe como parámetro el hilo que se encuentra a encolar, y cuenta con tres condicionales que determinarán dicho procesador:
 
 \begin{itemize}
-    \item Como primera condición, si el hilo se encuentra dentro del arreglo de pinned\_threads\_per\_cpu ya estamos en condiciones de elegir dicho procesador como el indicado para el encolado.
+    \item Como primera condición, si el hilo se encuentra dentro del arreglo de \textit{pinned\_threads\_per\_cpu} ya estamos en condiciones de elegir dicho procesador como el indicado para el encolado.
     \item Si el hilo no se encuentra dentro del arreglo, se intenta asignar a la cola del último procesador en el que se ejecutó. Esto es posible solo si la transición TRAN\_ADDTOQUEUE de dicho procesador se encuentra sensibilizada y el procesador no está monopolizado por otro hilo.
     \item Por último, si no se cumplen ninguna de las dos condiciones previas, se recorren los diferentes núcleos del procesador y se retorna el primero que cumpla las condiciones necesarias para el encolado.
 \end{itemize}
 
-Como parte del desarrollo del módulo, también se implementaron algunos métodos complementarios encargados de manejar el estado del arreglo  pinned\_threads\_per\_cpu.
+Como parte del desarrollo del módulo, también se implementaron algunos métodos complementarios encargados de manejar el estado del arreglo  \textit{pinned\_threads\_per\_cpu}.
 
 \begin{itemize}
     \item toggle\_pin\_thread\_to\_cpu: Método encargado de conmutar el estado de monopolización de un procesador. Recibe el ID de un hilo y de un procesador como parámetros y realiza diferentes operaciones de acuerdo al estado del arreglo:

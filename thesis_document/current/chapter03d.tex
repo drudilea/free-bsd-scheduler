@@ -2,6 +2,18 @@
 
 Durante el proceso de desarrollo de los módulos, se fueron trabajando además algunas otras problemáticas encontradas.
 
+\subsubsection{Modelado Específico de los Hilos \textit{Pinned}}
+
+Durante el desarrollo de los módulos de encendido/apagado y monopolización de procesadores, surgió un problema crítico relacionado con la gestión de hilos \textit{pinned}, que ya había sido identificado en trabajos anteriores. En FreeBSD, los hilos \textit{pinned} deben ejecutarse exclusivamente en el procesador al cual han sido fijados, sin excepción.
+
+En el contexto del planificador 4BSD, la lógica de selección de CPU que utiliza el método de asignación de hilos se modificó para tener en cuenta esta restricción. Anteriormente, el hilo \textit{pinned} se reencolaba automáticamente en su procesador original. Sin embargo, se añadió una nueva condición: además de estar \textit{pinned}, la transición que agrega el hilo a la cola del procesador debe estar habilitada.
+
+Este ajuste, aunque necesario, introdujo un nuevo desafío. Si durante la ejecución de un hilo actual (\textit{current thread}) se agrega otro hilo a la misma cola del procesador, y simultáneamente se fija el hilo actual (\textit{pinned}), la transición de reencolado del hilo actual podría quedar deshabilitada.
+
+En tal situación, si es necesario reprogramar el hilo actual, el planificador podría seleccionar un CPU diferente o la cola global, dado que la cola del procesador original estaría ocupada. Esto violaría la regla fundamental de que un hilo \textit{pinned} no puede ejecutarse en un CPU distinto al que le fue asignado originalmente, lo que podría desencadenar un \textit{KERNEL PANIC}.
+
+Este problema resalta la importancia de garantizar que los hilos \textit{pinned} siempre se mantengan en su procesador designado, como exige la arquitectura de FreeBSD. Cualquier desviación de esta norma puede tener consecuencias críticas para la estabilidad del sistema.
+
 
 \subsubsection{Solución del problema de afinidad (procesadores sobrecargados)}
 
