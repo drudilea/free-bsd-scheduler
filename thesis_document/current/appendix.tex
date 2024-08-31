@@ -92,40 +92,42 @@
 % TODO: ANEXO
 \section{Apéndice 2: Detalles de la implementación del módulo de monopolizado}\label{appendix:apB}
 
-El planificador 4BSD maneja los cambios de contexto cuando un hilo termina su ejecución o queda bloqueado, generando una interrupción para seleccionar un nuevo hilo. La función principal para gestionar estos cambios es \textit{mi\_switch()}, que invoca \textit{sched\_switch()}. Esta función se encarga de preparar el nuevo hilo para su ejecución y usa \textit{sched\_add()} para añadirlo a la cola de un procesador, considerando la afinidad y las políticas del planificador. Luego, \textit{sched\_choose()} selecciona el hilo a ejecutar y realiza el cambio de contexto si es necesario.
+En este apartado se desarrollará con mayor profundidad la implementación del módulo de monopolización de hilos, haciendo referencia principalmente a las funciones que se han modificado y su comportamiento a lo largo del proceso de ejecución de un hilo.
 
-% Para integrar el módulo de monopolización, modificamos \textit{sched\_add()} para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que un CPU ejecute siempre el mismo hilo hasta que se decida lo contrario. Implementamos un arreglo llamado \textit{pinned\_threads\_per\_cpu}, que almacena el ID del hilo asignado a cada CPU. Si un CPU está libre, el valor correspondiente en el arreglo es -1. Este ajuste facilita la asignación precisa de hilos a CPUs y asegura que cada procesador ejecute los hilos de manera eficiente según las políticas establecidas.
+El planificador 4BSD maneja los cambios de contexto cuando un hilo termina su ejecución o queda bloqueado, generando una interrupción para seleccionar un nuevo hilo.
 
-% En el siguiente ejemplo, se detalla un caso en el que el hilo con ID 100101 tomó control sobre el CPU1 y donde el resto de los procesadores se encuentran funcionando normalmente.
+La función principal para gestionar estos cambios es \textit{mi\_switch()}, que invoca a \textit{sched\_switch()}. Esta función se encarga de preparar el nuevo hilo para su ejecución y usa \textit{sched\_add()} para añadirlo a la cola de un procesador, considerando la afinidad y las políticas del planificador. Luego, \textit{sched\_choose()} selecciona el hilo a ejecutar y realiza el cambio de contexto en caso de ser necesario.
 
-% int \textit{pinned\_threads\_per\_cpu}[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
+Para integrar el módulo de monopolización, modificamos \textit{sched\_add()} para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que un CPU ejecute siempre el mismo hilo hasta que se decida lo contrario, excluyendo así, a todos aquellos hilos con un identificador diferente al elegido.
 
-% Al momento de encolar el hilo, se busca cuál de los procesadores disponibles sería la mejor opción para continuar la ejecución del mismo. Ésta decisión se toma dentro del método resource\_choose\_cpu desarrollado en el trabajo integrador previo y extendido actualmente, para hacer uso de este nuevo arreglo de hilos asociados a procesadores. Recibe como parámetro el hilo que se encuentra a encolar, y cuenta con tres condicionales que determinarán dicho procesador:
+Comenzamos implementando un arreglo llamado \textit{pinned\_threads\_per\_cpu}, que almacena el identificador (ID) del hilo asignado a cada CPU. El arreglo contiene tantos elementos como CPU's existan en el sistema, es decir, para un procesador de cuatro núcleos, el arreglo contendrá cuatro elementos. Cada elemento será el encargado de guardar el valor del identificador del hilo que monopoliza el CPU correspondiente.  Si un CPU está libre, el valor en el arreglo es -1.
 
-% \begin{itemize}
-%     \item Como primera condición, si el hilo se encuentra dentro del arreglo de \textit{pinned\_threads\_per\_cpu} ya estamos en condiciones de elegir dicho procesador como el indicado para el encolado.
-%     \item Si el hilo no se encuentra dentro del arreglo, se intenta asignar a la cola del último procesador en el que se ejecutó. Esto es posible solo si la transición TRAN\_ADDTOQUEUE de dicho procesador se encuentra sensibilizada y el procesador no está monopolizado por otro hilo.
-%     \item Por último, si no se cumplen ninguna de las dos condiciones previas, se recorren los diferentes núcleos del procesador y se retorna el primero que cumpla las condiciones necesarias para el encolado.
-% \end{itemize}
+En el siguiente ejemplo, se detalla un caso en el que el hilo con ID 100101 tomó control sobre el CPU1 y donde el resto de los procesadores se encuentran funcionando normalmente.
 
-% Como parte del desarrollo del módulo, también se implementaron algunos métodos complementarios encargados de manejar el estado del arreglo  \textit{pinned\_threads\_per\_cpu}.
+int \textit{pinned\_threads\_per\_cpu}[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
 
-% \begin{itemize}
-%     \item toggle\_pin\_thread\_to\_cpu: Método encargado de conmutar el estado de monopolización de un procesador. Recibe el ID de un hilo y de un procesador como parámetros y realiza diferentes operaciones de acuerdo al estado del arreglo:
-%     \begin{itemize}
-%         \item Si el procesador se encuentra libre, se agrega el ID del hilo a la posición correspondiente en el arreglo.
-%         \item Si el procesador ya estaba monopolizado por otro hilo, se sobreescribe con el nuevo ID.
-%         \item En caso de que el hilo ya se encuentre monopolizando al procesador, lo libera escribiendo el valor -1 en la posición correspondiente.
-%     \end{itemize}
-%     \item cpu\_available\_for\_thread: Método utilizado por resource\_choose\_cpu para saber si un hilo puede utilizar un procesador, o si este se encuentra monopolizado por otro. Recibe el ID de un hilo y de un procesador como parámetros y retorna 1 en caso de que el procesador se encuentre habilitado para encolar dicho hilo; retorna 0 en caso de que dicho procesador se encuentre tomado por otro hilo.
-%     \item get\_monopolized\_cpu\_by\_thread\_id: Método utilizado por resource\_choose\_cpu para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.
-% \end{itemize}
+Al momento de encolar el hilo, se busca cuál de los procesadores disponibles sería la mejor opción para continuar la ejecución del mismo. Ésta decisión se toma dentro del método \textit{resource\_choose\_cpu} desarrollado en el trabajo integrador previo y extendido actualmente, para hacer uso de este nuevo arreglo de hilos asociados a procesadores. El método recibe como parámetro el hilo que se quiera encolar, y realiza tres operaciones condicionales que determinarán el procesador a elegir:
+
+\begin{itemize}
+    \item Como primera condición, si el hilo se encuentra dentro del arreglo de \textit{pinned\_threads\_per\_cpu} ya estamos en condiciones de elegir dicho procesador como el indicado para el encolado.
+    \item Si el hilo no se encuentra dentro del arreglo, se intenta asignar a la cola del último procesador en el que se ejecutó. Esto es posible solo si la transición TRAN\_ADDTOQUEUE de dicho procesador se encuentra sensibilizada y el procesador no está monopolizado por otro hilo.
+    \item Por último, si no se cumplen ninguna de las dos condiciones previas, se recorren los diferentes núcleos del procesador y se retorna el primero que cumpla las condiciones necesarias para el encolado.
+\end{itemize}
+
+Como parte del desarrollo del módulo, también se implementaron algunos métodos complementarios encargados de manejar el estado del arreglo \textit{pinned\_threads\_per\_cpu}.
+
+\begin{itemize}
+    \item \textit{toggle\_pin\_thread\_to\_cpu()}: Método encargado de conmutar el estado de monopolización de un procesador. Recibe el ID de un hilo y de un procesador como parámetros y realiza diferentes operaciones de acuerdo al estado del arreglo:
+    \begin{itemize}
+        \item Si el procesador se encuentra libre, se agrega el ID del hilo a la posición correspondiente en el arreglo.
+        \item Si el procesador ya estaba monopolizado por otro hilo, se sobrescribe con el nuevo ID.
+        \item En caso de que el hilo ya se encuentre monopolizando al procesador, lo libera escribiendo el valor -1 en la posición correspondiente.
+    \end{itemize}
+    \item \textit{cpu\_available\_for\_thread()}: Método utilizado por \textit{resource\_choose\_cpu} para saber si un hilo puede utilizar un procesador, o si este se encuentra monopolizado por otro. Recibe el ID de un hilo y de un procesador como parámetros y retorna 1 en caso de que el procesador se encuentre habilitado para encolar dicho hilo; retorna 0 en caso de que dicho procesador se encuentre tomado por otro hilo.
+    \item \textit{get\_monopolized\_cpu\_by\_thread\_id()}: Método utilizado por \textit{resource\_choose\_cpu} para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.
+\end{itemize}
 
 
 
-
-
-
-
-
+% Add more sections as needed before the \end{document} command.
 \end{document}
