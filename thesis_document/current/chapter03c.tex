@@ -15,31 +15,38 @@ Para implementar el módulo de monopolización, se comenzó con una fase de inve
 
 Este enfoque nos llevó a entender el problema en términos de políticas para la toma de decisiones a la hora de encolar un hilo. Para implementar estas nuevas politicas, agregamos un mecanismo que permite fijar un hilo a un procesador específico, asegurandonos que dicho procesador no pueda encolar ni ejecutar otros hilos mientras esté monopolizado.
 
-El proceso utiliza un nuevo registro (\textit{pinned\_threads\_per\_cpu}) que rastrea el estado de monopolización de cada uno de los procesadores, que se define como un arreglo de tantos elementos como procesadores en el sistema, y que cada elemento almacena el identificador del hilo que se encuentra monopolizando dicho procesador. Así, cuando el planificador debe decidir donde ejecutar el hilo, primero verifica si este se encuentra \textit{anclado} a un procesador específico. Si es así, el hilo se encola en ese procesador para luego ser ejecutado. En caso contrario, el sistema sigue el proceso estándar de asignación a cualquier procesador disponible.
+El proceso utiliza un nuevo registro (\textit{pinned\_threads\_per\_cpu}) que rastrea el estado de monopolización de cada uno de los procesadores. Este registro se define como un arreglo de tantos elementos como procesadores en el sistema, en donde que cada elemento almacena el identificador del hilo que se encuentra monopolizando dicho procesador. Así, cuando el planificador debe decidir donde ejecutar el hilo, primero verifica si este se encuentra \textit{anclado} a un procesador específico. Si es así, el hilo se encola en ese procesador para luego ser ejecutado. En caso contrario, el sistema sigue el proceso estándar de asignación a cualquier procesador disponible.
+
+El comportamiento de la elección de procesador desarrollado, se muestra en la Figura \ref{fig:monopolization_resource-choose-cpu}.
+
+\vspace{.50cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{images/monopolized_choose-cpu.png}
+    \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
+    \label{fig:monopolization_resource-choose-cpu}
+\end{figure}
 
 Junto con el desarrollo de este sistema, también desarrollamos funciones complementarias que permiten alternar el estado de monopolización de los procesadores, liberar un procesador cuando se decida, y verificar si un procesador está ocupado o disponible para un nuevo hilo.
 
 Los detalles técnicos y las implementaciones específicas se encuentran documentados en el anexo \ref{appendix:apB}.
 
-% TODO: Agregar alguna imagen bien simple que explique la nueva forma de eleccion de cpu a encolar los hilos monopolizados.
-
 \subsubsection{Resultados}
 
-Los resultados del módulo fueron exitosos, logrando que los hilos pudieran monopolizar procesadores de manera efectiva.
+Los resultados del módulo fueron satisfactorios, demostrando que los hilos pudieron monopolizar los procesadores de manera efectiva.\par
 
-Para comprobar este comportamiento, realizamos pruebas utilizando una herramienta de monitoreo y un programa de estrés. En estas pruebas, se generaron varios subprocesos que se ejecutaron en los distintos núcleos del sistema durante un tiempo prolongado. Posteriormente, seleccionamos uno de estos hilos y lo vinculamos a un procesador específico. Esto nos permitió observar cómo el hilo permanecía continuamente en el procesador al que se había anclado, sin que este ejecutara otros hilos no vinculados.
+Para verificar este comportamiento, realizamos pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos de las CPUs durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
 
-Como parte del resultado, también aclaramos que no se encuentra contemplado el caso del CPU0 en este módulo, ya que al igual que en el modulo de encendido/apagado, nos trajo problemas a la hora de la monopolización, debido a que es el encargado de manejar algunas tareas de administración del sistema.
+Es importante señalar que el módulo no incluyó el caso del CPU0, ya que, al igual que en pruebas anteriores con el módulo de encendido/apagado, presentaba dificultades para la monopolización debido a su rol en la gestión de tareas administrativas del sistema.\par
 
-Los detalles de los resultados serán explicados con mayor profundidad en el capítulo de
-“Análisis de resultados”.
+Los detalles específicos y un análisis más profundo de los resultados se abordarán en el capítulo de “Análisis de resultados”.\par
 
 \subsubsection{Próximos pasos}
 
-Al igual que en el módulo previo, la implementación de este módulo no tiene mejoras o impacto inmediato en el sistema; esto es debido a que son módulos completamente independientes que son activados por señales o por alguna otra parte del kernel.
+Aunque la implementación de este módulo no genera mejoras inmediatas en el sistema, su potencial radica en su activación bajo demanda, ya sea por señales específicas o por otras partes del kernel. Al igual que en el módulo anterior, su funcionalidad se activa solo cuando es necesario, lo que lo hace útil en escenarios concretos.
 
-Puede ser especialmente útil en escenarios en los que se necesite garantizar la ejecución de tareas críticas en tiempo real o cuando ciertos hilos requieran una capacidad de procesamiento dedicada y preferente.
+Este módulo puede ser particularmente beneficioso en situaciones donde se requiere garantizar la ejecución de tareas críticas en tiempo real o cuando ciertos hilos necesitan acceso exclusivo y preferente a un procesador. Algunos ejemplos en los qeu podría ser beneficioso el módulo son en momentos de interrupciones de hardware a procesadores específicos, asegurando que estos hilos tengan acceso prioritario y minimizando la latencia en la respuesta a eventos de hardware. También podría ser útil en la gestión de dispositivos de almacenamiento de alto rendimiento, donde es crucial que los hilos responsables del acceso a disco mantengan un rendimiento constante.
 
-Además de la priorización manual de hilos, esta modificación puede tener otras funcionalidades relacionadas. Por ejemplo, podría permitir la asignación de hilos a procesadores específicos según criterios como la afinidad de memoria o la afinidad de caché, optimizando así el rendimiento del sistema. También podría ser utilizado en entornos de computación distribuida, donde se necesite asignar tareas a CPUs específicas para aprovechar recursos especializados.
+Otra mejora significante del módulo, sería la de hacer que el mecanismo de anclaje sea más dinámico y flexible. Actualmente, el módulo permite anclar un solo hilo a un solo procesador, pero una posible extensión de esta funcionalidad podría permitir que un procesador ancle múltiples hilos simultáneamente. Esto permitiría una distribución más equilibrada y eficiente de las cargas de trabajo.
 
-% TODO: Agregar como proximo paso la posibilidad de anclar multiples hilos a un procesador.
+Asimismo, se considera la posibilidad de que, en el futuro, se pueda anclar no solo hilos individuales, sino procesos enteros, asegurando que todos sus hilos se ejecuten exclusivamente en ese procesador.
