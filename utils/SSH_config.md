@@ -59,6 +59,24 @@ ssh root@127.0.0.1 -p 2222
 
 ---
 
+## SSH through Bridged Adapter
+
+> In this case, there will be two network adapters in the VirtualBox configuration.
+>
+> - NAT: To be able to connect to the Internet in the virtual machine.
+> - Bridged Adapter: To be able to connect via SSH from an external machine to the host.
+
+Running the `ifconfig` command you will be able to see the different network interfaces that the machine has. In this case, the interface to be used to connect via SSH is `em1`, since `em0` should have an IP of the type `10.0.x.x` and cannot be accessed via SSH to that IP.
+
+Inside the virtual machine add to the `/etc/rc.conf` file the following line:
+
+```bash
+#where it says em1 should say the name of the interface that is being used as bridged adapter.
+ifconfig_em1="inet 192.168.10.122 netmask 255.255.255.0"
+```
+
+---
+
 ## Copy files through SSH
 
 ### Copy from host to guest
