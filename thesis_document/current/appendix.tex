@@ -89,7 +89,6 @@
 
 \end{lstlisting}
 
-% TODO: ANEXO
 \section{Apéndice 2: Detalles de la implementación del módulo de monopolizado}\label{appendix:apB}
 
 En este apartado se desarrollará con mayor profundidad la implementación del módulo de monopolización de hilos, haciendo referencia principalmente a las funciones que se han modificado y su comportamiento a lo largo del proceso de ejecución de un hilo.
@@ -100,9 +99,9 @@ La función principal para gestionar estos cambios es \textit{mi\_switch()}, que
 
 Para integrar el módulo de monopolización, modificamos \textit{sched\_add()} para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que un CPU ejecute siempre el mismo hilo hasta que se decida lo contrario, excluyendo así, a todos aquellos hilos con un identificador diferente al elegido.
 
-Comenzamos implementando un arreglo llamado \textit{pinned\_threads\_per\_cpu}, que almacena el identificador (ID) del hilo asignado a cada CPU. El arreglo contiene tantos elementos como CPU's existan en el sistema, es decir, para un procesador de cuatro núcleos, el arreglo contendrá cuatro elementos. Cada elemento será el encargado de guardar el valor del identificador del hilo que monopoliza el CPU correspondiente.  Si un CPU está libre, el valor en el arreglo es -1.
+Comenzamos implementando un arreglo llamado \textit{pinned\_threads\_per\_cpu}, que almacena el identificador (ID) del hilo asignado a cada CPU. El arreglo contiene tantos elementos como CPU's existan en el sistema, es decir, para un procesador de cuatro núcleos, el arreglo contendrá cuatro elementos. Cada elemento será el encargado de guardar el valor del identificador del hilo que monopoliza la CPU correspondiente.  Si un CPU está libre, el valor en el arreglo es -1.
 
-En el siguiente ejemplo, se detalla un caso en el que el hilo con ID 100101 tomó control sobre el CPU1 y donde el resto de los procesadores se encuentran funcionando normalmente.
+En el siguiente ejemplo, se detalla un caso en el que el hilo con ID 100101 tomó control sobre la CPU1 y donde el resto de los procesadores se encuentran funcionando normalmente.
 
 int \textit{pinned\_threads\_per\_cpu}[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
 
@@ -127,7 +126,30 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
     \item \textit{get\_monopolized\_cpu\_by\_thread\_id()}: Método utilizado por \textit{resource\_choose\_cpu} para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.
 \end{itemize}
 
+\section{Apéndice 3: Análisis de \textit{kernel panic} debido a \textit{page fault}}\label{appendix:apC}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/kgdb_init.jpeg}
+    \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
+    \label{fig:kgdb_init}
+\end{figure}
+
+\vspace{.50cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/kgdb_where.jpeg}
+    \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
+    \label{fig:kgdb_where}
+\end{figure}
+
+\vspace{.50cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/kgdb_kern-select.jpeg}
+    \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
+    \label{fig:kgdb_kern-select}
+\end{figure}
 
 % Add more sections as needed before the \end{document} command.
 \end{document}
