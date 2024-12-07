@@ -8,7 +8,6 @@ El objetivo de este módulo es proporcionar al planificador 4BSD la capacidad de
 
 Es muy importante que este módulo, al igual que el desarrollado previamente, pueda ser cargado y activado en tiempo real, sin necesidad de reiniciar el sistema operativo. Esta flexibilidad facilitará su integración con funcionalidades del sistema operativo, como la adaptación dinámica a cambios en la carga de trabajo o la asignación de hilos críticos a núcleos específicos para mejorar el rendimiento, entre otras.\par
 
-% TODO: Revisar el nombre
 \subsubsection{Primera Iteración: Desarrollo del Módulo de Monopolización a través de Políticas en la Red}
 
 Para implementar el módulo de monopolización, se comenzó con una fase de investigación para explorar las posibles estrategias de desarrollo. Inicialmente, se consideró la opción de diseñarlo como un módulo independiente, similar al módulo de encendido/apagado. Sin embargo, se identificó que en última instancia, la decisión del planificador sobre a qué CPU encolar un hilo, estaba estrechamente vinculada a los identificadores de los hilos que se deseaban ejecutar.
@@ -37,7 +36,7 @@ Los resultados del módulo fueron satisfactorios, demostrando que los hilos pudi
 
 Para verificar este comportamiento, realizamos pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos de las CPUs durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
 
-Es importante señalar que el módulo no incluyó el caso del CPU0, ya que, al igual que en pruebas anteriores con el módulo de encendido/apagado, presentaba dificultades para la monopolización debido a su rol en la gestión de tareas administrativas del sistema.\par
+Es importante señalar que el módulo no incluyó el caso de la CPU0, ya que, al igual que en pruebas anteriores con el módulo de encendido/apagado, presentaba dificultades para la monopolización debido a su rol en la gestión de tareas administrativas del sistema.\par
 
 Los detalles específicos y un análisis más profundo de los resultados se abordarán en el capítulo de “Análisis de resultados”.\par
 

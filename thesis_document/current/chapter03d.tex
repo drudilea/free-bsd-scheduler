@@ -12,39 +12,35 @@ Aunque esta modificación era necesaria para mantener el equilibrio en la carga 
 
 En tal situación, el planificador podría verse forzado a seleccionar un núcleo diferente o la cola global, lo que violaría la regla fundamental de los hilos \textit{pinned} del kernel y podría provocar un \texttt{KERNEL PANIC}.
 
-\subsubsection{Solución del problema de afinidad (procesadores sobrecargados)}
+% \subsubsection{Solución del problema de afinidad (procesadores sobrecargados)}
 
-La primera de ellas, y la más crucial, fue un problema encontrado con la afinidad de los procesos.
+% La primera de ellas, y la más crucial, fue un problema encontrado con la afinidad de los procesos.
 
-El síntoma ocurría durante nuestras pruebas de estrés; nos dimos cuenta de que los procesadores nunca alcanzaban el 100\% de su capacidad. Descubrimos que esto se debía a un problema de asignación de CPU que generaba una sobrecarga (overhead). El sistema operativo realizaba demasiados cambios de contexto entre los hilos, debido a un cambio en el código en relación con la afinidad, la limitación y la fijación a núcleos específicos.
+% El síntoma ocurría durante nuestras pruebas de estrés; nos dimos cuenta de que los procesadores nunca alcanzaban el 100\% de su capacidad. Descubrimos que esto se debía a un problema de asignación de CPU que generaba una sobrecarga (overhead). El sistema operativo realizaba demasiados cambios de contexto entre los hilos, debido a un cambio en el código en relación con la afinidad, la limitación y la fijación a núcleos específicos.
 
-Estos cambios provocaban que el planificador eligiera los procesadores de forma aleatoria para encolar los hilos, sin considerar las indicaciones que podrían mejorar el rendimiento en la asignación de recursos y los cambios de contexto.
+% Estos cambios provocaban que el planificador eligiera los procesadores de forma aleatoria para encolar los hilos, sin considerar las indicaciones que podrían mejorar el rendimiento en la asignación de recursos y los cambios de contexto.
 
-% TODO{IMAGEN DEL HTOP}
+% % SKIPPED_TODO{IMAGEN DEL HTOP}
 
-A continuación, se dejan algunas pruebas de estrés realizadas previa y posteriormente a la implementación de la mejora. Si se observa detalladamente el programa htop en cada uno de los casos, se puede ver que en el primero, el promedio de uso de los procesadores es de un 78,62\% y el cálculo de todos los números primos hasta 100.000 tomó once segundos realizarlo (ocho veces, una por cada subproceso).
+% A continuación, se dejan algunas pruebas de estrés realizadas previa y posteriormente a la implementación de la mejora. Si se observa detalladamente el programa htop en cada uno de los casos, se puede ver que en el primero, el promedio de uso de los procesadores es de un 78,62\% y el cálculo de todos los números primos hasta 100.000 tomó once segundos realizarlo (ocho veces, una por cada subproceso).
 
-En la segunda imagen, se muestran los resultados obtenidos al hacer los cambios correspondientes para mantener las funcionalidades de afinidad, limitación (bound) y la fijación a núcleos específicos (pin) en el planificador.
+% En la segunda imagen, se muestran los resultados obtenidos al hacer los cambios correspondientes para mantener las funcionalidades de afinidad, limitación (bound) y la fijación a núcleos específicos (pin) en el planificador.
 
-Los cambios fueron positivos, logrando un uso pleno de los procesadores, que se mantuvieron al 100\% durante todas las pruebas de estrés realizadas y redujeron el tiempo de cálculo en un 63,63\%, completando la tarea en cuatro segundos.
+% Los cambios fueron positivos, logrando un uso pleno de los procesadores, que se mantuvieron al 100\% durante todas las pruebas de estrés realizadas y redujeron el tiempo de cálculo en un 63,63\%, completando la tarea en cuatro segundos.
 
-% TODO{SEGUNDA IMAGEN DEL HTOP}
+% % SKIPPED_TODO{SEGUNDA IMAGEN DEL HTOP}
 
 
-\subsubsection{Problema del uso de la placa de red en el sistema operativo}
+\subsubsection{Problema con la placa de red en el sistema operativo}
 
-Durante el desarrollo del proyecto integrador nos encontramos con otro problema recurrente relacionado a la placa de red del sistema operativo en sus diferentes versiones.
+Durante el desarrollo del proyecto integrador, identificamos un problema recurrente relacionado con el uso de la placa de red en nuestra máquina virtual. Este inconveniente surgía específicamente al utilizar SSH para facilitar la conexión con la máquina. Sin embargo, cuando se desactivaba la placa de red antes de iniciar la máquina virtual, el problema no ocurría, aunque esto también impedía el uso de SSH.\par
 
-Precisamente este problema surgió al utilizar SSH para facilitar la conexión con la máquina virtual. De todas formas, se observó que el problema no se producía si se iniciaba la máquina virtual con la placa de red desactivada evitando así el uso de la funcionalidad SSH.
+El problema técnico consistía en un kernel panic provocado por un page fault durante el arranque del sistema operativo. Luego de cada incidente, el sistema generaba un archivo con información del estado previo al fallo, lo que nos permitió realizar un análisis más detallado.\par
 
-El problema en sí, consiste en un kernel panic relacionado a un error por page fault. Esto quiere decir que el sistema ingresa en un estado de pánico en el cual no se permite seguir interactuando con el mismo; se imprime una mínima información relacionada al error en la consola y luego se reinicia. Durante el booteo del sistema, luego de este error, se crea un archivo con la información del sistema previo al kernel panic; ésto se conoce como crash dump file.
+Para abordar la situación, recurrimos al foro oficial de FreeBSD, donde presentamos nuestro caso. La discusión nos brindó diversas perspectivas y posibles soluciones, pero no logramos resolver el problema. Este intercambio de ideas se encuentra documentado en el hilo titulado Kernel panics when given a high workload, accesible en el foro oficial de FreeBSD\cite{bib6}.\par
 
-Luego de un análisis exhaustivo sobre el problema, decidimos hacer uso del foro oficial de FreeBSD para recibir ayuda de la comunidad. Una vez planteada la situación que enfrentábamos, obtuvimos diferentes puntos de vista y posibles soluciones al problema, que desafortunadamente no nos llevó a la resolución del problema.
+Aunque no encontramos una solución definitiva, este proceso nos permitió adquirir conocimientos valiosos. Aprendimos a utilizar herramientas avanzadas para depurar el kernel, a interpretar archivos de crash dump generados durante los fallos y confirmamos que la comunidad de FreeBSD tiene un fuerte interés en iniciativas relacionadas con planificadores basados en Redes de Petri. Además, demostraron una disposición notable para ayudar en casos similares.\par
 
-% TODO{Agregar link al hilo del blog  en el anexo}
+Consideramos que este es un punto relevante para futuras investigaciones y mejoras. Si bien no se trata de un problema bloqueante, su solución podría contribuir significativamente a mejorar la experiencia de desarrollo y operación del sistema.\par
 
-Igualmente, gracias a esta comunidad, pudimos aprender en profundidad acerca de los diferentes debuggers para el kernel del sistema operativo, a interpretar correctamente la información contenida en estos crash dumps files generados, y encontramos en FreeBSD una comunidad muy interesada con el proyecto del planificador mediante Redes de Petri y dispuesta a ayudar a solucionar problemáticas en este tipo de casos.
-
-% TODO{IMAGEN DE KGBD}
-
-Creemos que este es un punto a investigar y mejorar a futuro, ya que, si bien no es bloqueante, contribuye a una mejor experiencia al desarrollar y trabajar con el proyecto.
+Las capturas de pantalla y el análisis detallado del fallo se encuentran documentados en el anexo \ref{appendix:apC}.\par

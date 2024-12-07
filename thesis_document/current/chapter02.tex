@@ -179,7 +179,7 @@ Por otro lado, cada CPU en el sistema tiene su propia cola de ejecución. Estas 
 
 Algunos hilos pueden estar vinculados a un conjunto específico de CPUs debido a consideraciones de rendimiento. El planificador 4BSD respeta esta afinidad al determinar en qué CPU encolar el hilo mediante un mecanismo de iteración sobre las CPUs asignadas al hilo, excluyendo aquellas para las que no existe afinidad. Luego, selecciona la CPU cuya cola tenga la menor cantidad de hilos listos para ejecutarse.\par
 
-La función de \textit{bounding}, por otro lado, implica restringir un hilo a un procesador específico. Por ejemplo, al ejecutar el método \textit{kern\_reboot} en FreeBSD, encargado de preparar el sistema para un reinicio, apagado o parada, es necesario vincular primero dicho hilo al procesador 0. Esto garantiza que el código se ejecute en la CPU 0, una práctica crucial en sistemas que solo permiten la ejecución de instrucciones en dicha CPU.\par
+La función de \textit{bounding}, por otro lado, implica restringir un hilo a un procesador específico. Por ejemplo, al ejecutar el método \textit{kern\_reboot} en FreeBSD, encargado de preparar el sistema para un reinicio, apagado o parada, es necesario vincular primero dicho hilo al procesador 0. Esto garantiza que el código se ejecute en la CPU0, una práctica crucial en sistemas que solo permiten la ejecución de instrucciones en dicha CPU.\par
 
 Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particular. Cuando un hilo está anclado, el planificador se asegura de encolarlo siempre en el último procesador en el que se ejecutó. En el contexto del kernel de FreeBSD, esto se realiza para mantener la coherencia de caché o para garantizar la eficiencia de la ejecución de tareas críticas evitando la migración del hilo entre CPUs durante su ejecución. El método que ancla un hilo, es el que finalmente libera al hilo de esta restricción.\par
 
@@ -258,7 +258,7 @@ En cuanto a las transiciones de la red, podemos hacer la misma categorización:
 \begin{itemize}
     \item \textbf{Transiciones de la actividad del procesador}:
         \begin{itemize}
-            \item \textbf{TRAN\_UNQUEUE}: Esta transición elimina al hilo próximo a ejecutarse de la cola del CPU, dejándolo listo para su ejecución.
+            \item \textbf{TRAN\_UNQUEUE}: Esta transición elimina al hilo próximo a ejecutarse de la cola de la CPU, dejándolo listo para su ejecución.
             \item \textbf{TRAN\_EXEC}: El hilo pasa a ejecutarse, ocupando el recurso del procesador. Esta transición elimina el token de la plaza de habilitación, permitiendo que un nuevo hilo pueda ser encolado. Cabe destacar que esta transición está inhibida en modo monoprocesador ya que en este modo los hilos que se planifican, son buscados en la cola global.
             \item \textbf{TRAN\_EXEC\_EMPTY}: Similar a TRAN\_EXEC, esta transición permite la ejecución de hilos provenientes de la cola global.
             \item \textbf{TRAN\_RETURN\_VOL}: Representa la liberación del recurso del procesador para permitir la ejecución de otro hilo de la cola. Se dispara cuando un hilo no puede continuar su ejecución debido a la espera de un evento o recurso.
@@ -266,7 +266,7 @@ En cuanto a las transiciones de la red, podemos hacer la misma categorización:
         \end{itemize}
     \item \textbf{Transiciones de colas del procesador}:
         \begin{itemize}
-            \item \textbf{TRAN\_ADDTOQUEUE}: Un hilo se agrega a la cola del CPU correspondiente. Esta transición está inhibida cuando el sistema está en modo monoprocesador (al inicio del sistema operativo) y cuando ya existe un hilo en la cola. Esta última decisión recae en un sistema de colas y de penalización de procesadores implementada en el trabajo integrador previo.
+            \item \textbf{TRAN\_ADDTOQUEUE}: Un hilo se agrega a la cola de la CPU correspondiente. Esta transición está inhibida cuando el sistema está en modo monoprocesador (al inicio del sistema operativo) y cuando ya existe un hilo en la cola. Esta última decisión recae en un sistema de colas y de penalización de procesadores implementada en el trabajo integrador previo.
             \item \textbf{TRAN\_REMOVE\_QUEUE}: Expulsa un hilo de la cola y resta un token de habilitación de la CPU, desinhibiendo el encolado de otro hilo del sistema de penalización.
             \item \textbf{TRAN\_REMOVE\_EMPTY\_QUEUE}: Funciona igual que TRAN\_REMOVE\_QUEUE, pero se ejecuta cuando la plaza de habilitación no tiene ningún token.
             \item \textbf{TRAN\_THROW}: Esta transición se dispara automáticamente cuando todas las plazas de habilitación de las CPU tienen al menos un token. Su objetivo es habilitar las colas con la menor cantidad de hilos que estaban inhibidas, una vez que todas las colas se han nivelado.
