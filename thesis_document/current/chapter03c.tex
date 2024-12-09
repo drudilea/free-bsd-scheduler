@@ -12,7 +12,7 @@ Es muy importante que este módulo, al igual que el desarrollado previamente, pu
 
 Para implementar el módulo de monopolización, se comenzó con una fase de investigación para explorar las posibles estrategias de desarrollo. Inicialmente, se consideró la opción de diseñarlo como un módulo independiente, similar al módulo de encendido/apagado. Sin embargo, se identificó que en última instancia, la decisión del planificador sobre a qué CPU encolar un hilo, estaba estrechamente vinculada a los identificadores de los hilos que se deseaban ejecutar.
 
-Este enfoque nos llevó a entender el problema en términos de políticas para la toma de decisiones a la hora de encolar un hilo. Para implementar estas nuevas politicas, agregamos un mecanismo que permite fijar un hilo a un procesador específico, asegurandonos que dicho procesador no pueda encolar ni ejecutar otros hilos mientras esté monopolizado.
+Este enfoque nos llevó a entender el problema en términos de políticas para la toma de decisiones a la hora de encolar un hilo. Para implementar estas nuevas políticas, agregamos un mecanismo que permite fijar un hilo a un procesador específico, asegurándonos que dicho procesador no pueda encolar ni ejecutar otros hilos mientras esté monopolizado.
 
 El proceso utiliza un nuevo registro (\textit{pinned\_threads\_per\_cpu}) que rastrea el estado de monopolización de cada uno de los procesadores. Este registro se define como un arreglo de tantos elementos como procesadores en el sistema, en donde que cada elemento almacena el identificador del hilo que se encuentra monopolizando dicho procesador. Así, cuando el planificador debe decidir donde ejecutar el hilo, primero verifica si este se encuentra \textit{anclado} a un procesador específico. Si es así, el hilo se encola en ese procesador para luego ser ejecutado. En caso contrario, el sistema sigue el proceso estándar de asignación a cualquier procesador disponible.
 
@@ -28,7 +28,7 @@ El comportamiento de la elección de procesador desarrollado, se muestra en la F
 
 Junto con el desarrollo de este sistema, también desarrollamos funciones complementarias que permiten alternar el estado de monopolización de los procesadores, liberar un procesador cuando se decida, y verificar si un procesador está ocupado o disponible para un nuevo hilo.
 
-Los detalles técnicos y las implementaciones específicas se encuentran documentados en el anexo \ref{appendix:apB}.
+Los detalles técnicos y las implementaciones específicas se encuentran documentados en el Apéndice \ref{appendix:apB}.
 
 \subsubsection{Resultados}
 

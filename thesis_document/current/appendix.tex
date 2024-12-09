@@ -1,6 +1,6 @@
 \appendix
 
-\section{Apéndice 1: Archivos de diferencias}\label{appendix:apA}
+\section{Archivos de diferencias}\label{appendix:apA}
 
 \subsection{\textit{sched\_switch} (v12 a v13): Firma de la función y variables}\label{appendix:apA1}
 
@@ -89,7 +89,7 @@
 
 \end{lstlisting}
 
-\section{Apéndice 2: Detalles de la implementación del módulo de monopolizado}\label{appendix:apB}
+\section{Detalles de la implementación del módulo de monopolizado}\label{appendix:apB}
 
 En este apartado se desarrollará con mayor profundidad la implementación del módulo de monopolización de hilos, haciendo referencia principalmente a las funciones que se han modificado y su comportamiento a lo largo del proceso de ejecución de un hilo.
 
@@ -117,20 +117,22 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
 
 \begin{itemize}
     \item \textit{toggle\_pin\_thread\_to\_cpu()}: Método encargado de conmutar el estado de monopolización de un procesador. Recibe el ID de un hilo y de un procesador como parámetros y realiza diferentes operaciones de acuerdo al estado del arreglo:
-    \begin{itemize}
-        \item Si el procesador se encuentra libre, se agrega el ID del hilo a la posición correspondiente en el arreglo.
-        \item Si el procesador ya estaba monopolizado por otro hilo, se sobrescribe con el nuevo ID.
-        \item En caso de que el hilo ya se encuentre monopolizando al procesador, lo libera escribiendo el valor -1 en la posición correspondiente.
-    \end{itemize}
+          \begin{itemize}
+              \item Si el procesador se encuentra libre, se agrega el ID del hilo a la posición correspondiente en el arreglo.
+              \item Si el procesador ya estaba monopolizado por otro hilo, se sobrescribe con el nuevo ID.
+              \item En caso de que el hilo ya se encuentre monopolizando al procesador, lo libera escribiendo el valor -1 en la posición correspondiente.
+          \end{itemize}
     \item \textit{cpu\_available\_for\_thread()}: Método utilizado por \textit{resource\_choose\_cpu} para saber si un hilo puede utilizar un procesador, o si este se encuentra monopolizado por otro. Recibe el ID de un hilo y de un procesador como parámetros y retorna 1 en caso de que el procesador se encuentre habilitado para encolar dicho hilo; retorna 0 en caso de que dicho procesador se encuentre tomado por otro hilo.
-    \item \textit{get\_monopolized\_cpu\_by\_thread\_id()}: Método utilizado por \textit{resource\_choose\_cpu} para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.
+    \item \textit{get\_monopolized\_cpu\_by\_thread\_id()}: Método utilizado por \textit{resource\_choose\_cpu} para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.\par
 \end{itemize}
 
-\section{Apéndice 3: Análisis de \textit{kernel panic} debido a \textit{page fault}}\label{appendix:apC}
+\section{Análisis de \textit{kernel panic} debido a fallos de página (\textit{page fault})}\label{appendix:apC}
+
+% TODO - Agregar descripción del problema y solución - Cambiar captions de las imágenes
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{images/kgdb_init.jpeg}
+    \includegraphics[width=0.8\textwidth]{images/kgdb_init.jpeg}
     \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
     \label{fig:kgdb_init}
 \end{figure}
@@ -138,7 +140,7 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
 \vspace{.50cm}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{images/kgdb_where.jpeg}
+    \includegraphics[width=1\textwidth]{images/kgdb_where.jpeg}
     \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
     \label{fig:kgdb_where}
 \end{figure}
@@ -146,10 +148,36 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
 \vspace{.50cm}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{images/kgdb_kern-select.jpeg}
+    \includegraphics[width=1\textwidth]{images/kgdb_kern-select.jpeg}
     \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
     \label{fig:kgdb_kern-select}
 \end{figure}
+
+\section{Ejecución del programa de estrés con diferentes cantidades de núcleos activos}\label{appendix:apD}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/cpuOnOff-4CPUsTime.png}
+    \caption{Tiempo de ejecución del programa de estrés con 4 núcleos activos.}
+    \label{fig:cpuOnOff-4CPUsTime}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/cpuOnOff-3CPUsTime.png}
+    \caption{Tiempo de ejecución del programa de estrés con 3 núcleos activos.}
+    \label{fig:cpuOnOff-3CPUsTime}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/cpuOnOff-2CPUsTime.png}
+    \caption{Tiempo de ejecución del programa de estrés con 2 núcleos activos.}
+    \label{fig:cpuOnOff-2CPUsTime}
+\end{figure}
+
+
+
 
 % Add more sections as needed before the \end{document} command.
 \end{document}

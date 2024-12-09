@@ -33,12 +33,12 @@ Este escenario de funcionamiento con el módulo deshabilitado proporciona un pun
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-full-load.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado inhabilitado.}
+    \caption{Estado de los núcleos con el módulo encendido/apagado inhabilitado.}
     \label{fig:cpuOnOff-result-full-load}
 \end{figure}
 
 \subsubsection{Comportamiento con el Módulo Habilitado}
-Basándonos en las observaciones anteriores, llevamos a cabo la misma prueba de estrés, pero activando previamente el módulo de encendido/apagado para inhabilitar el Procesador 2.\par
+Basándonos en las observaciones anteriores, llevamos a cabo la misma prueba de estrés, pero activando previamente el módulo de encendido/apagado para inhabilitar el CPU2.\par
 
 Este enfoque nos permitió no solo corroborar la funcionalidad adecuada de la implementación, sino también analizar la respuesta del sistema ante un cambio tan significativo como el bloqueo del encolado en uno de sus núcleos.\par
 
@@ -47,7 +47,7 @@ En relación a los resultados obtenidos durante esta evaluación, observamos que
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-1CPU.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado habilitado para la CPU2.}
+    \caption{Estado de los núcleos con el módulo encendido/apagado habilitado para la CPU2.}
     \label{fig:cpuOnOff-result-1cpu}
 \end{figure}
 
@@ -56,13 +56,28 @@ En relación al tiempo necesario para completar el cálculo del programa, notamo
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-2CPU.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado habilitado para multiples CPUs.}
+    \caption{Estado de los núcleos con el módulo encendido/apagado habilitado para múltiples CPUs.}
     \label{fig:cpuOnOff-result-2cpu}
 \end{figure}
 
-% TODO{TABLA CON LOS TIEMPOS DE EJECUCION CON TODOS LOS PROC, CON 3 Y CON 2 + explicacion + diciendo que el objetivo no es tener apagos los procesadores en tiempos de estres, sino que se muestra solo para ejemplificar, y que la parte del kernel que en un futuro haga uso del modulo para reducir los gastos energeticos, tiene que entender cuando conviene apagar. (Medio como conclusion del modulo)}
+En la Tabla \ref{tabla:cpuOnOff-result-times} se presentan los tiempos de ejecución del programa de estrés con diferentes cantidades de CPUs activos. Estos resultados confirman la relación entre la cantidad de procesadores activos y el tiempo necesario para completar la tarea.\par
 
-% TODO{branch con el codigo}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Cantidad de núcleos} & \textbf{4 CPUs} & \textbf{3 CPUs} & \textbf{2 CPUs} \\
+        \hline
+        \textbf{Tiempo} (segundos)   & 26              & 34              & 49              \\
+        \hline
+    \end{tabular}
+    \caption{Tiempo de ejecución del programa de estrés con diferentes cantidades de CPUs activos.}
+    \label{tabla:cpuOnOff-result-times}
+\end{table}
+
+El objetivo de esta prueba no es fomentar la suspensión de procesadores durante un contexto de gran carga de trabajo, sino demostrar la capacidad del sistema para adaptarse a la reducción de recursos de procesamiento. En el futuro, se espera que el kernel sea quien decida de forma autónoma, cuándo suspender procesadores para lograr una mayor eficiencia energética.\par
+
+Las capturas de pantalla con los resultados mostrados en la Tabla \ref{tabla:cpuOnOff-result-times} se encuentran documentados en el Apéndice \ref{appendix:apD}.
 
 
 \subsection{Resultados del módulo de Monopolización de Núcleos}
@@ -73,17 +88,23 @@ La implementación del módulo de Monopolización de Núcleos en FreeBSD constit
 
 En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutaran hilos de clase IDLE en caso de inactividad del sistema. Con el planificador funcionando normalmente, los subprocesos se distribuyen entre los núcleos disponibles, utilizando las políticas definidas por el mismo.\par
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/top_disabled.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado habilitado para multiples CPUs.}
-    \label{fig:top_disabled}
-\end{figure}
+En la Figura \ref{fig:top_disabled} se puede observar el estado de los procesos en el sistema con el módulo de monopolización deshabilitado. En este caso, se puede apreciar que los procesos se distribuyen de manera equitativa entre los núcleos, sin que ninguno de ellos monopolice un núcleo específico.\par
+
+A su vez se ha ejecutado el proceso de estrés configurado para tener un solo hilo de procesamiento y así poder observar como el sistema opera en condiciones normales, reorganizando los tiempos de cada procesador para equilibrar la carga.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/dtrace_disabled.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado habilitado para multiples CPUs.}
+    \includegraphics[width=1\textwidth]{images/top_disabled.png}
+    \caption{Estado de los procesos en el sistema con el módulo de monopolización deshabilitado.}
+    \label{fig:top_disabled}
+\end{figure}
+
+Además de los resultados obtenidos con la herramienta que monitorea los procesos del sistema, se ha ejecutado otro programa encargado de hacer un seguimiento a un hilo determinado, mostrando los cambios de procesador en tiempo real. En la Figura \ref{fig:dtrace_disabled} se puede observar el comportamiento del hilo con el módulo de monopolización deshabilitado, donde se aprecia como este se ejecuta en diferentes núcleos del sistema.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/dtrace_disabled.png}
+    \caption{Ejecución de un hilo en diferentes núcleos del sistema con el módulo de monopolización deshabilitado.}
     \label{fig:dtrace_disabled}
 \end{figure}
 
@@ -91,45 +112,36 @@ En este apartado se analizará el comportamiento general del sistema con el mód
 \subsubsection{Comportamiento con el Módulo Habilitado}
 Habiendo expuesto el comportamiento del sistema en su condición normal, se sienta una base para la posterior comparación con el desempeño del módulo.\par
 
-Siguiendo un procedimiento similar al empleado con el módulo de encendido y apagado, procedimos a ejecutar el programa de estrés, orientado al cálculo de números primos. Durante su ejecución, la herramienta de monitoreo (htop) permite la observación de los distintos subprocesos vinculados a este programa y la información específica de cada uno.\par
+Siguiendo un procedimiento similar al empleado con el módulo de encendido y apagado, procedimos a ejecutar nuevamente el programa de estrés, orientado al cálculo de números primos.\par
 
-Luego de haber activado el módulo podemos observar que los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. Como era de esperar, este subproceso estuvo vinculado al CPU durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
+Luego de haber activado el módulo podemos observar que los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. Como era de esperar, este subproceso estuvo vinculado al CPU elegido, durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/cpuMonopolized-idle.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado habilitado para multiples CPUs.}
+    \includegraphics[width=1\textwidth]{images/cpuMonopolized-idle.png}
+    \caption{Estado de los procesos previo a la habilitación del módulo.}
     \label{fig:cpuMonopolized-idle}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/cpuMonopolized-on.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado habilitado para multiples CPUs.}
+    \includegraphics[width=1\textwidth]{images/cpuMonopolized-on.png}
+    \caption{Estado de los procesos luego de activar el módulo de monopolización para el CPU1.}
     \label{fig:cpuMonopolized-on}
 \end{figure}
 
+En la Figura \ref{fig:cpuMonopolized-dtrace} se observa el comportamiento del hilo con respecto a los núcleos en los que se ejecuta, comenzando con una asignación de acuerdo al planificador y luego de la activación del módulo, se puede observar como el hilo se ejecuta en el núcleo designado.\par
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/cpuMonopolized-dtrace.png}
-    \caption{Estado de los núcleos con el modulo encendido/apagado habilitado para multiples CPUs.}
+    \includegraphics[width=1\textwidth]{images/cpuMonopolized-dtrace.png}
+    \caption{Estado del hilo monopolizado antes y después de la activación del módulo.}
     \label{fig:cpuMonopolized-dtrace}
 \end{figure}
 
-
-
-% TODO{Mover a apendice}
-% Con el programa en ejecución y el monitoreo activado, el siguiente paso implica la configuración del módulo; en otras palabras, es el momento de actualizar las variables dentro del código del módulo. La primera variable a considerar es el identificador del subproceso que deseamos anclar a un núcleo específico, obtenido previamente del programa de monitoreo. Una vez que tenemos el identificador, procedemos a seleccionar en qué núcleo asociaremos este hilo, compilando y cargando el módulo de kernel adecuado.\par
-
-% TODO{Mover a apendice}
-% Los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. En este caso, hemos seleccionado el hilo con el identificador  878172 y la CPU2. Como era de esperar, tras la ejecución del módulo, este subproceso estuvo vinculado al CPU durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
-
-% TODO{Imagen con el hilo asociado al núcleo, quizás también podemos tener un link a video para mostrar hasta que termina de ejecutarse, y con la desactivación del módulo para ver como la CPU vuelve a estar disponible para los otros procesos}
-
-Un caso relevante es el estado del sistema una vez que el programa de estrés ha concluido pero el módulo permanece activado. En estas condiciones, se puede observar cómo la CPU al que se había anclado el hilo permanece “reservado”, sin ejecutar ningún hilo que no posea el ID especificado, mientras que los procesos restantes solo se ejecutan en los núcleos liberados. Con esto en mente, se puede identificar una similitud con el funcionamiento del módulo de encendido/apagado al desactivar un núcleo.\par
+Un caso relevante es el estado del sistema una vez que el programa de estrés ha concluido pero el módulo permanece activado. En estas condiciones, se observa cómo el núcleo al que se había anclado el hilo permanece “reservado”, sin ejecutar ningún hilo que no posea el identificador especificado, mientras que los procesos restantes solo se ejecutan en los núcleos liberados. Con esto en mente, se puede identificar una similitud con el funcionamiento del módulo de encendido/apagado al desactivar un núcleo.\par
 
 Al desactivar el módulo, el sistema continúa operando según lo esperado, con todos sus núcleos disponibles, tal como lo haría en su estado normal.
-
 
 \subsection{Resultados de las actualizaciones en la versión del S.O.}
 En esta sección, se expondrán los resultados derivados de las actualizaciones implementadas en el marco del proyecto integrador previo. Es relevante subrayar que estas actualizaciones se llevaron a cabo con el propósito de sincronizar el proyecto con la versión más reciente y estable del sistema operativo (versión 13.1). Dado que la implementación original demostró su eficacia en la versión 11, el énfasis principal en esta sección se dirigirá a garantizar la continuidad de dicho rendimiento.\par
@@ -139,6 +151,8 @@ Esta fue la primera tarea abordada en este proyecto, y la elección de priorizar
 A pesar de la necesidad de revisar numerosos conflictos generados entre el código del planificador en la versión 11 y la versión 13 de FreeBSD, los resultados finales obtenidos de esta etapa confirman que la actualización se realizó con éxito. El sistema operativo, con el planificador de redes de Petri, mantuvo la estabilidad y el funcionamiento adecuado en las pruebas realizadas.\par
 
 El código correspondiente a esta etapa se encuentra en una rama específica del repositorio del proyecto. Debido a la estructura de ramas y modalidad de trabajo que se planteó para la realización de este trabajo integrador, también podemos encontrar una rama por cada actualización que se fue realizando progresivamente desde la 11 hasta la 13.1.\par
+
+% TODO Tener en cuenta que en la introduccion del capitulo 4 se menciona que se presentaran los resultados de los modulos, pero no de las actualizaciones. Habria que agregarlo a la introduccion
 
 % TODO{MOSTRAR ALGUNAS IMAGENES DEL PROYECTO CORRIENDO CON LA VERSION 13.1 Y UTILIZANDO LA RED}
 

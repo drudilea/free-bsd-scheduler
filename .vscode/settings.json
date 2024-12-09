@@ -82,7 +82,8 @@
             ]
         }
     ],
-    "latex-workshop.latexindent.path": "/Library/TeX/texbin/latexindent",
+    "latex-workshop.formatting.latex": "latexindent",
+    "latex-workshop.formatting.latexindent.path": "/Library/TeX/texbin/latexindent",
     "latex-workshop.linting.chktex.exec.path": "/Library/TeX/texbin/chktex",
     "latex-workshop.latex.autoBuild.run": "onSave",
     "latex-workshop.latex.autoClean.run": "onFailed",
