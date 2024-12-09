@@ -39,15 +39,15 @@ La matriz base, que define la estructura inicial de la Red de Petri, necesitaba 
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 & 0 & -1 & 0 & 0 & 0 & 0 & -1 & 0 \\
+        1 & 0  & -1 & 0  & 0  & 0  & 0  & -1 & 0  \\
         \hline
-        1 & -1 & 0 & 0 & 0 & 0 & 0 & -1 & -1 \\
+        1 & -1 & 0  & 0  & 0  & 0  & 0  & -1 & -1 \\
         \hline
-        0 & -1 & 0 & 0 & 1 & 1 & -1 & 0 & 0 \\
+        0 & -1 & 0  & 0  & 1  & 1  & -1 & 0  & 0  \\
         \hline
-        0 & 1 & -1 & -1 & 0 & 0 & 1 & 0 & 0 \\
+        0 & 1  & -1 & -1 & 0  & 0  & 1  & 0  & 0  \\
         \hline
-        0 & 0 & 1 & 1 & -1 & -1 & 0 & 0 & 0 \\
+        0 & 0  & 1  & 1  & -1 & -1 & 0  & 0  & 0  \\
         \hline
     \end{tabular}
     \caption{Matriz base inicial.}
@@ -58,15 +58,15 @@ La matriz base, que define la estructura inicial de la Red de Petri, necesitaba 
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 & 0 & -1 & 0 & 0 & 0 & 0 & -1 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        1                      & 0                      & -1                     & 0                      & 0                      & 0                      & 0                      & -1                     & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
         \hline
-        1 & -1 & 0 & 0 & 0 & 0 & 0 & -1 & -1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        1                      & -1                     & 0                      & 0                      & 0                      & 0                      & 0                      & -1                     & -1                     & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
         \hline
-        0 & -1 & 0 & 0 & 1 & 1 & -1 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        0                      & -1                     & 0                      & 0                      & 1                      & 1                      & -1                     & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
         \hline
-        0 & 1 & -1 & -1 & 0 & 0 & 1 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        0                      & 1                      & -1                     & -1                     & 0                      & 0                      & 1                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
         \hline
-        0 & 0 & 1 & 1 & -1 & -1 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        0                      & 0                      & 1                      & 1                      & -1                     & -1                     & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
         \hline
         \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}-1 \\
         \hline
@@ -103,15 +103,15 @@ Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        1                      & 0                      & 0                      & 1                      & 0                      & 0                      & 0                      & 0                      & 1                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
         \hline
         \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 \\
         \hline
@@ -155,17 +155,17 @@ Una vez más, la implementación de estos cambios comenzó con la actualización
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
-        1 &  0 & -1 &  0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & -1 & 0 & 0 & 0 \\
+        1 & 0  & -1 & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & -1 & 0  & 0 & 0  \\
         \hline
-        1 & -1 &  0 &  0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & -1 & -1 & 0 & 0 \\
+        1 & -1 & 0  & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & -1 & -1 & 0 & 0  \\
         \hline
-        0 & -1 &  0 &  0 & \cellcolor{lightgray}-1 & 1 & 1 & -1 & 0 & 0 & 0 & 0 \\
+        0 & -1 & 0  & 0  & \cellcolor{lightgray}-1 & 1  & 1  & -1 & 0  & 0  & 0 & 0  \\
         \hline
-        0 &  1 & -1 & -1 & \cellcolor{lightgray}1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 1  & -1 & -1 & \cellcolor{lightgray}1  & 0  & 0  & 1  & 0  & 0  & 0 & 0  \\
         \hline
-        0 &  0 &  1 &  1 & \cellcolor{lightgray}0 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0  & 1  & 1  & \cellcolor{lightgray}0  & -1 & -1 & 0  & 0  & 0  & 0 & 0  \\
         \hline
-        0 &  0 &  0 &  0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 \\
+        0 & 0  & 0  & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & 0  & 0  & 1 & -1 \\
         \hline
     \end{tabular}
     \caption{Matriz base: Segunda iteración del módulo de encendido/apagado.}
@@ -203,7 +203,7 @@ Además, se logró la versatilidad esperada para este módulo, ya que es posible
 
 Los detalles completos de los resultados se discutirán en profundidad en el capítulo \ref{ch:results} de \textit{Análisis de Resultados}.\par
 
-Es importante señalar que no es posible suspender el procesador cero. Esto se debe a que el sistema operativo utiliza este núcleo de forma predeterminada para tareas esenciales como la gestion de interrupciones, la gestión de memoria, entre otras; y al desactivarlo, el sistema experimenta un comportamiento inesperado. Para evitar esta situación, se realizaron ajustes en el código que impiden la selección de dicho núcleo para su suspensión.\par
+Es importante señalar que no es posible suspender el procesador cero. Esto se debe a que el sistema operativo utiliza este núcleo de forma predeterminada para tareas esenciales como la gestión de interrupciones, la gestión de memoria, entre otras; y al desactivarlo, el sistema experimenta un comportamiento inesperado. Para evitar esta situación, se realizaron ajustes en el código que impiden la selección de dicho núcleo para su suspensión.\par
 
 \subsubsection{Próximos pasos}
 
