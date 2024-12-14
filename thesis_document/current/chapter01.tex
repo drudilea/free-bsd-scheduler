@@ -3,7 +3,7 @@ La planificación a corto plazo de un sistema operativo es la parte del sistema 
 
 El sistema operativo elegido para realizar este proyecto y las modificaciones pertinentes, es FreeBSD.\@ Éste es un sistema operativo libre y de código abierto, basado en Unix, que se utiliza principalmente en servidores y estaciones de trabajo. Es conocido por su escalabilidad y robustez, así como por su capacidad de adaptarse y personalizarse según las necesidades del usuario.\par
 
-El planificador de bajo nivel se ejecuta cada vez que un hilo se bloquea o interrumpe, y se debe seleccionar un nuevo hilo para ejecutar. Al ejecutarse miles de veces por segundo, debe tomar decisiones rápidamente y con la menor cantidad de información posible para ser eficiente. Para simplificar su tarea, el kernel mantiene un conjunto de colas de ejecución para cada CPU.\@ Cuando una tarea se bloquea en una CPU, la responsabilidad del planificador de bajo nivel es encontrar y elegir el hilo con la máxima prioridad en la cola de ejecución asignada a esa CPU.\par
+El planificador de bajo nivel se ejecuta cada vez que un hilo se bloquea o interrumpe, y se debe seleccionar un nuevo hilo para ejecutar. Al ejecutarse miles de veces por segundo, debe tomar decisiones rápidamente y con la menor cantidad de información posible para ser eficiente. Para simplificar su tarea, el \textit{kernel} mantiene un conjunto de colas de ejecución para cada CPU.\@ Cuando una tarea se bloquea en una CPU, la responsabilidad del planificador de bajo nivel es encontrar y elegir el hilo con la máxima prioridad en la cola de ejecución asignada a esa CPU.\par
 
 Este trabajo se construye sobre los cimientos establecidos en un proyecto integrador previo, donde se abordó la mejora del \textit{scheduler} en el sistema operativo FreeBSD.\@ En dicha investigación, se identificó la naturaleza estadística del proceso de asignación de tiempo de procesador y se propuso un modelo basado en redes de Petri para introducir determinismo y reducir la incertidumbre en la toma de decisiones.\par
 
@@ -43,7 +43,7 @@ Objetivos secundarios:
 
 \begin{itemize}
     \item Analizar y aprender exhaustivamente acerca del código fuente del sistema operativo FreeBSD.\@
-    \item Profundizar los conocimientos en la depuración del kernel y las diferentes herramientas de debugging.
+    \item Profundizar los conocimientos en la depuración del \textit{kernel} y las diferentes herramientas de debugging.
     \item Mejorar la documentación del proyecto, estrategia de ramas y commits en el repositorio de desarrollo priorizando las buenas prácticas de programación. Esto permitirá dejar mejores bases para quienes decidan continuar con la investigación a futuro.
     \item Automatizar y documentar los procesos repetitivos que se llevan a cabo en las diferentes etapas del proyecto, como por ejemplo la instalación de máquinas virtuales, paquetes que nos ayudarán a la hora del desarrollo, configuraciones de red, instalación y compilación de kernel, entre otras.
     \item Compartir e interactuar con la comunidad de FreeBSD a través de foros y listas de difusión.
@@ -53,7 +53,7 @@ Objetivos secundarios:
 
 La fase inicial del proyecto se enfocará en la actualización de la implementación existente a la ultima versión del sistema operativo FreeBSD.\@ Se considerará completada, una vez que el código del proyecto integrador previo se encuentre actualizado y se compruebe el funcionamiento adecuado.\par
 
-Luego se procederá a implementar las dos nuevas funcionalidades mencionadas anteriormente. Esta etapa presenta un mayor nivel de complejidad, ya que estas funcionalidades pueden ser implementadas de diversas formas. Por esta razón, se ha decidido delimitar el alcance de la implementación en dos módulos independientes. La activación y desactivación de estos módulos se realizará mediante la carga o descarga de un módulo de kernel que incluirá parámetros relevantes en cada caso.\par
+Luego se procederá a implementar las dos nuevas funcionalidades mencionadas anteriormente. Esta etapa presenta un mayor nivel de complejidad, ya que estas funcionalidades pueden ser implementadas de diversas formas. Por esta razón, se ha decidido delimitar el alcance de la implementación en dos módulos independientes. La activación y desactivación de estos módulos se realizará mediante la carga o descarga de un módulo de \textit{kernel} que incluirá parámetros relevantes en cada caso.\par
 
 En el caso de la funcionalidad de encendido y apagado de procesadores, la activación permitirá elegir los procesadores que se desean desactivar del proceso de selección de colas. Por otro lado, en el caso de la funcionalidad de monopolización de CPUs, la activación del módulo permitirá seleccionar el hilo que se apropiará de la CPU correspondiente, también elegido mediante parámetros.\par
 

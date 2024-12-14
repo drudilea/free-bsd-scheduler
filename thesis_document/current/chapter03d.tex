@@ -10,7 +10,7 @@ En FreeBSD, los hilos \textit{pinned} deben ejecutarse exclusivamente en el proc
 
 Aunque esta modificación era necesaria para mantener el equilibrio en la carga de los núcleos del sistema, introdujo un problema adicional. Si, durante la ejecución de un hilo actual, se agrega otro hilo a la cola de ese procesador y simultáneamente se fija el hilo actual (es decir, se convierte en \textit{pinned}), la transición de reencolado del hilo \textit{pinned} podría quedar deshabilitada.
 
-En tal situación, el planificador podría verse forzado a seleccionar un núcleo diferente o la cola global, lo que violaría la regla fundamental de los hilos \textit{pinned} del kernel y podría provocar un \texttt{KERNEL PANIC}.
+En tal situación, el planificador podría verse forzado a seleccionar un núcleo diferente o la cola global, lo que violaría la regla fundamental de los hilos \textit{pinned} del \textit{kernel} y podría provocar un \texttt{KERNEL PANIC}.
 
 % \subsubsection{Solución del problema de afinidad (procesadores sobrecargados)}
 
@@ -35,7 +35,7 @@ En tal situación, el planificador podría verse forzado a seleccionar un núcle
 
 Durante el desarrollo del proyecto integrador, identificamos un problema recurrente relacionado con el uso de la placa de red en nuestra máquina virtual. Este inconveniente surgía específicamente al utilizar SSH para facilitar la conexión con la máquina. Sin embargo, cuando se desactivaba la placa de red antes de iniciar la máquina virtual, el problema no ocurría, aunque esto también impedía el uso de SSH.\par
 
-El problema técnico consistía en un kernel panic provocado por un page fault durante el arranque del sistema operativo. Luego de cada incidente, el sistema generaba un archivo con información del estado previo al fallo, lo que nos permitió realizar un análisis más detallado.\par
+El problema técnico consistía en un \textit{kernel} panic provocado por un page fault durante el arranque del sistema operativo. Luego de cada incidente, el sistema generaba un archivo con información del estado previo al fallo, lo que nos permitió realizar un análisis más detallado.\par
 
 Para abordar la situación, recurrimos al foro oficial de FreeBSD, donde presentamos nuestro caso. La discusión nos brindó diversas perspectivas y posibles soluciones, pero no logramos resolver el problema. Este intercambio de ideas se encuentra documentado en el hilo titulado Kernel panics when given a high workload, accesible en el foro oficial de FreeBSD\cite{bib6}.\par
 
