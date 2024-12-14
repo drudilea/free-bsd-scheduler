@@ -8,14 +8,14 @@ Al profundizar en esta base teórica, no solo sentaremos las bases para entender
 
 \subsection{Procesos e hilos}
 
-En sistemas operativos, los procesos son entidades aisladas que representan la ejecución de una tarea o aplicación en particular. Cada proceso cuenta con su propio espacio de direcciones, que es un área reservada de memoria virtual donde se aloja el código del programa, las variables y los recursos necesarios para su ejecución. Además, disponen de acceso a los recursos del kernel a través de llamadas a sistemas.\par
+En sistemas operativos, los procesos son entidades aisladas que representan la ejecución de una tarea o aplicación en particular. Cada proceso cuenta con su propio espacio de direcciones, que es un área reservada de memoria virtual donde se aloja el código del programa, las variables y los recursos necesarios para su ejecución. Además, disponen de acceso a los recursos del \textit{kernel} a través de llamadas a sistemas.\par
 
 Dentro de cada proceso, puede haber uno o varios hilos de ejecución. Estos hilos son unidades de ejecución independientes que comparten los recursos del proceso padre. Cada hilo se asocia con un procesador virtual, que tiene su propio contexto y un stack de ejecución alojado en el espacio de direcciones del proceso.\par
 
-El kernel del sistema operativo crea la ilusión de ejecución concurrente de múltiples procesos, distribuyendo los recursos del sistema entre los procesadores listos para ejecutar tareas.\par
+El \textit{kernel} del sistema operativo crea la ilusión de ejecución concurrente de múltiples procesos, distribuyendo los recursos del sistema entre los procesadores listos para ejecutar tareas.\par
 
 \subsubsection{Estructura de los procesos}
-Cada proceso en el sistema recibe un identificador único llamado \textit{identificador de proceso} (PID). Los PID son el mecanismo común utilizado por las aplicaciones y el kernel para hacer referencia a los procesos. Existen dos identificadores que son de especial importancia para cada proceso: el PID del proceso en sí, y el PID del proceso padre.
+Cada proceso en el sistema recibe un identificador único llamado \textit{identificador de proceso} (PID). Los PID son el mecanismo común utilizado por las aplicaciones y el \textit{kernel} para hacer referencia a los procesos. Existen dos identificadores que son de especial importancia para cada proceso: el PID del proceso en sí, y el PID del proceso padre.
 
 La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process-state}. Esta estructura tiene como objetivo facilitar la gestión de múltiples hilos que comparten un espacio de direcciones y otros recursos dentro del proceso. Algunas de las categorías que componen esta estructura son las siguientes:
 
@@ -24,7 +24,7 @@ La estructura simplificada de un proceso se puede observar en la Figura \ref{fig
     \item Credenciales de usuario: los identificadores de usuario y grupo determinan los permisos de acceso a los recursos del sistema.
     \item Gestión de memoria: esta parte de la estructura es crucial para asignar y gestionar el espacio de direcciones virtuales del proceso, así como para administrar otros aspectos relacionados con la memoria.
     \item Descriptores de archivos: una matriz de punteros que indica los archivos abiertos por el proceso e información relevante de los mismos.
-    \item Vector de llamadas al sistema: estructura de datos que mapea las llamadas al sistema con las funciones correspondientes en el kernel del sistema operativo.
+    \item Vector de llamadas al sistema: estructura de datos que mapea las llamadas al sistema con las funciones correspondientes en el \textit{kernel} del sistema operativo.
     \item Contabilidad de recursos: estructura que describe la utilización de los recursos del sistema por parte del proceso.
     \item Estadísticas: estadísticas del proceso sobre su ejecución, temporizadores y profiling.
     \item Acciones de señal: la acción a tomar cuando se envía una señal a un proceso.
@@ -51,14 +51,14 @@ Cada proceso cuenta con los punteros \textit{p\_pptr}, \textit{p\_children} y \t
 \subsubsection{Estructura de los hilos}
 Un hilo, en sistemas operativos modernos, constituye una unidad fundamental de ejecución dentro de un proceso. Se trata de una entidad independiente que representa una secuencia de instrucciones ejecutables dentro del contexto de un proceso. Cada hilo posee su propio contador de programa, registros de CPU y pila de ejecución, lo que le permite ejecutar código de manera concurrente dentro del mismo proceso. Aunque los hilos comparten recursos como el espacio de direcciones y otros recursos del proceso principal, también pueden comunicarse y cooperar entre sí para llevar a cabo tareas específicas de manera más eficiente.\par
 
-En el caso de FreeBSD, el sistema adopta el modelo 1:1, donde cada hilo de usuario se corresponde con un hilo a nivel de kernel para mejorar la eficiencia de las aplicaciones.\par
+En el caso de FreeBSD, el sistema adopta el modelo 1:1, donde cada hilo de usuario se corresponde con un hilo a nivel de \textit{kernel} para mejorar la eficiencia de las aplicaciones.\par
 
-La estructura de un hilo, que se muestra en la Figura \ref{fig:process-state}, contiene la información necesaria para ejecutarse en el kernel del sistema operativo:
+La estructura de un hilo, que se muestra en la Figura \ref{fig:process-state}, contiene la información necesaria para ejecutarse en el \textit{kernel} del sistema operativo:
 
 \begin{itemize}
-    \item Información para la planificación: se refiere a la prioridad del hilo en modo kernel y en modo usuario, la cantidad de tiempo que ha pasado suspendido y el uso reciente de la CPU. Además, se indica el estado de ejecución del hilo, banderas de estado adicionales; y si el hilo se encuentra suspendido, información sobre el canal y evento por el cual espera.
+    \item Información para la planificación: se refiere a la prioridad del hilo en modo \textit{kernel} y en modo usuario, la cantidad de tiempo que ha pasado suspendido y el uso reciente de la CPU. Además, se indica el estado de ejecución del hilo, banderas de estado adicionales; y si el hilo se encuentra suspendido, información sobre el canal y evento por el cual espera.
     \item TSB (thread state block): estado de ejecución del hilo en modo usuario y modo kernel. La estructura incluye registros de propósito general, punteros de pila, contador de programa, registros de gestión de memoria, entre otros.
-    \item Pila del kernel: pila para usar al ejecutar en el kernel. Las pilas del kernel deben mantenerse pequeñas para evitar desperdiciar memoria física.
+    \item Pila del kernel: pila para usar al ejecutar en el kernel. Las pilas del \textit{kernel} deben mantenerse pequeñas para evitar desperdiciar memoria física.
     \item Estado de la máquina (\textit{machine-dependent state}): se refiere a la información del hilo en relación a detalles que son específicos de la arquitectura de la CPU (registros de estado de punto flotante, información de interrupciones, información de registros de segmento de memoria, etc.).
 \end{itemize}
 
@@ -101,9 +101,9 @@ Las prioridades de los hilos son un componente importante para la planificación
 
 Las prioridades en el rango de 0 a 47 son asignadas de forma predeterminada por el sistema y se destinan a las tareas de interrupción.\par
 
-Las prioridades de los hilos en tiempo real se encuentran en el intervalo de 48 a 79 y deben ser configuradas previamente por las aplicaciones mediante la llamada al sistema \textit{rtprio}. A continuación, se encuentran los hilos con prioridades en el rango de 80 a 119, conocidos como hilos del kernel superior (top-half kernel threads). Estos hilos se encargan de gestionar operaciones críticas del kernel que afectan a todo el sistema.\par
+Las prioridades de los hilos en tiempo real se encuentran en el intervalo de 48 a 79 y deben ser configuradas previamente por las aplicaciones mediante la llamada al sistema \textit{rtprio}. A continuación, se encuentran los hilos con prioridades en el rango de 80 a 119, conocidos como hilos del \textit{kernel} superior (top-half \textit{kernel} threads). Estos hilos se encargan de gestionar operaciones críticas del \textit{kernel} que afectan a todo el sistema.\par
 
-Los hilos con prioridades entre 120 y 223 pertenecen a la clase de hilos de tiempo compartido. Están destinados a ejecutar tareas de usuario convencionales y sus prioridades son ajustadas de manera automática por el kernel en función del uso de la CPU.\par
+Los hilos con prioridades entre 120 y 223 pertenecen a la clase de hilos de tiempo compartido. Están destinados a ejecutar tareas de usuario convencionales y sus prioridades son ajustadas de manera automática por el \textit{kernel} en función del uso de la CPU.\par
 
 Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la clase \"IDLE\" pueden ejecutarse. Estos hilos tienen la finalidad de mantener el sistema en un estado inactivo, consumiendo recursos mínimos y estando listos para responder a tareas prioritarias.\par
 
@@ -113,11 +113,11 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
         \hline
         \textbf{Rango} & \textbf{Clase} & \textbf{Tipo de hilo}          \\
         \hline
-        0 - 47         & ITHD           & Bottom-half kernel (interrupt) \\
+        0 - 47         & ITHD           & Bottom-half \textit{kernel} (interrupt) \\
         \hline
         48 -79         & REALTIME       & Real-time user                 \\
         \hline
-        80 - 119       & KERN           & Top-half kernel                \\
+        80 - 119       & KERN           & Top-half \textit{kernel}                \\
         \hline
         120 - 223      & TIMESHARE      & Time-sharing user              \\
         \hline
@@ -181,7 +181,7 @@ Algunos hilos pueden estar vinculados a un conjunto específico de CPUs debido a
 
 La función de \textit{bounding}, por otro lado, implica restringir un hilo a un procesador específico. Por ejemplo, al ejecutar el método \textit{kern\_reboot} en FreeBSD, encargado de preparar el sistema para un reinicio, apagado o parada, es necesario vincular primero dicho hilo al procesador 0. Esto garantiza que el código se ejecute en la CPU0, una práctica crucial en sistemas que solo permiten la ejecución de instrucciones en dicha CPU.\par
 
-Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particular. Cuando un hilo está anclado, el planificador se asegura de encolarlo siempre en el último procesador en el que se ejecutó. En el contexto del kernel de FreeBSD, esto se realiza para mantener la coherencia de caché o para garantizar la eficiencia de la ejecución de tareas críticas evitando la migración del hilo entre CPUs durante su ejecución. El método que ancla un hilo, es el que finalmente libera al hilo de esta restricción.\par
+Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particular. Cuando un hilo está anclado, el planificador se asegura de encolarlo siempre en el último procesador en el que se ejecutó. En el contexto del \textit{kernel} de FreeBSD, esto se realiza para mantener la coherencia de caché o para garantizar la eficiencia de la ejecución de tareas críticas evitando la migración del hilo entre CPUs durante su ejecución. El método que ancla un hilo, es el que finalmente libera al hilo de esta restricción.\par
 
 \subsection{Conceptos del proyecto integrador previo}
 

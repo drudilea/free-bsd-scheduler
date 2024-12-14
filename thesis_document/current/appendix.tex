@@ -128,12 +128,20 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
 
 \section{Análisis de \textit{kernel panic} debido a fallos de página (\textit{page fault})}\label{appendix:apC}
 
-% TODO - Agregar descripción del problema y solución - Cambiar captions de las imágenes
+Se analizaron archivos \textit{dump} generados en un sistema FreeBSD a partir de un page fault ocurrido mientras la placa de red se encontraba encendida. El proceso involucrado en el fallo es sshd, que generó un \textit{kernel panic} debido a un acceso inválido a memoria.
+
+El proceso de análisis inició cargando el archivo de \textit{core dump} con la herramienta \textit{kgdb}, que permite depurar el \textit{kernel} de FreeBSD y obtener información detallada sobre el estado del sistema al momento del fallo.
+
+Todos los archivos de \textit{core dump} generados por el sistema se encuentran en la carpeta \textit{/var/crash/}, y para cargarlos en \textit{kgdb} se utiliza el comando \textit{kgdb /boot/kernel/kernel /var/crash/vmcore.0}.
+
+En las imagenes a continuación se muestran algunas de las salidas obtenidas durante el análisis del \textit{core dump}. Una vez cargado el \textit{core dump}, se utilizó el comando \textit{where} para obtener la ubicación del fallo de página en el \textit{kernel}. La salida de este comando muestra la pila de llamadas al momento del fallo, y se observa que el fallo ocurrió en la función \textit{kern\_select}.
+
+Para obtener más información sobre el fallo, se utilizó el comando \textit{up} para navegar hacia la función \textit{kern\_select}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/kgdb_init.jpeg}
-    \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
+    \caption{Inicialización de \textit{kgdb} y lectura del \textit{crash dump}.}
     \label{fig:kgdb_init}
 \end{figure}
 
@@ -141,7 +149,7 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/kgdb_where.jpeg}
-    \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
+    \caption{Ubicación del fallo de página en el \textit{kernel}.}
     \label{fig:kgdb_where}
 \end{figure}
 
@@ -149,7 +157,7 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/kgdb_kern-select.jpeg}
-    \caption{Modelo de Monopolización de Hilos por Parte de los Procesadores.}
+    \caption{Llamada a la función \textit{kern\_select} en el \textit{kernel}.}
     \label{fig:kgdb_kern-select}
 \end{figure}
 
@@ -175,8 +183,6 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
     \caption{Tiempo de ejecución del programa de estrés con 2 núcleos activos.}
     \label{fig:cpuOnOff-2CPUsTime}
 \end{figure}
-
-
 
 
 % Add more sections as needed before the \end{document} command.

@@ -75,7 +75,7 @@ En la Tabla \ref{tabla:cpuOnOff-result-times} se presentan los tiempos de ejecuc
     \label{tabla:cpuOnOff-result-times}
 \end{table}
 
-El objetivo de esta prueba no es fomentar la suspensión de procesadores durante un contexto de gran carga de trabajo, sino demostrar la capacidad del sistema para adaptarse a la reducción de recursos de procesamiento. En el futuro, se espera que el kernel sea quien decida de forma autónoma, cuándo suspender procesadores para lograr una mayor eficiencia energética.\par
+El objetivo de esta prueba no es fomentar la suspensión de procesadores durante un contexto de gran carga de trabajo, sino demostrar la capacidad del sistema para adaptarse a la reducción de recursos de procesamiento. En el futuro, se espera que el \textit{kernel} sea quien decida de forma autónoma, cuándo suspender procesadores para lograr una mayor eficiencia energética.\par
 
 Las capturas de pantalla con los resultados mostrados en la Tabla \ref{tabla:cpuOnOff-result-times} se encuentran documentados en el Apéndice \ref{appendix:apD}.
 
@@ -144,13 +144,14 @@ Un caso relevante es el estado del sistema una vez que el programa de estrés ha
 Al desactivar el módulo, el sistema continúa operando según lo esperado, con todos sus núcleos disponibles, tal como lo haría en su estado normal.
 
 \subsection{Resultados de las actualizaciones en la versión del S.O.}
-En esta sección, se expondrán los resultados derivados de las actualizaciones implementadas en el marco del proyecto integrador previo. Es relevante subrayar que estas actualizaciones se llevaron a cabo con el propósito de sincronizar el proyecto con la versión más reciente y estable del sistema operativo (versión 13.1). Dado que la implementación original demostró su eficacia en la versión 11, el énfasis principal en esta sección se dirigirá a garantizar la continuidad de dicho rendimiento.\par
 
-Esta fue la primera tarea abordada en este proyecto, y la elección de priorizarla desde el inicio se fundamentó en la necesidad de mantenerse alineado con la comunidad y acceder a posibles recursos de apoyo cuando fuese necesario. Asimismo, esta estrategia facilitó el desarrollo sobre una base de código más actualizada, evitando conflictos significativos que pudieran surgir en fases finales del desarrollo.\par
+En esta sección se presentan los resultados de las actualizaciones realizadas para adaptar el planificador basado en Redes de Petri a las versiones más recientes del sistema operativo, particularmente la versión 13.1. Estas actualizaciones aseguraron la continuidad del rendimiento observado originalmente en la versión 11, sincronizando el proyecto con la última versión estable del sistema.\par
 
-A pesar de la necesidad de revisar numerosos conflictos generados entre el código del planificador en la versión 11 y la versión 13 de FreeBSD, los resultados finales obtenidos de esta etapa confirman que la actualización se realizó con éxito. El sistema operativo, con el planificador de redes de Petri, mantuvo la estabilidad y el funcionamiento adecuado en las pruebas realizadas.\par
+La actualización fue priorizada al inicio del proyecto para mantenernos alineados con la comunidad y facilitar el desarrollo sobre una base de código actualizada. Esto permitió reducir las diferencias entre el \textit{kernel} original y nuestro \textit{fork}, optimizando su integración en etapas posteriores. Si bien fue necesario resolver diversos conflictos entre las versiones 11 y 13 de FreeBSD, las pruebas confirmaron que el planificador opera de manera estable y eficiente en la versión actualizada.\par
 
-El código correspondiente a esta etapa se encuentra en una rama específica del repositorio del proyecto. Debido a la estructura de ramas y modalidad de trabajo que se planteó para la realización de este trabajo integrador, también podemos encontrar una rama por cada actualización que se fue realizando progresivamente desde la 11 hasta la 13.1.\par
+El código actualizado se encuentra en una rama específica del repositorio, junto con ramas adicionales que documentan cada etapa de la transición progresiva desde la versión 11 hasta la 13.1.\par
+
+
 
 % TODO Tener en cuenta que en la introduccion del capitulo 4 se menciona que se presentaran los resultados de los modulos, pero no de las actualizaciones. Habria que agregarlo a la introduccion
 
@@ -158,4 +159,3 @@ El código correspondiente a esta etapa se encuentra en una rama específica del
 
 % TODO{OPCIONAL - VER SI LO AGREGAMOS}
 % \subsection{Resultados del tareas extra}
-
