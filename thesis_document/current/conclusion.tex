@@ -1,37 +1,32 @@
 \section{Conclusión y trabajos futuros}
 
-En este capítulo, se presentarán las conclusiones derivadas del desarrollo de las actualizaciones implementadas en el proyecto, el Módulo de encendido/apagado de procesadores, y el Módulo de monopolización de núcleos en el sistema operativo FreeBSD.\par
-
-Además, se discutirán las implicancias y aplicaciones prácticas de los resultados obtenidos, destacando los logros alcanzados y las perspectivas para futuras investigaciones y mejoras en la gestión de recursos.\par
-
 \subsection{Conclusiones}
-La actualización exitosa del código del planificador a la última versión del sistema operativo FreeBSD 13.1 fue un paso crucial en la evolución de nuestro trabajo.  Este proceso no solo demostró la continuidad del funcionamiento del planificador mediante redes de Petri, sino que también validó la vision del proyecto en curso y de futuros proyectos que sigan esta línea de desarrollo.\par
 
-La modularidad se reveló como una ventaja esencial en nuestra implementación. La facilidad con la que pudimos agregar módulos independientes que interactúan con la red general del sistema abrió nuevas posibilidades para trabajar con procesos e hilos. Esta flexibilidad no solo facilita la comprensión de los puntos críticos del sistema operativo, como los tiempos de respuesta y el manejo eficiente de procesadores, sino que también abre puertas a futuras mejoras. La implementación exitosa del Módulo de encendido/apagado de procesadores, así como del Módulo de monopolización de núcleos, han demostrado la viabilidad del enfoque.\par
+El desarrollo de este trabajo permitió confirmar que es posible extender el planificador basado en Redes de Petri en FreeBSD sin modificar su estructura base. La actualización del planificador a la versión 13.1 garantiza su compatibilidad con versiones recientes del sistema operativo y sienta una base para trabajos futuros.
 
-Por otro lado, la colaboración con la comunidad de desarrolladores de FreeBSD fue esencial. En momentos críticos, la ayuda de personas experimentadas que comprenden a un nivel profundo un código complejo resultó fundamental. Esto resalta la importancia de mantenerse actualizado con la comunidad para superar desafíos y mejorar el código de manera efectiva.\par
+Además, la implementación de los módulos de encendido/apagado de procesadores y de monopolización de núcleos demostró que es viable gestionar dinámicamente los recursos del sistema operativo a nivel de software. La integración de estas funcionalidades sin alterar el núcleo del planificador valida la hipótesis de que el enfoque basado en Redes de Petri facilita la incorporación de nuevas capacidades de manera modular y estructurada.
+
+Sin embargo, el trabajo realizado se centró en la implementación de estos mecanismos sin abordar aún su impacto en la eficiencia del sistema. En particular, el módulo de encendido/apagado de procesadores permite seleccionar qué núcleos estarán activos, pero aún no se ha explorado su integración con mecanismos de hardware que optimicen el consumo energético. Del mismo modo, el módulo de monopolización de núcleos cumple con su propósito de asignar procesadores exclusivos a ciertos hilos, pero su efecto en el rendimiento global del sistema aún requiere mayor análisis.
+
+Por otro lado, la interacción con la comunidad y el estudio del código fuente fueron aspectos clave para la resolución de problemas técnicos y demuestran la importancia de seguir de cerca las actualizaciones y cambios en el ecosistema del sistema operativo.
 
 \subsection{Trabajos Futuros}
-Mirando hacia el futuro, nuestra implementación proporciona una base sólida para investigaciones adicionales y mejoras continuas. Identificamos áreas potenciales que podrían beneficiarse de un estudio más profundo.\par
 
-El éxito de los módulos desarrollados abre la puerta a diversas oportunidades para futuras investigaciones y mejoras en la gestión de recursos en sistemas operativos. A continuación, intentaremos desarrollar algunas de las áreas en donde detectamos potenciales mejoras a lo implementado hasta el momento.\par
+Mirando hacia el futuro, nuestra implementación proporciona una base sólida para investigaciones adicionales y mejoras continuas. Identificamos varias áreas en las que se podrían realizar avances significativos.
 
-\subsubsection{Optimización del \textit{timeslice} para procesadores apagados}
-Una mejora considerable para tener en cuenta en futuras iteraciones consiste en la implementación de una gestión dinámica de las ventanas de tiempo (\textit{timeslice}) asignadas a los hilos.\par
+\subsubsection{Automatización de la Activación de los Módulos}
+Hasta el momento, la activación o desactivación de los módulos se realiza de forma manual. Una posible mejora futura es la integración de un mecanismo automático basado en \textit{triggers} dentro del sistema operativo, permitiendo que la Red de Petri active o desactive los módulos en función de la carga de trabajo del sistema.
 
-En el caso del módulo de encendido/apagado, esta mejora evitaría la necesidad de realizar operaciones repetidas de encolado y desencolado del \textit{idlethread}. Este enfoque contribuiría significativamente a la eficiencia del sistema, reduciendo la carga asociada con estas operaciones y dirigiendo el módulo hacia una mejora sustancial en la gestión de recursos y la eficacia en el manejo de la energía del sistema operativo.\par
-
-En cuanto al módulo de monopolización de núcleos, la aplicación de esta estrategia permitiría una asignación de tiempo prolongada. Esto posibilitaría que los procesos anclados se ejecuten de manera continua en los procesadores, acelerando así la finalización de los mismos, contribuyendo a un rendimiento general mejorado del sistema operativo.\par
-
-\subsubsection{Implementación de las políticas de afinidad mediante la Red}
-En la actualidad, FreeBSD dispone de métodos nativos para gestionar la afinidad entre hilos y procesadores. La migración de esta implementación hacia el enfoque basado en Redes de Petri fue postergada para priorizar la introducción de los primeros módulos en la red.\par
-
-Sin embargo, reconocemos la relevancia de realizar los ajustes correspondientes con el fin de incorporar estas políticas en la red de recursos. De esta manera, el sistema operativo estaría capacitado para tomar todas las decisiones a través de la red, evitando que algunas de ellas queden vinculadas al código existente que utiliza flags de afinidad para la toma de decisiones; contribuyendo a una gestión más cohesiva y centralizada de las políticas de afinidad en el sistema operativo.\par
+\subsubsection{Integración con Hardware para Optimización Energética}
+Si bien el módulo de encendido/apagado de procesadores permite seleccionar qué núcleos estarán inactivos, actualmente su implementación se encuentra limitada a una gestión a nivel de software. Un siguiente paso clave sería explorar cómo estas decisiones pueden traducirse en una reducción efectiva del consumo energético a nivel de hardware, aprovechando mecanismos de administración de energía soportados por los procesadores modernos.
 
 \subsubsection{Solución definitiva al fallo de página con la placa de red encendida}
 Como se comentó en la sección \ref{ch:problema_red} del presente informe, actualmente tenemos problemas en el uso regular del sistema operativo cuando la placa de red se encuentra encendida. Si bien es una falla que se puede detectar también en la versión del proyecto integrador previo, consideramos que es un punto importante a tener en cuenta para mejorar la experiencia de trabajo sobre este proyecto.\par
 
-\subsubsection{Integración de los módulos a \textit{triggers} automáticos del Sistema Operativo}
-Este punto de mejora futura, y probablemente la razón del presente desarrollo, se relaciona con la integración de los módulos en el sistema operativo en sí. Hasta el momento, la activación o desactivación de estos módulos se realiza de forma manual. Esta decisión fue tomada desde el inicio del proyecto, convencidos de que la importancia de este desarrollo recaía en comenzar el camino a la mejora de gestión y energía del sistema operativo mediante la implementación de los respectivos módulos.\par
+\subsubsection{Optimización del \textit{timeslice} para procesadores apagados}
+Otra posible mejora para futuras versiones del sistema es la optimización de la gestión del \textit{timeslice} asignado a los hilos, permitiendo un manejo más eficiente del tiempo de ejecución. En el caso del módulo de encendido/apagado de procesadores, esta optimización reduciría la cantidad de operaciones de encolado y desencolado del \textit{idlethread}, evitando procesos innecesarios y disminuyendo la sobrecarga del sistema. Para el módulo de monopolización de núcleos, ajustar dinámicamente el \textit{timeslice} permitiría que los hilos anclados se ejecuten por períodos más largos sin interrupciones innecesarias. Esto evitaría, al planificador, algunos cambios de contexto y haría más predecible la ejecución de estos procesos sin afectar la estabilidad del sistema.
 
-No obstante, la visión es que la toma de decisiones sobre la activación o desactivación de estos módulos recaiga en el propio sistema operativo mediante la implementación de señales o mensajes (\textit{triggers}) que permitan disparar las transiciones correspondientes en la red, habilitando así los módulos. La intención es delegar al sistema operativo la toma de estas decisiones de manera automatizada, aprovechando momentos de inactividad (para el módulo de encendido/apagado de procesadores) y durante la ejecución de tareas críticas (para el módulo de monopolización de núcleos).\par
+\subsubsection{Implementación de Políticas de Afinidad mediante la Red}
+Actualmente, FreeBSD dispone de métodos nativos para gestionar la afinidad entre hilos y procesadores. Sin embargo, la migración de esta implementación hacia el enfoque basado en Redes de Petri permitiría un control más centralizado de la asignación de recursos.
+
+En resumen, el trabajo realizado representa un primer paso hacia una planificación más flexible y modular en sistemas operativos. Los próximos avances deberán centrarse en traducir estas mejoras en beneficios concretos en términos de eficiencia energética, rendimiento y automatización del sistema.
