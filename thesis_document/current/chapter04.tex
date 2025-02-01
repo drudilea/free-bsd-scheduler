@@ -1,18 +1,28 @@
 \section{Análisis de resultados integrales}
 \label{ch:results}
 
-En este capítulo, se presentan los resultados integrales de nuestra investigación, que se centra en dos aspectos cruciales para la optimización de la gestión de recursos en sistemas operativos. En primer lugar, introduciremos los resultados del módulo de Encendido y Apagado de Procesadores. En segundo lugar, se presentarán los del módulo de Monopolización de Núcleos.\par
+En este capítulo se presentan los resultados obtenidos tras la implementación de las mejoras propuestas. Se establecieron dos objetivos principales: (1) la actualización del planificador a FreeBSD 13 y (2) la validación de la hipótesis de que la Red de Petri permite la creación e integración sencilla de nuevos módulos funcionales. En este caso, el desarrollo de dos módulos: el de encendido/apagado de procesadores y el módulo de monopolización de núcleos, destinado a optimizar la ejecución de procesos críticos.
 
-Ambos mecanismos desarrollados proporcionan al sistema operativo y a la red las herramientas necesarias para mejorar la gestión de sus recursos. Es fundamental tener presente que estos mecanismos representan un paso esencial hacia la consecución de objetivos más amplios, específicamente relacionados con mejoras en la eficiencia energética y el rendimiento general del sistema. La exposición de resultados tiene como objetivo destacar la funcionalidad adecuada de la implementación de los módulos previamente desarrollados en este informe, acercándonos a  los objetivos más amplios mencionados.\par
+Los resultados muestran que ambos objetivos fueron alcanzados. La actualización del planificador fue completada con éxito, permitiendo su uso en FreeBSD 13 sin afectar la estabilidad del sistema. Además, la implementación de los módulos confirmó que la Red de Petri facilita la extensión del planificador, permitiendo la integración de nuevas funcionalidades de manera modular y sin alterar el comportamiento base del sistema operativo.
 
-Como se detalló en la sección de desarrollo de este informe, previo a  la implementación de los módulos mencionados llevamos a cabo una actualización del código del kernel, para incorporar al último lanzamiento estable de FreeBSD, las modificaciones realizadas en el proyecto integrador previo. Decidimos incluir los resultados de esta actualización al final de este capítulo, dado que consideramos que los módulos son más propensos a un análisis detallado y a comprender sus resultados. En contraste, las actualizaciones simplemente requieren que el sistema continúe funcionando correctamente.\par
+En los siguientes apartados se detallan los resultados específicos de cada módulo.
 
 \subsection{Resultados de la Implementación del Módulo de Encendido/Apagado de Procesadores}
-La implementación del módulo de encendido/apagado de procesadores en FreeBSD, utilizando el enfoque de Redes de Petri, se realizó como punto de inicio del camino hacia la mejora de eficiencia y gestión de recursos del sistema operativo. En esta sección, presentaremos los resultados obtenidos de nuestras pruebas y analizaremos cómo este módulo afecta el rendimiento del sistema.\par
 
+El módulo de encendido/apagado de procesadores cumple con su objetivo, permitiendo desactivar procesadores de manera controlada. Para validar su funcionamiento, realizamos la siguiente prueba:
+
+\begin{enumerate}
+    \item \textbf{Estado inactivo}: En ausencia de tareas pendientes, los procesadores permanecen en estado de espera, ejecutando hilos de la clase IDLE.\@
+    \item \textbf{Comportamiento con el módulo inhabilitado}: Se llevaron a cabo distintas pruebas de estrés en el sistema. Como resultado, todos los procesadores operaron al 100\% de su capacidad.
+    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhabilitando distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron carga de trabajo, mientras que los demás procesadores continuaron ejecutando la tareas sin interrupciones.
+\end{enumerate}
+
+Estos resultados confirman que el sistema es capaz de gestionar dinámicamente la activación y desactivación de procesadores sin comprometer su estabilidad.
+
+En los siguientes apartados se detallan las observaciones y análisis específicos de cada etapa de la prueba.
 
 \subsubsection{Estado Inactivo del Sistema}
-En situaciones de inactividad del sistema operativo, caracterizadas por la ausencia de tareas pendientes, cada procesador opera en un modo especial ejecutando hilos de la clase IDLE. Este escenario está diseñado para que el sistema mantenga un estado pasivo, preparado para abordar de manera eficiente cualquier tarea que pueda emerger.\par
+En situaciones de inactividad del sistema operativo, caracterizadas por la ausencia de tareas pendientes, cada procesador opera en un modo especial ejecutando hilos de la clase IDLE.\@ Este escenario está diseñado para que el sistema mantenga un estado pasivo, preparado para abordar de manera eficiente cualquier tarea que pueda emerger.\par
 
 Creemos importante resaltar que, independientemente de si nuestro módulo de encendido/apagado está activo para alguno de los procesadores en este contexto, hemos considerado y abordado esta situación en nuestra implementación para garantizar la estabilidad del sistema. La Figura \ref{fig:cpuOnOff-result-idle} proporciona una representación visual de este estado.\par
 
@@ -80,9 +90,18 @@ El objetivo de esta prueba no es fomentar la suspensión de procesadores durante
 Las capturas de pantalla con los resultados mostrados en la Tabla \ref{tabla:cpuOnOff-result-times} se encuentran documentados en el Apéndice \ref{appendix:apD}.
 
 
-\subsection{Resultados del módulo de Monopolización de Núcleos}
+\subsection{Resultados del Módulo de Monopolización de Núcleos}
 
-La implementación del módulo de Monopolización de Núcleos en FreeBSD constituyó el próximo paso en el desarrollo de este proyecto integrador. A continuación, se expondrán en detalle los resultados alcanzados al concluir dicho módulo.\par
+El módulo de monopolización de núcleos cumple su objetivo, permitiendo que un hilo se ejecute exclusivamente en un procesador sin que otros hilos sean encolados en él. Para validar su funcionamiento, realizamos la siguiente prueba:
+
+\begin{enumerate}
+    \item \textbf{Estado normal del sistema:} Con el módulo deshabilitado, los hilos se distribuyen entre los procesadores disponibles según las políticas de planificación definidas por la Red de Petri.
+    \item \textbf{Comportamiento con el módulo habilitado:} Se seleccionó un hilo y se lo ancló a un procesador específico. Como resultado, el hilo permaneció en ejecución en el mismo núcleo durante toda la prueba, sin migraciones a otros procesadores ni interferencias de otros hilos.
+\end{enumerate}
+
+Estos resultados confirman que el sistema es capaz de asignar núcleos exclusivos a hilos específicos sin afectar la estabilidad general del planificador.
+
+En los siguientes apartados se detallan las observaciones y análisis específicos de cada etapa de la prueba.
 
 \subsubsection{Estado Normal del Sistema}
 
