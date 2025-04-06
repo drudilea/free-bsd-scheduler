@@ -5,7 +5,7 @@ El sistema operativo elegido para realizar este proyecto y las modificaciones pe
 
 El planificador de bajo nivel se ejecuta cada vez que un hilo se bloquea o interrumpe, y se debe seleccionar un nuevo hilo para ejecutar. Al ejecutarse miles de veces por segundo, debe tomar decisiones rápidamente y con la menor cantidad de información posible para ser eficiente. Para simplificar su tarea, el \textit{kernel} mantiene un conjunto de colas de ejecución para cada CPU.\@ Cuando una tarea se bloquea en una CPU, la responsabilidad del planificador de bajo nivel es encontrar y elegir el hilo con la máxima prioridad en la cola de ejecución asignada a esa CPU.\par
 
-Este trabajo se construye sobre los cimientos establecidos en un proyecto integrador previo, donde se abordó la mejora del \textit{scheduler} en el sistema operativo FreeBSD.\@ En dicha investigación, se identificó la naturaleza estadística del proceso de asignación de tiempo de procesador y se propuso un modelo basado en redes de Petri para introducir determinismo y reducir la incertidumbre en la toma de decisiones.\par
+Este trabajo se construye sobre los cimientos establecidos en un proyecto integrador previo, donde se abordó la mejora del \textit{scheduler} en el sistema operativo FreeBSD.\@ En dicha investigación\cite{bib1}, se identificó la naturaleza estadística del proceso de asignación de tiempo de procesador y se propuso un modelo basado en redes de Petri para introducir determinismo y reducir la incertidumbre en la toma de decisiones.\par
 
 \subsection{Oportunidad}
 El proyecto integrador previo estableció una base sólida para la comprensión integral del funcionamiento de los sistemas operativos y demostró la relevancia de la planificación en el rendimiento del sistema. Este logro requirió un compromiso considerable y una laboriosa inversión de tiempo en la construcción de modelos, así como en el análisis de los resultados obtenidos.\par
@@ -14,16 +14,12 @@ No obstante, dada la continua evolución tecnológica y la evolución de las nec
 
 La presente oportunidad de trabajo se centra en la incorporación de nuevas funcionalidades y mejoras al planificador a corto plazo del sistema operativo. El objetivo principal radica en alcanzar niveles superiores de eficiencia y desempeño en las operaciones que se ejecutan en el sistema. Para ello, aprovecharemos el conocimiento y las ventajas que ofrecen las Redes de Petri, herramientas que nos permitirán introducir innovaciones de manera efectiva, al tiempo que conservamos las características fundamentales del sistema base.\par
 
-En este contexto, identificamos dos oportunidades específicas. La primera consiste en eliminar la participación de los CPUs en determinadas tareas, priorizando así el consumo de energía sobre el rendimiento. Para abordar esta oportunidad, se planteó desarrollado un módulo que permita bloquear el \textit{encolado} de un procesador, simulando así su ``apagado'' y reduciendo el consumo energético global del sistema. La segunda oportunidad se centra en optimizar el rendimiento en tareas de tiempo real, evitando interrupciones al saltarse el sistema de colas. Para esta finalidad, planteamos la creación de otro módulo que permita a un hilo apropiarse de un CPU, evitando que otros hilos hagan uso del mismo mientras se ejecuta la tarea prioritaria. Si bien estos cambios aún requerirán de desarrollos adicionales para implementarse concretamente en los procesos y situaciones específicas, representan un primer paso hacia la mejora de la eficiencia energética y el rendimiento del sistema operativo, al proporcionar herramientas para el control más preciso de los recursos de hardware y la gestión de tareas críticas.\par
+En este contexto, identificamos dos oportunidades específicas. La primera consiste en eliminar la participación de los CPUs en determinadas tareas, priorizando así el consumo de energía sobre el rendimiento. Para abordar esta oportunidad, se planteó el desarrollo de un módulo que permita bloquear el \textit{encolado} de un procesador, simulando así su ``apagado'' y reduciendo el consumo energético global del sistema. La segunda oportunidad se centra en optimizar el rendimiento en tareas de tiempo real, evitando interrupciones al saltarse el sistema de colas. Para esta finalidad, planteamos la creación de otro módulo que permita a un hilo apropiarse de un CPU, evitando que otros hilos hagan uso del mismo mientras se ejecuta la tarea prioritaria. Si bien estos cambios aún requerirán de desarrollos adicionales para implementarse concretamente en los procesos y situaciones específicas, representan un primer paso hacia la mejora de la eficiencia energética y el rendimiento del sistema operativo, al proporcionar herramientas para el control más preciso de los recursos de hardware y la gestión de tareas críticas.\par
 
 \subsection{Motivación}
-Entre las principales motivaciones que nos impulsan a realizar este proyecto, podemos destacar la importancia de la planificación a corto plazo en los sistemas operativos y su impacto en el rendimiento y la eficiencia energética.
+Entre las principales motivaciones que nos impulsan a realizar este proyecto, podemos destacar la importancia de la planificación a corto plazo en los sistemas operativos y su impacto en el rendimiento.
 
 Actualmente la planificación a corto plazo de sistemas operativos es un objeto de estudio para encontrar soluciones que disminuyan el indeterminismo y optimicen el rendimiento. En concreto, la implementación del planificador a corto plazo de FreeBSD utilizando Redes de Petri, ha demostrado muchas ventajas mediante esta técnica de modelado.\par
-
-La administración eficiente de la energía es un tema de interés en la actualidad, debido al aumento de la demanda de energía y al impacto ambiental. En este sentido, el uso de técnicas de ahorro de energía en los sistemas operativos es esencial para reducir los costos y minimizar dicho impacto.\par
-
-Por otro lado, la gestión eficiente de las tareas en tiempo real es esencial en una amplia gama de aplicaciones. La capacidad de priorizar y ejecutar estas tareas de manera oportuna y predecible es crucial para garantizar un funcionamiento confiable del sistema.\par
 
 En este trabajo integrador, proponemos avanzar con la implementación de funcionalidades de control de recursos y priorización de tareas en el sistema operativo, aprovechando el potencial de las Redes de Petri como herramienta de modelado y análisis en el ámbito de los sistemas operativos, sentando las bases para futuras investigaciones en este campo y contribuyendo así al avance de la informática en este aspecto.\par
 
@@ -31,21 +27,19 @@ Otra oportunidad significativa que surge para el desarrollo de este proyecto int
 
 \subsection{Objetivo}
 
-Objetivos principales:
+Objetivo principal:
 
 \begin{itemize}
-    \item Actualizar el modelado e implementación del planificador del sistema operativo FreeBSD mediante Redes de Petri. Este fue desarrollado originalmente para la versión 11 del mismo, mientras que FreeBSD se encuentra cursando la versión 13. Como comentamos en la sección de motivación, hacerlo compatible con las últimas versiones nos permite aprovechar las nuevas funcionalidades y mejoras de seguridad, evitar que se vuelva obsoleto con el paso del tiempo y acercarnos a la comunidad.
-    \item Validar la hipótesis de que un planificador basado en Redes de Petri permite una integración más sencilla y modular de nuevas funcionalidades. Para ello, se desarrollarán dos módulos:
-    \begin{itemize}
-        \item Desarrollar una funcionalidad que permita encender y apagar procesadores según las necesidades del sistema en diferentes momentos. Al permitir que el sistema gestione activamente el estado de los procesadores, restará unicamente implementar estrategias que utilicen este módulo para optimizar el consumo de energía en función de la carga de trabajo.
-        \item Desarrollar un mecanismo que le brinde a cualquier hilo la posibilidad de ejecutarse en un procesador, evitando que otros hilos se encolen en éste. Mediante esta funcionalidad, se prioriza la ejecución del hilo correspondiente y se reduce el tiempo de espera y las demoras, logrando que el hilo alcance su objetivo antes. Como consecuencia se evitan pérdidas de rendimiento causadas por cambios de contexto.
-    \end{itemize}
+    \item Modelar un \textit{scheduler} para FreeBSD mediante Redes de Petri que permita decidir sobre el uso o liberación de procesadores según la demanda de los procesos.
 \end{itemize}
 
 
 Objetivos secundarios:
 
 \begin{itemize}
+    \item Actualizar el modelado e implementación del planificador del sistema operativo FreeBSD mediante Redes de Petri. Este fue desarrollado originalmente para la versión 11 del mismo, mientras que FreeBSD se encuentra cursando la versión 13. Como comentamos en la sección de motivación, hacerlo compatible con las últimas versiones nos permite aprovechar las nuevas funcionalidades y mejoras de seguridad, evitar que se vuelva obsoleto con el paso del tiempo y acercarnos a la comunidad.
+    \item Desarrollar una funcionalidad que permita encender y apagar procesadores según las necesidades del sistema en diferentes momentos. Al permitir que el sistema gestione activamente el estado de los procesadores, restará únicamente implementar estrategias que utilicen este módulo para optimizar el consumo de energía en función de la carga de trabajo.
+    \item Desarrollar un mecanismo que le brinde a cualquier hilo la posibilidad de ejecutarse en un procesador, evitando que otros hilos se encolen en éste. Mediante esta funcionalidad, se prioriza la ejecución del hilo correspondiente y se reduce el tiempo de espera y las demoras, logrando que el hilo alcance su objetivo antes. Como consecuencia se evitan pérdidas de rendimiento causadas por cambios de contexto.
     \item Analizar y aprender exhaustivamente acerca del código fuente del sistema operativo FreeBSD.\@
     \item Profundizar los conocimientos en la depuración del \textit{kernel} y las diferentes herramientas de debugging.
     \item Mejorar la documentación del proyecto, estrategia de ramas y commits en el repositorio de desarrollo priorizando las buenas prácticas de programación. Esto permitirá dejar mejores bases para quienes decidan continuar con la investigación a futuro.

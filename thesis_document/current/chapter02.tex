@@ -135,7 +135,7 @@ La planificación en sistemas operativos, implica decidir el orden y la duració
 
 FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinamicamente la prioridad de los procesos. El cálculo se realiza en función de varios parámetros de comportamiento previo de dicho proceso, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
 
-La política de planificación asigna inicialmente una prioridad de ejecución alta a cada hilo y permite que ese hilo se ejecute durante un intervalo de tiempo fijo, o \textit{time slice}. A los hilos que se ejecutan durante la duración de su \textit{time slice} se les decrementa la prioridad; mientras que los hilos que ceden la CPU (generalmente debido a operaciones de entrada/salida) pueden mantener su prioridad. Por otro lado, los hilos inactivos incrementan su prioridad.\par
+La política de planificación asigna inicialmente una prioridad de ejecución alta a cada hilo y permite que ese hilo se ejecute durante un intervalo de tiempo fijo, o \textit{timeslice}. A los hilos que se ejecutan durante la duración de su \textit{timeslice} se les decrementa la prioridad; mientras que los hilos que ceden la CPU (generalmente debido a operaciones de entrada/salida) pueden mantener su prioridad. Por otro lado, los hilos inactivos incrementan su prioridad.\par
 
 Esta forma de planificación beneficia especialmente a los programas interactivos. Los procesos que demandan una gran cantidad de tiempo de CPU ven reducida rápidamente su prioridad, mientras que los procesos interactivos que permanecen mayormente inactivos conservan una prioridad elevada. Esto permite que, cuando estén listos para ejecutarse, puedan desplazar a los procesos de baja prioridad que llevan ejecutándose durante un largo período de tiempo. Por ejemplo, supongamos que un editor de texto realiza una búsqueda dentro de un documento, lo que conlleva un aumento temporal en el uso de recursos computacionales. Durante este período, la prioridad del editor puede verse momentáneamente reducida para dar prioridad a otros procesos más urgentes. Sin embargo, una vez completada la búsqueda y sin actividad adicional del usuario, el editor recuperará su prioridad en la cola de planificación del sistema operativo.\par
 
@@ -145,9 +145,9 @@ Algunas tareas requieren un control más preciso sobre el proceso, como el caso 
 
 El planificador 4BSD, utiliza un algoritmo de planificación basado en colas de retroalimentación multinivel \textit{Multilevel Feedback Queue}. Todos los hilos en estado \textit{RUNNABLE} reciben una prioridad que determina en qué cola de ejecución se colocan. Al seleccionar un nuevo hilo para ejecutar, el sistema escanea las colas de ejecución de mayor a menor prioridad y elige aquel que se encuentra en la primera cola no vacía. Si varios hilos residen en una cola, el sistema los ejecuta en orden circular (\textit{Round Robin}); es decir, en el orden en que se encuentran en la cola, con igual cantidad de tiempo permitido.\par
 
-Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (\textit{run\_queue}); en su lugar, se coloca en una \textit{turnstile\_queue} o en una \textit{sleep\_queue}. Cuando el hilo agota el \textit{time slice}, se coloca al final de la cola de la que provino y se selecciona el hilo que se encuentra al comienzo de la misma para ejecutarse.\par
+Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (\textit{run\_queue}); en su lugar, se coloca en una \textit{turnstile\_queue} o en una \textit{sleep\_queue}. Cuando el hilo agota el \textit{timeslice}, se coloca al final de la cola de la que provino y se selecciona el hilo que se encuentra al comienzo de la misma para ejecutarse.\par
 
-Cuanto más corto sea el \textit{time slice}, mejor será la respuesta interactiva. Sin embargo, cuanto más largos sean los cuántums de tiempo, mayor será el rendimiento del sistema, ya que habrá menos sobrecarga debida a los cambios de contexto y se limpiarán menos a menudo las cachés del procesador. El \textit{time slice} utilizado por 4BSD es de 0.1 segundo. Este valor se encontró empíricamente como el cuántum más largo que podía usarse sin pérdida de la respuesta deseada para trabajos interactivos como los editores.\par
+Cuanto más corto sea el \textit{timeslice}, mejor será la respuesta interactiva. Sin embargo, cuanto más largos sean los cuántums de tiempo, mayor será el rendimiento del sistema, ya que habrá menos sobrecarga debida a los cambios de contexto y se limpiarán menos a menudo las cachés del procesador. El \textit{timeslice} utilizado por 4BSD es de 0.1 segundo. Este valor se encontró empíricamente como el cuántum más largo que podía usarse sin pérdida de la respuesta deseada para trabajos interactivos como los editores.\par
 
 \subsubsection{Colas de ejecución de hilos y Cambios de Contexto}
 
@@ -175,7 +175,7 @@ El planificador 4BSD en FreeBSD está diseñado para gestionar la carga de traba
 
 La cola de ejecución global contiene hilos que pueden ser ejecutados por cualquier CPU del sistema. Sirve como un \textit{pool} central de hilos listos para ejecutarse, permitiendo una distribución flexible de la carga de trabajo. Cuando una CPU queda inactiva, revisa tanto su propia cola de ejecución como la cola de ejecución global, seleccionando el hilo con mayor prioridad para ejecutarlo. En los casos en donde la cola de ejecución propia está vacía, la CPU tomará un hilo de la cola global, garantizando que todas las CPUs tengan trabajo disponible si hay suficientes hilos listos para ejecutarse.
 
-Por otro lado, cada CPU en el sistema tiene su propia cola de ejecución. Estas colas contienen hilos que están designados para ejecutarse en CPUs específicas. Para optimizar el rendimiento, el planificador 4BSD considera varias restricciones y preferencias de afinidad cuando decide dónde colocar un hilo cuando termina su \textit{time slice} o debe abandonar por otras razones.
+Por otro lado, cada CPU en el sistema tiene su propia cola de ejecución. Estas colas contienen hilos que están designados para ejecutarse en CPUs específicas. Para optimizar el rendimiento, el planificador 4BSD considera varias restricciones y preferencias de afinidad cuando decide dónde colocar un hilo cuando termina su \textit{timeslice} o debe abandonar por otras razones.
 
 Algunos hilos pueden estar vinculados a un conjunto específico de CPUs debido a consideraciones de rendimiento. El planificador 4BSD respeta esta afinidad al determinar en qué CPU encolar el hilo mediante un mecanismo de iteración sobre las CPUs asignadas al hilo, excluyendo aquellas para las que no existe afinidad. Luego, selecciona la CPU cuya cola tenga la menor cantidad de hilos listos para ejecutarse.\par
 
@@ -214,7 +214,7 @@ Para comprender la naturaleza de los cambios realizados en el trabajo previo, de
 
 Uno de los modelos representados mediante redes de Petri es el de los estados de un hilo, como se muestra en la Figura \ref{fig:threadModel}.\par
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.45\textwidth]{images/Thread_Net.png}
     \caption{Modelo del hilo.}
@@ -224,7 +224,7 @@ Uno de los modelos representados mediante redes de Petri es el de los estados de
 Las plazas de la Red de Petri la Figura \ref{fig:threadModel} se corresponden a los estados posibles del hilo, siendo posible encontrarse en un solo estado a la vez. Las transiciones, por otro lado, representan los eventos que pueden llevar al hilo de un estado a otro. A continuación, se detallan las transiciones que se modelaron en la Red de Petri para el hilo:
 
 \begin{itemize}
-    \item \textbf{T0\_INIT}: Transición del estado INACTIVE a CAN\_RUN, que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al scheduler, por lo que inicialmente un hilo en el planificador se inicializa en el estado CAN\_RUN. Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
+    \item \textbf{T0\_INIT}: Transición del estado INACTIVE a CAN\_RUN, que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al \textit{scheduler}, por lo que inicialmente un hilo en el planificador se inicializa en el estado CAN\_RUN. Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
     \item \textbf{T1\_ON\_QUEUE}: El hilo se coloca en una cola local de una CPU específica o en la cola global, según la disponibilidad.
     \item \textbf{T2\_SET\_RUNNING}: El hilo se retira de la cola y comienza a ejecutar las instrucciones del programa asignado, ocupando así el procesador.
     \item \textbf{T3\_SWITCH\_OUT}: El planificador interrumpe el hilo y lo devuelve a su estado de CAN\_RUN, seleccionando otro hilo de mayor prioridad para ejecutar y realizando un cambio de contexto.
@@ -238,7 +238,7 @@ Las plazas de la Red de Petri la Figura \ref{fig:threadModel} se corresponden a 
 
 Por otro lado, se realizó el modelado de la red de Petri del planificador, o red de recursos, que se muestra en la Figura \ref{fig:schedulerModel}. En esta figura se detallan las plaza y transiciones de una sola CPU, siendo extensible a tantas CPUs como el sistema multiprocesador posea.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/Resource_1CPU.png}
     \caption{Modelo del planificador.}

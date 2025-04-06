@@ -4,7 +4,7 @@
 
 El desarrollo de este trabajo permitió confirmar que es posible extender el planificador basado en Redes de Petri en FreeBSD sin modificar su estructura base. La actualización del planificador a la versión 13.1 garantiza su compatibilidad con versiones recientes del sistema operativo y sienta una base para trabajos futuros.
 
-Además, la implementación de los módulos de encendido/apagado de procesadores y de monopolización de núcleos demostró que es viable gestionar dinámicamente los recursos del sistema operativo a nivel de software. La integración de estas funcionalidades sin alterar el núcleo del planificador valida la hipótesis de que el enfoque basado en Redes de Petri facilita la incorporación de nuevas capacidades de manera modular y estructurada.
+Además, la implementación de los módulos de encendido/apagado de procesadores y de monopolización de núcleos mostró que es viable gestionar dinámicamente los recursos del sistema operativo a nivel de software. El hecho de haber incorporado estas funcionalidades sin modificar el núcleo del planificador confirma que es posible extender sus capacidades de manera modular y organizada, aprovechando las ventajas de las Redes de Petri.
 
 Sin embargo, el trabajo realizado se centró en la implementación de estos mecanismos sin abordar aún su impacto en la eficiencia del sistema. En particular, el módulo de encendido/apagado de procesadores permite seleccionar qué núcleos estarán activos, pero aún no se ha explorado su integración con mecanismos de hardware que optimicen el consumo energético. Del mismo modo, el módulo de monopolización de núcleos cumple con su propósito de asignar procesadores exclusivos a ciertos hilos, pero su efecto en el rendimiento global del sistema aún requiere mayor análisis.
 
