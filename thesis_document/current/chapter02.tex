@@ -1,4 +1,4 @@
-\section{Base Teórica}
+\chapter{Base Teórica}
 
 La planificación es un componente esencial de cualquier sistema operativo, encargado de asignar tiempo de procesamiento a los diferentes hilos y procesos en ejecución. En este capítulo, nos sumergiremos en la comprensión de la planificación a corto plazo, con especial atención en el contexto del sistema operativo FreeBSD y su planificador 4BSD. Como ya se detalló previamente en el capítulo 1, este trabajo se basa y extiende directamente desde investigaciones previas\cite{bib1}, donde se introdujo el concepto de Redes de Petri, para el modelado de procesos.\par
 
@@ -6,7 +6,7 @@ Exploraremos los conceptos fundamentales de procesos e hilos, detallando su estr
 
 Al profundizar en esta base teórica, no solo sentaremos las bases para entender el funcionamiento del planificador de FreeBSD, sino que también estableceremos una sólida conexión con los avances y las decisiones tomadas en trabajos anteriores. Esto nos permitirá visualizar el progreso continuo y las oportunidades de mejora que surgieron a partir de esos primeros cambios implementados en el sistema operativo.\par
 
-\subsection{Procesos e hilos}
+\section{Procesos e hilos}
 
 En sistemas operativos, los procesos son entidades aisladas que representan la ejecución de una tarea o aplicación en particular. Cada proceso cuenta con su propio espacio de direcciones, que es un área reservada de memoria virtual donde se aloja el código del programa, las variables y los recursos necesarios para su ejecución. Además, disponen de acceso a los recursos del \textit{kernel} a través de llamadas a sistemas.\par
 
@@ -14,7 +14,7 @@ Dentro de cada proceso, puede haber uno o varios hilos de ejecución. Estos hilo
 
 El \textit{kernel} del sistema operativo crea la ilusión de ejecución concurrente de múltiples procesos, distribuyendo los recursos del sistema entre los procesadores listos para ejecutar tareas.\par
 
-\subsubsection{Estructura de los procesos}
+\subsection{Estructura de los procesos}
 Cada proceso en el sistema recibe un identificador único llamado \textit{identificador de proceso} (PID). Los PID son el mecanismo común utilizado por las aplicaciones y el \textit{kernel} para hacer referencia a los procesos. Existen dos identificadores que son de especial importancia para cada proceso: el PID del proceso en sí, y el PID del proceso padre.
 
 La estructura simplificada de un proceso se puede observar en la Figura \ref{fig:process-state}. Esta estructura tiene como objetivo facilitar la gestión de múltiples hilos que comparten un espacio de direcciones y otros recursos dentro del proceso. Algunas de las categorías que componen esta estructura son las siguientes:
@@ -48,7 +48,7 @@ Cada proceso cuenta con los punteros \textit{p\_pptr}, \textit{p\_children} y \t
 \end{figure}
 
 
-\subsubsection{Estructura de los hilos}
+\subsection{Estructura de los hilos}
 Un hilo, en sistemas operativos modernos, constituye una unidad fundamental de ejecución dentro de un proceso. Se trata de una entidad independiente que representa una secuencia de instrucciones ejecutables dentro del contexto de un proceso. Cada hilo posee su propio contador de programa, registros de CPU y pila de ejecución, lo que le permite ejecutar código de manera concurrente dentro del mismo proceso. Aunque los hilos comparten recursos como el espacio de direcciones y otros recursos del proceso principal, también pueden comunicarse y cooperar entre sí para llevar a cabo tareas específicas de manera más eficiente.\par
 
 En el caso de FreeBSD, el sistema adopta el modelo 1:1, donde cada hilo de usuario se corresponde con un hilo a nivel de \textit{kernel} para mejorar la eficiencia de las aplicaciones.\par
@@ -62,7 +62,7 @@ La estructura de un hilo, que se muestra en la Figura \ref{fig:process-state}, c
     \item Estado de la máquina (\textit{machine-dependent state}): se refiere a la información del hilo en relación a detalles que son específicos de la arquitectura de la CPU (registros de estado de punto flotante, información de interrupciones, información de registros de segmento de memoria, etc.).
 \end{itemize}
 
-\subsubsection{Estados de los procesos e hilos}
+\subsection{Estados de los procesos e hilos}
 
 La estructura de un proceso en FreeBSD incluye un campo que indica su estado actual. Los estados de un proceso son fundamentales para entender su comportamiento en el sistema y están estrechamente relacionados con el funcionamiento del planificador 4BSD. Cuando se crea un proceso utilizando la llamada al sistema \textit{fork}, inicialmente se marca como nuevo (NEW). Este estado indica que el proceso está en su fase de creación y aún no ha recibido suficientes recursos para comenzar la ejecución.
 
@@ -95,7 +95,7 @@ En FreeBSD, el sistema organiza las estructuras de procesos en dos listas princi
 
 Los hilos de un proceso, por su lado, excluyendo los que están en ejecución, se distribuyen en tres colas principales: \textit{run\_queue}, \textit{sleep\_queue} y \textit{turnstile\_queue}. Los hilos listos para ejecutarse se ubican en la \textit{run\_queue}, mientras que aquellos que están bloqueados esperando eventos se encuentran en la \textit{sleep\_queue} o en la \textit{turnstile\_queue}. Es importante destacar que las colas \textit{run\_queue} están organizadas según la prioridad de planificación de hilos establecida por el planificador 4BSD. La diferencia entre la \textit{turnstile\_queue} y la \textit{sleep\_queue}, radica en que esta última se utiliza para hilos bloqueados con locks de tipo \textit{sleepable}, mientras que la \textit{turnstile\_queue} alberga hilos bloqueados con locks de tipo \textit{non-sleepable}.
 
-\subsubsection{Prioridad de los hilos}
+\subsection{Prioridad de los hilos}
 
 Las prioridades de los hilos son un componente importante para la planificación. Estas prioridades, que van desde 0 hasta 255 (donde 0 denota la prioridad más alta), determinarán el orden en que se ejecutarán los hilos. En la Tabla \ref{tabla:prio-hilos}, se describen los diferentes rangos de prioridades.
 
@@ -129,7 +129,7 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
 \end{table}
 
 
-\subsection{Planificación}
+\section{Planificación}
 
 La planificación en sistemas operativos, implica decidir el orden y la duración de la ejecución de procesos e hilos del sistema. En este sentido, es el componente clave para optimizar el uso de recursos y el tiempo de ejecución de los programas.\par
 
@@ -141,15 +141,15 @@ Esta forma de planificación beneficia especialmente a los programas interactivo
 
 Algunas tareas requieren un control más preciso sobre el proceso, como el caso de la planificación de tiempo real. FreeBSD también implementa esta funcionalidad mediante una cola separada para los hilos en cuestión, los cuales no se ven interrumpidos por otros hilos a menos que tengan igual o mayor prioridad. Además, el \textit{kernel} de FreeBSD cuenta con otra cola de hilos de mínima prioridad que se ejecutan únicamente cuando ningún hilo en las colas de mayor prioridad está en un estado de posible ejecución.\par
 
-\subsubsection{\textit{Multilevel Feedback Queue Scheduling}}
+\subsection{\textit{Multilevel Feedback Queue Scheduling}}
 
 El planificador 4BSD, utiliza un algoritmo de planificación basado en colas de retroalimentación multinivel \textit{Multilevel Feedback Queue}. Todos los hilos en estado \textit{RUNNABLE} reciben una prioridad que determina en qué cola de ejecución se colocan. Al seleccionar un nuevo hilo para ejecutar, el sistema escanea las colas de ejecución de mayor a menor prioridad y elige aquel que se encuentra en la primera cola no vacía. Si varios hilos residen en una cola, el sistema los ejecuta en orden circular (\textit{Round Robin}); es decir, en el orden en que se encuentran en la cola, con igual cantidad de tiempo permitido.\par
 
 Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (\textit{run\_queue}); en su lugar, se coloca en una \textit{turnstile\_queue} o en una \textit{sleep\_queue}. Cuando el hilo agota el \textit{timeslice}, se coloca al final de la cola de la que provino y se selecciona el hilo que se encuentra al comienzo de la misma para ejecutarse.\par
 
-Cuanto más corto sea el \textit{timeslice}, mejor será la respuesta interactiva. Sin embargo, cuanto más largos sean los cuántums de tiempo, mayor será el rendimiento del sistema, ya que habrá menos sobrecarga debida a los cambios de contexto y se limpiarán menos a menudo las cachés del procesador. El \textit{timeslice} utilizado por 4BSD es de 0.1 segundo. Este valor se encontró empíricamente como el cuántum más largo que podía usarse sin pérdida de la respuesta deseada para trabajos interactivos como los editores.\par
+Cuanto más corto sea el \textit{timeslice}, mejor será la respuesta interactiva. Sin embargo, cuanto más largos sean los quántums de tiempo, mayor será el rendimiento del sistema, ya que habrá menos sobrecarga debida a los cambios de contexto y se limpiarán menos a menudo las cachés del procesador. El \textit{timeslice} utilizado por 4BSD es de 0.1 segundo. Este valor se encontró empíricamente como el quántum más largo que podía usarse sin pérdida de la respuesta deseada para trabajos interactivos como los editores.\par
 
-\subsubsection{Colas de ejecución de hilos y Cambios de Contexto}
+\subsection{Colas de ejecución de hilos y Cambios de Contexto}
 
 El \textit{kernel} cuenta con un conjunto único de colas de ejecución para manejar todas las clases de hilos mencionadas anteriormente en la sección "Prioridad de los hilos". La cantidad de colas utilizadas para mantener la colección de hilos \textit{RUNNABLE} impacta en el costo de su gestión. Mantener una sola cola ordenada simplifica la operación de búsqueda y selección del próximo hilo listo, pero otras operaciones se vuelven más costosas. Por otro lado, si se utilizara una cola por cada nivel de prioridad, la selección del próximo hilo listo sería demasiado costosa, dado que habría que buscar entre 256 de ellas. FreeBSD emplea 64 colas de ejecución para los hilos listos, de modo que para ubicar un hilo en una cola, se divide la prioridad del mismo por 4, y el resultado indica la cola donde debería ser ubicado. Con el fin de optimizar el tiempo, los hilos en cada cola no son reordenados según sus prioridades.\par
 
@@ -169,7 +169,7 @@ Los \textbf{cambios de contexto voluntarios}, es decir, cuando un hilo decide ce
 
 La rutina \textit{mi\_switch()} no puede ser llamada desde el código que se ejecuta a nivel de interrupción, ya que debe ser invocada dentro del contexto del hilo en ejecución. Por ello, para \textbf{cambios de contexto involuntarios}, se activa la bandera TDF\_NEEDRESCHED del hilo en ejecución y luego se envía una trampa de sistema asíncrona (AST). Una AST es una trampa que se le entrega al hilo que se estaba ejecutando previo a una interrupción, para que en lugar de reanudar su ejecución (al volver de la interrupción), se llame a la rutina \textit{mi\_switch()}.\par
 
-\subsubsection{Planificador 4BSD para sistemas multiprocesador}
+\subsection{Planificador 4BSD para sistemas multiprocesador}
 
 El planificador 4BSD en FreeBSD está diseñado para gestionar la carga de trabajo en sistemas multiprocesador mediante un enfoque que equilibra la carga de los procesadores. Para lograr esto, el planificador emplea tanto las colas de ejecución específicas de cada CPU como una cola de ejecución global. Tanto la cola global como las específicas de cada CPU están estructuradas como colas de múltiples niveles con realimentación (Multilevel Feedback Queue), lo que permite priorizar y gestionar los hilos de manera eficiente según su comportamiento y necesidades de tiempo de CPU.
 
@@ -183,13 +183,13 @@ La función de \textit{bounding}, por otro lado, implica restringir un hilo a un
 
 Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particular. Cuando un hilo está anclado, el planificador se asegura de encolarlo siempre en el último procesador en el que se ejecutó. En el contexto del \textit{kernel} de FreeBSD, esto se realiza para mantener la coherencia de caché o para garantizar la eficiencia de la ejecución de tareas críticas evitando la migración del hilo entre CPUs durante su ejecución. El método que ancla un hilo, es el que finalmente libera al hilo de esta restricción.\par
 
-\subsection{Conceptos del proyecto integrador previo}
+\section{Conceptos del proyecto integrador previo}
 
 En el contexto del proyecto integrador previo, se llevó a cabo un análisis detallado del comportamiento del \textit{scheduler} de un sistema operativo, con un enfoque específico en el proceso de asignación de tiempo de procesador. El objetivo fundamental fue identificar oportunidades de mejora en su funcionamiento, migrando de una visión estadística a un sistema más complejo implementado mediante Redes de Petri, en donde las decisiones de encolado de los hilos en una CPU se derivan de la información representada en el modelo, incluidos los estados globales y los de cada hilo.\par
 
 En las secciones siguientes, se presentan los puntos clave abordados en este estudio, incluyendo la naturaleza de las modificaciones realizadas. Además, se resaltan los puntos de interés surgidos durante este análisis, los cuales orientarán el desarrollo de los distintos módulos destinados a ampliar las funcionalidades de planificación como la gestión del encendido y apagado de procesadores, así como la monopolización de los mismos por parte de los hilos.\par
 
-\subsubsection{Elección del planificador}
+\subsection{Elección del planificador}
 
 La planificación a corto plazo en FreeBSD ha experimentado una evolución constante desde sus primeras versiones basadas en el sistema operativo 4.4BSD\cite{bib3}. A lo largo de su historia, FreeBSD ha confiado en dos planificadores para gestionar la asignación de recursos del sistema, siendo el planificador 4BSD uno de los más notables. Este planificador, inicialmente diseñado para sistemas monoprocesador, ha sido adaptado y optimizado para entornos multiprocesador, convirtiéndose en un componente fundamental de la arquitectura del sistema operativo.\par
 
@@ -200,7 +200,7 @@ A pesar de que el planificador ULE se ha convertido en el predeterminado en las 
 Nuestro proyecto se basa en el trabajo previo que se centró en el planificador 4BSD. Para obtener una comprensión más detallada y contextualizada de esta elección, se puede consultar las secciones de \textit{Alcance} (1.4) y  \textit{Diferencias entre el planificador ULE y el 4BSD} (2.3.3) del proyecto integrador previo\cite{bib1}. Aunque nuestro enfoque principal no radica en realizar cambios inmediatos en el sistema operativo ni en contribuir directamente a la comunidad de FreeBSD, continuamos con la fase de investigación e implementación centrada en este tipo de planificadores.\par
 
 
-\subsubsection{Análisis de modificaciones realizadas}
+\subsection{Análisis de modificaciones realizadas}
 
 Como se explicó previamente, la planificación en sistemas operativos consiste en decidir el orden y la duración de la ejecución de los distintos hilos del sistema. Tradicionalmente, los sistemas operativos han basado estas decisiones en estadísticas del comportamiento previo, utilizando datos históricos para optimizar el rendimiento.
 
@@ -210,7 +210,7 @@ Las modificaciones realizadas en el código del planificador 4BSD se centraron e
 
 Para comprender la naturaleza de los cambios realizados en el trabajo previo, detallaremos los resultados finales en términos de modelado de sistemas mediante redes de Petri.
 
-\subsubsection{Modelado del hilo}
+\subsection{Modelado del hilo}
 
 Uno de los modelos representados mediante redes de Petri es el de los estados de un hilo, como se muestra en la Figura \ref{fig:threadModel}.\par
 
@@ -234,7 +234,7 @@ Las plazas de la Red de Petri la Figura \ref{fig:threadModel} se corresponden a 
 \end{itemize}
 
 
-\subsubsection{Modelado del planificador}
+\subsection{Modelado del planificador}
 
 Por otro lado, se realizó el modelado de la red de Petri del planificador, o red de recursos, que se muestra en la Figura \ref{fig:schedulerModel}. En esta figura se detallan las plaza y transiciones de una sola CPU, siendo extensible a tantas CPUs como el sistema multiprocesador posea.
 
@@ -281,7 +281,7 @@ En cuanto a las transiciones de la red, podemos hacer la misma categorización:
     \end{itemize}
 
 
-\subsubsection{Jerarquía de transiciones}
+\subsection{Jerarquía de transiciones}
 Para llevar a cabo la conexión entre las redes de los hilos y la red de recursos de las CPU se utiliza el concepto de redes jerárquicas. Es decir que al dispararse cierta transición en la red de recursos, también debe dispararse su transición correspondiente en la red del hilo.
 
 Las jerarquías están definidas de la siguiente forma:
@@ -294,12 +294,12 @@ Las jerarquías están definidas de la siguiente forma:
     \item Transición TRAN\_RETURN\_VOL de la red de recursos es jerárquica a la transición T4\_TO \_WAIT\_CHANNEL del hilo.
 \end{itemize}
 
-\subsubsection{Marcado inicial}
+\subsection{Marcado inicial}
 La red de recursos se inicializará siempre con un token en la plaza que indica que el sistema se encuentra funcionando en modo monoprocesador. Además, se inicializan las plazas que representan a las CPU con un token, excepto la de la CPU0 ya que la misma, inicialmente se encuentra ejecutando el hilo inicial del sistema, por lo que esta última debe inicializarse con un token en la plaza de ejecución (PLACE\_EXECUTING\_0).
 
 
 
-\subsubsection{Métodos de interes para nuestra tesis}
+\subsection{Métodos de interés para nuestra tesis}
 
 Las principales modificaciones realizadas en el planificador se encuentran en las siguientes funciones, donde se implementaron las transiciones correspondientes para asociar y ajustar el funcionamiento del planificador original, al modelo de la red de Petri:
 
@@ -307,7 +307,7 @@ Las principales modificaciones realizadas en el planificador se encuentran en la
     \item Funciones de inicialización del planificador: Se añadieron funciones para inicializar la red de Petri, incluyendo el marcado inicial y la configuración de las transiciones y plazas en el modelo, representadas mediante variables.
     \item Encolado de hilos: En la función que gestiona el encolado de hilos, se ajustó la lógica para alinearse con la red de Petri, permitiendo que un hilo sea encolado en la cola global o en la de un procesador específico.
     \item Desencolado de hilos: En la función encargada de desencolar hilos, se integró el disparo de la transición correspondiente, permitiendo desencolar un hilo tanto de la cola global como de la cola de un procesador.
-    \item Selección del hilo a ejecutar: En la función que elige el próximo hilo a ejecutar, se gestionan los hilos de la cola global, las colas de los procesadores y el hilo IDLETHREAD, ejecutado en casos de ausencia de otros hilos listos.
+    \item Selección del hilo a ejecutar: En la función que elige el próximo hilo a ejecutar, se gestionan los hilos de la cola global, las colas de los procesadores y el hilo \textit{idlethread}, ejecutado en casos de ausencia de otros hilos listos.
     \item Selección del Procesador: La función que selecciona el procesador adecuado para ejecutar un hilo fue completamente rediseñada para basarse en el estado de la red de Petri.
     \item Expulsión de Hilos: Función donde se gestiona la expulsión de hilos del planificador.
     \item Cambio de Contexto: Se añadieron las transiciones necesarias para tener en cuenta el cambio de contexto entre hilos debido a la preempción.

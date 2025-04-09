@@ -1,4 +1,4 @@
-\documentclass[11pt, spanish]{article}
+\documentclass[11pt, spanish]{book}
 \usepackage{tocbibind}
 \usepackage[colorlinks=true, linkcolor=linkblue, citecolor=linkblue]{hyperref}
 \usepackage[spanish]{babel}
@@ -35,7 +35,7 @@
 
 \makeindex
 
-\pagestyle{plain}
+\pagestyle{headings}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -53,46 +53,37 @@
 
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{10pt}
+\renewcommand{\tablename}{Tabla}
 
 \begin{document}
-\renewcommand{\tablename}{Tabla}
 \input{titlepage}
+\thispagestyle{empty}
+
+% Para numerar en romanos
+\frontmatter
 
 \input{abstract}
-\newpage
 
 \tableofcontents
-\newpage
-
-\input{chapter01}
-\newpage
-
-\input{chapter02}
-\newpage
-
-\input{chapter03}
-\input{chapter03a}
-\input{chapter03b}
-\input{chapter03c}
-\input{chapter03d}
-\newpage
-
-\input{chapter04}
-\newpage
-
-\input{conclusion}
-\newpage
-
-\medskip
-
 \listoffigures
-
 \listoftables
 
-\newpage
-\input{bibliografia}
-\newpage
+% Reinicia contador de páginas y numera en arábigo
+\mainmatter
 
-\input{appendix}
+\include{chapter01}
+
+\include{chapter02}
+
+\include{chapter03}
+
+\include{chapter04}
+
+\include{conclusion}
+
+\include{bibliografia}
+\include{appendix}
+
+\backmatter
 
 \end{document}
