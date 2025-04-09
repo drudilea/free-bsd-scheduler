@@ -1,8 +1,8 @@
 \appendix
 
-\section{Archivos de diferencias}\label{appendix:apA}
+\chapter{Archivos de diferencias}\label{appendix:apA}
 
-\subsection{\textit{sched\_switch} (v12 a v13): Firma de la función y variables}\label{appendix:apA1}
+\section{\textit{sched\_switch} (v12 a v13): Firma de la función y variables}\label{appendix:apA1}
 
 \begin{lstlisting}[language=diff]
 - void sched_switch(struct thread *td, struct thread *newtd, int flags)
@@ -26,7 +26,7 @@
 
 
 
-\subsection{\textit{sched\_switch} (v12 a v13): Cambio de posición del bloque que bloquea el hilo previo al \textit{resource\_expulse\_thread}}\label{appendix:apA2}
+\section{\textit{sched\_switch} (v12 a v13): Cambio de posición del bloque que bloquea el hilo previo al \textit{resource\_expulse\_thread}}\label{appendix:apA2}
 
 \begin{lstlisting}[language=diff]
 +   if (td->td_lock != &sched_lock) {
@@ -55,7 +55,7 @@
 \end{lstlisting}
 
 
-\subsection{\textit{sched\_switch} (v12 a v13): Selección y ejecución de un nuevo thread}\label{appendix:apA3}
+\section{\textit{sched\_switch} (v12 a v13): Selección y ejecución de un nuevo thread}\label{appendix:apA3}
 
 \begin{lstlisting}[language=diff]
 +   newtd = choosethread();
@@ -89,7 +89,7 @@
 
 \end{lstlisting}
 
-\section{Detalles de la implementación del módulo de monopolizado}\label{appendix:apB}
+\chapter{Detalles de la implementación del módulo de monopolizado}\label{appendix:apB}
 
 En este apartado se desarrollará con mayor profundidad la implementación del módulo de monopolización de hilos, haciendo referencia principalmente a las funciones que se han modificado y su comportamiento a lo largo del proceso de ejecución de un hilo.
 
@@ -126,7 +126,7 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
     \item \textit{get\_monopolized\_cpu\_by\_thread\_id()}: Método utilizado por \textit{resource\_choose\_cpu} para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.\par
 \end{itemize}
 
-\section{Análisis de \textit{kernel panic} debido a fallos de página (\textit{page fault})}\label{appendix:apC}
+\chapter{Análisis de \textit{kernel panic} debido a fallos de página (\textit{page fault})}\label{appendix:apC}
 
 Se analizaron archivos \textit{dump} generados en un sistema FreeBSD a partir de un page fault ocurrido mientras la placa de red se encontraba encendida. El proceso involucrado en el fallo es sshd, que generó un \textit{kernel panic} debido a un acceso inválido a memoria.
 
@@ -161,7 +161,7 @@ Para obtener más información sobre el fallo, se utilizó el comando \textit{up
     \label{fig:kgdb_kern-select}
 \end{figure}
 
-\section{Ejecución del programa de estrés con diferentes cantidades de núcleos activos}\label{appendix:apD}
+\chapter{Ejecución del programa de estrés con diferentes cantidades de núcleos activos}\label{appendix:apD}
 
 \begin{figure}[H]
     \centering
@@ -183,7 +183,3 @@ Para obtener más información sobre el fallo, se utilizó el comando \textit{up
     \caption{Tiempo de ejecución del programa de estrés con 2 núcleos activos.}
     \label{fig:cpuOnOff-2CPUsTime}
 \end{figure}
-
-
-% Add more sections as needed before the \end{document} command.
-\end{document}

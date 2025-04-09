@@ -1,4 +1,4 @@
-\section{Introducción}
+\chapter{Introducción}
 La planificación a corto plazo de un sistema operativo es la parte del sistema que se encarga de tomar decisiones sobre qué tareas se deben ejecutar y en qué orden. El objetivo principal de la misma es hacer un uso eficiente de los recursos de CPU disponibles y minimizar el tiempo de respuesta de los procesos.\par
 
 El sistema operativo elegido para realizar este proyecto y las modificaciones pertinentes, es FreeBSD.\@ Éste es un sistema operativo libre y de código abierto, basado en Unix, que se utiliza principalmente en servidores y estaciones de trabajo. Es conocido por su escalabilidad y robustez, así como por su capacidad de adaptarse y personalizarse según las necesidades del usuario.\par
@@ -7,7 +7,7 @@ El planificador de bajo nivel se ejecuta cada vez que un hilo se bloquea o inter
 
 Este trabajo se construye sobre los cimientos establecidos en un proyecto integrador previo, donde se abordó la mejora del \textit{scheduler} en el sistema operativo FreeBSD.\@ En dicha investigación\cite{bib1}, se identificó la naturaleza estadística del proceso de asignación de tiempo de procesador y se propuso un modelo basado en redes de Petri para introducir determinismo y reducir la incertidumbre en la toma de decisiones.\par
 
-\subsection{Oportunidad}
+\section{Oportunidad}
 El proyecto integrador previo estableció una base sólida para la comprensión integral del funcionamiento de los sistemas operativos y demostró la relevancia de la planificación en el rendimiento del sistema. Este logro requirió un compromiso considerable y una laboriosa inversión de tiempo en la construcción de modelos, así como en el análisis de los resultados obtenidos.\par
 
 No obstante, dada la continua evolución tecnológica y la evolución de las necesidades de los usuarios, se hace imperativo mantener una constante actualización y refinamiento de dicha implementación.\par
@@ -16,7 +16,7 @@ La presente oportunidad de trabajo se centra en la incorporación de nuevas func
 
 En este contexto, identificamos dos oportunidades específicas. La primera consiste en eliminar la participación de los CPUs en determinadas tareas, priorizando así el consumo de energía sobre el rendimiento. Para abordar esta oportunidad, se planteó el desarrollo de un módulo que permita bloquear el \textit{encolado} de un procesador, simulando así su ``apagado'' y reduciendo el consumo energético global del sistema. La segunda oportunidad se centra en optimizar el rendimiento en tareas de tiempo real, evitando interrupciones al saltarse el sistema de colas. Para esta finalidad, planteamos la creación de otro módulo que permita a un hilo apropiarse de un CPU, evitando que otros hilos hagan uso del mismo mientras se ejecuta la tarea prioritaria. Si bien estos cambios aún requerirán de desarrollos adicionales para implementarse concretamente en los procesos y situaciones específicas, representan un primer paso hacia la mejora de la eficiencia energética y el rendimiento del sistema operativo, al proporcionar herramientas para el control más preciso de los recursos de hardware y la gestión de tareas críticas.\par
 
-\subsection{Motivación}
+\section{Motivación}
 Entre las principales motivaciones que nos impulsan a realizar este proyecto, podemos destacar la importancia de la planificación a corto plazo en los sistemas operativos y su impacto en el rendimiento.
 
 Actualmente la planificación a corto plazo de sistemas operativos es un objeto de estudio para encontrar soluciones que disminuyan el indeterminismo y optimicen el rendimiento. En concreto, la implementación del planificador a corto plazo de FreeBSD utilizando Redes de Petri, ha demostrado muchas ventajas mediante esta técnica de modelado.\par
@@ -25,7 +25,7 @@ En este trabajo integrador, proponemos avanzar con la implementación de funcion
 
 Otra oportunidad significativa que surge para el desarrollo de este proyecto integrador es la actualización del código del planificador a la última versión del sistema operativo. La versión desde la que partimos como base es FreeBSD 11, y buscamos la migración hacia la 13.1. Esta actualización nos brinda la posibilidad de capitalizar las mejoras de rendimiento, seguridad y estabilidad introducidas en las últimas versiones. Por otro lado, los avances realizados en ambos trabajos estarían más cerca de representar una contribución al código base del sistema, y al mismo tiempo nos permitiría trabajar a la par de los contribuyentes de FreeBSD.\par
 
-\subsection{Objetivo}
+\section{Objetivo}
 
 Objetivo principal:
 
@@ -47,7 +47,7 @@ Objetivos secundarios:
     \item Compartir e interactuar con la comunidad de FreeBSD a través de foros y listas de difusión.
 \end{itemize}
 
-\subsection{Alcance}
+\section{Alcance}
 
 La fase inicial del proyecto se enfocará en la actualización de la implementación existente a la ultima versión del sistema operativo FreeBSD.\@ Se considerará completada, una vez que el código del proyecto integrador previo se encuentre actualizado y se compruebe el funcionamiento adecuado.\par
 
@@ -57,13 +57,13 @@ En el caso de la funcionalidad de encendido y apagado de procesadores, la activa
 
 Adicionalmente, se implementarán pruebas para validar la funcionalidad precisa de estas incorporaciones. El alcance general de este trabajo es establecer un sólido fundamento para la adición de módulos independientes, capaces de integrarse a la Red de Petri para alcanzar diversos propósitos. En este contexto, se anticipa que los resultados obtenidos en este proyecto puedan servir como un valioso punto de partida para futuras investigaciones en el campo de la planificación a corto plazo de sistemas operativos.\par
 
-\subsection{Modelo de Desarrollo}
+\section{Modelo de Desarrollo}
 
 Nuestro enfoque para este proyecto se centró en tres objetivos principales, como se mencionó anteriormente: actualizar el planificador a la última versión del sistema operativo y desarrollar los módulos de encendido/apagado de procesadores, y de monopolización de CPUs. Estos objetivos nos guiaron en la definición de metas específicas y alcances concretos, lo que nos permitió avanzar de manera ágil y precisa en el desarrollo. Aunque en este informe presentaremos estos objetivos como tres módulos separados, es importante destacar que evolucionaron de forma incremental a lo largo del proceso de desarrollo.
 
-\subsection{Requerimientos Generales}
+\section{Requerimientos Generales}
 
-\subsubsection{Requerimientos funcionales}
+\subsection{Requerimientos funcionales}
 \begin{itemize}
     \item Adaptar la implementación actual del planificador a corto plazo de FreeBSD para garantizar su compatibilidad con las últimas versiones del sistema operativo.
     \item Diseñar y ejecutar pruebas para validar la correcta integración del modelo a las nuevas versiones de FreeBSD y para evaluar el funcionamiento óptimo de los nuevos desarrollos.
@@ -71,7 +71,7 @@ Nuestro enfoque para este proyecto se centró en tres objetivos principales, com
     \item Ejecutar pruebas para asegurar la correcta implementación e integración de las nuevas características desarrolladas en el planificador existente de modo que no afecten negativamente su rendimiento.
 \end{itemize}
 
-\subsubsection{Requerimientos no funcionales}
+\subsection{Requerimientos no funcionales}
 \begin{itemize}
     \item Abordar las actualizaciones y los nuevos módulos del planificador a corto plazo de manera modular, organizada y documentada para facilitar su mantenimiento y actualización en el futuro.
     \item Detectar posibles integraciones de los nuevos módulos en el sistema operativo para proyectos futuros.
