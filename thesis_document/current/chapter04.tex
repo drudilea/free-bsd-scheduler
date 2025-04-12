@@ -34,7 +34,7 @@ Creemos importante resaltar que, independientemente de si nuestro módulo de enc
 \end{figure}
 
 \subsection{Comportamiento con el Módulo Inhabilitado}
-Cuando el módulo de encendido/apagado de procesadores no está habilitado para ningún núcleo, el sistema operativo sigue su funcionamiento convencional bajo la lógica del planificador. En este estado, el \textit{scheduler} opera mediante el uso de la Red de Petri  con las plazas y transiciones de cada uno de los procesadores del sistema, sin hacer uso de la adición de plazas y transiciones que corresponden al módulo, introducidas en el desarrollo del mismo.\par
+Cuando el módulo de encendido/apagado de procesadores no está habilitado para ningún núcleo, el sistema operativo sigue su funcionamiento convencional bajo la lógica del planificador basado en Redes de Petri. En este estado, el \textit{scheduler} opera mediante el uso de la Red de Petri  con las plazas y transiciones de cada uno de los procesadores del sistema, sin hacer uso de la adición de plazas y transiciones que corresponden al módulo, introducidas en el desarrollo del mismo.\par
 
 Para confirmar dicho comportamiento, llevamos a cabo una prueba de estrés sobre los procesadores, ejecutando un programa que genera múltiples procesos que realizan cálculos matemáticos complejos. Durante la ejecución del programa, supervisamos el sistema y observamos que todos los procesadores operaban al máximo de su capacidad, funcionando al 100\% para completar la tarea. La Figura \ref{fig:cpuOnOff-result-full-load} proporciona una representación visual de este estado.\par
 
@@ -85,7 +85,7 @@ En la Tabla \ref{tabla:cpuOnOff-result-times} se presentan los tiempos de ejecuc
     \label{tabla:cpuOnOff-result-times}
 \end{table}
 
-El objetivo de esta prueba no es fomentar la suspensión de procesadores durante un contexto de gran carga de trabajo, sino demostrar la capacidad del sistema para adaptarse a la reducción de recursos de procesamiento. En el futuro, se espera que el \textit{kernel} sea quien decida de forma autónoma, cuándo suspender procesadores para lograr una mayor eficiencia energética.\par
+El objetivo de esta prueba no es fomentar la suspensión de procesadores durante un contexto de gran carga de trabajo, sino mostrar la capacidad del sistema para adaptarse a la reducción de recursos de procesamiento. A futuro, se espera que la activación o desactivación de procesadores pueda ser gestionada tanto por el \textit{kernel} como por mecanismos externos, como directivas embebidas en los procesos o módulos del sistema capaces de tomar decisiones en función del tipo de tarea, la prioridad del hilo, el estado general de carga o criterios de eficiencia energética.\par
 
 Las capturas de pantalla con los resultados mostrados en la Tabla \ref{tabla:cpuOnOff-result-times} se encuentran documentados en el Apéndice \ref{appendix:apD}.
 
@@ -105,7 +105,7 @@ En los siguientes apartados se detallan las observaciones y análisis específic
 
 \subsection{Estado Normal del Sistema}
 
-En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutaran hilos de clase IDLE en caso de inactividad del sistema. Con el planificador funcionando normalmente, los subprocesos se distribuyen entre los núcleos disponibles, utilizando las políticas definidas por el mismo.\par
+En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutaran hilos de clase IDLE en caso de inactividad del sistema. Con el planificador funcionando normalmente, los subprocesos se distribuyen entre los núcleos disponibles, utilizando las políticas definidas por él mismo.\par
 
 En la Figura \ref{fig:top_disabled} se puede observar el estado de los procesos en el sistema con el módulo de monopolización deshabilitado. En este caso, se puede apreciar que los procesos se distribuyen de manera equitativa entre los núcleos, sin que ninguno de ellos monopolice un núcleo específico.\par
 
