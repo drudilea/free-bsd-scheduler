@@ -163,11 +163,11 @@ Las colas de ejecución contienen todos los hilos listos en la memoria principal
     \label{fig:queueing-structure}
 \end{figure}
 
-El código de cambio de contexto se divide en dos partes: una parte independiente de la máquina, que reside en \textit{mi\_switch()}, y otra parte dependiente de la máquina, que reside en \textit{cpu\_switch()}.\par
+El código de cambio de contexto se divide en dos partes: una parte independiente de la máquina, que reside en \verb|mi_switch()|, y otra parte dependiente de la máquina, que reside en \verb|cpu_switch()|.\par
 
-Los \textbf{cambios de contexto voluntarios}, es decir, cuando un hilo decide ceder la CPU de forma deliberada, ocurren cuando dicho hilo llama a la rutina \textit{sleep()}, colocándolo en una cola de espera e invocando \textit{mi\_switch()} para programar el siguiente hilo a ejecutar.\par
+Los \textbf{cambios de contexto voluntarios}, es decir, cuando un hilo decide ceder la CPU de forma deliberada, ocurren cuando dicho hilo llama a la rutina \verb|sleep()|, colocándolo en una cola de espera e invocando \verb|mi_switch()| para programar el siguiente hilo a ejecutar.\par
 
-La rutina \textit{mi\_switch()} no puede ser llamada desde el código que se ejecuta a nivel de interrupción, ya que debe ser invocada dentro del contexto del hilo en ejecución. Por ello, para \textbf{cambios de contexto involuntarios}, se activa la bandera TDF\_NEEDRESCHED del hilo en ejecución y luego se envía una trampa de sistema asíncrona (AST). Una AST es una trampa que se le entrega al hilo que se estaba ejecutando previo a una interrupción, para que en lugar de reanudar su ejecución (al volver de la interrupción), se llame a la rutina \textit{mi\_switch()}.\par
+La rutina \verb|mi_switch()| no puede ser llamada desde el código que se ejecuta a nivel de interrupción, ya que debe ser invocada dentro del contexto del hilo en ejecución. Por ello, para \textbf{cambios de contexto involuntarios}, se activa la bandera \verb|TDF_NEEDRESCHED| del hilo en ejecución y luego se envía una trampa de sistema asíncrona (AST). Una AST es una trampa que se le entrega al hilo que se estaba ejecutando previo a una interrupción, para que en lugar de reanudar su ejecución (al volver de la interrupción), se llame a la rutina \verb|mi_switch()|.\par
 
 \subsection{Planificador 4BSD para sistemas multiprocesador}
 
@@ -179,7 +179,7 @@ Por otro lado, cada CPU en el sistema tiene su propia cola de ejecución. Estas 
 
 Algunos hilos pueden estar vinculados a un conjunto específico de CPUs debido a consideraciones de rendimiento. El planificador 4BSD respeta esta afinidad al determinar en qué CPU encolar el hilo mediante un mecanismo de iteración sobre las CPUs asignadas al hilo, excluyendo aquellas para las que no existe afinidad. Luego, selecciona la CPU cuya cola tenga la menor cantidad de hilos listos para ejecutarse.\par
 
-La función de \textit{bounding}, por otro lado, implica restringir un hilo a un procesador específico. Por ejemplo, al ejecutar el método \textit{kern\_reboot} en FreeBSD, encargado de preparar el sistema para un reinicio, apagado o parada, es necesario vincular primero dicho hilo al procesador 0. Esto garantiza que el código se ejecute en la CPU0, una práctica crucial en sistemas que solo permiten la ejecución de instrucciones en dicha CPU.\par
+La función de \textit{bounding}, por otro lado, implica restringir un hilo a un procesador específico. Por ejemplo, al ejecutar el método \verb|kern_reboot()| en FreeBSD, encargado de preparar el sistema para un reinicio, apagado o parada, es necesario vincular primero dicho hilo al procesador 0. Esto garantiza que el código se ejecute en la CPU0, una práctica crucial en sistemas que solo permiten la ejecución de instrucciones en dicha CPU.\par
 
 Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particular. Cuando un hilo está anclado, el planificador se asegura de encolarlo siempre en el último procesador en el que se ejecutó. En el contexto del \textit{kernel} de FreeBSD, esto se realiza para mantener la coherencia de caché o para garantizar la eficiencia de la ejecución de tareas críticas evitando la migración del hilo entre CPUs durante su ejecución. El método que ancla un hilo, es el que finalmente libera al hilo de esta restricción.\par
 
@@ -248,9 +248,9 @@ Por otro lado, se realizó el modelado de la red de Petri del planificador, o re
 Las plazas del planificador, podemos separarlas en las siguientes categorías:
 
 \begin{itemize}
-    \item \textbf{Plazas de la actividad del procesador}: Entre ellas encontramos las plazas PLACE\_CPU, PLACE\_TOEXEC y PLACE\_EXECUTING que representan el estado de ejecución de un hilo sobre el procesador en cuestión.
-    \item \textbf{Plazas de colas del procesador}: PLACE\_QUEUE y PLACE\_CANTQ, que representan las colas del procesador en cuestión, con un sistema diseñado para soportar la penalización de procesadores.
-    \item \textbf{Plazas globales o de sistema}: PLACE\_GLOBAL\_QUEUE, PLACE\_SMP\_READY y PLACE\_SMP\_NOT\_READY que representan las colas globales y el estado del sistema SMP en un determinado momento.
+    \item \textbf{Plazas de la actividad del procesador}: Entre ellas encontramos las plazas \verb|PLACE_CPU|, \verb|PLACE_TOEXEC| y \verb|PLACE_EXECUTING| que representan el estado de ejecución de un hilo sobre el procesador en cuestión.
+    \item \textbf{Plazas de colas del procesador}: \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|, que representan las colas del procesador en cuestión, con un sistema diseñado para soportar la penalización de procesadores.
+    \item \textbf{Plazas globales o de sistema}: \verb|PLACE_GLOBAL_QUEUE|, \verb|PLACE_SMP_READY| y \verb|PLACE_SMP_NOT_READY| que representan las colas globales y el estado del sistema SMP en un determinado momento.
 \end{itemize}
 
 En cuanto a las transiciones de la red, podemos hacer la misma categorización:
@@ -258,25 +258,25 @@ En cuanto a las transiciones de la red, podemos hacer la misma categorización:
 \begin{itemize}
     \item \textbf{Transiciones de la actividad del procesador}:
         \begin{itemize}
-            \item \textbf{TRAN\_UNQUEUE}: Esta transición elimina al hilo próximo a ejecutarse de la cola de la CPU, dejándolo listo para su ejecución.
-            \item \textbf{TRAN\_EXEC}: El hilo pasa a ejecutarse, ocupando el recurso del procesador. Esta transición elimina el token de la plaza de habilitación, permitiendo que un nuevo hilo pueda ser encolado. Cabe destacar que esta transición está inhibida en modo monoprocesador ya que en este modo los hilos que se planifican, son buscados en la cola global.
-            \item \textbf{TRAN\_EXEC\_EMPTY}: Similar a TRAN\_EXEC, esta transición permite la ejecución de hilos provenientes de la cola global.
-            \item \textbf{TRAN\_RETURN\_VOL}: Representa la liberación del recurso del procesador para permitir la ejecución de otro hilo de la cola. Se dispara cuando un hilo no puede continuar su ejecución debido a la espera de un evento o recurso.
-            \item \textbf{TRAN\_RETURN\_INVOL}: Al igual que TRAN\_RETURN\_VOL, esta transición se dispara cuando un hilo libera el procesador, pero en este caso, la interrupción se produce porque el hilo ha consumido su tiempo asignado de CPU o ha finalizado su tarea.
+            \item \verb|TRAN_UNQUEUE|: Esta transición elimina al hilo próximo a ejecutarse de la cola de la CPU, dejándolo listo para su ejecución.
+            \item \verb|TRAN_EXEC|: El hilo pasa a ejecutarse, ocupando el recurso del procesador. Esta transición elimina el token de la plaza de habilitación, permitiendo que un nuevo hilo pueda ser encolado. Cabe destacar que esta transición está inhibida en modo monoprocesador ya que en este modo los hilos que se planifican, son buscados en la cola global.
+            \item \verb|TRAN_EXEC_EMPTY|: Similar a \verb|TRAN_EXEC|, esta transición permite la ejecución de hilos provenientes de la cola global.
+            \item \verb|TRAN_RETURN_VOL|: Representa la liberación del recurso del procesador para permitir la ejecución de otro hilo de la cola. Se dispara cuando un hilo no puede continuar su ejecución debido a la espera de un evento o recurso.
+            \item \verb|TRAN_RETURN_INVOL|: Al igual que \verb|TRAN_RETURN_VOL|, esta transición se dispara cuando un hilo libera el procesador, pero en este caso, la interrupción se produce porque el hilo ha consumido su tiempo asignado de CPU o ha finalizado su tarea.
         \end{itemize}
     \item \textbf{Transiciones de colas del procesador}:
         \begin{itemize}
-            \item \textbf{TRAN\_ADDTOQUEUE}: Un hilo se agrega a la cola de la CPU correspondiente. Esta transición está inhibida cuando el sistema está en modo monoprocesador (al inicio del sistema operativo) y cuando ya existe un hilo en la cola. Esta última decisión recae en un sistema de colas y de penalización de procesadores implementada en el trabajo integrador previo.
-            \item \textbf{TRAN\_REMOVE\_QUEUE}: Expulsa un hilo de la cola y resta un token de habilitación de la CPU, desinhibiendo el encolado de otro hilo del sistema de penalización.
-            \item \textbf{TRAN\_REMOVE\_EMPTY\_QUEUE}: Funciona igual que TRAN\_REMOVE\_QUEUE, pero se ejecuta cuando la plaza de habilitación no tiene ningún token.
-            \item \textbf{TRAN\_THROW}: Esta transición se dispara automáticamente cuando todas las plazas de habilitación de las CPU tienen al menos un token. Su objetivo es habilitar las colas con la menor cantidad de hilos que estaban inhibidas, una vez que todas las colas se han nivelado.
+            \item \verb|TRAN_ADDTOQUEUE|: Un hilo se agrega a la cola de la CPU correspondiente. Esta transición está inhibida cuando el sistema está en modo monoprocesador (al inicio del sistema operativo) y cuando ya existe un hilo en la cola. Esta última decisión recae en un sistema de colas y de penalización de procesadores implementada en el trabajo integrador previo.
+            \item \verb|TRAN_REMOVE_QUEUE|: Expulsa un hilo de la cola y resta un token de habilitación de la CPU, desinhibiendo el encolado de otro hilo del sistema de penalización.
+            \item \verb|TRAN_REMOVE_EMPTY_QUEUE|: Funciona igual que \verb|TRAN_REMOVE_QUEUE|, pero se ejecuta cuando la plaza de habilitación no tiene ningún token.
+            \item \verb|TRAN_THROW|: Esta transición se dispara automáticamente cuando todas las plazas de habilitación de las CPU tienen al menos un token. Su objetivo es habilitar las colas con la menor cantidad de hilos que estaban inhibidas, una vez que todas las colas se han nivelado.
         \end{itemize}
     \item \textbf{Transiciones globales o de sistema}:
         \begin{itemize}
-            \item \textbf{TRAN\_FROM\_GLOBAL\_CPU}: Representa el desencolado de un hilo desde la cola global.
-            \item \textbf{TRAN\_REMOVE\_GLOBAL\_QUEUE}: Expulsa un hilo de la cola global sin afectar la habilitación de la CPU.
-            \item \textbf{TRAN\_START\_SMP}: Se dispara cuando el sistema cambia de monoprocesador a multiprocesador.
-            \item \textbf{TRAN\_QUEUE\_GLOBAL}: Agrega un hilo a la cola global.
+            \item \verb|TRAN_FROM_GLOBAL_CPU|: Representa el desencolado de un hilo desde la cola global.
+            \item \verb|TRAN_REMOVE_GLOBAL_QUEUE|: Expulsa un hilo de la cola global sin afectar la habilitación de la CPU.
+            \item \verb|TRAN_START_SMP|: Se dispara cuando el sistema cambia de monoprocesador a multiprocesador.
+            \item \verb|TRAN_QUEUE_GLOBAL|: Agrega un hilo a la cola global.
         \end{itemize}
     \end{itemize}
 
@@ -287,19 +287,19 @@ Para llevar a cabo la conexión entre las redes de los hilos y la red de recurso
 Las jerarquías están definidas de la siguiente forma:
 
 \begin{itemize}
-    \item Transiciones TRAN\_ADDTOQUEUE y TRAN\_QUEUE\_GLOBAL de la red de recursos son jerárquicas a la transición T1\_ON\_QUEUE del hilo.
-    \item Transiciones TRAN\_EXEC y TRAN\_EXEC\_EMPTY de la red de recursos son jerárquicas a la transición T2\_SET\_RUNNING del hilo.
-    \item Transiciones TRAN\_REMOVE\_QUEUE, TRAN\_REMOVE\_EMPTY\_QUEUE y TRAN\_ REMOVE\_GLOBAL\_QUEUE de la red de recursos son jerárquicas a la transición T6\_ REMOVE del hilo.
-    \item Transición TRAN\_RETURN\_INVOL de la red de recursos es jerárquica a la transición T3\_ SWITCH\_OUT del hilo.
-    \item Transición TRAN\_RETURN\_VOL de la red de recursos es jerárquica a la transición T4\_TO \_WAIT\_CHANNEL del hilo.
+    \item Transiciones \verb|TRAN_ADDTOQUEUE| y \verb|TRAN_QUEUE_GLOBAL| de la red de recursos son jerárquicas a la transición \verb|T1_ON_QUEUE| del hilo.
+    \item Transiciones \verb|TRAN_EXEC| y \verb|TRAN_EXEC_EMPTY| de la red de recursos son jerárquicas a la transición \verb|T2_SET_RUNNING| del hilo.
+    \item Transiciones \verb|TRAN_REMOVE_QUEUE|, \verb|TRAN_REMOVE_EMPTY_QUEUE| y \verb|TRAN_REMOVE_GLOBAL_QUEUE| de la red de recursos son jerárquicas a la transición \verb|T6_ REMOVE| del hilo.
+    \item Transición \verb|TRAN_RETURN_INVOL| de la red de recursos es jerárquica a la transición \verb|T3_SWITCH_OUT| del hilo.
+    \item Transición \verb|TRAN_RETURN_VOL| de la red de recursos es jerárquica a la transición \verb|T4_TO_WAIT_CHANNEL| del hilo.
 \end{itemize}
 
 \subsection{Marcado inicial}
-La red de recursos se inicializará siempre con un token en la plaza que indica que el sistema se encuentra funcionando en modo monoprocesador. Además, se inicializan las plazas que representan a las CPU con un token, excepto la de la CPU0 ya que la misma, inicialmente se encuentra ejecutando el hilo inicial del sistema, por lo que esta última debe inicializarse con un token en la plaza de ejecución (PLACE\_EXECUTING\_0).
+La red de recursos se inicializará siempre con un token en la plaza que indica que el sistema se encuentra funcionando en modo monoprocesador. Además, se inicializan las plazas que representan a las CPU con un token, excepto la de la CPU0 ya que la misma, inicialmente se encuentra ejecutando el hilo inicial del sistema, por lo que esta última debe inicializarse con un token en la plaza de ejecución (\verb|PLACE_EXECUTING_0|).
 
 
 
-\subsection{Métodos de interés para nuestra tesis}
+\subsection{Métodos de interés para nuestro proyecto}
 
 Las principales modificaciones realizadas en el planificador se encuentran en las siguientes funciones, donde se implementaron las transiciones correspondientes para asociar y ajustar el funcionamiento del planificador original, al modelo de la red de Petri:
 
@@ -307,7 +307,7 @@ Las principales modificaciones realizadas en el planificador se encuentran en la
     \item Funciones de inicialización del planificador: Se añadieron funciones para inicializar la red de Petri, incluyendo el marcado inicial y la configuración de las transiciones y plazas en el modelo, representadas mediante variables.
     \item Encolado de hilos: En la función que gestiona el encolado de hilos, se ajustó la lógica para alinearse con la red de Petri, permitiendo que un hilo sea encolado en la cola global o en la de un procesador específico.
     \item Desencolado de hilos: En la función encargada de desencolar hilos, se integró el disparo de la transición correspondiente, permitiendo desencolar un hilo tanto de la cola global como de la cola de un procesador.
-    \item Selección del hilo a ejecutar: En la función que elige el próximo hilo a ejecutar, se gestionan los hilos de la cola global, las colas de los procesadores y el hilo \textit{idlethread}, ejecutado en casos de ausencia de otros hilos listos.
+    \item Selección del hilo a ejecutar: En la función que elige el próximo hilo a ejecutar, se gestionan los hilos de la cola global, las colas de los procesadores y el hilo \texttt{idlethread}, ejecutado en casos de ausencia de otros hilos listos.
     \item Selección del Procesador: La función que selecciona el procesador adecuado para ejecutar un hilo fue completamente rediseñada para basarse en el estado de la red de Petri.
     \item Expulsión de Hilos: Función donde se gestiona la expulsión de hilos del planificador.
     \item Cambio de Contexto: Se añadieron las transiciones necesarias para tener en cuenta el cambio de contexto entre hilos debido a la preempción.

@@ -2,7 +2,7 @@
 
 \chapter{Archivos de diferencias}\label{appendix:apA}
 
-\section{\textit{sched\_switch} (v12 a v13): Firma de la función y variables}\label{appendix:apA1}
+\section{\texttt{sched\_switch()} (v12 a v13): Firma de la función y variables}\label{appendix:apA1}
 
 \begin{lstlisting}[language=diff]
 - void sched_switch(struct thread *td, struct thread *newtd, int flags)
@@ -26,7 +26,7 @@
 
 
 
-\section{\textit{sched\_switch} (v12 a v13): Cambio de posición del bloque que bloquea el hilo previo al \textit{resource\_expulse\_thread}}\label{appendix:apA2}
+\section{\texttt{sched\_switch()} (v12 a v13): Cambio de posición del bloque que bloquea el hilo previo al \texttt{resource\_expulse\_thread()}}\label{appendix:apA2}
 
 \begin{lstlisting}[language=diff]
 +   if (td->td_lock != &sched_lock) {
@@ -55,7 +55,7 @@
 \end{lstlisting}
 
 
-\section{\textit{sched\_switch} (v12 a v13): Selección y ejecución de un nuevo thread}\label{appendix:apA3}
+\section{\texttt{sched\_switch()} (v12 a v13): Selección y ejecución de un nuevo thread}\label{appendix:apA3}
 
 \begin{lstlisting}[language=diff]
 +   newtd = choosethread();
@@ -95,35 +95,35 @@ En este apartado se desarrollará con mayor profundidad la implementación del m
 
 El planificador 4BSD maneja los cambios de contexto cuando un hilo termina su ejecución o queda bloqueado, generando una interrupción para seleccionar un nuevo hilo.
 
-La función principal para gestionar estos cambios es \textit{mi\_switch()}, que invoca a \textit{sched\_switch()}. Esta función se encarga de preparar el nuevo hilo para su ejecución y usa \textit{sched\_add()} para añadirlo a la cola de un procesador, considerando la afinidad y las políticas del planificador. Luego, \textit{sched\_choose()} selecciona el hilo a ejecutar y realiza el cambio de contexto en caso de ser necesario.
+La función principal para gestionar estos cambios es \verb|mi_switch()|, que invoca a \verb|sched_switch()|. Esta función se encarga de preparar el nuevo hilo para su ejecución y usa \verb|sched_add()| para añadirlo a la cola de un procesador, considerando la afinidad y las políticas del planificador. Luego, \verb|sched_choose()| selecciona el hilo a ejecutar y realiza el cambio de contexto en caso de ser necesario.
 
-Para integrar el módulo de monopolización, modificamos \textit{sched\_add()} para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que un CPU ejecute siempre el mismo hilo hasta que se decida lo contrario, excluyendo así, a todos aquellos hilos con un identificador diferente al elegido.
+Para integrar el módulo de monopolización, modificamos \verb|sched_add()| para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que un CPU ejecute siempre el mismo hilo hasta que se decida lo contrario, excluyendo así, a todos aquellos hilos con un identificador diferente al elegido.
 
-Comenzamos implementando un arreglo llamado \textit{pinned\_threads\_per\_cpu}, que almacena el identificador (ID) del hilo asignado a cada CPU. El arreglo contiene tantos elementos como CPU's existan en el sistema, es decir, para un procesador de cuatro núcleos, el arreglo contendrá cuatro elementos. Cada elemento será el encargado de guardar el valor del identificador del hilo que monopoliza la CPU correspondiente.  Si un CPU está libre, el valor en el arreglo es -1.
+Comenzamos implementando un arreglo llamado \verb|pinned_threads_per_cpu|, que almacena el identificador (ID) del hilo asignado a cada CPU. El arreglo contiene tantos elementos como CPU's existan en el sistema, es decir, para un procesador de cuatro núcleos, el arreglo contendrá cuatro elementos. Cada elemento será el encargado de guardar el valor del identificador del hilo que monopoliza la CPU correspondiente.  Si un CPU está libre, el valor en el arreglo es -1.
 
 En el siguiente ejemplo, se detalla un caso en el que el hilo con ID 100101 tomó control sobre la CPU1 y donde el resto de los procesadores se encuentran funcionando normalmente.
 
-int \textit{pinned\_threads\_per\_cpu}[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
+int \verb|pinned_threads_per_cpu|[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
 
-Al momento de encolar el hilo, se busca cuál de los procesadores disponibles sería la mejor opción para continuar la ejecución del mismo. Ésta decisión se toma dentro del método \textit{resource\_choose\_cpu} desarrollado en el trabajo integrador previo y extendido actualmente, para hacer uso de este nuevo arreglo de hilos asociados a procesadores. El método recibe como parámetro el hilo que se quiera encolar, y realiza tres operaciones condicionales que determinarán el procesador a elegir:
+Al momento de encolar el hilo, se busca cuál de los procesadores disponibles sería la mejor opción para continuar la ejecución del mismo. Ésta decisión se toma dentro del método \verb|resource_choose_cpu()| desarrollado en el trabajo integrador previo y extendido actualmente, para hacer uso de este nuevo arreglo de hilos asociados a procesadores. El método recibe como parámetro el hilo que se quiera encolar, y realiza tres operaciones condicionales que determinarán el procesador a elegir:
 
 \begin{itemize}
-    \item Como primera condición, si el hilo se encuentra dentro del arreglo de \textit{pinned\_threads\_per\_cpu} ya estamos en condiciones de elegir dicho procesador como el indicado para el encolado.
-    \item Si el hilo no se encuentra dentro del arreglo, se intenta asignar a la cola del último procesador en el que se ejecutó. Esto es posible solo si la transición TRAN\_ADDTOQUEUE de dicho procesador se encuentra sensibilizada y el procesador no está monopolizado por otro hilo.
+    \item Como primera condición, si el hilo se encuentra dentro del arreglo de \verb|pinned_threads_per_cpu| ya estamos en condiciones de elegir dicho procesador como el indicado para el encolado.
+    \item Si el hilo no se encuentra dentro del arreglo, se intenta asignar a la cola del último procesador en el que se ejecutó. Esto es posible solo si la transición \verb|TRAN_ADDTOQUEUE| de dicho procesador se encuentra sensibilizada y el procesador no está monopolizado por otro hilo.
     \item Por último, si no se cumplen ninguna de las dos condiciones previas, se recorren los diferentes núcleos del procesador y se retorna el primero que cumpla las condiciones necesarias para el encolado.
 \end{itemize}
 
-Como parte del desarrollo del módulo, también se implementaron algunos métodos complementarios encargados de manejar el estado del arreglo \textit{pinned\_threads\_per\_cpu}.
+Como parte del desarrollo del módulo, también se implementaron algunos métodos complementarios encargados de manejar el estado del arreglo \verb|pinned_threads_per_cpu|.
 
 \begin{itemize}
-    \item \textit{toggle\_pin\_thread\_to\_cpu()}: Método encargado de conmutar el estado de monopolización de un procesador. Recibe el ID de un hilo y de un procesador como parámetros y realiza diferentes operaciones de acuerdo al estado del arreglo:
+    \item \verb|toggle_pin_thread_to_cpu()|: Método encargado de conmutar el estado de monopolización de un procesador. Recibe el ID de un hilo y de un procesador como parámetros y realiza diferentes operaciones de acuerdo al estado del arreglo:
           \begin{itemize}
               \item Si el procesador se encuentra libre, se agrega el ID del hilo a la posición correspondiente en el arreglo.
               \item Si el procesador ya estaba monopolizado por otro hilo, se sobrescribe con el nuevo ID.
               \item En caso de que el hilo ya se encuentre monopolizando al procesador, lo libera escribiendo el valor -1 en la posición correspondiente.
           \end{itemize}
-    \item \textit{cpu\_available\_for\_thread()}: Método utilizado por \textit{resource\_choose\_cpu} para saber si un hilo puede utilizar un procesador, o si este se encuentra monopolizado por otro. Recibe el ID de un hilo y de un procesador como parámetros y retorna 1 en caso de que el procesador se encuentre habilitado para encolar dicho hilo; retorna 0 en caso de que dicho procesador se encuentre tomado por otro hilo.
-    \item \textit{get\_monopolized\_cpu\_by\_thread\_id()}: Método utilizado por \textit{resource\_choose\_cpu} para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.\par
+    \item \verb|cpu_available_for_thread()|: Método utilizado por \verb|resource_choose_cpu()| para saber si un hilo puede utilizar un procesador, o si este se encuentra monopolizado por otro. Recibe el ID de un hilo y de un procesador como parámetros y retorna 1 en caso de que el procesador se encuentre habilitado para encolar dicho hilo; retorna 0 en caso de que dicho procesador se encuentre tomado por otro hilo.
+    \item \verb|get_monopolized_cpu_by_thread_id()|: Método utilizado por \verb|resource_choose_cpu()| para obtener el ID del procesador al que se encuentra asociado el hilo enviado por parámetro. Retorna -1 en caso de que no esté anclado a ningún CPU.\par
 \end{itemize}
 
 \chapter{Análisis de \textit{kernel panic} debido a fallos de página (\textit{page fault})}\label{appendix:apC}
@@ -134,9 +134,9 @@ El proceso de análisis inició cargando el archivo de \textit{core dump} con la
 
 Todos los archivos de \textit{core dump} generados por el sistema se encuentran en la carpeta \textit{/var/crash/}, y para cargarlos en \textit{kgdb} se utiliza el comando \textit{kgdb /boot/kernel/kernel /var/crash/vmcore.0}.
 
-En las imagenes a continuación se muestran algunas de las salidas obtenidas durante el análisis del \textit{core dump}. Una vez cargado el \textit{core dump}, se utilizó el comando \textit{where} para obtener la ubicación del fallo de página en el \textit{kernel}. La salida de este comando muestra la pila de llamadas al momento del fallo, y se observa que el fallo ocurrió en la función \textit{kern\_select}.
+En las imagenes a continuación se muestran algunas de las salidas obtenidas durante el análisis del \textit{core dump}. Una vez cargado el \textit{core dump}, se utilizó el comando \textit{where} para obtener la ubicación del fallo de página en el \textit{kernel}. La salida de este comando muestra la pila de llamadas al momento del fallo, y se observa que el fallo ocurrió en la función \verb|kern_select()|.
 
-Para obtener más información sobre el fallo, se utilizó el comando \textit{up} para navegar hacia la función \textit{kern\_select}.
+Para obtener más información sobre el fallo, se utilizó el comando \textit{up} para navegar hacia la función \verb|kern_select()|.
 
 \begin{figure}[H]
     \centering
@@ -157,7 +157,7 @@ Para obtener más información sobre el fallo, se utilizó el comando \textit{up
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/kgdb_kern-select.jpeg}
-    \caption{Llamada a la función \textit{kern\_select} en el \textit{kernel}.}
+    \caption{Llamada a la función \texttt{kern\_select()} en el \textit{kernel}.}
     \label{fig:kgdb_kern-select}
 \end{figure}
 
