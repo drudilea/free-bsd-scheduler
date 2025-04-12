@@ -38,7 +38,7 @@ La estructura simplificada de un proceso se puede observar en la Figura \ref{fig
     \label{fig:process-state}
 \end{figure}
 
-Cada proceso cuenta con los punteros \textit{p\_pptr}, \textit{p\_children} y \textit{p\_sibling}, utilizados para establecer la relación entre procesos. Cuando se crea un proceso hijo, se agrega a la lista \textit{p\_children} de su padre. El proceso hijo también mantiene un enlace a su padre mediante su puntero \textit{p\_pptr}. Si un proceso tiene más de un hijo activo al mismo tiempo, los hijos están asociados entre sí a través de las entradas de la lista \textit{p\_sibling}. La Figura \ref{fig:process-hierarchy} muestra un ejemplo de jerarquía de procesos.
+Cada proceso cuenta con los punteros \texttt{p\_pptr}, \texttt{p\_children} y \texttt{p\_sibling}, utilizados para establecer la relación entre procesos. Cuando se crea un proceso hijo, se agrega a la lista \texttt{p\_children} de su padre. El proceso hijo también mantiene un enlace a su padre mediante su puntero \texttt{p\_pptr}. Si un proceso tiene más de un hijo activo al mismo tiempo, los hijos están asociados entre sí a través de las entradas de la lista \texttt{p\_sibling}. La Figura \ref{fig:process-hierarchy} muestra un ejemplo de jerarquía de procesos.
 
 \begin{figure}[H]
     \centering
@@ -91,9 +91,9 @@ En la tabla \ref{tabla:estados-proceso}, se proporciona una descripción concisa
     \label{tabla:estados-proceso}
 \end{table}
 
-En FreeBSD, el sistema organiza las estructuras de procesos en dos listas principales: \textit{zombproc} y \textit{allproc}. Los procesos en estado ZOMBIE se encuentran en la lista \textit{zombproc}, mientras que los procesos activos están en la lista \textit{allproc}. Esta distinción permite optimizar las operaciones del sistema, como la llamada al sistema \textit{wait} que busca procesos terminados, así como las operaciones del planificador que identifican procesos listos para ejecutarse.
+En FreeBSD, el sistema organiza las estructuras de procesos en dos listas principales: \texttt{zombproc} y \texttt{allproc}. Los procesos en estado ZOMBIE se encuentran en la lista \texttt{zombproc}, mientras que los procesos activos están en la lista \texttt{allproc}. Esta distinción permite optimizar las operaciones del sistema, como la llamada al sistema \texttt{wait} que busca procesos terminados, así como las operaciones del planificador que identifican procesos listos para ejecutarse.
 
-Los hilos de un proceso, por su lado, excluyendo los que están en ejecución, se distribuyen en tres colas principales: \textit{run\_queue}, \textit{sleep\_queue} y \textit{turnstile\_queue}. Los hilos listos para ejecutarse se ubican en la \textit{run\_queue}, mientras que aquellos que están bloqueados esperando eventos se encuentran en la \textit{sleep\_queue} o en la \textit{turnstile\_queue}. Es importante destacar que las colas \textit{run\_queue} están organizadas según la prioridad de planificación de hilos establecida por el planificador 4BSD. La diferencia entre la \textit{turnstile\_queue} y la \textit{sleep\_queue}, radica en que esta última se utiliza para hilos bloqueados con locks de tipo \textit{sleepable}, mientras que la \textit{turnstile\_queue} alberga hilos bloqueados con locks de tipo \textit{non-sleepable}.
+Los hilos de un proceso, por su lado, excluyendo los que están en ejecución, se distribuyen en tres colas principales: \texttt{run\_queue}, \texttt{sleep\_queue} y \texttt{turnstile\_queue}. Los hilos listos para ejecutarse se ubican en la \texttt{run\_queue}, mientras que aquellos que están bloqueados esperando eventos se encuentran en la \texttt{sleep\_queue} o en la \texttt{turnstile\_queue}. Es importante destacar que las colas \texttt{run\_queue} están organizadas según la prioridad de planificación de hilos establecida por el planificador 4BSD. La diferencia entre la \texttt{turnstile\_queue} y la \texttt{sleep\_queue}, radica en que esta última se utiliza para hilos bloqueados con locks de tipo \texttt{sleepable}, mientras que la \texttt{turnstile\_queue} alberga hilos bloqueados con locks de tipo \texttt{non-sleepable}.
 
 \subsection{Prioridad de los hilos}
 
@@ -101,11 +101,11 @@ Las prioridades de los hilos son un componente importante para la planificación
 
 Las prioridades en el rango de 0 a 47 son asignadas de forma predeterminada por el sistema y se destinan a las tareas de interrupción.\par
 
-Las prioridades de los hilos en tiempo real se encuentran en el intervalo de 48 a 79 y deben ser configuradas previamente por las aplicaciones mediante la llamada al sistema \textit{rtprio}. A continuación, se encuentran los hilos con prioridades en el rango de 80 a 119, conocidos como hilos del \textit{kernel} superior (top-half \textit{kernel} threads). Estos hilos se encargan de gestionar operaciones críticas del \textit{kernel} que afectan a todo el sistema.\par
+Las prioridades de los hilos en tiempo real se encuentran en el intervalo de 48 a 79 y deben ser configuradas previamente por las aplicaciones mediante la llamada al sistema \texttt{rtprio}. A continuación, se encuentran los hilos con prioridades en el rango de 80 a 119, conocidos como hilos del \textit{kernel} superior (top-half \textit{kernel} threads). Estos hilos se encargan de gestionar operaciones críticas del \textit{kernel} que afectan a todo el sistema.\par
 
 Los hilos con prioridades entre 120 y 223 pertenecen a la clase de hilos de tiempo compartido. Están destinados a ejecutar tareas de usuario convencionales y sus prioridades son ajustadas de manera automática por el \textit{kernel} en función del uso de la CPU.\par
 
-Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la clase \"IDLE\" pueden ejecutarse. Estos hilos tienen la finalidad de mantener el sistema en un estado inactivo, consumiendo recursos mínimos y estando listos para responder a tareas prioritarias.\par
+Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la clase ``IDLE'' pueden ejecutarse. Estos hilos tienen la finalidad de mantener el sistema en un estado inactivo, consumiendo recursos mínimos y estando listos para responder a tareas prioritarias.\par
 
 \begin{table}[H]
     \centering
@@ -145,7 +145,7 @@ Algunas tareas requieren un control más preciso sobre el proceso, como el caso 
 
 El planificador 4BSD, utiliza un algoritmo de planificación basado en colas de retroalimentación multinivel \textit{Multilevel Feedback Queue}. Todos los hilos en estado \textit{RUNNABLE} reciben una prioridad que determina en qué cola de ejecución se colocan. Al seleccionar un nuevo hilo para ejecutar, el sistema escanea las colas de ejecución de mayor a menor prioridad y elige aquel que se encuentra en la primera cola no vacía. Si varios hilos residen en una cola, el sistema los ejecuta en orden circular (\textit{Round Robin}); es decir, en el orden en que se encuentran en la cola, con igual cantidad de tiempo permitido.\par
 
-Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (\textit{run\_queue}); en su lugar, se coloca en una \textit{turnstile\_queue} o en una \textit{sleep\_queue}. Cuando el hilo agota el \textit{timeslice}, se coloca al final de la cola de la que provino y se selecciona el hilo que se encuentra al comienzo de la misma para ejecutarse.\par
+Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (\texttt{run\_queue}); en su lugar, se coloca en una \texttt{turnstile\_queue} o en una \texttt{sleep\_queue}. Cuando el hilo agota el \textit{timeslice}, se coloca al final de la cola de la que provino y se selecciona el hilo que se encuentra al comienzo de la misma para ejecutarse.\par
 
 Cuanto más corto sea el \textit{timeslice}, mejor será la respuesta interactiva. Sin embargo, cuanto más largos sean los quántums de tiempo, mayor será el rendimiento del sistema, ya que habrá menos sobrecarga debida a los cambios de contexto y se limpiarán menos a menudo las cachés del procesador. El \textit{timeslice} utilizado por 4BSD es de 0.1 segundo. Este valor se encontró empíricamente como el quántum más largo que podía usarse sin pérdida de la respuesta deseada para trabajos interactivos como los editores.\par
 
@@ -224,13 +224,13 @@ Uno de los modelos representados mediante redes de Petri es el de los estados de
 Las plazas de la Red de Petri la Figura \ref{fig:threadModel} se corresponden a los estados posibles del hilo, siendo posible encontrarse en un solo estado a la vez. Las transiciones, por otro lado, representan los eventos que pueden llevar al hilo de un estado a otro. A continuación, se detallan las transiciones que se modelaron en la Red de Petri para el hilo:
 
 \begin{itemize}
-    \item \textbf{T0\_INIT}: Transición del estado INACTIVE a CAN\_RUN, que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al \textit{scheduler}, por lo que inicialmente un hilo en el planificador se inicializa en el estado CAN\_RUN. Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
-    \item \textbf{T1\_ON\_QUEUE}: El hilo se coloca en una cola local de una CPU específica o en la cola global, según la disponibilidad.
-    \item \textbf{T2\_SET\_RUNNING}: El hilo se retira de la cola y comienza a ejecutar las instrucciones del programa asignado, ocupando así el procesador.
-    \item \textbf{T3\_SWITCH\_OUT}: El planificador interrumpe el hilo y lo devuelve a su estado de CAN\_RUN, seleccionando otro hilo de mayor prioridad para ejecutar y realizando un cambio de contexto.
-    \item \textbf{T4\_TO\_WAIT\_CHANNEL}: El hilo se bloquea debido a algún evento, semáforo o espera, y se coloca en una cola de espera hasta que se desbloquee.
-    \item \textbf{T5\_WAKEUP}: El hilo se desbloquea y puede volver a encolarse. Este evento ocurre fuera del planificador, y el hilo espera cambiar de estado según corresponda.
-    \item \textbf{T6\_REMOVE}: Se ejecuta cuando un hilo debe eliminarse de la cola en la que se encuentra.
+    \item \verb|T0_INIT|: Transición del estado \verb|INACTIVE| a \verb|CAN_RUN| que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al \textit{scheduler}, por lo que inicialmente un hilo en el planificador se inicializa en el estado \verb|CAN_RUN| Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
+    \item \verb|T1_ON_QUEUE|: El hilo se coloca en una cola local de una CPU específica o en la cola global, según la disponibilidad.
+    \item \verb|T2_SET_RUNNING|: El hilo se retira de la cola y comienza a ejecutar las instrucciones del programa asignado, ocupando así el procesador.
+    \item \verb|T3_SWITCH_OUT|: El planificador interrumpe el hilo y lo devuelve a su estado de \verb|CAN_RUN| seleccionando otro hilo de mayor prioridad para ejecutar y realizando un cambio de contexto.
+    \item \verb|T4_TO_WAIT_CHANNEL|: El hilo se bloquea debido a algún evento, semáforo o espera, y se coloca en una cola de espera hasta que se desbloquee.
+    \item \verb|T5_WAKEUP|: El hilo se desbloquea y puede volver a encolarse. Este evento ocurre fuera del planificador, y el hilo espera cambiar de estado según corresponda.
+    \item \verb|T6_REMOVE|: Se ejecuta cuando un hilo debe eliminarse de la cola en la que se encuentra.
 \end{itemize}
 
 
