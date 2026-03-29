@@ -14,10 +14,10 @@ El módulo de encendido/apagado de procesadores cumple con su objetivo, permitie
 \begin{enumerate}
     \item \textbf{Estado inactivo}: En ausencia de tareas pendientes, los procesadores permanecen en estado de espera, ejecutando hilos de la clase IDLE.\@
     \item \textbf{Comportamiento con el módulo inhabilitado}: Se llevaron a cabo distintas pruebas de estrés en el sistema. Como resultado, todos los procesadores operaron al 100\% de su capacidad.
-    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhabilitando distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron carga de trabajo, mientras que los demás procesadores continuaron ejecutando la tareas sin interrupciones.
+    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhabilitando distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron carga de trabajo, mientras que los demás procesadores continuaron ejecutando las tareas sin interrupciones.
 \end{enumerate}
 
-Estos resultados confirman que el sistema es capaz de gestionar dinamicamente la activación y desactivación de procesadores sin comprometer su estabilidad.\par
+Estos resultados confirman que el sistema es capaz de gestionar dinámicamente la activación y desactivación de procesadores sin comprometer su estabilidad.\par
 
 En los siguientes apartados se detallan las observaciones y análisis específicos de cada etapa de la prueba.\par
 
@@ -34,7 +34,7 @@ Creemos importante resaltar que, independientemente de si nuestro módulo de enc
 \end{figure}
 
 \subsection{Comportamiento con el Módulo Inhabilitado}
-Cuando el módulo de encendido/apagado de procesadores no está habilitado para ningún núcleo, el sistema operativo sigue su funcionamiento convencional bajo la lógica del planificador basado en Redes de Petri. En este estado, el \textit{scheduler} opera mediante el uso de la Red de Petri  con las plazas y transiciones de cada uno de los procesadores del sistema, sin hacer uso de la adición de plazas y transiciones que corresponden al módulo, introducidas en el desarrollo del mismo.\par
+Cuando el módulo de encendido/apagado de procesadores no está habilitado para ningún núcleo, el sistema operativo sigue su funcionamiento convencional bajo la lógica del planificador basado en Redes de Petri. En este estado, el \textit{scheduler} opera mediante el uso de la Red de Petri con las plazas y transiciones de cada uno de los procesadores del sistema, sin hacer uso de la adición de plazas y transiciones que corresponden al módulo, introducidas en el desarrollo del mismo.\par
 
 Para confirmar dicho comportamiento, llevamos a cabo una prueba de estrés sobre los procesadores, ejecutando un programa que genera múltiples procesos que realizan cálculos matemáticos complejos. Durante la ejecución del programa, supervisamos el sistema y observamos que todos los procesadores operaban al máximo de su capacidad, funcionando al 100\% para completar la tarea. La Figura \ref{fig:cpuOnOff-result-full-load} proporciona una representación visual de este estado.\par
 
@@ -48,7 +48,7 @@ Este escenario de funcionamiento con el módulo deshabilitado proporciona un pun
 \end{figure}
 
 \subsection{Comportamiento con el Módulo Habilitado}
-Basándonos en las observaciones anteriores, llevamos a cabo la misma prueba de estrés, pero activando previamente el módulo de encendido/apagado para inhabilitar el CPU2.\par
+Basándonos en las observaciones anteriores, llevamos a cabo la misma prueba de estrés, pero activando previamente el módulo de encendido/apagado para inhabilitar la CPU2.\par
 
 Este enfoque nos permitió no solo corroborar la funcionalidad adecuada de la implementación, sino también analizar la respuesta del sistema ante un cambio tan significativo como el bloqueo del encolado en uno de sus núcleos.\par
 
@@ -105,7 +105,7 @@ En los siguientes apartados se detallan las observaciones y análisis específic
 
 \subsection{Estado Normal del Sistema}
 
-En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutaran hilos de clase IDLE en caso de inactividad del sistema. Con el planificador funcionando normalmente, los subprocesos se distribuyen entre los núcleos disponibles, utilizando las políticas definidas por él mismo.\par
+En este apartado se analizará el comportamiento general del sistema con el módulo de monopolización deshabilitado. Es relevante señalar que bajo esta configuración, los procesadores operan de forma predeterminada, utilizando la Red de Petri como planificador para mantener el equilibrio de la carga. De esta forma, los núcleos que en algún momento carezcan de tareas tomarán hilos de la cola global o ejecutarán hilos de clase IDLE en caso de inactividad del sistema. Con el planificador funcionando normalmente, los subprocesos se distribuyen entre los núcleos disponibles, utilizando las políticas definidas por él mismo.\par
 
 En la Figura \ref{fig:top_disabled} se puede observar el estado de los procesos en el sistema con el módulo de monopolización deshabilitado. En este caso, se puede apreciar que los procesos se distribuyen de manera equitativa entre los núcleos, sin que ninguno de ellos monopolice un núcleo específico.\par
 
@@ -133,7 +133,7 @@ Habiendo expuesto el comportamiento del sistema en su condición normal, se sien
 
 Siguiendo un procedimiento similar al empleado con el módulo de encendido y apagado, procedimos a ejecutar nuevamente el programa de estrés, orientado al cálculo de números primos.\par
 
-Luego de haber activado el módulo podemos observar que los resultados obtenidos concuerdan con la información proporcionada por la  herramienta de monitoreo. Como era de esperar, este subproceso estuvo vinculado al CPU elegido, durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
+Luego de haber activado el módulo podemos observar que los resultados obtenidos concuerdan con la información proporcionada por la herramienta de monitoreo. Como era de esperar, este subproceso estuvo vinculado a la CPU elegida, durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
 
 \begin{figure}[H]
     \centering

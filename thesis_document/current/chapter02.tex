@@ -82,7 +82,7 @@ En la tabla \ref{tabla:estados-proceso}, se proporciona una descripción concisa
         \hline
         NEW             & En fase de creación, aún sin recursos asignados                                                      \\
         \hline
-        NORMAL          & Ejecución activa, sus hilos alternaran entre \textit{RUNNABLE}, \textit{SLEEPING} o \textit{STOPPED} \\
+        NORMAL          & Ejecución activa, sus hilos alternarán entre \textit{RUNNABLE}, \textit{SLEEPING} o \textit{STOPPED} \\
         \hline
         ZOMBIE          & En fase de finalización                                                                              \\
         \hline
@@ -133,7 +133,7 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
 
 La planificación en sistemas operativos, implica decidir el orden y la duración de la ejecución de procesos e hilos del sistema. En este sentido, es el componente clave para optimizar el uso de recursos y el tiempo de ejecución de los programas.\par
 
-FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinamicamente la prioridad de los procesos. El cálculo se realiza en función de varios parámetros de comportamiento previo de dicho proceso, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
+FreeBSD cuenta con el planificador 4BSD, un planificador de tiempo compartido (\textit{timeshare scheduler}) que asigna dinámicamente la prioridad de los procesos. El cálculo se realiza en función de varios parámetros de comportamiento previo de dicho proceso, como la cantidad de tiempo de CPU utilizado, la cantidad de recursos de memoria que posee o requiere para su ejecución, entre otros.\par
 
 La política de planificación asigna inicialmente una prioridad de ejecución alta a cada hilo y permite que ese hilo se ejecute durante un intervalo de tiempo fijo, o \textit{timeslice}. A los hilos que se ejecutan durante la duración de su \textit{timeslice} se les decrementa la prioridad; mientras que los hilos que ceden la CPU (generalmente debido a operaciones de entrada/salida) pueden mantener su prioridad. Por otro lado, los hilos inactivos incrementan su prioridad.\par
 
@@ -221,7 +221,7 @@ Uno de los modelos representados mediante redes de Petri es el de los estados de
     \label{fig:threadModel}
 \end{figure}
 
-Las plazas de la Red de Petri la Figura \ref{fig:threadModel} se corresponden a los estados posibles del hilo, siendo posible encontrarse en un solo estado a la vez. Las transiciones, por otro lado, representan los eventos que pueden llevar al hilo de un estado a otro. A continuación, se detallan las transiciones que se modelaron en la Red de Petri para el hilo:
+Las plazas de la Red de Petri de la Figura \ref{fig:threadModel} se corresponden a los estados posibles del hilo, siendo posible encontrarse en un solo estado a la vez. Las transiciones, por otro lado, representan los eventos que pueden llevar al hilo de un estado a otro. A continuación, se detallan las transiciones que se modelaron en la Red de Petri para el hilo:
 
 \begin{itemize}
     \item \verb|T0_INIT|: Transición del estado \verb|INACTIVE| a \verb|CAN_RUN| que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al \textit{scheduler}, por lo que inicialmente un hilo en el planificador se inicializa en el estado \verb|CAN_RUN| Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
