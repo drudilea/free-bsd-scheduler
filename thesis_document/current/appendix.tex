@@ -97,15 +97,15 @@ El planificador 4BSD maneja los cambios de contexto cuando un hilo termina su ej
 
 La función principal para gestionar estos cambios es \verb|mi_switch()|, que invoca a \verb|sched_switch()|. Esta función se encarga de preparar el nuevo hilo para su ejecución y usa \verb|sched_add()| para añadirlo a la cola de un procesador, considerando la afinidad y las políticas del planificador. Luego, \verb|sched_choose()| selecciona el hilo a ejecutar y realiza el cambio de contexto en caso de ser necesario.
 
-Para integrar el módulo de monopolización, modificamos \verb|sched_add()| para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que un CPU ejecute siempre el mismo hilo hasta que se decida lo contrario, excluyendo así, a todos aquellos hilos con un identificador diferente al elegido.
+Para integrar el módulo de monopolización, modificamos \verb|sched_add()| para permitir que ciertos hilos se fijen a CPUs específicas. Esto asegura que una CPU ejecute siempre el mismo hilo hasta que se decida lo contrario, excluyendo así, a todos aquellos hilos con un identificador diferente al elegido.
 
-Comenzamos implementando un arreglo llamado \verb|pinned_threads_per_cpu|, que almacena el identificador (ID) del hilo asignado a cada CPU. El arreglo contiene tantos elementos como CPU's existan en el sistema, es decir, para un procesador de cuatro núcleos, el arreglo contendrá cuatro elementos. Cada elemento será el encargado de guardar el valor del identificador del hilo que monopoliza la CPU correspondiente.  Si un CPU está libre, el valor en el arreglo es -1.
+Comenzamos implementando un arreglo llamado \verb|pinned_threads_per_cpu|, que almacena el identificador (ID) del hilo asignado a cada CPU. El arreglo contiene tantos elementos como CPUs existan en el sistema, es decir, para un procesador de cuatro núcleos, el arreglo contendrá cuatro elementos. Cada elemento será el encargado de guardar el valor del identificador del hilo que monopoliza la CPU correspondiente. Si una CPU está libre, el valor en el arreglo es -1.
 
 En el siguiente ejemplo, se detalla un caso en el que el hilo con ID 100101 tomó control sobre la CPU1 y donde el resto de los procesadores se encuentran funcionando normalmente.
 
 int \verb|pinned_threads_per_cpu|[CPU\_NUMBER] = \{ -1, 100101, -1, -1 \};
 
-Al momento de encolar el hilo, se busca cuál de los procesadores disponibles sería la mejor opción para continuar la ejecución del mismo. Ésta decisión se toma dentro del método \verb|resource_choose_cpu()| desarrollado en el trabajo integrador previo y extendido actualmente, para hacer uso de este nuevo arreglo de hilos asociados a procesadores. El método recibe como parámetro el hilo que se quiera encolar, y realiza tres operaciones condicionales que determinarán el procesador a elegir:
+Al momento de encolar el hilo, se busca cuál de los procesadores disponibles sería la mejor opción para continuar la ejecución del mismo. Esta decisión se toma dentro del método \verb|resource_choose_cpu()| desarrollado en el trabajo integrador previo y extendido actualmente, para hacer uso de este nuevo arreglo de hilos asociados a procesadores. El método recibe como parámetro el hilo que se quiera encolar, y realiza tres operaciones condicionales que determinarán el procesador a elegir:
 
 \begin{itemize}
     \item Como primera condición, si el hilo se encuentra dentro del arreglo de \verb|pinned_threads_per_cpu| ya estamos en condiciones de elegir dicho procesador como el indicado para el encolado.
@@ -134,7 +134,7 @@ El proceso de análisis inició cargando el archivo de \textit{core dump} con la
 
 Todos los archivos de \textit{core dump} generados por el sistema se encuentran en la carpeta \textit{/var/crash/}, y para cargarlos en \textit{kgdb} se utiliza el comando \textit{kgdb /boot/kernel/kernel /var/crash/vmcore.0}.
 
-En las imagenes a continuación se muestran algunas de las salidas obtenidas durante el análisis del \textit{core dump}. Una vez cargado el \textit{core dump}, se utilizó el comando \textit{where} para obtener la ubicación del fallo de página en el \textit{kernel}. La salida de este comando muestra la pila de llamadas al momento del fallo, y se observa que el fallo ocurrió en la función \verb|kern_select()|.
+En las imágenes a continuación se muestran algunas de las salidas obtenidas durante el análisis del \textit{core dump}. Una vez cargado el \textit{core dump}, se utilizó el comando \textit{where} para obtener la ubicación del fallo de página en el \textit{kernel}. La salida de este comando muestra la pila de llamadas al momento del fallo, y se observa que el fallo ocurrió en la función \verb|kern_select()|.
 
 Para obtener más información sobre el fallo, se utilizó el comando \textit{up} para navegar hacia la función \verb|kern_select()|.
 

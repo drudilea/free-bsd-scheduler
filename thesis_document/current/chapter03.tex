@@ -87,7 +87,7 @@ Para más detalles, puede acceder al repositorio de documentación del proyecto 
 
 El desarrollo del proyecto se organizó en módulos, cada uno con objetivos específicos y alcanzables para asegurar avances concretos en cada etapa.\par
 
-En la fase inicial, nos enfocamos en una tarea esencial en cualquier proyecto de software: mantener la compatibilidad con las diferentes versiones del sistema operativo. De esta forma, obtuvimos beneficios significativos en términos de estabilidad y compatibilidad, resultando en un sistema más confiable. Además, estando alineados con la ultima versión del mismo, nos acerca a la posibilidad de contribuir al proyecto de una manera directa.\par
+En la fase inicial, nos enfocamos en una tarea esencial en cualquier proyecto de software: mantener la compatibilidad con las diferentes versiones del sistema operativo. De esta forma, obtuvimos beneficios significativos en términos de estabilidad y compatibilidad, resultando en un sistema más confiable. Además, estando alineados con la última versión del mismo, nos acerca a la posibilidad de contribuir al proyecto de una manera directa.\par
 
 El trabajo comenzó con la versión 11 de FreeBSD, basado en el trabajo integrador previo realizado por Nicolás Papp y Tomás Turina, y se extendió hasta la última versión estable, la 13.1.\par
 
@@ -96,13 +96,13 @@ Para gestionar las actualizaciones de manera ordenada y efectiva, así como tamb
 
 \subsection{Actualización al último \textit{release} de la versión 11}
 
-En esta primera iteración se buscó llevar los cambios del proyecto integrador previo realizados en la versión 11.0.0 del sistema operativo FreeBSD a la última release de ésta versión, es decir, al 11.4.0.\par
+En esta primera iteración se buscó llevar los cambios del proyecto integrador previo realizados en la versión 11.0.0 del sistema operativo FreeBSD a la última release de esta versión, es decir, al 11.4.0.\par
 
 Durante dicha actualización, nos encontramos con un cambio significativo que tuvo un impacto relevante en nuestro proyecto: la modificación en la función \verb|maybe_preempt()|. En la versión anterior, esta función se encargaba de determinar si un nuevo hilo debía tomar el control del procesador inmediatamente, reemplazando al hilo actual en ejecución. En caso afirmativo, se realizaba el cambio de contexto y comenzaba su ejecución, sustituyendo al hilo que se encontraba en el procesador.\par
 
 En la versión más reciente, se introdujo una nueva estrategia, posponer el cambio de contexto para un momento más adecuado mediante un sistema de banderas. En lugar de realizar el cambio de contexto de manera inmediata, se implementó un mecanismo donde el hilo recién encolado establece el valor de la bandera \verb|td_owepreempt| en 1, indicando la necesidad de desalojar al que se encuentra en ejecución, para así tomar el control.\par
 
-Si bien el metodo de preemption no se encuentra modelado en nuestra Red de Petri de Recursos, este cambio impactó en el código del planificador de nuestro trabajo ya que implicó la remoción de algunos disparos de transiciones que se provocaban en el cambio de contexto inmediato. Con la nueva estrategia, fue necesario ajustar el código de nuestra Red de Petri para reflejar el cambio en la política de planificación.\par
+Si bien el método de preemption no se encuentra modelado en nuestra Red de Petri de Recursos, este cambio impactó en el código del planificador de nuestro trabajo ya que implicó la remoción de algunos disparos de transiciones que se provocaban en el cambio de contexto inmediato. Con la nueva estrategia, fue necesario ajustar el código de nuestra Red de Petri para reflejar el cambio en la política de planificación.\par
 
 \subsection{Actualización a la versión 12}
 
@@ -127,7 +127,7 @@ Adicionalmente, durante el proceso de actualizaciones, se identificaron, realiza
 
 \subsection{Próximos pasos}
 
-Como se desarrolló previamente, sostenemos la importancia de mantener el proyecto actualizado con las últimas versiones del sistema operativo FreeBSD para asegurar su eficiencia, seguridad y compatibilidad con tecnologías mas recientes.\par
+Como se desarrolló previamente, sostenemos la importancia de mantener el proyecto actualizado con las últimas versiones del sistema operativo FreeBSD para asegurar su eficiencia, seguridad y compatibilidad con tecnologías más recientes.\par
 
 Para lograr este objetivo, es esencial monitorear continuamente las actualizaciones y aplicar los cambios necesarios de manera oportuna. Esto evitará el rezago respecto a \textit{releases} más recientes y garantizará que el proyecto se beneficie de las últimas mejoras y correcciones de errores.\par
 
@@ -257,7 +257,7 @@ Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a
     \label{tabla:matriz_incidencia_post}
 \end{table}
 
-Como parte de los ajustes realizados en las matrices, se incorporó una nueva función, \linebreak\verb|toggle_active_cpu()|, al archivo de métodos auxiliares de la Red de Petri. Esta función puede ser invocada desde un módulo del \textit{kernel} y está diseñada para alternar el estado de un CPU especificado como parámetro. La función verifica si la transición asociada está sensibilizada y, si es así, procede a dispararla. En resumen, esta adición permite seleccionar y alternar el estado de un procesador, que puede ser suspendido o activado según sea necesario, y se gestiona de manera externa al flujo principal del kernel, permitiendo así un control en ejecución del estado de habilitación de la CPU.\par
+Como parte de los ajustes realizados en las matrices, se incorporó una nueva función, \linebreak\verb|toggle_active_cpu()|, al archivo de métodos auxiliares de la Red de Petri. Esta función puede ser invocada desde un módulo del \textit{kernel} y está diseñada para alternar el estado de una CPU especificada como parámetro. La función verifica si la transición asociada está sensibilizada y, si es así, procede a dispararla. En resumen, esta adición permite seleccionar y alternar el estado de un procesador, que puede ser suspendido o activado según sea necesario, y se gestiona de manera externa al flujo principal del kernel, permitiendo así un control en ejecución del estado de habilitación de la CPU.\par
 
 Tras la implementación de esta funcionalidad, nos encontramos con un problema inesperado: la funcionalidad no se comportaba como se había previsto. Específicamente, recibimos alertas indicando que algunas transiciones no estaban sensibilizadas durante los intentos de disparo. El proceso de depuración reveló que el problema estaba relacionado con el comportamiento del \textit{scheduler} cuando no había hilos disponibles para ejecutar, ni en la cola local del procesador ni en la cola global.\par
 
@@ -441,7 +441,7 @@ Durante el desarrollo del proyecto integrador, identificamos un problema recurre
 
 El problema técnico consistía en un \textit{kernel} panic provocado por un page fault durante el arranque del sistema operativo. Luego de cada incidente, el sistema generaba un archivo con información del estado previo al fallo, lo que nos permitió realizar un análisis más detallado.\par
 
-Para abordar la situación, recurrimos al foro oficial de FreeBSD, donde presentamos nuestro caso. La discusión nos brindó diversas perspectivas y posibles soluciones, pero no logramos resolver el problema. Este intercambio de ideas se encuentra documentado en el hilo titulado \emph{"Kernel panics when given a high workload, accesible en el foro oficial de FreeBSD"}\cite{bib6}.\par
+Para abordar la situación, recurrimos al foro oficial de FreeBSD, donde presentamos nuestro caso. La discusión nos brindó diversas perspectivas y posibles soluciones, pero no logramos resolver el problema. Este intercambio de ideas se encuentra documentado en el hilo titulado \emph{"Kernel panics when given a high workload"}\cite{bib6}, accesible en el foro oficial de FreeBSD.\par
 
 Aunque no encontramos una solución definitiva, este proceso nos permitió adquirir conocimientos valiosos. Aprendimos a utilizar herramientas avanzadas para depurar el kernel, a interpretar archivos de crash dump generados durante los fallos y confirmamos que la comunidad de FreeBSD tiene un fuerte interés en iniciativas relacionadas con planificadores basados en Redes de Petri. Además, demostraron una disposición notable para ayudar en casos similares.\par
 
