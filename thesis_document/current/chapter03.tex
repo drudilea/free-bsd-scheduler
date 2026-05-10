@@ -87,9 +87,9 @@ Para más detalles, puede acceder al repositorio de documentación del proyecto 
 
 El desarrollo del proyecto se organizó en módulos, cada uno con objetivos específicos y alcanzables para asegurar avances concretos en cada etapa.\par
 
-En la fase inicial, nos enfocamos en una tarea esencial en cualquier proyecto de software: mantener la compatibilidad con las diferentes versiones del sistema operativo. De esta forma, obtuvimos beneficios significativos en términos de estabilidad y compatibilidad, resultando en un sistema más confiable. Además, estando alineados con la última versión del mismo, nos acerca a la posibilidad de contribuir al proyecto de una manera directa.\par
+En la fase inicial, el trabajo se enfocó en una tarea esencial en cualquier proyecto de software: mantener la compatibilidad con versiones más recientes del sistema operativo. De esta forma, se obtuvieron beneficios significativos en términos de estabilidad y compatibilidad, resultando en un sistema más confiable y mejor posicionado para futuras actualizaciones.\par
 
-El trabajo comenzó con la versión 11 de FreeBSD, basado en el trabajo integrador previo realizado por Nicolás Papp y Tomás Turina, y se extendió hasta la última versión estable, la 13.1.\par
+El trabajo comenzó con la versión 11 de FreeBSD, basado en el trabajo integrador previo realizado por Nicolás Papp y Tomás Turina, y se extendió hasta FreeBSD 13.1, versión definida como objetivo de migración para este proyecto.\par
 
 Para gestionar las actualizaciones de manera ordenada y efectiva, así como también, comprender mejor los cambios entre versiones; el módulo se dividió en tres etapas progresivas: actualización a la última \textit{release} de la versión 11, y actualizaciones a las versiones 12 y 13 de FreeBSD.\par
 
@@ -135,23 +135,23 @@ Mantener el software actualizado en proyectos de código abierto como FreeBSD no
 
 Para futuros trabajos en este proyecto, se recomienda priorizar la importancia de este aspecto y comprometerse a dedicar los recursos y el tiempo necesarios para llevar a cabo las actualizaciones de manera regular.\par
 
-\section{Módulo de encendido/apagado de los procesadores}
+\section{Módulo de inhibición de asignación de trabajo a procesadores}
 
-Tras completar las actualizaciones del sistema operativo, el siguiente paso fue desarrollar una nueva funcionalidad enfocada en el control de los núcleos del procesador. Esta funcionalidad está diseñada para proporcionar una herramienta flexible que permita la gestión dinámica del encendido y apagado de los núcleos del procesador, con la expectativa de que futuros proyectos utilicen este módulo para optimizar el ahorro energético.\par
+Tras completar las actualizaciones del sistema operativo, el siguiente paso fue desarrollar una nueva funcionalidad para controlar, desde el planificador, qué núcleos pueden recibir nuevos hilos. Esta funcionalidad permite inhibir manualmente la asignación de trabajo a determinados núcleos, sin apagar físicamente el procesador ni intervenir sobre la administración energética del hardware.\par
 
-Este módulo es especialmente útil en escenarios donde la carga de trabajo varía significativamente, permitiendo controlar los núcleos durante periodos de baja demanda y ajustarlos cuando la carga aumenta. Aunque aún no se ha implementado una estrategia de ahorro energético, esta herramienta abre la puerta a desarrollos futuros que podrían aprovechar esta capacidad para reducir el consumo de energía y mejorar la eficiencia del sistema.\par
+Este módulo es útil como punto de partida para estudiar escenarios donde la carga de trabajo cambia con el tiempo, ya que permite decidir qué núcleos participan en la selección de colas y cuáles quedan excluidos. Aunque aún no se implementó una estrategia automática ni se midió ahorro energético, el mecanismo podría combinarse en trabajos futuros con políticas de carga, prioridad o administración de energía.\par
 
 \subsection{Objetivos}
 
-El objetivo general de esta sección, fue el desarrollo de una nueva funcionalidad dentro del \textit{scheduler} del sistema operativo FreeBSD que permita habilitar o deshabilitar los diferentes núcleos del procesador de manera dinámica.\par
+El objetivo general de esta sección fue desarrollar una funcionalidad dentro del \textit{scheduler} de FreeBSD que permita habilitar o deshabilitar manualmente la asignación de trabajo a diferentes núcleos del procesador.\par
 
-Este objetivo principal se traduce en múltiples aplicaciones que pueden proporcionar ventajas significativas, tales como la optimización del uso de recursos de hardware bajo cargas de trabajo reducidas, la restricción de núcleos disponibles para aplicaciones específicas, y la capacidad de ajustar el estado de los procesadores en tiempo de ejecución.\par
+Esta funcionalidad permite explorar escenarios con distinta cantidad de procesadores disponibles, restringir núcleos para ciertas políticas de planificación y modificar ese estado durante la ejecución del sistema.\par
 
-\subsection{Primera Iteración: Implementación del Módulo de Encendido/Apagado mediante cambios en la Red de Petri}
+\subsection{Primera Iteración: Implementación del Módulo de Inhibición mediante cambios en la Red de Petri}
 
-Para iniciar la implementación del módulo de encendido/apagado de núcleos del procesador, se debatieron dos enfoques relacionados con la Red de Petri del sistema operativo. El primer enfoque proponía utilizar las plazas y transiciones ya existentes, estableciendo diferentes políticas a través de cambios en el código del \textit{scheduler}. El segundo enfoque, que fue el adoptado finalmente, implicaba la incorporación de nuevas plazas y transiciones en la Red de Petri para representar explícitamente el estado de los núcleos del procesador. Optamos por esta segunda opción porque nos permitió integrar el módulo de manera más fluida al sistema ya existente, sin hacer cambios drásticos en el núcleo del sistema operativo, y ampliando al mismo tiempo las capacidades de la Red de Petri. La principal ventaja de esta implementación, y motivador principal, fue que desde cualquier parte del sistema, simplemente disparando una transición, fuera posible activar o desactivar cualquier núcleo del procesador según sea necesario.\par
+Para iniciar la implementación del módulo de inhibición de asignación de trabajo a núcleos del procesador, se debatieron dos enfoques relacionados con la Red de Petri del sistema operativo. El primero proponía utilizar las plazas y transiciones ya existentes, agregando políticas nuevas en el código del \textit{scheduler}. El segundo, que fue el adoptado, consistía en sumar plazas y transiciones a la Red de Petri para representar si un núcleo puede recibir nuevos hilos. Se optó por esta alternativa porque integraba el módulo al modelo existente sin cambiar de forma drástica la estructura del planificador. Además, permitía habilitar o inhibir la asignación de trabajo a un núcleo desde distintas partes del sistema mediante el disparo de una transición.\par
 
-Con esta decisión en mente, el primer paso fue crear un indicador que permitiera conocer si cada procesador está encendido o apagado. Para esto, se añadió una nueva plaza en la Red de Petri, llamada \verb|PLACE_SUSPENDED|. La presencia o ausencia de un \textit{token} en esta plaza indica si un procesador está disponible para encolar y ejecutar hilos.\par
+Con esta decisión en mente, el primer paso fue crear un indicador que permitiera conocer si cada procesador se encuentra habilitado o inhibido para recibir nuevos hilos. Para esto, se añadió una nueva plaza en la Red de Petri, llamada \verb|PLACE_SUSPENDED|. La presencia o ausencia de un \textit{token} en esta plaza indica si un procesador está disponible para encolar y ejecutar hilos ordinarios.\par
 
 La plaza \verb|PLACE_SUSPENDED| está acompañada de dos transiciones que manejan el \textit{token} correspondiente: \verb|TRAN_SUSPEND_PROC| para deshabilitar el núcleo, y \verb|TRAN_WAKEUP_PROC| para habilitarlo nuevamente. Se añadió un arco inhibidor a la transición que libera el recurso para asegurar que la plaza funcione como un recurso único. Una vez que un procesador está deshabilitado, solo la transición que lo habilita de nuevo queda sensibilizada.\par
 
@@ -161,7 +161,7 @@ En resumen, la plaza \verb|PLACE_SUSPENDED| controla las transiciones de encolad
     \centering
     \vspace*{0.1in}
     \includegraphics[width=0.8\textwidth]{./images/cpuOnOff-1st-iteration.png}
-    \caption{Primera iteración del módulo de encendido/apagado de núcleos del procesador.}
+    \caption{Primera iteración del módulo de inhibición de asignación de trabajo a núcleos del procesador.}
     \label{fig:cpu-on-off-1st-iteration}
 \end{figure}
 
@@ -208,7 +208,7 @@ La matriz base, que define la estructura inicial de la Red de Petri, necesitaba 
         \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}-1 \\
         \hline
     \end{tabular}
-    \caption{Matriz base: Primera iteración del módulo de encendido/apagado.}
+    \caption{Matriz base: Primera iteración del módulo de inhibición.}
     \label{tabla:matriz_base_post}
 \end{table}
 
@@ -253,7 +253,7 @@ Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a
         \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 \\
         \hline
     \end{tabular}
-    \caption{Matriz de incidencia: Primera iteración del módulo de encendido/apagado.}
+    \caption{Matriz de incidencia: Primera iteración del módulo de inhibición.}
     \label{tabla:matriz_incidencia_post}
 \end{table}
 
@@ -266,7 +266,7 @@ En la siguiente sección, se describe la solución implementada para superar est
 \subsection{Segunda Iteración: Soporte del \texttt{idlethread} en la Red de Petri}
 \label{ch:idlethread}
 
-Durante la depuración realizada en la iteración anterior, se identificó un error en situaciones donde una CPU no tenía hilos listos para ejecutar. Para abordar este problema en la segunda iteración del módulo de encendido/apagado, es importante entender el papel del \texttt{idlethread}. En estos casos, el planificador encola y ejecuta el \texttt{idlethread}, una funcionalidad que ya estaba presente antes del inicio del proyecto integrador y que es característica del planificador 4.4BSD utilizado en FreeBSD.\par
+Durante la depuración realizada en la iteración anterior, se identificó un error en situaciones donde una CPU no tenía hilos listos para ejecutar. Para abordar este problema en la segunda iteración del módulo de inhibición, es importante entender el papel del \texttt{idlethread}. En estos casos, el planificador encola y ejecuta el \texttt{idlethread}, una funcionalidad que ya estaba presente antes del inicio del proyecto integrador y que es característica del planificador 4.4BSD utilizado en FreeBSD.\par
 
 El \texttt{idlethread} es un hilo \textit{dummy}, es decir, un hilo que no genera carga significativa para el procesador. Puede ser encolado, suspendido y ejecutado de manera similar a otros hilos. Cada núcleo de CPU tiene asociado su propio \texttt{idlethread}, el cual ejecuta un bucle simple que generalmente consiste en poner la CPU en un estado de bajo consumo.\par
 
@@ -282,7 +282,7 @@ La solución, detallada en la Figura \ref{fig:cpu-on-off-2nd-iteration}, consist
     \centering
     \vspace*{0.1in}
     \includegraphics[width=0.8\textwidth]{./images/cpuOnOff-2nd-iteration.png}
-    \caption{Segunda iteración del módulo de encendido/apagado de núcleos del procesador.}
+    \caption{Segunda iteración del módulo de inhibición de asignación de trabajo a núcleos del procesador.}
     \label{fig:cpu-on-off-2nd-iteration}
 \end{figure}
 
@@ -305,7 +305,7 @@ Una vez más, la implementación de estos cambios comenzó con la actualización
         0 & 0  & 0  & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & 0  & 0  & 1 & -1 \\
         \hline
     \end{tabular}
-    \caption{Matriz base: Segunda iteración del módulo de encendido/apagado.}
+    \caption{Matriz base: Segunda iteración del módulo de inhibición.}
     \label{tabla:matriz_base_post_2}
 \end{table}
 
@@ -326,7 +326,7 @@ Una vez más, la implementación de estos cambios comenzó con la actualización
         1 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
         \hline
     \end{tabular}
-    \caption{Matriz de incidencia: Segunda iteración del módulo de encendido/apagado.}
+    \caption{Matriz de incidencia: Segunda iteración del módulo de inhibición.}
     \label{tabla:matriz_incidencia_post_2}
 \end{table}
 
@@ -352,7 +352,7 @@ Otra mejora, relacionada con la estructura de la red de Petri de recursos desarr
 
 \section{Módulo de monopolización de hilos por parte de los procesadores}
 
-Tras finalizar el módulo de encendido y apagado de procesadores, nos enfocamos en el desarrollo del módulo de monopolización de hilos por parte de los procesadores. Este módulo introduce la capacidad en el planificador de anclar hilos a una CPU específica, lo que implica que dicho núcleo solo puede encolar y ejecutar los hilos que están asociados a él.\par
+Tras finalizar el módulo de inhibición de asignación de trabajo a procesadores, el desarrollo se enfocó en el módulo de monopolización de hilos por parte de los procesadores. Este módulo introduce la capacidad en el planificador de anclar hilos a una CPU específica, lo que implica que dicho núcleo solo puede encolar y ejecutar los hilos que están asociados a él.\par
 
 \subsection{Objetivos}
 
@@ -362,7 +362,7 @@ Es muy importante que este módulo, al igual que el desarrollado previamente, pu
 
 \subsection{Primera Iteración: Desarrollo del Módulo de Monopolización a través de Políticas en la Red}
 
-Para implementar el módulo de monopolización, se comenzó con una fase de investigación para explorar las posibles estrategias de desarrollo. Inicialmente, se consideró la opción de diseñarlo como un módulo independiente, similar al módulo de encendido/apagado. Sin embargo, se identificó que en última instancia, la decisión del planificador sobre a qué CPU encolar un hilo, estaba estrechamente vinculada a los identificadores de los hilos que se deseaban ejecutar.\par
+Para implementar el módulo de monopolización, se comenzó con una fase de investigación para explorar las posibles estrategias de desarrollo. Inicialmente, se consideró la opción de diseñarlo como un módulo independiente, similar al módulo de inhibición. Sin embargo, se identificó que en última instancia, la decisión del planificador sobre a qué CPU encolar un hilo, estaba estrechamente vinculada a los identificadores de los hilos que se deseaban ejecutar.\par
 
 Este enfoque nos llevó a entender el problema en términos de políticas para la toma de decisiones a la hora de encolar un hilo. Para implementar estas nuevas políticas, agregamos un mecanismo que permite fijar un hilo a un procesador específico, asegurándonos que dicho procesador no pueda encolar ni ejecutar otros hilos mientras esté monopolizado.\par
 
@@ -388,7 +388,7 @@ Los resultados del módulo fueron satisfactorios, demostrando que los hilos pudi
 
 Para verificar este comportamiento, realizamos pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos de las CPUs durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
 
-Es importante señalar que el módulo no incluyó el caso de la CPU0, ya que, al igual que en pruebas anteriores con el módulo de encendido/apagado, presentaba dificultades para la monopolización debido a su rol en la gestión de tareas administrativas del sistema.\par
+Es importante señalar que el módulo no incluyó el caso de la CPU0, ya que, al igual que en pruebas anteriores con el módulo de inhibición, presentaba dificultades para la monopolización debido a su rol en la gestión de tareas administrativas del sistema.\par
 
 Los detalles específicos y un análisis más profundo de los resultados se abordarán en el capítulo de “Análisis de resultados”.\par
 
@@ -408,7 +408,7 @@ Durante el proceso de desarrollo de los módulos, se fueron trabajando además a
 
 \subsection{Modelado Específico de los Hilos \textit{Pinned}}
 
-Durante el desarrollo de los módulos de encendido/apagado y monopolización de procesadores, surgió un problema crítico relacionado con la gestión de hilos \textit{pinned}, que ya había sido identificado en investigaciones anteriores.\par
+Durante el desarrollo de los módulos de inhibición y monopolización de procesadores, surgió un problema crítico relacionado con la gestión de hilos \textit{pinned}, que ya había sido identificado en investigaciones anteriores.\par
 
 En FreeBSD, los hilos \textit{pinned} deben ejecutarse exclusivamente en el procesador al que han sido asignados. En el contexto del planificador 4BSD modelado e implementado en la red de Petri de recursos, se modificó la lógica de selección de CPU. Originalmente, un hilo \textit{pinned} se reencolaba automáticamente en su procesador original sin condiciones adicionales. Sin embargo, con el desarrollo del modelo de la red de recursos, se introdujo una nueva condición: para que un hilo \textit{pinned} sea reencolado en su último procesador asignado, la transición que lo agrega a la cola del procesador debe estar habilitada.\par
 

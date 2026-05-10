@@ -187,7 +187,7 @@ Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particula
 
 En el contexto del proyecto integrador previo, se llevó a cabo un análisis detallado del comportamiento del \textit{scheduler} de un sistema operativo, con un enfoque específico en el proceso de asignación de tiempo de procesador. El objetivo fundamental fue identificar oportunidades de mejora en su funcionamiento, migrando de una visión estadística a un sistema más complejo implementado mediante Redes de Petri, en donde las decisiones de encolado de los hilos en una CPU se derivan de la información representada en el modelo, incluidos los estados globales y los de cada hilo.\par
 
-En las secciones siguientes, se presentan los puntos clave abordados en este estudio, incluyendo la naturaleza de las modificaciones realizadas. Además, se resaltan los puntos de interés surgidos durante este análisis, los cuales orientarán el desarrollo de los distintos módulos destinados a ampliar las funcionalidades de planificación como la gestión del encendido y apagado de procesadores, así como la monopolización de los mismos por parte de los hilos.\par
+En las secciones siguientes, se presentan los puntos clave abordados en este estudio, incluyendo la naturaleza de las modificaciones realizadas. Además, se resaltan los puntos de interés surgidos durante este análisis, los cuales orientarán el desarrollo de los distintos módulos destinados a ampliar las funcionalidades de planificación, como la inhibición de asignación de trabajo a procesadores y la monopolización de los mismos por parte de los hilos.\par
 
 \subsection{Elección del planificador}
 

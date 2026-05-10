@@ -12,34 +12,37 @@ El proyecto integrador previo estableció una base sólida para la comprensión 
 
 No obstante, dada la continua evolución tecnológica y la evolución de las necesidades de los usuarios, se hace imperativo mantener una constante actualización y refinamiento de dicha implementación.\par
 
-La presente oportunidad de trabajo se centra en la incorporación de nuevas funcionalidades y mejoras al planificador a corto plazo del sistema operativo. El objetivo principal radica en alcanzar niveles superiores de eficiencia y desempeño en las operaciones que se ejecutan en el sistema. Para ello, aprovecharemos el conocimiento y las ventajas que ofrecen las Redes de Petri, herramientas que nos permitirán introducir innovaciones de manera efectiva, al tiempo que conservamos las características fundamentales del sistema base.\par
+La presente oportunidad de trabajo se centra en la incorporación de nuevas funcionalidades al planificador a corto plazo del sistema operativo. El objetivo principal es extender el planificador modelado mediante Redes de Petri y evaluar hasta dónde esta representación ayuda a sumar nuevos mecanismos de control de recursos, sin alterar las características centrales del sistema base.\par
 
-En este contexto, identificamos dos oportunidades específicas. La primera consiste en eliminar la participación de las CPUs en determinadas tareas, priorizando así el consumo de energía sobre el rendimiento. Para abordar esta oportunidad, se planteó el desarrollo de un módulo que permita bloquear el \textit{encolado} de un procesador, simulando así su ``apagado'' y reduciendo el consumo energético global del sistema. La segunda oportunidad se centra en optimizar el rendimiento de tareas en ejecución, evitando interrupciones al saltarse el sistema de colas. Para esta finalidad, planteamos la creación de otro módulo que permita a un hilo apropiarse de una CPU, evitando que otros hilos hagan uso de la misma mientras se ejecuta la tarea prioritaria. Si bien estos cambios aún requerirán de desarrollos adicionales para implementarse concretamente en los procesos y situaciones específicas, representan un primer paso hacia la mejora de la eficiencia energética y el rendimiento del sistema operativo, al proporcionar herramientas para el control más preciso de los recursos de hardware y la gestión de tareas críticas.\par
+En este contexto, se identificaron dos oportunidades específicas. La primera consiste en impedir que determinadas CPUs reciban nuevos hilos en sus colas de ejecución, simulando desde el planificador una reducción de los procesadores disponibles para tareas comunes. Esta funcionalidad no apaga físicamente el procesador ni mide consumo energético; solamente agrega un mecanismo de control que podría ser aprovechado en trabajos futuros para definir políticas de eficiencia energética. La segunda oportunidad se centra en reservar un núcleo para un hilo específico, evitando que otros hilos sean encolados en ese núcleo mientras la reserva se encuentra activa. Si bien estos cambios todavía requieren desarrollos adicionales para integrarse con políticas automáticas y casos de uso concretos, representan un primer paso hacia un control más preciso de la asignación de recursos del planificador.\par
 
 \section{Motivación}
 Entre las principales motivaciones que nos impulsan a realizar este proyecto, podemos destacar la importancia de la planificación a corto plazo en los sistemas operativos y su impacto en el rendimiento.
 
 Actualmente la planificación a corto plazo de sistemas operativos es un objeto de estudio para encontrar soluciones que disminuyan el indeterminismo y optimicen el rendimiento. En concreto, la implementación del planificador a corto plazo de FreeBSD utilizando Redes de Petri, ha demostrado muchas ventajas mediante esta técnica de modelado.\par
 
-En este trabajo integrador, proponemos avanzar con la implementación de funcionalidades de control de recursos y priorización de tareas en el sistema operativo, aprovechando el potencial de las Redes de Petri como herramienta de modelado y análisis en el ámbito de los sistemas operativos, sentando las bases para futuras investigaciones en este campo y contribuyendo así al avance de la informática en este aspecto.\par
+En este trabajo integrador se propone avanzar con la implementación de funcionalidades de control de recursos y priorización de tareas en el sistema operativo, aprovechando el potencial de las Redes de Petri como herramienta de modelado y análisis. El aporte buscado no es demostrar una mejora de rendimiento o de consumo energético, sino extender el planificador existente y precisar los alcances y límites del enfoque basado en Redes de Petri.\par
 
-Otra oportunidad significativa que surge para el desarrollo de este proyecto integrador es la actualización del código del planificador a la última versión del sistema operativo. La versión desde la que partimos como base es FreeBSD 11, y buscamos la migración hacia la 13.1. Esta actualización nos brinda la posibilidad de capitalizar las mejoras de rendimiento, seguridad y estabilidad introducidas en las últimas versiones. Por otro lado, los avances realizados en ambos trabajos estarían más cerca de representar una contribución al código base del sistema, y al mismo tiempo nos permitiría trabajar a la par de los contribuyentes de FreeBSD.\par
+Otra oportunidad significativa para este proyecto integrador es la actualización del código del planificador a una versión más reciente del sistema operativo. La versión tomada como base es FreeBSD 11, y la migración se realiza hacia FreeBSD 13.1. Esta actualización permite trabajar sobre una base de código más actual que la del proyecto integrador previo, incorporar los cambios relevantes del planificador entre versiones y dejar el desarrollo mejor preparado para futuras actualizaciones.\par
 
 \section{Objetivo}
 
 Objetivo principal:
 
 \begin{itemize}
-    \item Modelar un \textit{scheduler} para FreeBSD mediante Redes de Petri que permita decidir sobre el uso o liberación de procesadores según la demanda de los procesos.
+    \item Extender el planificador 4BSD de FreeBSD modelado mediante Redes de Petri, incorporando módulos de activación manual para inhibir la asignación de trabajo a determinados procesadores y para reservar núcleos a hilos específicos.
 \end{itemize}
 
+\subsection{Hipótesis de trabajo}
+
+La hipótesis que guía este trabajo sostiene que las Redes de Petri facilitan la extensión modular del planificador cuando el comportamiento que se quiere agregar puede describirse mediante estados y transiciones del recurso planificado. A su vez, el desarrollo de los módulos permite analizar los límites de este enfoque cuando la política de planificación depende de información que no está representada directamente en la red, como identidad de hilos, afinidad, fijación a procesadores o reglas internas del \textit{kernel}.\par
 
 Objetivos secundarios:
 
 \begin{itemize}
-    \item Actualizar el modelado e implementación del planificador del sistema operativo FreeBSD mediante Redes de Petri. Este fue desarrollado originalmente para la versión 11 del mismo, mientras que FreeBSD se encuentra cursando la versión 13. Como comentamos en la sección de motivación, hacerlo compatible con las últimas versiones nos permite aprovechar las nuevas funcionalidades y mejoras de seguridad, evitar que se vuelva obsoleto con el paso del tiempo y acercarnos a la comunidad.
-    \item Desarrollar una funcionalidad que permita encender y apagar procesadores según las necesidades del sistema en diferentes momentos. Al permitir que el sistema gestione activamente el estado de los procesadores, restará únicamente implementar estrategias que utilicen este módulo para optimizar el consumo de energía en función de la carga de trabajo.
-    \item Desarrollar un mecanismo que le brinde a cualquier hilo la posibilidad de ejecutarse en un procesador, evitando que otros hilos se encolen en éste. Mediante esta funcionalidad, se prioriza la ejecución del hilo correspondiente y se reduce el tiempo de espera y las demoras, logrando que el hilo alcance su objetivo antes. Como consecuencia se evitan pérdidas de rendimiento causadas por cambios de contexto.
+    \item Actualizar el modelado e implementación del planificador del sistema operativo FreeBSD mediante Redes de Petri. Este fue desarrollado originalmente para la versión 11 del mismo, mientras que este trabajo toma como objetivo la compatibilidad con FreeBSD 13.1.
+    \item Desarrollar una funcionalidad que permita inhibir manualmente la asignación de nuevos hilos a procesadores seleccionados. Esta funcionalidad no implementa apagado físico de procesadores, sino un mecanismo de control a nivel del planificador que puede servir como base para trabajos futuros.
+    \item Desarrollar un mecanismo que le brinde a un hilo la posibilidad de ejecutarse de forma exclusiva en un procesador seleccionado, evitando que otros hilos se encolen en éste mientras el módulo se encuentra activo.
     \item Analizar y aprender exhaustivamente acerca del código fuente del sistema operativo FreeBSD.\@
     \item Profundizar los conocimientos en la depuración del \textit{kernel} y las diferentes herramientas de debugging.
     \item Mejorar la documentación del proyecto, estrategia de ramas y commits en el repositorio de desarrollo priorizando las buenas prácticas de programación. Esto permitirá dejar mejores bases para quienes decidan continuar con la investigación a futuro.
@@ -49,17 +52,17 @@ Objetivos secundarios:
 
 \section{Alcance}
 
-La fase inicial del proyecto se enfocará en la actualización de la implementación existente a la última versión del sistema operativo FreeBSD.\@ Se considerará completada una vez que el código del proyecto integrador previo se encuentre actualizado y se compruebe el funcionamiento adecuado.\par
+La fase inicial del proyecto se enfocará en la actualización de la implementación existente a FreeBSD 13.1. Se considerará completada una vez que el código del proyecto integrador previo se encuentre actualizado y se compruebe el funcionamiento adecuado.\par
 
 Luego se procederá a implementar las dos nuevas funcionalidades mencionadas anteriormente. Esta etapa presenta un mayor nivel de complejidad, ya que estas funcionalidades pueden ser implementadas de diversas formas. Por esta razón, se ha decidido delimitar el alcance de la implementación en dos módulos independientes. La activación y desactivación de estos módulos se realizará mediante la carga o descarga de un módulo de \textit{kernel} que incluirá parámetros relevantes en cada caso.\par
 
-En el caso de la funcionalidad de encendido y apagado de procesadores, la activación permitirá elegir los procesadores que se desean desactivar del proceso de selección de colas. Por otro lado, en el caso de la funcionalidad de monopolización de CPUs, la activación del módulo permitirá seleccionar el hilo que se apropiará de la CPU correspondiente, también elegida mediante parámetros.\par
+En el caso de la funcionalidad de inhibición de asignación de trabajo a procesadores, la activación permitirá elegir los procesadores que se desean excluir del proceso ordinario de selección de colas. Estos procesadores no son apagados a nivel de hardware: continúan disponibles para ejecutar el \texttt{idlethread} u otros comportamientos necesarios del sistema. Por otro lado, en el caso de la funcionalidad de monopolización de CPUs, la activación del módulo permitirá seleccionar el hilo que se apropiará de la CPU correspondiente, también elegida mediante parámetros.\par
 
-Adicionalmente, se implementarán pruebas para validar la funcionalidad precisa de estas incorporaciones. El alcance general de este trabajo es establecer un sólido fundamento para la adición de módulos independientes, capaces de integrarse a la Red de Petri para alcanzar diversos propósitos. En este contexto, se anticipa que los resultados obtenidos en este proyecto puedan servir como un valioso punto de partida para futuras investigaciones en el campo de la planificación a corto plazo de sistemas operativos.\par
+Adicionalmente, se implementarán pruebas para validar la funcionalidad precisa de estas incorporaciones. El alcance general de este trabajo es dejar una base para agregar módulos independientes al planificador y analizar cuándo esas extensiones pueden integrarse directamente a la Red de Petri y cuándo requieren lógica auxiliar del \textit{kernel}. En este contexto, se anticipa que los resultados obtenidos en este proyecto puedan servir como punto de partida para futuras investigaciones en el campo de la planificación a corto plazo de sistemas operativos.\par
 
 \section{Modelo de Desarrollo}
 
-Nuestro enfoque para este proyecto se centró en tres objetivos principales, como se mencionó anteriormente: actualizar el planificador a la última versión del sistema operativo y desarrollar los módulos de encendido/apagado de procesadores, y de monopolización de CPUs. Estos objetivos nos guiaron en la definición de metas específicas y alcances concretos, lo que nos permitió avanzar de manera ágil y precisa en el desarrollo. Aunque en este informe presentaremos estos objetivos como tres módulos separados, es importante destacar que evolucionaron de forma incremental a lo largo del proceso de desarrollo.
+El enfoque de este proyecto se centró en tres objetivos principales: actualizar el planificador a FreeBSD 13.1 y desarrollar los módulos de inhibición de asignación de trabajo a procesadores y de monopolización de CPUs. Estos objetivos guiaron la definición de metas específicas y alcances concretos. Aunque en este informe se presentan como tres módulos separados, es importante destacar que evolucionaron de forma incremental a lo largo del proceso de desarrollo.
 
 \section{Requerimientos Generales}
 
@@ -67,7 +70,7 @@ Nuestro enfoque para este proyecto se centró en tres objetivos principales, com
 \begin{itemize}
     \item Adaptar la implementación actual del planificador a corto plazo de FreeBSD para garantizar su compatibilidad con las últimas versiones del sistema operativo.
     \item Diseñar y ejecutar pruebas para validar la correcta integración del modelo a las nuevas versiones de FreeBSD y para evaluar el funcionamiento óptimo de los nuevos desarrollos.
-    \item Desarrollar e integrar dos nuevos módulos con funciones de gestión de procesadores y de monopolización de CPUs.
+    \item Desarrollar e integrar dos nuevos módulos con funciones de inhibición de asignación de trabajo a procesadores y de monopolización de CPUs.
     \item Ejecutar pruebas para asegurar la correcta implementación e integración de las nuevas características desarrolladas en el planificador existente de modo que no afecten negativamente su rendimiento.
 \end{itemize}
 
