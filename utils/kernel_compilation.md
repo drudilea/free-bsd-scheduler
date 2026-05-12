@@ -1,5 +1,51 @@
 # Compilación de kernel
 
+## Workflow actual para kernels de testing
+
+Para validar las funcionalidades actuales se instalan kernels con `KODIR`
+explícito, sin pisar el kernel de rescate.
+
+- Kernel estable/de rescate: `/boot/kernel-original/kernel`
+- Kernel de testing on/off: `/boot/petri-onoff-test/kernel`
+- Kernel de testing monopolize: `/boot/petri-monopolize-test/kernel`
+
+Ejemplo para on/off:
+
+```bash
+cd ~/src/freebsd-src
+git fetch origin
+git switch testing/petri-net-scheduler_cpu-on-off-module
+git pull --ff-only
+make -j4 buildkernel KERNCONF=PI_KERNELCONF
+su -
+cd /usr/home/nicodrudi/src/freebsd-src
+make installkernel KERNCONF=PI_KERNELCONF KODIR=/boot/petri-onoff-test
+reboot
+```
+
+Ejemplo para monopolize:
+
+```bash
+cd ~/src/freebsd-src
+git fetch origin
+git switch testing/petri-net-scheduler_monopolize-cpu-module
+git pull --ff-only
+make -j4 buildkernel KERNCONF=PI_KERNELCONF
+su -
+cd /usr/home/nicodrudi/src/freebsd-src
+make installkernel KERNCONF=PI_KERNELCONF KODIR=/boot/petri-monopolize-test
+reboot
+```
+
+Al volver a bootear:
+
+```bash
+uname -a
+sysctl kern.bootfile
+```
+
+Para comandos de validación, ver `../tests/current_scheduler_testing.md`.
+
 ## Activar 4BSD como scheduler predeterminado
 
 - Editar el archivo de configuración de kernel ubicado en `/usr/src/sys/amd64/conf`.

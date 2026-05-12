@@ -2,6 +2,12 @@
 
 Procedimientos y métodos para verificar que lo implementado en el proyecto final anterior, sigue siendo válido en cualquier versión a la que se quiera migrar.
 
+> Estado actual: este documento conserva la referencia histórica del modelo,
+> plazas, transiciones e invariantes. Para ejecutar pruebas sobre FreeBSD 13.1,
+> usar el flujo actualizado en `current_scheduler_testing.md`. Ese flujo
+> reemplaza los módulos `.ko` históricos por kernels de testing y controles
+> `sysctl`.
+
 Para poder desarrollar los procedimientos es necesario conocer la estructura de las redes de petri de los casos sobre los que se ejecutarán las pruebas.
 
 ### Modelado de un hilo
