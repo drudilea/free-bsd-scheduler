@@ -1,30 +1,30 @@
 \chapter{Análisis de resultados integrales}
 \label{ch:results}
 
-En este capítulo se presentan los resultados obtenidos tras la implementación de las mejoras propuestas. Se establecieron dos objetivos principales: (1) la actualización del planificador a FreeBSD 13 y (2) la validación de la hipótesis de que la Red de Petri permite la creación e integración sencilla de nuevos módulos funcionales. En este caso, el desarrollo de dos módulos: el de encendido/apagado de procesadores y el módulo de monopolización de núcleos, destinado a optimizar la ejecución de procesos críticos.\par
+En este capítulo se presentan los resultados obtenidos luego de implementar las extensiones propuestas. El análisis se organiza alrededor de dos ejes: la actualización del planificador a FreeBSD 13.1 y la hipótesis de que la Red de Petri facilita la integración de nuevos módulos cuando el comportamiento puede describirse mediante estados y transiciones del recurso planificado. En este trabajo se desarrollaron dos módulos: el de inhibición de asignación de trabajo a procesadores y el de monopolización de núcleos.\par
 
-Los resultados muestran que ambos objetivos fueron alcanzados. La actualización del planificador fue completada con éxito, permitiendo su uso en FreeBSD 13 sin afectar la estabilidad del sistema. Además, la implementación de los módulos confirmó que la Red de Petri facilita la extensión del planificador, permitiendo la integración de nuevas funcionalidades de manera modular y sin alterar el comportamiento base del sistema operativo.\par
+La actualización del planificador permitió utilizarlo en FreeBSD 13.1 sin afectar la estabilidad observada en las pruebas realizadas. A su vez, los módulos desarrollados permitieron evaluar el alcance del enfoque basado en Redes de Petri: el módulo de inhibición se integró directamente mediante nuevas plazas y transiciones, mientras que el módulo de monopolización requirió lógica auxiliar por depender de identificadores de hilos y restricciones propias del \textit{kernel}.\par
 
 En los siguientes apartados se detallan los resultados específicos de cada módulo.\par
 
-\section{Resultados de la Implementación del Módulo de Encendido/Apagado de Procesadores}
+\section{Resultados de la Implementación del Módulo de Inhibición de Asignación de Trabajo a Procesadores}
 
-El módulo de encendido/apagado de procesadores cumple con su objetivo, permitiendo desactivar procesadores de manera controlada. Para validar su funcionamiento, realizamos la siguiente prueba:
+El módulo de inhibición de asignación de trabajo a procesadores permite evitar, de manera controlada, que determinados procesadores reciban nuevos hilos en sus colas de ejecución. Para validar su funcionamiento, se realizó la siguiente prueba:
 
 \begin{enumerate}
     \item \textbf{Estado inactivo}: En ausencia de tareas pendientes, los procesadores permanecen en estado de espera, ejecutando hilos de la clase IDLE.\@
     \item \textbf{Comportamiento con el módulo inhabilitado}: Se llevaron a cabo distintas pruebas de estrés en el sistema. Como resultado, todos los procesadores operaron al 100\% de su capacidad.
-    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhabilitando distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron carga de trabajo, mientras que los demás procesadores continuaron ejecutando las tareas sin interrupciones.
+    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhibiendo distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron nuevos hilos de trabajo ordinario, mientras que los demás procesadores continuaron ejecutando las tareas sin interrupciones.
 \end{enumerate}
 
-Estos resultados confirman que el sistema es capaz de gestionar dinámicamente la activación y desactivación de procesadores sin comprometer su estabilidad.\par
+Estos resultados muestran que el sistema puede aplicar la inhibición de asignación de trabajo a procesadores sin comprometer su estabilidad durante las pruebas realizadas.\par
 
 En los siguientes apartados se detallan las observaciones y análisis específicos de cada etapa de la prueba.\par
 
 \subsection{Estado Inactivo del Sistema}
 En situaciones de inactividad del sistema operativo, caracterizadas por la ausencia de tareas pendientes, cada procesador opera en un modo especial ejecutando hilos de la clase IDLE.\@ Este escenario está diseñado para que el sistema mantenga un estado pasivo, preparado para abordar de manera eficiente cualquier tarea que pueda emerger.\par
 
-Creemos importante resaltar que, independientemente de si nuestro módulo de encendido/apagado está activo para alguno de los procesadores en este contexto, hemos considerado y abordado esta situación en nuestra implementación para garantizar la estabilidad del sistema. La Figura \ref{fig:cpuOnOff-result-idle} proporciona una representación visual de este estado.\par
+Esta situación fue considerada durante la implementación para evitar que el módulo afecte la estabilidad del sistema cuando no hay hilos de usuario listos para ejecutar. La Figura \ref{fig:cpuOnOff-result-idle} muestra este estado.\par
 
 \begin{figure}[H]
     \centering
@@ -34,39 +34,39 @@ Creemos importante resaltar que, independientemente de si nuestro módulo de enc
 \end{figure}
 
 \subsection{Comportamiento con el Módulo Inhabilitado}
-Cuando el módulo de encendido/apagado de procesadores no está habilitado para ningún núcleo, el sistema operativo sigue su funcionamiento convencional bajo la lógica del planificador basado en Redes de Petri. En este estado, el \textit{scheduler} opera mediante el uso de la Red de Petri con las plazas y transiciones de cada uno de los procesadores del sistema, sin hacer uso de la adición de plazas y transiciones que corresponden al módulo, introducidas en el desarrollo del mismo.\par
+Cuando el módulo de inhibición de asignación de trabajo no está habilitado para ningún núcleo, el sistema operativo sigue su funcionamiento convencional bajo la lógica del planificador basado en Redes de Petri. En este estado, el \textit{scheduler} opera mediante el uso de la Red de Petri con las plazas y transiciones de cada uno de los procesadores del sistema, sin hacer uso de la adición de plazas y transiciones que corresponden al módulo, introducidas en el desarrollo del mismo.\par
 
-Para confirmar dicho comportamiento, llevamos a cabo una prueba de estrés sobre los procesadores, ejecutando un programa que genera múltiples procesos que realizan cálculos matemáticos complejos. Durante la ejecución del programa, supervisamos el sistema y observamos que todos los procesadores operaban al máximo de su capacidad, funcionando al 100\% para completar la tarea. La Figura \ref{fig:cpuOnOff-result-full-load} proporciona una representación visual de este estado.\par
+Para confirmar dicho comportamiento, se llevó a cabo una prueba de estrés sobre los procesadores, ejecutando un programa que genera múltiples procesos que realizan cálculos matemáticos complejos. Durante la ejecución del programa, se supervisó el sistema y se observó que todos los procesadores operaban al máximo de su capacidad, funcionando al 100\% para completar la tarea. La Figura \ref{fig:cpuOnOff-result-full-load} proporciona una representación visual de este estado.\par
 
-Este escenario de funcionamiento con el módulo deshabilitado proporciona un punto de referencia inicial para comprender el impacto de nuestra implementación en la gestión de recursos y el rendimiento general del sistema operativo.\par
+Este escenario con el módulo deshabilitado sirve como punto de referencia para observar el comportamiento del sistema antes de inhibir la asignación de trabajo a alguno de sus procesadores.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-full-load.png}
-    \caption{Estado de los núcleos con el módulo encendido/apagado inhabilitado.}
+    \caption{Estado de los núcleos con el módulo de inhibición inhabilitado.}
     \label{fig:cpuOnOff-result-full-load}
 \end{figure}
 
 \subsection{Comportamiento con el Módulo Habilitado}
-Basándonos en las observaciones anteriores, llevamos a cabo la misma prueba de estrés, pero activando previamente el módulo de encendido/apagado para inhabilitar la CPU2.\par
+Luego se llevó a cabo la misma prueba de estrés, pero activando previamente el módulo de inhibición para la CPU2.\par
 
-Este enfoque nos permitió no solo corroborar la funcionalidad adecuada de la implementación, sino también analizar la respuesta del sistema ante un cambio tan significativo como el bloqueo del encolado en uno de sus núcleos.\par
+Esta prueba permitió corroborar el funcionamiento de la implementación y observar la respuesta del sistema cuando se bloquea el encolado de nuevos hilos en uno de sus núcleos.\par
 
-En relación a los resultados obtenidos durante esta evaluación, observamos que, al suspender uno de los procesadores del sistema, este continuó funcionando de manera estable. Se puede apreciar que la carga del procesador suspendido se mantuvo en cero, mientras que los demás procesadores continuaron ejecutando los cálculos. Esto demuestra de manera concluyente que el sistema fue capaz de adaptarse sin dificultades a la reducción de recursos de procesamiento.\par
+Durante esta evaluación se observó que, al inhibir la asignación de trabajo a uno de los procesadores, el sistema continuó funcionando de manera estable. La carga del procesador inhibido se mantuvo en cero para la prueba ejecutada, mientras que los demás procesadores continuaron ejecutando los cálculos. Esto muestra que el sistema pudo operar con una reducción manual de los procesadores disponibles para recibir nuevos hilos.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-1CPU.png}
-    \caption{Estado de los núcleos con el módulo encendido/apagado habilitado para la CPU2.}
+    \caption{Estado de los núcleos con el módulo de inhibición habilitado para la CPU2.}
     \label{fig:cpuOnOff-result-1cpu}
 \end{figure}
 
-En relación al tiempo necesario para completar el cálculo del programa, notamos que dicho tiempo aumentó proporcionalmente a la disminución en el número de procesadores activos, destacando la correlación entre la disponibilidad de recursos de procesamiento y el tiempo total requerido para finalizar el programa. En la Figura \ref{fig:cpuOnOff-result-2cpu} podemos comprobar el funcionamiento del sistema con la inhabilitación simultánea de dos procesadores.\par
+En relación al tiempo necesario para completar el cálculo del programa, se observó que dicho tiempo aumentó a medida que disminuyó la cantidad de procesadores disponibles. En la Figura \ref{fig:cpuOnOff-result-2cpu} se muestra el funcionamiento del sistema con la inhibición simultánea de dos procesadores.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-2CPU.png}
-    \caption{Estado de los núcleos con el módulo encendido/apagado habilitado para múltiples CPUs.}
+    \caption{Estado de los núcleos con el módulo de inhibición habilitado para múltiples CPUs.}
     \label{fig:cpuOnOff-result-2cpu}
 \end{figure}
 
@@ -85,21 +85,21 @@ En la Tabla \ref{tabla:cpuOnOff-result-times} se presentan los tiempos de ejecuc
     \label{tabla:cpuOnOff-result-times}
 \end{table}
 
-El objetivo de esta prueba no es fomentar la suspensión de procesadores durante un contexto de gran carga de trabajo, sino mostrar la capacidad del sistema para adaptarse a la reducción de recursos de procesamiento. A futuro, se espera que la activación o desactivación de procesadores pueda ser gestionada tanto por el \textit{kernel} como por mecanismos externos, como directivas embebidas en los procesos o módulos del sistema capaces de tomar decisiones en función del tipo de tarea, la prioridad del hilo, el estado general de carga o criterios de eficiencia energética.\par
+El objetivo de esta prueba no es proponer la inhibición de procesadores durante un contexto de gran carga de trabajo, sino mostrar que el sistema puede operar con una reducción manual de los procesadores disponibles. A futuro, esta activación podría ser gestionada por el \textit{kernel} o por mecanismos externos, como directivas embebidas en los procesos o módulos del sistema que tomen decisiones según el tipo de tarea, la prioridad del hilo, el estado general de carga o criterios de eficiencia energética.\par
 
 Las capturas de pantalla con los resultados mostrados en la Tabla \ref{tabla:cpuOnOff-result-times} se encuentran documentados en el Apéndice \ref{appendix:apD}.
 
 
 \section{Resultados del Módulo de Monopolización de Núcleos}
 
-El módulo de monopolización de núcleos cumple su objetivo, permitiendo que un hilo se ejecute exclusivamente en un procesador sin que otros hilos sean encolados en él. Para validar su funcionamiento, realizamos la siguiente prueba:
+El módulo de monopolización de núcleos cumple su objetivo, permitiendo que un hilo se ejecute exclusivamente en un procesador sin que otros hilos sean encolados en él. Para validar su funcionamiento, se realizó la siguiente prueba:
 
 \begin{enumerate}
     \item \textbf{Estado normal del sistema:} Con el módulo deshabilitado, los hilos se distribuyen entre los procesadores disponibles según las políticas de planificación definidas por la Red de Petri.
     \item \textbf{Comportamiento con el módulo habilitado:} Se seleccionó un hilo y se lo ancló a un procesador específico. Como resultado, el hilo permaneció en ejecución en el mismo núcleo durante toda la prueba, sin migraciones a otros procesadores ni interferencias de otros hilos.
 \end{enumerate}
 
-Estos resultados confirman que el sistema es capaz de asignar núcleos exclusivos a hilos específicos sin afectar la estabilidad general del planificador.\par
+Estos resultados muestran que el sistema puede asignar núcleos exclusivos a hilos específicos sin afectar la estabilidad general del planificador durante las pruebas realizadas.\par
 
 En los siguientes apartados se detallan las observaciones y análisis específicos de cada etapa de la prueba.\par
 
@@ -131,7 +131,7 @@ Además de los resultados obtenidos con la herramienta que monitora los procesos
 \subsection{Comportamiento con el Módulo Habilitado}
 Habiendo expuesto el comportamiento del sistema en su condición normal, se sienta una base para la posterior comparación con el desempeño del módulo.\par
 
-Siguiendo un procedimiento similar al empleado con el módulo de encendido y apagado, procedimos a ejecutar nuevamente el programa de estrés, orientado al cálculo de números primos.\par
+Siguiendo un procedimiento similar al empleado con el módulo de inhibición, se ejecutó nuevamente el programa de estrés, orientado al cálculo de números primos.\par
 
 Luego de haber activado el módulo podemos observar que los resultados obtenidos concuerdan con la información proporcionada por la herramienta de monitoreo. Como era de esperar, este subproceso estuvo vinculado a la CPU elegida, durante toda su ejecución. Además, ningún otro hilo o proceso se ejecutó en ningún momento en este núcleo, evidenciando así su exclusividad y el correcto funcionamiento del desarrollo.\par
 
@@ -158,15 +158,14 @@ En la Figura \ref{fig:cpuMonopolized-dtrace} se observa el comportamiento del hi
     \label{fig:cpuMonopolized-dtrace}
 \end{figure}
 
-Un caso relevante es el estado del sistema una vez que el programa de estrés ha concluido pero el módulo permanece activado. En estas condiciones, se observa cómo el núcleo al que se había anclado el hilo permanece “reservado”, sin ejecutar ningún hilo que no posea el identificador especificado, mientras que los procesos restantes solo se ejecutan en los núcleos liberados. Con esto en mente, se puede identificar una similitud con el funcionamiento del módulo de encendido/apagado al desactivar un núcleo.\par
+Un caso relevante es el estado del sistema una vez que el programa de estrés ha concluido pero el módulo permanece activado. En estas condiciones, se observa cómo el núcleo al que se había anclado el hilo permanece “reservado”, sin ejecutar ningún hilo que no posea el identificador especificado, mientras que los procesos restantes solo se ejecutan en los núcleos liberados. Con esto en mente, se puede identificar una similitud con el funcionamiento del módulo de inhibición al excluir un núcleo de la asignación ordinaria de trabajo.\par
 
 Al desactivar el módulo, el sistema continúa operando según lo esperado, con todos sus núcleos disponibles, tal como lo haría en su estado normal.\par
 
 \section{Resultados de las actualizaciones en la versión del S.O.}
 
-En esta sección se presentan los resultados de las actualizaciones realizadas para adaptar el planificador basado en Redes de Petri a las versiones más recientes del sistema operativo, particularmente la versión 13.1. Estas actualizaciones aseguraron la continuidad del rendimiento observado originalmente en la versión 11, sincronizando el proyecto con la última versión estable del sistema.\par
+En esta sección se presentan los resultados de las actualizaciones realizadas para adaptar el planificador basado en Redes de Petri a FreeBSD 13.1. Estas actualizaciones permitieron conservar el funcionamiento observado originalmente en la versión 11 y dejar el proyecto sobre la versión definida como objetivo de migración.\par
 
-La actualización fue priorizada al inicio del proyecto para mantenernos alineados con la comunidad y facilitar el desarrollo sobre una base de código actualizada. Esto permitió reducir las diferencias entre el \textit{kernel} original y nuestro \textit{fork}, optimizando su integración en etapas posteriores. Si bien fue necesario resolver diversos conflictos entre las versiones 11 y 13 de FreeBSD, las pruebas confirmaron que el planificador opera de manera estable en la versión actualizada.\par
+La actualización fue priorizada al inicio del proyecto para trabajar sobre una base de código más actual que la del proyecto integrador previo. Esto redujo las diferencias entre el \textit{kernel} original y el \textit{fork} desarrollado. Si bien fue necesario resolver diversos conflictos entre las versiones 11 y 13 de FreeBSD, las pruebas confirmaron que el planificador opera de manera estable en la versión actualizada.\par
 
 El código actualizado se encuentra en una rama específica del repositorio, junto con ramas adicionales que documentan cada etapa de la transición progresiva desde la versión 11 hasta la 13.1.\par
-
