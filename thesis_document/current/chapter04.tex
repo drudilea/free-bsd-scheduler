@@ -5,7 +5,61 @@ En este capítulo se presentan los resultados obtenidos luego de implementar las
 
 La actualización del planificador permitió utilizarlo en FreeBSD 13.1 sin afectar la estabilidad observada en las pruebas realizadas. A su vez, los módulos desarrollados permitieron evaluar el alcance del enfoque basado en Redes de Petri: el módulo de inhibición se integró directamente mediante nuevas plazas y transiciones, mientras que el módulo de monopolización requirió lógica auxiliar por depender de identificadores de hilos y restricciones propias del \textit{kernel}.\par
 
-En los siguientes apartados se detallan los resultados específicos de cada módulo.\par
+Antes de presentar los resultados específicos de cada módulo, se incluye la validación realizada sobre el problema de estabilidad descripto en la sección \ref{ch:problema_red}. Esta validación no corresponde a un módulo funcional independiente, sino a una corrección transversal del planificador base sobre el cual se apoyan las extensiones desarrolladas.\par
+
+\section{Resultados de estabilización del planificador base}
+
+Para validar la corrección del fallo de página se instrumentó el planificador mediante \textit{DTrace}, agregando eventos específicos para observar los caminos de encolado utilizados por \verb|sched_add()|. Antes de analizar los resultados, se definieron tres categorías de trazado. La primera corresponde a \verb|TRAN_QUEUE_GLOBAL|, utilizada cuando el hilo es enviado a la cola global. La segunda corresponde a \verb|TRAN_ADDTOQUEUE|, utilizada cuando la red de Petri elige una cola per-CPU mediante su política normal. La tercera corresponde a \verb|TRAN_ADDTOQUEUE_FORCED|, utilizada cuando FreeBSD debe encolar el hilo en una cola per-CPU por una restricción interna, aunque la política normal de Petri no pueda elegir libremente esa CPU.\par
+
+La instrumentación se implementó mediante un proveedor \verb|SDT| propio llamado \verb|petri|, siguiendo el esquema descripto en el Apéndice \ref{appendix:dtrace-sdt}. Esto permitió exponer eventos internos del planificador y de la red de Petri a \textit{DTrace}, recolectando información acotada sobre el camino de encolado, la transición efectivamente disparada y los intentos de disparo que hubieran quedado bloqueados por falta de sensibilización.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.42\textwidth}|p{0.48\textwidth}|}
+        \hline
+        \textbf{Probe} & \textbf{Uso dentro de la validación} \\
+        \hline
+        \verb|petri:sched:addtoqueue:decision| & Registra la clasificación realizada por \verb|sched_add()| antes de encolar el hilo. \\
+        \hline
+        \verb|petri:sched:addtoqueue:global| & Identifica los casos enviados a la cola global del planificador. \\
+        \hline
+        \verb|petri:resource:addtoqueue:policy| & Identifica los encolados per-CPU decididos por la política de la red mediante \verb|TRAN_ADDTOQUEUE|. \\
+        \hline
+        \verb|petri:resource:addtoqueue:forced| & Identifica los encolados per-CPU obligatorios registrados mediante \verb|TRAN_ADDTOQUEUE_FORCED|. \\
+        \hline
+        \verb|petri:resource:transition:fire| & Registra transiciones disparadas efectivamente en la red de recursos. \\
+        \hline
+        \verb|petri:resource:transition:blocked| & Detecta intentos de disparar transiciones no sensibilizadas. \\
+        \hline
+    \end{tabular}
+    \caption[Probes DTrace agregados para la red de Petri]{Probes propios agregados para validar el comportamiento del planificador basado en la red de Petri.}
+    \label{tabla:petri-dtrace-probes}
+\end{table}
+
+Durante las pruebas, los probes de decisión permitieron distinguir cuál de estas tres categorías se utilizaba en cada encolado, mientras que los probes de transición permitieron verificar que la red registrara efectivamente el cambio de marcado correspondiente. En particular, el probe de transiciones bloqueadas fue utilizado como indicador de desincronización: si el planificador intentaba continuar por un camino que la red no tenía sensibilizado, ese evento debía aparecer en las trazas. Por lo tanto, además de medir cuántas veces se utilizaba cada camino, la instrumentación permitió validar que la corrección no volviera a generar disparos inválidos dentro de la red.\par
+
+En el análisis de las trazas, \verb|TRAN_ADDTOQUEUE| se identificó como \textit{ADDTOQUEUE\_POLICY} para diferenciarlo del camino forzado. Este nombre no representa una transición nueva de la red, sino la transición original utilizada cuando la red de Petri puede elegir una CPU válida y sensibilizada.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Escenario} & \textbf{Global} & \textbf{Policy} & \textbf{Forced} & \textbf{Bloq.} \\
+        \hline
+        Carga general & 99.49\% & 0.00\% & 0.50\% & 0 \\
+        \hline
+        \textit{cpuset} 1,2 & 83.60\% & 10.01\% & 6.37\% & 0 \\
+        \hline
+    \end{tabular}
+    \caption[Distribución de decisiones de encolado]{Distribución de decisiones observadas en \texttt{sched\_add()} durante las pruebas con DTrace. Las columnas \textit{Policy} y \textit{Forced} corresponden a \texttt{ADDTOQUEUE\_POLICY} y \texttt{ADDTOQUEUE\_FORCED}.}
+    \label{tabla:addtoqueue-forced-dtrace}
+\end{table}
+
+La primera prueba utilizó una carga general sin afinidad explícita. En este escenario, casi todos los hilos fueron enviados a la cola global, lo cual es esperable para trabajo ordinario del planificador 4BSD. Los pocos casos forzados observados correspondieron a hilos \textit{bound} del sistema, y no se registraron transiciones bloqueadas.\par
+
+La segunda prueba restringió la ejecución mediante \verb|cpuset| a un subconjunto de CPUs. En este caso aparecieron tanto \textit{ADDTOQUEUE\_POLICY} como \textit{ADDTOQUEUE\_FORCED}. Esto muestra que la red de Petri no quedó en desuso: cuando encontró una CPU permitida y sensibilizada, siguió tomando decisiones mediante \verb|TRAN_ADDTOQUEUE|. Al mismo tiempo, cuando no encontró una CPU disponible dentro del conjunto permitido, el camino \verb|TRAN_ADDTOQUEUE_FORCED| permitió registrar el encolado real sin bloquear el \textit{scheduler} ni desincronizar el marcado de la red.\par
+
+Si se consideran solamente los encolados per-CPU registrados por la red en la prueba con \verb|cpuset|, el 61.10\% correspondió al camino de política y el 38.89\% al camino forzado. Además, dentro de los encolados forzados, la mayor parte correspondió a casos de respaldo por afinidad. Estos resultados confirman que la transición forzada aparece en ejecución real, que la transición original sigue siendo utilizada por la política de Petri y que el modelo permanece sincronizado en los escenarios evaluados.\par
 
 \section{Resultados de la Implementación del Módulo de Inhibición de Asignación de Trabajo a Procesadores}
 

@@ -10,6 +10,8 @@ El trabajo realizado se centró en la implementación funcional de estos mecanis
 
 Por otro lado, la interacción con la comunidad y el estudio del código fuente fueron aspectos clave para la resolución de problemas técnicos y demuestran la importancia de seguir de cerca las actualizaciones y cambios en el ecosistema del sistema operativo.\par
 
+Finalmente, durante el desarrollo se identificó y corrigió una causa relevante de inestabilidad del planificador. Los fallos de página que inicialmente parecían asociados al uso de la placa de red fueron explicados como una desincronización entre el estado real de las colas de FreeBSD y el marcado de la Red de Petri. La incorporación de un camino de encolado forzado permitió registrar en la red aquellos encolados que FreeBSD debe realizar para respetar reglas internas como \textit{pinning}, \textit{bounding} y afinidad, sin eliminar la penalización utilizada por la política de balanceo.\par
+
 \section{Trabajos Futuros}
 
 La implementación desarrollada deja una base para nuevas investigaciones y mejoras. Se identifican varias áreas en las que se podrían realizar avances significativos.\par
@@ -20,8 +22,8 @@ Hasta el momento, la activación o desactivación de los módulos se realiza de 
 \subsection{Integración con Hardware para Optimización Energética}
 Si bien el módulo de inhibición de asignación de trabajo permite seleccionar qué núcleos no recibirán nuevos hilos, actualmente su implementación se encuentra limitada al planificador. Un siguiente paso sería estudiar cómo vincular estas decisiones con mecanismos de administración de energía soportados por los procesadores modernos, y recién entonces evaluar si existe una reducción efectiva del consumo energético a nivel de hardware.\par
 
-\subsection{Solución definitiva al fallo de página con la placa de red encendida}
-Como se comentó en la sección \ref{ch:problema_red} del presente informe, actualmente existen problemas en el uso regular del sistema operativo cuando la placa de red se encuentra encendida. Si bien es una falla que se puede detectar también en la versión del proyecto integrador previo, se considera un punto importante a tener en cuenta para mejorar la experiencia de trabajo sobre este proyecto.\par
+\subsection{Validación extendida del encolado forzado}
+Como se comentó en la sección \ref{ch:problema_red}, la causa principal del fallo de página fue corregida separando el encolado decidido por la política de la red del encolado impuesto por restricciones internas de FreeBSD. Como trabajo futuro, sería conveniente ampliar la validación con cargas más extensas, más combinaciones de afinidad y métricas de rendimiento que permitan cuantificar el impacto del camino \verb|TRAN_ADDTOQUEUE_FORCED| sobre el balanceo de carga.\par
 
 \subsection{Optimización del \textit{timeslice} para procesadores inhibidos}
 Otra posible mejora para futuras versiones del sistema es la optimización de la gestión del \textit{timeslice} asignado a los hilos, permitiendo un manejo más eficiente del tiempo de ejecución. En el caso del módulo de inhibición de asignación de trabajo, esta optimización reduciría la cantidad de operaciones de encolado y desencolado del \texttt{idlethread}, evitando procesos innecesarios y disminuyendo la sobrecarga del sistema. Para el módulo de monopolización de núcleos, ajustar dinámicamente el \textit{timeslice} permitiría que los hilos anclados se ejecuten por períodos más largos sin interrupciones innecesarias. Esto evitaría, al planificador, algunos cambios de contexto y haría más predecible la ejecución de estos procesos sin afectar la estabilidad del sistema.\par
