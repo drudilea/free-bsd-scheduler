@@ -183,6 +183,8 @@ La función de \textit{bounding}, por otro lado, implica restringir un hilo a un
 
 Por último, los hilos pueden ser \textit{pinned} o anclados a una CPU particular. Cuando un hilo está anclado, el planificador se asegura de encolarlo siempre en el último procesador en el que se ejecutó. En el contexto del \textit{kernel} de FreeBSD, esto se realiza para mantener la coherencia de caché o para garantizar la eficiencia de la ejecución de tareas críticas evitando la migración del hilo entre CPUs durante su ejecución. El método que ancla un hilo, es el que finalmente libera al hilo de esta restricción.\par
 
+Estas reglas no representan solamente preferencias de balanceo de carga. En particular, los hilos \textit{bound} y \textit{pinned}, y ciertos casos de afinidad, limitan el conjunto de procesadores válidos para ejecutar un hilo. Por este motivo, una decisión de planificación que envíe estos hilos a la cola global o a una cola per-CPU no permitida puede violar supuestos internos del \textit{kernel}, ya que la cola global puede ser consumida por cualquier CPU disponible.\par
+
 \section{Redes de Petri}
 
 Las Redes de Petri son una herramienta formal de modelado para sistemas de eventos discretos, especialmente útil cuando el comportamiento que se quiere representar depende de estados, eventos y concurrencia\cite{bib8,bib9}. En el contexto de este trabajo, esa característica resulta relevante porque el planificador no ejecuta una única secuencia lineal de pasos, sino que debe administrar hilos, colas y procesadores que cambian de estado en distintos momentos.\par
