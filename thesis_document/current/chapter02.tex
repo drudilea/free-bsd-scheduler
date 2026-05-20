@@ -197,6 +197,8 @@ En una implementación por software, este comportamiento puede representarse med
 
 Además del comportamiento dinámico, las Redes de Petri permiten analizar ciertas propiedades del modelo. Una red acotada impide que una plaza acumule una cantidad ilimitada de tokens; una red segura es aquella donde cada plaza puede contener, como máximo, un token; y una red libre de interbloqueos evita estados en los que el sistema queda sin posibilidad de avanzar. Estas propiedades no sustituyen las pruebas sobre el \textit{kernel}, pero sirven como una primera forma de razonamiento sobre el diseño del modelo antes de llevarlo al código\cite{bib7}.\par
 
+Otro concepto útil para analizar Redes de Petri es el de invariante. Un invariante describe una relación que se mantiene mientras la red evoluciona, aunque se disparen distintas transiciones. En particular, los invariantes de plaza ayudan a revisar si ciertos recursos se conservan dentro del modelo, es decir, si no aparecen ni desaparecen tokens donde no deberían hacerlo. Los invariantes de transición, en cambio, permiten observar ciclos o secuencias de disparos que pueden repetirse sin romper la coherencia del marcado. En un modelo de planificación, este tipo de análisis sirve para revisar si los estados definidos para hilos, colas y procesadores se mantienen consistentes durante la ejecución del sistema\cite{bib7}.\par
+
 Para conectar el modelo con el planificador se utilizan dos niveles de representación. Por un lado, existe una red asociada a cada hilo, donde se representan estados como listo para ejecutar, encolado, ejecutando o esperando un evento. Por otro lado, existe una red de recursos, que representa el estado de las CPU y sus colas. La relación entre ambas se expresa mediante transiciones jerárquicas: cuando se dispara una transición en la red de recursos, también debe dispararse la transición correspondiente en la red del hilo. Esta separación permite modelar el estado local de cada hilo sin perder la visión global de los recursos del sistema.\par
 
 Sobre esta base teórica se apoya el proyecto integrador previo y también las extensiones desarrolladas en este trabajo. En particular, la incorporación de nuevas funcionalidades al planificador se analiza observando si pueden representarse como nuevas plazas, transiciones y relaciones dentro de la red, o si requieren información adicional que no está contenida directamente en el marcado.\par
@@ -316,8 +318,6 @@ Las jerarquías están definidas de la siguiente forma:
 
 \subsection{Marcado inicial}
 La red de recursos se inicializará siempre con un token en la plaza que indica que el sistema se encuentra funcionando en modo monoprocesador. Además, se inicializan las plazas que representan a las CPU con un token, excepto la de la CPU0 ya que la misma, inicialmente se encuentra ejecutando el hilo inicial del sistema, por lo que esta última debe inicializarse con un token en la plaza de ejecución (\verb|PLACE_EXECUTING_0|).
-
-
 
 \subsection{Métodos de interés para nuestro proyecto}
 
