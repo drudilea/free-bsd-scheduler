@@ -1,26 +1,26 @@
 \chapter{Desarrollo}
 
 \section{Introducción}
-En este capítulo, detallaremos el desarrollo de las mejoras implementadas en el planificador a corto plazo basado en Redes de Petri para el sistema operativo FreeBSD. El trabajo realizado se fundamenta en la colaboración y continuidad de proyectos previos desarrollados por estudiantes de nuestra institución.\par
+En este capítulo, se detalla el desarrollo de las mejoras implementadas en el planificador a corto plazo basado en Redes de Petri para el sistema operativo FreeBSD. El trabajo realizado se fundamenta en la colaboración y continuidad de proyectos previos desarrollados por estudiantes de la institución.\par
 
-La comprensión y depuración del código existente, así como la adaptación de los archivos del código fuente de FreeBSD relacionados con el planificador 4BSD, fueron tareas esenciales en nuestro proceso de desarrollo. Este esfuerzo intenta reflejar buenas prácticas en ingeniería de software, siendo ésta, una prioridad durante las primeras etapas de desarrollo. Nuestro enfoque integró principios de trabajo en equipo y metodologías ágiles, permitiendo una iteración continua y mejorada sobre el código. A lo largo del desarrollo, se implementaron prácticas de gestión de versiones y estrategias de ramificación para garantizar la calidad y estabilidad del código en cada una de sus etapas. En las siguientes secciones, se detallarán las metodologías utilizadas y los módulos específicos desarrollados, subrayando la importancia de cada componente en el contexto del planificador 4BSD.\par
+La comprensión y depuración del código existente, así como la adaptación de los archivos del código fuente de FreeBSD relacionados con el planificador 4BSD, fueron tareas esenciales en el proceso de desarrollo. Este esfuerzo intenta reflejar buenas prácticas en ingeniería de software, una prioridad durante las primeras etapas de desarrollo. El enfoque adoptado integró principios de trabajo en equipo y metodologías ágiles, permitiendo una iteración continua y mejorada sobre el código. A lo largo del desarrollo, se implementaron prácticas de gestión de versiones y estrategias de ramificación para garantizar la calidad y estabilidad del código en cada una de sus etapas. En las siguientes secciones, se detallan las metodologías utilizadas y los módulos específicos desarrollados, subrayando la importancia de cada componente en el contexto del planificador 4BSD.\par
 
 
 \section{Metodologías de trabajo}
-Para abordar el desarrollo de este proyecto de manera efectiva, establecimos una serie de metodologías de trabajo que nos permitieron mantener una organización rigurosa y una documentación detallada en cada etapa del proceso. Nuestro objetivo era no solo avanzar de manera sistemática, sino también crear un recurso valioso para futuros trabajos en este ámbito.\par
+Para abordar el desarrollo de este proyecto de manera efectiva, se estableció una serie de metodologías de trabajo orientadas a mantener una organización rigurosa y una documentación detallada en cada etapa del proceso. El objetivo no fue solo avanzar de manera sistemática, sino también crear un recurso valioso para futuros trabajos en este ámbito.\par
 
-La primera etapa consistió en una profunda revisión del informe del trabajo integrador previo, así como del código base de los archivos de interés en el planificador 4BSD. Este proceso se realizó de forma iterativa, asegurándonos de comprender y extender la documentación de ambos componentes antes de proceder. Ampliar la documentación en esta etapa de análisis inicial, fue crucial para establecer una base sólida sobre la cual construir el resto del proyecto.\par
+La primera etapa consistió en una profunda revisión del informe del trabajo integrador previo, así como del código base de los archivos de interés en el planificador 4BSD. Este proceso se realizó de forma iterativa, con el propósito de comprender y extender la documentación de ambos componentes antes de proceder. Ampliar la documentación en esta etapa de análisis inicial fue crucial para establecer una base sólida sobre la cual construir el resto del proyecto.\par
 
-Una vez completada la fase de comprensión y documentación, planificamos nuestras metodologías de trabajo, enfocándonos en estrategias que facilitaran la colaboración y la gestión del proyecto. Implementamos una estrategia de ramas estandarizada en el repositorio fork de FreeBSD, permitiendo un control preciso de las versiones y facilitando la integración continua. Además, creamos un repositorio externo dedicado a almacenar toda la documentación y los recursos necesarios para el desarrollo, garantizando un acceso fácil y organizado a la información relevante.\par
+Una vez completada la fase de comprensión y documentación, se definieron metodologías de trabajo enfocadas en estrategias que facilitaran la colaboración y la gestión del proyecto. Se implementó una estrategia de ramas estandarizada en el repositorio fork de FreeBSD, permitiendo un control preciso de las versiones y facilitando la integración continua. Además, se creó un repositorio externo dedicado a almacenar toda la documentación y los recursos necesarios para el desarrollo, garantizando un acceso fácil y organizado a la información relevante.\par
 
-Estas metodologías no solo nos permitieron trabajar de manera ordenada y eficiente, sino que también sentaron las bases para una colaboración efectiva y una fácil transición del conocimiento. En las siguientes secciones, se detallarán las estrategias específicas utilizadas.\par
+Estas metodologías permitieron trabajar de manera ordenada y eficiente, y también sentaron las bases para una colaboración efectiva y una fácil transición del conocimiento. En las siguientes secciones, se detallan las estrategias específicas utilizadas.\par
 
 \subsection{Estrategia de ramificación}
 Definir una estrategia de ramificación o \textit{branch strategy} en los proyectos es fundamental para mantener el control sobre el flujo de trabajo, la organización del proyecto y asegurar que las modificaciones se integren sin problemas en la rama principal del código. Una estrategia bien definida establece un conjunto de reglas claras y consistentes para la creación y fusión de ramas de código.\par
 
-Además, esta estrategia facilita el mantenimiento de un historial completo y bien organizado de las modificaciones realizadas al código, lo cual es esencial para el seguimiento y la continuidad del proyecto. En nuestro caso, definimos el prefijo de branches utilizando los apellidos de los integrantes del grupo de trabajo, como por ejemplo, \texttt{\textbf{DrudiGoldmanPI/}}. Este enfoque nos ayuda a identificar y localizar fácilmente todos los cambios realizados en este proyecto integrador.\par
+Además, esta estrategia facilita el mantenimiento de un historial completo y bien organizado de las modificaciones realizadas al código, lo cual es esencial para el seguimiento y la continuidad del proyecto. En este caso, se definió el prefijo de branches utilizando los apellidos de los integrantes del grupo de trabajo, como por ejemplo, \texttt{\textbf{DrudiGoldmanPI/}}. Este enfoque ayuda a identificar y localizar fácilmente todos los cambios realizados en este proyecto integrador.\par
 
-Para definir los nombres de las ramas, establecimos tres casos principales por los cuales se crearían nuevas ramas:
+Para definir los nombres de las ramas, se establecieron tres casos principales por los cuales se crearían nuevas ramas:
 
 \begin{itemize}
     \item \textbf{Testing}: Ramas creadas para realizar pruebas y verificar que ciertas partes del código fuente funcionen según lo esperado. Este tipo de ramas se utilizan principalmente para la depuración mediante el uso de logs.
@@ -39,9 +39,9 @@ Donde \texttt{\textbf{<DESCRIPCIÓN>}} es una breve explicación del contenido d
 Por ejemplo, \textit{DrudiGoldmanPI/feature\_cpuMonopolized-13.1.0} es una rama destinada a la implementación del módulo de monopolización, el cual se detalla más adelante en esta sección de desarrollo; mientras que \textit{DrudiGoldmanPI/update\_petriNetScheduler-12.3.0} corresponde a una rama utilizada para la actualización del planificador 4BSD, modelado mediante Redes de Petri, a la versión 12.3.0 del sistema operativo.\par
 
 \subsection{Conventional Commits}
-En nuestro proyecto, utilizamos la convención de \textit{Conventional Commits} para mantener un historial de cambios claro y consistente. Esta práctica facilita la lectura y comprensión de los cambios realizados, tanto para el equipo de desarrollo como para futuros colaboradores.\par
+En este proyecto, se utilizó la convención de \textit{Conventional Commits} para mantener un historial de cambios claro y consistente. Esta práctica facilita la lectura y comprensión de los cambios realizados, tanto para el equipo de desarrollo como para futuros colaboradores.\par
 
-Los mensajes de \textit{commit} siguen un formato estandarizado que describe de manera concisa el tipo de cambio, la versión del sistema operativo afectada y una breve descripción de la modificación. A continuación, se presentan algunos ejemplos extraídos de nuestro proyecto:
+Los mensajes de \textit{commit} siguen un formato estandarizado que describe de manera concisa el tipo de cambio, la versión del sistema operativo afectada y una breve descripción de la modificación. A continuación, se presentan algunos ejemplos extraídos del proyecto:
 
 \begin{itemize}
     \item \texttt{feat(13.1.0): Move thread lock before resource\_expulse\_thread()}
@@ -50,14 +50,14 @@ Los mensajes de \textit{commit} siguen un formato estandarizado que describe de 
     \item \texttt{feat(12.3.0): Short term scheduler modeling with PN - Add PI code to release/12.3.0}
 \end{itemize}
 
-Los tipos de cambios más comunes que utilizamos incluyen:
+Los tipos de cambios más comunes utilizados incluyen:
 \begin{itemize}
     \item \textbf{feat}: Para la adición de nuevas funcionalidades.
     \item \textbf{fix}: Para la corrección de errores.
     \item \textbf{refactor}: Para modificaciones que mejoran el código sin alterar su funcionalidad.
 \end{itemize}
 
-Para la integración de cambios, hemos adoptado la estrategia de \textit{squash merge}. Esta técnica permite consolidar todos los cambios de una rama en un único \textit{commit} bien detallado, lo cual simplifica el historial del proyecto y facilita el seguimiento de avances importantes. Cada \textit{squash merge} incluye un resumen comprensivo de todos los \textit{sub-commits} que forman parte del cambio, garantizando así una documentación clara y precisa del progreso del proyecto.\par
+Para la integración de cambios, se adoptó la estrategia de \textit{squash merge}. Esta técnica permite consolidar todos los cambios de una rama en un único \textit{commit} bien detallado, lo cual simplifica el historial del proyecto y facilita el seguimiento de avances importantes. Cada \textit{squash merge} incluye un resumen comprensivo de todos los \textit{sub-commits} que forman parte del cambio, garantizando así una documentación clara y precisa del progreso del proyecto.\par
 
 \subsection{Repositorio de Documentación del Proyecto} \label{sect:wiki}
 
@@ -98,15 +98,15 @@ Para gestionar las actualizaciones de manera ordenada y efectiva, así como tamb
 
 En esta primera iteración se buscó llevar los cambios del proyecto integrador previo realizados en la versión 11.0.0 del sistema operativo FreeBSD a la última release de esta versión, es decir, al 11.4.0.\par
 
-Durante dicha actualización, nos encontramos con un cambio significativo que tuvo un impacto relevante en nuestro proyecto: la modificación en la función \verb|maybe_preempt()|. En la versión anterior, esta función se encargaba de determinar si un nuevo hilo debía tomar el control del procesador inmediatamente, reemplazando al hilo actual en ejecución. En caso afirmativo, se realizaba el cambio de contexto y comenzaba su ejecución, sustituyendo al hilo que se encontraba en el procesador.\par
+Durante dicha actualización, se identificó un cambio significativo que tuvo un impacto relevante en este proyecto: la modificación en la función \verb|maybe_preempt()|. En la versión anterior, esta función se encargaba de determinar si un nuevo hilo debía tomar el control del procesador inmediatamente, reemplazando al hilo actual en ejecución. En caso afirmativo, se realizaba el cambio de contexto y comenzaba su ejecución, sustituyendo al hilo que se encontraba en el procesador.\par
 
 En la versión más reciente, se introdujo una nueva estrategia, posponer el cambio de contexto para un momento más adecuado mediante un sistema de banderas. En lugar de realizar el cambio de contexto de manera inmediata, se implementó un mecanismo donde el hilo recién encolado establece el valor de la bandera \verb|td_owepreempt| en 1, indicando la necesidad de desalojar al que se encuentra en ejecución, para así tomar el control.\par
 
-Si bien el método de preemption no se encuentra modelado en nuestra Red de Petri de Recursos, este cambio impactó en el código del planificador de nuestro trabajo ya que implicó la remoción de algunos disparos de transiciones que se provocaban en el cambio de contexto inmediato. Con la nueva estrategia, fue necesario ajustar el código de nuestra Red de Petri para reflejar el cambio en la política de planificación.\par
+Si bien el método de preemption no se encuentra modelado en la Red de Petri de recursos, este cambio impactó en el código del planificador desarrollado, ya que implicó la remoción de algunos disparos de transiciones que se provocaban en el cambio de contexto inmediato. Con la nueva estrategia, fue necesario ajustar el código de la Red de Petri para reflejar el cambio en la política de planificación.\par
 
 \subsection{Actualización a la versión 12}
 
-Al comparar las diferencias entre las versiones 11.4.0 y 12.3.0 (último \textit{release}) de FreeBSD, no se encontraron cambios significativos en los archivos relevantes para nuestro proyecto del planificador. Debido a esto, no fue necesario realizar ajustes específicos para esta versión.\par
+Al comparar las diferencias entre las versiones 11.4.0 y 12.3.0 (último \textit{release}) de FreeBSD, no se encontraron cambios significativos en los archivos relevantes para el planificador desarrollado. Debido a esto, no fue necesario realizar ajustes específicos para esta versión.\par
 
 
 \subsection{Actualización a la versión 13}
@@ -115,19 +115,19 @@ La versión 13 trajo con ella varios cambios significativos en el código del pl
 
 El primero de ellos (ver Apéndice \ref{appendix:apA1}) ya se encuentra en la firma de la función y sus variables: previamente, \verb|newtd| era un parámetro de \verb|sched_switch()| que se utilizaba para indicar explícitamente el hilo que se iba a ejecutar a continuación. Sin embargo, en la versión 13, el parámetro \verb|newtd| se eliminó y con ello se simplificó la lógica de selección del hilo (ver Apéndice \ref{appendix:apA3}), teniendo que ajustar algunos disparos en la Red de Petri que previamente eran necesarios para mantener la coherencia de los recursos relacionados, con estos desencolados en el planificador.\par
 
-En la versión 13 de FreeBSD, se realizó una reorganización significativa de los locks en la función \verb|sched_switch()| (ver Apéndice \ref{appendix:apA2}). Estos cambios introdujeron comportamientos inesperados en la red, como el disparo de transiciones no sensibilizadas que desajustaban el estado de la red y causaban fallos en el sistema. Después de depurar el código, identificamos que el problema principal era el manejo incorrecto de la transición \verb|RETURN_VOL|. Específicamente, el método \verb|resource_expulse_thread()| estaba disparando esta transición sin bloquear previamente el \verb|td_lock|. Sin este bloqueo, no era posible cambiar el estado del hilo, lo que impedía que regresara al estado de \verb|CAN_RUN| o listo para ejecutarse. Como resultado, ningún hilo podía ser ejecutado por los procesadores más de una vez, lo que bloqueaba el sistema. Tras realizar los ajustes necesarios, logramos resolver este problema y garantizar el correcto funcionamiento de la red.\par
+En la versión 13 de FreeBSD, se realizó una reorganización significativa de los locks en la función \verb|sched_switch()| (ver Apéndice \ref{appendix:apA2}). Estos cambios introdujeron comportamientos inesperados en la red, como el disparo de transiciones no sensibilizadas que desajustaban el estado de la red y causaban fallos en el sistema. Después de depurar el código, se identificó que el problema principal era el manejo incorrecto de la transición \verb|RETURN_VOL|. Específicamente, el método \verb|resource_expulse_thread()| estaba disparando esta transición sin bloquear previamente el \verb|td_lock|. Sin este bloqueo, no era posible cambiar el estado del hilo, lo que impedía que regresara al estado de \verb|CAN_RUN| o listo para ejecutarse. Como resultado, ningún hilo podía ser ejecutado por los procesadores más de una vez, lo que bloqueaba el sistema. Tras realizar los ajustes necesarios, se resolvió este problema y se garantizó el correcto funcionamiento de la red.\par
 
 \subsection{Resultados}
 
-Durante la actualización a las diferentes versiones del sistema operativo FreeBSD, se logró garantizar el funcionamiento correcto de todas las versiones, lo cual fue un logro significativo. Esto permitió no solo mantener el proyecto al día, sino también adentrarnos en el código del sistema operativo y comprender su funcionamiento de manera más integral.\par
+Durante la actualización a las diferentes versiones del sistema operativo FreeBSD, se logró garantizar el funcionamiento correcto de todas las versiones. Esto permitió no solo mantener el proyecto al día, sino también profundizar en el código del sistema operativo y comprender su funcionamiento de manera más integral.\par
 
-Se tuvo la oportunidad de leer y analizar el código fuente en profundidad. Esto nos permitió adquirir un conocimiento detallado del proyecto y nos familiarizó con su estructura y características particulares. Esta inmersión en el código nos brindó una base sólida para abordar tareas posteriores de manera más eficiente y efectiva.\par
+La lectura y el análisis del código fuente en profundidad permitieron adquirir un conocimiento detallado del proyecto y de su estructura y características particulares. Esta inmersión en el código brindó una base sólida para abordar tareas posteriores de manera más eficiente y efectiva.\par
 
 Adicionalmente, durante el proceso de actualizaciones, se identificaron, realizaron y documentaron algunas mejoras respecto a versiones anteriores del proyecto. Dichas mejoras fueron registradas en el repositorio de documentación (apartado \ref{sect:wiki}); y algunas de ellas, en el presente documento, con el objetivo de mantener un registro detallado y accesible para trabajos futuros.\par
 
 \subsection{Próximos pasos}
 
-Como se desarrolló previamente, sostenemos la importancia de mantener el proyecto actualizado con las últimas versiones del sistema operativo FreeBSD para asegurar su eficiencia, seguridad y compatibilidad con tecnologías más recientes.\par
+Como se desarrolló previamente, se sostiene la importancia de mantener el proyecto actualizado con las últimas versiones del sistema operativo FreeBSD para asegurar su eficiencia, seguridad y compatibilidad con tecnologías más recientes.\par
 
 Para lograr este objetivo, es esencial monitorear continuamente las actualizaciones y aplicar los cambios necesarios de manera oportuna. Esto evitará el rezago respecto a \textit{releases} más recientes y garantizará que el proyecto se beneficie de las últimas mejoras y correcciones de errores.\par
 
@@ -165,9 +165,9 @@ En resumen, la plaza \verb|PLACE_SUSPENDED| controla las transiciones de encolad
     \label{fig:cpu-on-off-1st-iteration}
 \end{figure}
 
-Como primer paso para implementar esta funcionalidad a nivel de código, nos centramos en ajustar las matrices fundamentales que soportan el funcionamiento de la Red de Petri: la matriz base y la matriz de incidencia. Estas matrices son cruciales para la representación y el manejo de las transiciones y plazas en la Red de Petri.\par
+Como primer paso para implementar esta funcionalidad a nivel de código, el trabajo se centró en ajustar las matrices fundamentales que soportan el funcionamiento de la Red de Petri: la matriz base y la matriz de incidencia. Estas matrices son cruciales para la representación y el manejo de las transiciones y plazas en la Red de Petri.\par
 
-La matriz base, que define la estructura inicial de la Red de Petri, necesitaba ser actualizada para reflejar las nuevas plazas y transiciones introducidas. Específicamente, agregamos entradas para la nueva plaza \verb|PLACE_SUSPENDED| y las transiciones asociadas (\verb|TRAN_SUSPEND_PROC| y \verb|TRAN_WAKEUP_PROC|). Esta modificación asegura que la estructura de la red pueda manejar los cambios en el estado de los núcleos del procesador, permitiendo que el sistema registre y gestione correctamente los \textit{tokens} en la plaza de suspensión.\par
+La matriz base, que define la estructura inicial de la Red de Petri, necesitaba ser actualizada para reflejar las nuevas plazas y transiciones introducidas. Específicamente, se agregaron entradas para la nueva plaza \verb|PLACE_SUSPENDED| y las transiciones asociadas (\verb|TRAN_SUSPEND_PROC| y \verb|TRAN_WAKEUP_PROC|). Esta modificación asegura que la estructura de la red pueda manejar los cambios en el estado de los núcleos del procesador, permitiendo que el sistema registre y gestione correctamente los \textit{tokens} en la plaza de suspensión.\par
 
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{10pt}
@@ -212,7 +212,7 @@ La matriz base, que define la estructura inicial de la Red de Petri, necesitaba 
     \label{tabla:matriz_base_post}
 \end{table}
 
-Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a las plazas y viceversa. Actualizar esta matriz implicó modificar las relaciones entre las nuevas transiciones y las plazas afectadas. Concretamente, tuvimos que ajustar las entradas para reflejar el impacto de las transiciones de habilitación y deshabilitación de los núcleos en las plazas correspondientes. Esto incluye la configuración de los arcos inhibidores que garantizan que los cambios en el estado del procesador se gestionen correctamente.\par
+Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a las plazas y viceversa. Actualizar esta matriz implicó modificar las relaciones entre las nuevas transiciones y las plazas afectadas. Concretamente, se ajustaron las entradas para reflejar el impacto de las transiciones de habilitación y deshabilitación de los núcleos en las plazas correspondientes. Esto incluye la configuración de los arcos inhibidores que garantizan que los cambios en el estado del procesador se gestionen correctamente.\par
 
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{10pt}
@@ -259,7 +259,7 @@ Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a
 
 Como parte de los ajustes realizados en las matrices, se incorporó una nueva función, \linebreak\verb|toggle_active_cpu()|, al archivo de métodos auxiliares de la Red de Petri. Esta función puede ser invocada desde un módulo del \textit{kernel} y está diseñada para alternar el estado de una CPU especificada como parámetro. La función verifica si la transición asociada está sensibilizada y, si es así, procede a dispararla. En resumen, esta adición permite seleccionar y alternar el estado de un procesador, que puede ser suspendido o activado según sea necesario, y se gestiona de manera externa al flujo principal del kernel, permitiendo así un control en ejecución del estado de habilitación de la CPU.\par
 
-Tras la implementación de esta funcionalidad, nos encontramos con un problema inesperado: la funcionalidad no se comportaba como se había previsto. Específicamente, recibimos alertas indicando que algunas transiciones no estaban sensibilizadas durante los intentos de disparo. El proceso de depuración reveló que el problema estaba relacionado con el comportamiento del \textit{scheduler} cuando no había hilos disponibles para ejecutar, ni en la cola local del procesador ni en la cola global.\par
+Tras la implementación de esta funcionalidad, apareció un problema inesperado: la funcionalidad no se comportaba como se había previsto. Específicamente, se recibieron alertas indicando que algunas transiciones no estaban sensibilizadas durante los intentos de disparo. El proceso de depuración reveló que el problema estaba relacionado con el comportamiento del \textit{scheduler} cuando no había hilos disponibles para ejecutar, ni en la cola local del procesador ni en la cola global.\par
 
 En la siguiente sección, se describe la solución implementada para superar esta dificultad.\par
 
@@ -274,7 +274,7 @@ Cuando no hay hilos o procesos listos para ejecutarse en una CPU, el planificado
 
 En el trabajo integrador previo, el momento de la toma de decisión del encolado del \texttt{idlethread} no estaba modelado en su totalidad, sino que se simulaban los disparos de transiciones utilizando la cola global, para mantener coherentes los estados en ambas redes (de recursos y de hilos). Es decir, en momentos de inactividad de la CPU, se disparaban las transiciones de \verb|TRAN_QUEUE_GLOBAL| y \verb|TRAN_FROM_GLOBAL_CPU| para encolar, desencolar y ejecutar el \texttt{idlethread}.\par
 
-El problema con este enfoque en nuestro proyecto es que la decisión de inhabilitar el procesador mediante el modulo desarrollado, bloquea tanto el encolado como el desencolado, ya sea de la cola particular del procesador como de la cola global, lo que hace que el mecanismo utilizado en el proyecto integrador previo quede inutilizable, ya que se intentarán disparar transiciones no sensibilizadas. Por tanto, fue necesario ajustar el modelo de la red de Petri para incluir ahora el comportamiento específico del planificador en los momentos en que se tiene que hacer uso del \texttt{idlethread}.\par
+El problema con este enfoque en el proyecto actual es que la decisión de inhabilitar el procesador mediante el modulo desarrollado bloquea tanto el encolado como el desencolado, ya sea de la cola particular del procesador como de la cola global, lo que hace que el mecanismo utilizado en el proyecto integrador previo quede inutilizable, ya que se intentarán disparar transiciones no sensibilizadas. Por tanto, fue necesario ajustar el modelo de la red de Petri para incluir ahora el comportamiento específico del planificador en los momentos en que se tiene que hacer uso del \texttt{idlethread}.\par
 
 La solución, detallada en la Figura \ref{fig:cpu-on-off-2nd-iteration}, consistió en agregar una nueva transición, \verb|TRAN_EXEC_IDLE|, que permite la ejecución del \texttt{idlethread} cuando no hay hilos en la cola del procesador, contemplando así el caso en que la CPU está suspendida. Tras implementar estos cambios, el modelo comenzó a representar con precisión el proceso interno del planificador.\par
 
@@ -346,7 +346,7 @@ Es importante señalar que no es posible suspender el procesador cero. Esto se d
 
 La implementación de este módulo independiente no tiene un impacto inmediato en el sistema, ya que se activa únicamente cuando el usuario envía una señal específica, en el momento que elija.\par
 
-De cara al futuro, creemos que el siguiente paso debería enfocarse en integrar esta funcionalidad con otros elementos clave del sistema operativo, como hilos, procesos o programas que los gestionen. Esta integración permitiría ajustar el estado de los procesadores en ejecución, respondiendo a las necesidades reales del sistema en su conjunto, y no solo a través de un módulo del kernel.\par
+De cara al futuro, se considera que el siguiente paso debería enfocarse en integrar esta funcionalidad con otros elementos clave del sistema operativo, como hilos, procesos o programas que los gestionen. Esta integración permitiría ajustar el estado de los procesadores en ejecución, respondiendo a las necesidades reales del sistema en su conjunto, y no solo a través de un módulo del kernel.\par
 
 Otra mejora, relacionada con la estructura de la red de Petri de recursos desarrollada en la sección \ref{ch:idlethread}, sería asignar una plaza específica en la red para el \texttt{idlethread}. Esto facilitaría la detección de los momentos en los que el \texttt{idlethread} está en ejecución, proporcionando un mayor control sobre posibles acciones en estas situaciones.\par
 
@@ -364,7 +364,7 @@ Es muy importante que este módulo, al igual que el desarrollado previamente, pu
 
 Para implementar el módulo de monopolización, se comenzó con una fase de investigación para explorar las posibles estrategias de desarrollo. Inicialmente, se consideró la opción de diseñarlo como un módulo independiente, similar al módulo de inhibición. Sin embargo, se identificó que en última instancia, la decisión del planificador sobre a qué CPU encolar un hilo, estaba estrechamente vinculada a los identificadores de los hilos que se deseaban ejecutar.\par
 
-Este enfoque nos llevó a entender el problema en términos de políticas para la toma de decisiones a la hora de encolar un hilo. Para implementar estas nuevas políticas, agregamos un mecanismo que permite fijar un hilo a un procesador específico, asegurándonos que dicho procesador no pueda encolar ni ejecutar otros hilos mientras esté monopolizado.\par
+Este enfoque llevó a entender el problema en términos de políticas para la toma de decisiones a la hora de encolar un hilo. Para implementar estas nuevas políticas, se agregó un mecanismo que permite fijar un hilo a un procesador específico, asegurando que dicho procesador no pueda encolar ni ejecutar otros hilos mientras esté monopolizado.\par
 
 El proceso utiliza un nuevo registro (\verb|pinned_threads_per_cpu|) que rastrea el estado de monopolización de cada uno de los procesadores. Este registro se define como un arreglo de tantos elementos como procesadores en el sistema, que almacenan el identificador del hilo monopolizando dicho procesador (o -1 en caso de encontrarse libre). Así, cuando el planificador debe decidir donde ejecutar el hilo, primero verifica si este se encuentra \textit{anclado} a un procesador específico. Si es así, el hilo se encola en ese procesador para luego ser ejecutado. En caso contrario, el sistema sigue el proceso estándar de asignación a cualquier procesador disponible.\par
 
@@ -378,7 +378,7 @@ El comportamiento de la elección de procesador desarrollado, se muestra en la F
     \label{fig:monopolization_resource-choose-cpu}
 \end{figure}
 
-Junto con el desarrollo de este sistema, también desarrollamos funciones complementarias que permiten alternar el estado de monopolización de los procesadores, liberar un procesador cuando se decida, y verificar si un procesador está ocupado o disponible para un nuevo hilo.\par
+Junto con el desarrollo de este sistema, también se desarrollaron funciones complementarias que permiten alternar el estado de monopolización de los procesadores, liberar un procesador cuando se decida, y verificar si un procesador está ocupado o disponible para un nuevo hilo.\par
 
 Los detalles técnicos y las implementaciones específicas se encuentran documentados en el Apéndice \ref{appendix:apB}.\par
 
@@ -386,7 +386,7 @@ Los detalles técnicos y las implementaciones específicas se encuentran documen
 
 Los resultados del módulo fueron satisfactorios, demostrando que los hilos pudieron monopolizar los procesadores de manera efectiva.\par
 
-Para verificar este comportamiento, realizamos pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos de las CPUs durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
+Para verificar este comportamiento, se realizaron pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos de las CPUs durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
 
 Es importante señalar que el módulo no incluyó el caso de la CPU0, ya que, al igual que en pruebas anteriores con el módulo de inhibición, presentaba dificultades para la monopolización debido a su rol en la gestión de tareas administrativas del sistema.\par
 
@@ -420,7 +420,7 @@ La distinción central fue separar las decisiones de política de las restriccio
 
 % La primera de ellas, y la más crucial, fue un problema encontrado con la afinidad de los procesos.
 
-% El síntoma ocurría durante nuestras pruebas de estrés; nos dimos cuenta de que los procesadores nunca alcanzaban el 100\% de su capacidad. Descubrimos que esto se debía a un problema de asignación de CPU que generaba una sobrecarga (overhead). El sistema operativo realizaba demasiados cambios de contexto entre los hilos, debido a un cambio en el código en relación con la afinidad, la limitación y la fijación a núcleos específicos.
+% El síntoma ocurría durante las pruebas de estrés; se observó que los procesadores nunca alcanzaban el 100\% de su capacidad. Se identificó que esto se debía a un problema de asignación de CPU que generaba una sobrecarga (overhead). El sistema operativo realizaba demasiados cambios de contexto entre los hilos, debido a un cambio en el código en relación con la afinidad, la limitación y la fijación a núcleos específicos.
 
 % Estos cambios provocaban que el planificador eligiera los procesadores de forma aleatoria para encolar los hilos, sin considerar las indicaciones que podrían mejorar el rendimiento en la asignación de recursos y los cambios de contexto.
 
@@ -437,13 +437,13 @@ La distinción central fue separar las decisiones de política de las restriccio
 
 \subsection{Fallo de página por desincronización entre FreeBSD y la red de Petri}\label{ch:problema_red}
 
-Durante el desarrollo identificamos un problema recurrente que inicialmente parecía estar relacionado con el uso de la placa de red en la máquina virtual. El síntoma aparecía con mayor frecuencia al habilitar SSH para conectarnos al sistema, mientras que al desactivar la placa de red antes del arranque el problema dejaba de reproducirse. Sin embargo, el análisis posterior mostró que la placa de red no era la causa raíz, sino un escenario que aumentaba la probabilidad de ejecutar caminos problemáticos del planificador.\par
+Durante el desarrollo se identificó un problema recurrente que inicialmente parecía estar relacionado con el uso de la placa de red en la máquina virtual. El síntoma aparecía con mayor frecuencia al habilitar SSH para conectarse al sistema, mientras que al desactivar la placa de red antes del arranque el problema dejaba de reproducirse. Sin embargo, el análisis posterior mostró que la placa de red no era la causa raíz, sino un escenario que aumentaba la probabilidad de ejecutar caminos problemáticos del planificador.\par
 
 El síntoma visible era un \textit{kernel panic} provocado por un \textit{page fault}. En varios \textit{crash dumps}, el fallo aparecía en funciones como \verb|kern_select()| o en caminos de espera del \textit{kernel}. Esto dificultó el diagnóstico porque el punto del \textit{crash} no era el lugar donde se había introducido el error. El sistema llegaba a esas funciones con el estado real del planificador y el marcado de la red de Petri ya desincronizados.\par
 
-Al revisar la implementación del proyecto integrador previo, observamos que la decisión de CPU quedaba delegada al método \verb|resource_choose_cpu()|. En ese modelo, si un hilo con restricciones debía ir a una CPU cuya transición \verb|TRAN_ADDTOQUEUE| estaba inhibida por \verb|PLACE_CANTQ|, el planificador podía enviarlo a la cola global. Esta decisión mantenía la red sincronizada con el evento registrado, pero podía incumplir reglas internas de FreeBSD, ya que la cola global puede ser consumida por cualquier CPU y no vuelve a validar las condiciones de \textit{pinning}, \textit{bounding} o afinidad antes de ejecutar el hilo.\par
+Al revisar la implementación del proyecto integrador previo, se observó que la decisión de CPU quedaba delegada al método \verb|resource_choose_cpu()|. En ese modelo, si un hilo con restricciones debía ir a una CPU cuya transición \verb|TRAN_ADDTOQUEUE| estaba inhibida por \verb|PLACE_CANTQ|, el planificador podía enviarlo a la cola global. Esta decisión mantenía la red sincronizada con el evento registrado, pero podía incumplir reglas internas de FreeBSD, ya que la cola global puede ser consumida por cualquier CPU y no vuelve a validar las condiciones de \textit{pinning}, \textit{bounding} o afinidad antes de ejecutar el hilo.\par
 
-En nuestras versiones posteriores intentamos respetar mejor esas reglas internas. Para hilos \textit{pinned}, \textit{bound} o con afinidad restringida, el planificador encolaba el hilo en la CPU correspondiente o dentro del conjunto permitido por FreeBSD. El problema era que, si la red tenía esa CPU inhibida por \verb|PLACE_CANTQ|, la transición \verb|TRAN_ADDTOQUEUE| no estaba sensibilizada. En consecuencia, FreeBSD agregaba el hilo a la run queue real, pero la red no sumaba el token correspondiente en \verb|PLACE_QUEUE| ni actualizaba correctamente su estado.\par
+En versiones posteriores se intentó respetar mejor esas reglas internas. Para hilos \textit{pinned}, \textit{bound} o con afinidad restringida, el planificador encolaba el hilo en la CPU correspondiente o dentro del conjunto permitido por FreeBSD. El problema era que, si la red tenía esa CPU inhibida por \verb|PLACE_CANTQ|, la transición \verb|TRAN_ADDTOQUEUE| no estaba sensibilizada. En consecuencia, FreeBSD agregaba el hilo a la run queue real, pero la red no sumaba el token correspondiente en \verb|PLACE_QUEUE| ni actualizaba correctamente su estado.\par
 
 A partir de ese momento, la red dejaba de representar el estado real del \textit{scheduler}. Cuando FreeBSD luego intentaba sacar ese hilo de la cola para ejecutarlo, la red podía intentar disparar \verb|TRAN_UNQUEUE| sin haber registrado antes el \verb|TRAN_ADDTOQUEUE| correspondiente. Esa misma diferencia de marcado podía propagarse a transiciones posteriores como \verb|TRAN_EXEC|, \verb|TRAN_RETURN_INVOL|, \verb|TRAN_RETURN_VOL| o \verb|TRAN_REMOVE_QUEUE|. Por este motivo, el \textit{panic} terminaba apareciendo más tarde y en otro punto del \textit{kernel}: el error observable era consecuencia de haber desincronizado previamente el estado real de FreeBSD y el marcado de la red.\par
 
