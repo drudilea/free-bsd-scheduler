@@ -89,6 +89,228 @@
 
 \end{lstlisting}
 
+\chapter{Matrices de la red de recursos}\label{appendix:matrices}
+
+Este apéndice presenta las matrices completas utilizadas en el módulo de inhibición de asignación de trabajo a procesadores. Las filas corresponden a plazas de la red de recursos y las columnas corresponden a transiciones. Las celdas sombreadas indican entradas agregadas o modificadas respecto del estado anterior del modelo.\par
+
+La matriz base corresponde a la matriz de incidencia local \(C = W^{+} - W^{-}\). Un valor positivo agrega tokens a la plaza de la fila cuando se dispara la transición de la columna; un valor negativo consume tokens; y el valor 0 indica que la transición no modifica esa plaza. La matriz de inhibición representa arcos inhibidores: el valor 1 indica que la plaza de la fila inhibe la transición de la columna cuando contiene tokens, y el valor 0 indica ausencia de arco inhibidor.\par
+
+\begin{table}[p]
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Plaza / Transición} &
+        \rotatebox{90}{\texttt{TRAN\_ADDTOQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_UNQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_EMPTY}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_VOL}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_INVOL}} &
+        \rotatebox{90}{\texttt{TRAN\_FROM\_GLOBAL\_CPU}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_EMPTY\_QUEUE}} \\
+        \hline
+        \texttt{PLACE\_CANTQ}     & 1 & 0  & -1 & 0  & 0  & 0  & 0  & -1 & 0  \\
+        \hline
+        \texttt{PLACE\_QUEUE}     & 1 & -1 & 0  & 0  & 0  & 0  & 0  & -1 & -1 \\
+        \hline
+        \texttt{PLACE\_CPU}       & 0 & -1 & 0  & 0  & 1  & 1  & -1 & 0  & 0  \\
+        \hline
+        \texttt{PLACE\_TOEXEC}    & 0 & 1  & -1 & -1 & 0  & 0  & 1  & 0  & 0  \\
+        \hline
+        \texttt{PLACE\_EXECUTING} & 0 & 0  & 1  & 1  & -1 & -1 & 0  & 0  & 0  \\
+        \hline
+    \end{tabular}
+    \caption{Matriz base inicial de la red de recursos por CPU.}
+    \label{tabla:matriz_base_pre}
+\end{table}
+
+\begin{table}[p]
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Plaza / Transición} &
+        \rotatebox{90}{\texttt{TRAN\_ADDTOQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_UNQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_EMPTY}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_VOL}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_INVOL}} &
+        \rotatebox{90}{\texttt{TRAN\_FROM\_GLOBAL\_CPU}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_EMPTY\_QUEUE}} \\
+        \hline
+        \texttt{PLACE\_CANTQ}     & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 \\
+        \hline
+        \texttt{PLACE\_QUEUE}     & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_CPU}       & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_TOEXEC}    & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_EXECUTING} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+    \end{tabular}
+    \caption{Matriz de inhibición inicial de la red de recursos por CPU.}
+    \label{tabla:matriz_inhibicion_pre}
+\end{table}
+
+\begin{table}[p]
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Plaza / Transición} &
+        \rotatebox{90}{\texttt{TRAN\_ADDTOQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_UNQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_EMPTY}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_VOL}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_INVOL}} &
+        \rotatebox{90}{\texttt{TRAN\_FROM\_GLOBAL\_CPU}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_EMPTY\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_SUSPEND\_PROC}} &
+        \rotatebox{90}{\texttt{TRAN\_WAKEUP\_PROC}} \\
+        \hline
+        \texttt{PLACE\_CANTQ}     & 1 & 0  & -1 & 0  & 0  & 0  & 0  & -1 & 0  & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
+        \hline
+        \texttt{PLACE\_QUEUE}     & 1 & -1 & 0  & 0  & 0  & 0  & 0  & -1 & -1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
+        \hline
+        \texttt{PLACE\_CPU}       & 0 & -1 & 0  & 0  & 1  & 1  & -1 & 0  & 0  & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
+        \hline
+        \texttt{PLACE\_TOEXEC}    & 0 & 1  & -1 & -1 & 0  & 0  & 1  & 0  & 0  & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
+        \hline
+        \texttt{PLACE\_EXECUTING} & 0 & 0  & 1  & 1  & -1 & -1 & 0  & 0  & 0  & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
+        \hline
+        \texttt{PLACE\_SUSPENDED} & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}-1 \\
+        \hline
+    \end{tabular}
+    \caption{Matriz base de la primera iteración del módulo de inhibición.}
+    \label{tabla:matriz_base_post}
+\end{table}
+
+\begin{table}[p]
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Plaza / Transición} &
+        \rotatebox{90}{\texttt{TRAN\_ADDTOQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_UNQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_EMPTY}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_VOL}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_INVOL}} &
+        \rotatebox{90}{\texttt{TRAN\_FROM\_GLOBAL\_CPU}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_EMPTY\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_SUSPEND\_PROC}} &
+        \rotatebox{90}{\texttt{TRAN\_WAKEUP\_PROC}} \\
+        \hline
+        \texttt{PLACE\_CANTQ}     & 1                      & 0                      & 0                      & 1                      & 0                      & 0                      & 0                      & 0                      & 1                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        \hline
+        \texttt{PLACE\_QUEUE}     & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        \hline
+        \texttt{PLACE\_CPU}       & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        \hline
+        \texttt{PLACE\_TOEXEC}    & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        \hline
+        \texttt{PLACE\_EXECUTING} & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
+        \hline
+        \texttt{PLACE\_SUSPENDED} & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 \\
+        \hline
+    \end{tabular}
+    \caption{Matriz de inhibición de la primera iteración del módulo de inhibición.}
+    \label{tabla:matriz_inhibicion_post}
+\end{table}
+
+\begin{table}[p]
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Plaza / Transición} &
+        \rotatebox{90}{\texttt{TRAN\_ADDTOQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_UNQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_EMPTY}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_IDLE}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_VOL}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_INVOL}} &
+        \rotatebox{90}{\texttt{TRAN\_FROM\_GLOBAL\_CPU}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_EMPTY\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_SUSPEND\_PROC}} &
+        \rotatebox{90}{\texttt{TRAN\_WAKEUP\_PROC}} \\
+        \hline
+        \texttt{PLACE\_CANTQ}     & 1 & 0  & -1 & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & -1 & 0  & 0 & 0  \\
+        \hline
+        \texttt{PLACE\_QUEUE}     & 1 & -1 & 0  & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & -1 & -1 & 0 & 0  \\
+        \hline
+        \texttt{PLACE\_CPU}       & 0 & -1 & 0  & 0  & \cellcolor{lightgray}-1 & 1  & 1  & -1 & 0  & 0  & 0 & 0  \\
+        \hline
+        \texttt{PLACE\_TOEXEC}    & 0 & 1  & -1 & -1 & \cellcolor{lightgray}1  & 0  & 0  & 1  & 0  & 0  & 0 & 0  \\
+        \hline
+        \texttt{PLACE\_EXECUTING} & 0 & 0  & 1  & 1  & \cellcolor{lightgray}0  & -1 & -1 & 0  & 0  & 0  & 0 & 0  \\
+        \hline
+        \texttt{PLACE\_SUSPENDED} & 0 & 0  & 0  & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & 0  & 0  & 1 & -1 \\
+        \hline
+    \end{tabular}
+    \caption{Matriz base de la segunda iteración del módulo de inhibición.}
+    \label{tabla:matriz_base_post_2}
+\end{table}
+
+\begin{table}[p]
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \textbf{Plaza / Transición} &
+        \rotatebox{90}{\texttt{TRAN\_ADDTOQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_UNQUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_EMPTY}} &
+        \rotatebox{90}{\texttt{TRAN\_EXEC\_IDLE}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_VOL}} &
+        \rotatebox{90}{\texttt{TRAN\_RETURN\_INVOL}} &
+        \rotatebox{90}{\texttt{TRAN\_FROM\_GLOBAL\_CPU}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_REMOVE\_EMPTY\_QUEUE}} &
+        \rotatebox{90}{\texttt{TRAN\_SUSPEND\_PROC}} &
+        \rotatebox{90}{\texttt{TRAN\_WAKEUP\_PROC}} \\
+        \hline
+        \texttt{PLACE\_CANTQ}     & 1 & 0 & 0 & 1 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_QUEUE}     & 0 & 0 & 0 & 0 & \cellcolor{lightgray}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_CPU}       & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_TOEXEC}    & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_EXECUTING} & 0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hline
+        \texttt{PLACE\_SUSPENDED} & 1 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
+        \hline
+    \end{tabular}
+    \caption{Matriz de inhibición de la segunda iteración del módulo de inhibición.}
+    \label{tabla:matriz_inhibicion_post_2}
+\end{table}
+
 \chapter{Detalles de la implementación del módulo de monopolizado}\label{appendix:apB}
 
 En este apartado se desarrollará con mayor profundidad la implementación del módulo de monopolización de hilos, haciendo referencia principalmente a las funciones que se han modificado y su comportamiento a lo largo del proceso de ejecución de un hilo.

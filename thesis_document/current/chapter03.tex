@@ -167,94 +167,25 @@ En resumen, la plaza \verb|PLACE_SUSPENDED| controla las transiciones de encolad
 
 Como primer paso para implementar esta funcionalidad a nivel de código, el trabajo se centró en ajustar las matrices fundamentales que soportan el funcionamiento de la Red de Petri: la matriz base y la matriz de incidencia. Estas matrices son cruciales para la representación y el manejo de las transiciones y plazas en la Red de Petri.\par
 
-La matriz base, que define la estructura inicial de la Red de Petri, necesitaba ser actualizada para reflejar las nuevas plazas y transiciones introducidas. Específicamente, se agregaron entradas para la nueva plaza \verb|PLACE_SUSPENDED| y las transiciones asociadas (\verb|TRAN_SUSPEND_PROC| y \verb|TRAN_WAKEUP_PROC|). Esta modificación asegura que la estructura de la red pueda manejar los cambios en el estado de los núcleos del procesador, permitiendo que el sistema registre y gestione correctamente los \textit{tokens} en la plaza de suspensión.\par
+La matriz base, que define la estructura inicial de la Red de Petri, necesitaba ser actualizada para reflejar las nuevas plazas y transiciones introducidas. En este informe se usa el nombre matriz base para referirse a la matriz de incidencia local de una CPU: cada celda indica el cambio de marcado producido sobre una plaza cuando se dispara una transición. Es decir, corresponde a la matriz \(C = W^{+} - W^{-}\) de la subred local del recurso.\par
 
-\renewcommand{\arraystretch}{1.5}
-\setlength{\tabcolsep}{10pt}
+También fue necesario actualizar la matriz de inhibición. A diferencia de la matriz base, esta matriz no representa suma o resta de tokens, sino la presencia de arcos inhibidores: una celda con valor 1 indica que la plaza de esa fila inhibe la transición de esa columna cuando contiene tokens. Una celda con valor 0 indica ausencia de arco inhibidor.\par
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-        \hline
-        1 & 0  & -1 & 0  & 0  & 0  & 0  & -1 & 0  \\
-        \hline
-        1 & -1 & 0  & 0  & 0  & 0  & 0  & -1 & -1 \\
-        \hline
-        0 & -1 & 0  & 0  & 1  & 1  & -1 & 0  & 0  \\
-        \hline
-        0 & 1  & -1 & -1 & 0  & 0  & 1  & 0  & 0  \\
-        \hline
-        0 & 0  & 1  & 1  & -1 & -1 & 0  & 0  & 0  \\
-        \hline
-    \end{tabular}
-    \caption{Matriz base inicial.}
-    \label{tabla:matriz_base_pre}
-\end{table}
+En la primera iteración se agregaron entradas para la nueva plaza \verb|PLACE_SUSPENDED| y para las transiciones \verb|TRAN_SUSPEND_PROC| y \verb|TRAN_WAKEUP_PROC|. En la matriz base, esas entradas registran el cambio de marcado asociado a suspender o rehabilitar un procesador. En la matriz de inhibición, registran que un procesador suspendido no debe aceptar ciertos caminos de encolado hasta que vuelva a habilitarse.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+    \begin{tabular}{|>{\RaggedRight\arraybackslash}p{0.23\textwidth}|>{\RaggedRight\arraybackslash}p{0.30\textwidth}|>{\RaggedRight\arraybackslash}p{0.30\textwidth}|}
         \hline
-        1                      & 0                      & -1                     & 0                      & 0                      & 0                      & 0                      & -1                     & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
+        \textbf{Etapa} & \textbf{Elementos agregados} & \textbf{Detalle de matrices} \\
         \hline
-        1                      & -1                     & 0                      & 0                      & 0                      & 0                      & 0                      & -1                     & -1                     & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
+        Modelo inicial & Red de recursos original por CPU & Apéndice \ref{appendix:matrices}, Tablas \ref{tabla:matriz_base_pre} y \ref{tabla:matriz_inhibicion_pre} \\
         \hline
-        0                      & -1                     & 0                      & 0                      & 1                      & 1                      & -1                     & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
-        \hline
-        0                      & 1                      & -1                     & -1                     & 0                      & 0                      & 1                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
-        \hline
-        0                      & 0                      & 1                      & 1                      & -1                     & -1                     & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0  \\
-        \hline
-        \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}-1 \\
+        Primera iteración & \verb|PLACE_SUSPENDED|, \verb|TRAN_SUSPEND_PROC| y \verb|TRAN_WAKEUP_PROC| & Apéndice \ref{appendix:matrices}, Tablas \ref{tabla:matriz_base_post} y \ref{tabla:matriz_inhibicion_post} \\
         \hline
     \end{tabular}
-    \caption{Matriz base: Primera iteración del módulo de inhibición.}
-    \label{tabla:matriz_base_post}
-\end{table}
-
-Por otro lado, la matriz de incidencia describe cómo las transiciones afectan a las plazas y viceversa. Actualizar esta matriz implicó modificar las relaciones entre las nuevas transiciones y las plazas afectadas. Concretamente, se ajustaron las entradas para reflejar el impacto de las transiciones de habilitación y deshabilitación de los núcleos en las plazas correspondientes. Esto incluye la configuración de los arcos inhibidores que garantizan que los cambios en el estado del procesador se gestionen correctamente.\par
-
-\renewcommand{\arraystretch}{1.5}
-\setlength{\tabcolsep}{10pt}
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-        \hline
-        1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 \\
-        \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-    \end{tabular}
-    \caption{Matriz de incidencia inicial.}
-    \label{tabla:matriz_incidencia_pre}
-\end{table}
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
-        \hline
-        1                      & 0                      & 0                      & 1                      & 0                      & 0                      & 0                      & 0                      & 1                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
-        \hline
-        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
-        \hline
-        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
-        \hline
-        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
-        \hline
-        0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & 0                      & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 \\
-        \hline
-        \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 & \cellcolor{lightgray}0 & \cellcolor{lightgray}1 & \cellcolor{lightgray}0 \\
-        \hline
-    \end{tabular}
-    \caption{Matriz de incidencia: Primera iteración del módulo de inhibición.}
-    \label{tabla:matriz_incidencia_post}
+    \caption{Resumen de las matrices modificadas en la primera iteración del módulo de inhibición.}
+    \label{tabla:resumen_matrices_primera_iteracion}
 \end{table}
 
 Como parte de los ajustes realizados en las matrices, se incorporó una nueva función, \linebreak\verb|toggle_active_cpu()|, al archivo de métodos auxiliares de la Red de Petri. Esta función puede ser invocada desde un módulo del \textit{kernel} y está diseñada para alternar el estado de una CPU especificada como parámetro. La función verifica si la transición asociada está sensibilizada y, si es así, procede a dispararla. En resumen, esta adición permite seleccionar y alternar el estado de un procesador, que puede ser suspendido o activado según sea necesario, y se gestiona de manera externa al flujo principal del kernel, permitiendo así un control en ejecución del estado de habilitación de la CPU.\par
@@ -286,48 +217,21 @@ La solución, detallada en la Figura \ref{fig:cpu-on-off-2nd-iteration}, consist
     \label{fig:cpu-on-off-2nd-iteration}
 \end{figure}
 
-Una vez más, la implementación de estos cambios comenzó con la actualización de las matrices base y de incidencia. Después de realizar estos ajustes, se pudo proceder a incorporar las modificaciones correspondientes en el código del planificador. Dichos cambios incluyeron la implementación de la lógica detallada previamente, donde en casos de inactividad o inhabilitación manual de algún procesador, el flujo de ejecución de la red y, por tanto, de los procesos e hilos dentro de un núcleo, se comportará de manera esperada.\par
+Una vez más, la implementación de estos cambios comenzó con la actualización de las matrices base y de inhibición. Después de realizar estos ajustes, se pudo proceder a incorporar las modificaciones correspondientes en el código del planificador. Dichos cambios incluyeron la implementación de la lógica detallada previamente, donde en casos de inactividad o inhabilitación manual de algún procesador, el flujo de ejecución de la red y, por tanto, de los procesos e hilos dentro de un núcleo, se comportará de manera esperada.\par
+
+La segunda iteración incorporó la transición \verb|TRAN_EXEC_IDLE| para modelar el camino de ejecución del \texttt{idlethread}. En la matriz base, esta transición registra el movimiento de tokens necesario para pasar desde el estado de CPU disponible hacia la ejecución del hilo de inactividad. En la matriz de inhibición, se agregaron las restricciones necesarias para evitar disparos no sensibilizados cuando el procesador está suspendido o no existen hilos ordinarios disponibles.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \begin{tabular}{|>{\RaggedRight\arraybackslash}p{0.23\textwidth}|>{\RaggedRight\arraybackslash}p{0.30\textwidth}|>{\RaggedRight\arraybackslash}p{0.30\textwidth}|}
         \hline
-        1 & 0  & -1 & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & -1 & 0  & 0 & 0  \\
+        \textbf{Etapa} & \textbf{Elementos agregados} & \textbf{Detalle de matrices} \\
         \hline
-        1 & -1 & 0  & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & -1 & -1 & 0 & 0  \\
-        \hline
-        0 & -1 & 0  & 0  & \cellcolor{lightgray}-1 & 1  & 1  & -1 & 0  & 0  & 0 & 0  \\
-        \hline
-        0 & 1  & -1 & -1 & \cellcolor{lightgray}1  & 0  & 0  & 1  & 0  & 0  & 0 & 0  \\
-        \hline
-        0 & 0  & 1  & 1  & \cellcolor{lightgray}0  & -1 & -1 & 0  & 0  & 0  & 0 & 0  \\
-        \hline
-        0 & 0  & 0  & 0  & \cellcolor{lightgray}0  & 0  & 0  & 0  & 0  & 0  & 1 & -1 \\
+        Segunda iteración & \verb|TRAN_EXEC_IDLE| sobre el modelo ya extendido con \verb|PLACE_SUSPENDED| & Apéndice \ref{appendix:matrices}, Tablas \ref{tabla:matriz_base_post_2} y \ref{tabla:matriz_inhibicion_post_2} \\
         \hline
     \end{tabular}
-    \caption{Matriz base: Segunda iteración del módulo de inhibición.}
-    \label{tabla:matriz_base_post_2}
-\end{table}
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
-        \hline
-        1 & 0 & 0 & 1 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
-        \hline
-        0 & 0 & 0 & 0 & \cellcolor{lightgray}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-        0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-        0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-        0 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        \hline
-        1 & 0 & 0 & 0 & \cellcolor{lightgray}0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\
-        \hline
-    \end{tabular}
-    \caption{Matriz de incidencia: Segunda iteración del módulo de inhibición.}
-    \label{tabla:matriz_incidencia_post_2}
+    \caption{Resumen de las matrices modificadas en la segunda iteración del módulo de inhibición.}
+    \label{tabla:resumen_matrices_segunda_iteracion}
 \end{table}
 
 \subsection{Resultados}
