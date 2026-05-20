@@ -135,6 +135,20 @@ Mantener el software actualizado en proyectos de código abierto como FreeBSD no
 
 Para futuros trabajos en este proyecto, se recomienda priorizar la importancia de este aspecto y comprometerse a dedicar los recursos y el tiempo necesarios para llevar a cabo las actualizaciones de manera regular.\par
 
+\section{Criterios comunes para los módulos desarrollados}
+
+Los módulos desarrollados en este trabajo modifican la forma en que el planificador decide qué procesadores pueden recibir nuevos hilos. Aunque cada módulo tiene un objetivo distinto, ambos comparten algunas restricciones de diseño relacionadas con el funcionamiento interno de FreeBSD.\par
+
+\subsection{Tratamiento del procesador 0}\label{sect:cpu0-modulos}
+
+Tanto el módulo de inhibición de asignación de trabajo como el módulo de monopolización excluyen al procesador 0 de las operaciones configurables por el usuario. Esta decisión se tomó como una medida conservadora para preservar la estabilidad del sistema durante las pruebas realizadas.\par
+
+La CPU0 suele tener un rol particular en distintas rutas internas del \textit{kernel}. Como se explicó al describir las restricciones de afinidad y \textit{bounding} del planificador 4BSD, existen casos donde FreeBSD vincula explícitamente la ejecución a este procesador, por ejemplo en caminos asociados a \verb|kern_reboot()|. Además, dependiendo de la plataforma y de la configuración del sistema, pueden existir interrupciones o tareas internas con afinidad hacia CPU0. Por ese motivo, inhibir o monopolizar este procesador no es equivalente a hacerlo sobre cualquier otro núcleo disponible.\par
+
+Durante el desarrollo se observó que aplicar estos módulos sobre CPU0 podía producir comportamientos inestables. En lugar de incorporar una excepción parcial sin comprender completamente todos los caminos internos involucrados, se decidió impedir su selección dentro de ambos módulos. Esta restricción no implica que sea imposible diseñar una política que incluya CPU0, sino que dicha posibilidad requiere un análisis específico de afinidad, interrupciones y caminos obligatorios del \textit{kernel} que quedó fuera del alcance de este prototipo.\par
+
+La limitación tiene un costo práctico: en sistemas con pocos núcleos, excluir CPU0 reduce de forma directa la cantidad de procesadores que pueden ser inhibidos o monopolizados. Por lo tanto, la decisión mejora la estabilidad del prototipo, pero también restringe su aplicabilidad en equipos de baja cantidad de CPUs.\par
+
 \section{Módulo de inhibición de asignación de trabajo a procesadores}
 
 Tras completar las actualizaciones del sistema operativo, el siguiente paso fue desarrollar una nueva funcionalidad para controlar, desde el planificador, qué núcleos pueden recibir nuevos hilos. Esta funcionalidad permite inhibir manualmente la asignación de trabajo a determinados núcleos, sin apagar físicamente el procesador ni intervenir sobre la administración energética del hardware.\par
@@ -244,7 +258,7 @@ Además, se logró la versatilidad esperada para este módulo, ya que es posible
 
 Los detalles completos de los resultados se discutirán en profundidad en el capítulo \ref{ch:results} de \textit{Análisis de Resultados}.\par
 
-Es importante señalar que no es posible suspender el procesador cero. Esto se debe a que el sistema operativo utiliza este núcleo de forma predeterminada para tareas esenciales como la gestión de interrupciones, la gestión de memoria, entre otras; y al desactivarlo, el sistema experimenta un comportamiento inesperado. Para evitar esta situación, se realizaron ajustes en el código que impiden la selección de dicho núcleo para su suspensión.\par
+Como se explicó en la sección \ref{sect:cpu0-modulos}, el módulo no permite seleccionar el procesador 0 para su inhibición. Esta restricción fue incorporada para evitar comportamientos inestables observados durante las pruebas y mantener la decisión de inhibición limitada a procesadores que no cumplen ese rol especial dentro del sistema.\par
 
 \subsection{Próximos pasos}
 
@@ -292,7 +306,7 @@ Los resultados del módulo fueron satisfactorios, demostrando que los hilos pudi
 
 Para verificar este comportamiento, se realizaron pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos de las CPUs durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
 
-Es importante señalar que el módulo no incluyó el caso de la CPU0, ya que, al igual que en pruebas anteriores con el módulo de inhibición, presentaba dificultades para la monopolización debido a su rol en la gestión de tareas administrativas del sistema.\par
+Como se indicó en la sección \ref{sect:cpu0-modulos}, el módulo no incluyó la monopolización de CPU0. La decisión se mantuvo por el mismo criterio adoptado en el módulo de inhibición: evitar que el prototipo interfiera con rutas internas del sistema que pueden depender de ese procesador.\par
 
 Los detalles específicos y un análisis más profundo de los resultados se abordarán en el capítulo de “Análisis de resultados”.\par
 
