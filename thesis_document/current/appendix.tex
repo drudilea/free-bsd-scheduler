@@ -55,7 +55,7 @@
 \end{lstlisting}
 
 
-\section{\texttt{sched\_switch()} (v12 a v13): Selección y ejecución de un nuevo thread}\label{appendix:apA3}
+\section{\texttt{sched\_switch()} (v12 a v13): Selección y ejecución de un nuevo hilo}\label{appendix:apA3}
 
 \begin{lstlisting}[language=diff]
 +   newtd = choosethread();
@@ -350,20 +350,20 @@ Como parte del desarrollo del módulo, también se implementaron algunos método
 
 \chapter{Análisis de \textit{kernel panic} debido a fallos de página (\textit{page fault})}\label{appendix:apC}
 
-Se analizaron archivos \textit{dump} generados en un sistema FreeBSD a partir de un page fault ocurrido mientras la placa de red se encontraba encendida. El proceso involucrado en el fallo es sshd, que generó un \textit{kernel panic} debido a un acceso inválido a memoria.
+Se analizaron archivos de volcado generados en un sistema FreeBSD a partir de un \textit{page fault} ocurrido mientras la placa de red se encontraba encendida. El proceso involucrado en el fallo es \texttt{sshd}, que generó un \textit{kernel panic} debido a un acceso inválido a memoria.
 
-El proceso de análisis inició cargando el archivo de \textit{core dump} con la herramienta \textit{kgdb}, que permite depurar el \textit{kernel} de FreeBSD y obtener información detallada sobre el estado del sistema al momento del fallo.
+El proceso de análisis inició cargando el archivo de \textit{core dump} con la herramienta \texttt{kgdb}, que permite depurar el \textit{kernel} de FreeBSD y obtener información detallada sobre el estado del sistema al momento del fallo.
 
-Todos los archivos de \textit{core dump} generados por el sistema se encuentran en la carpeta \textit{/var/crash/}, y para cargarlos en \textit{kgdb} se utiliza el comando \textit{kgdb /boot/kernel/kernel /var/crash/vmcore.0}.
+Todos los archivos de \textit{core dump} generados por el sistema se encuentran en el directorio \texttt{/var/crash/}, y para cargarlos en \texttt{kgdb} se utiliza el comando \verb|kgdb /boot/kernel/kernel /var/crash/vmcore.0|.
 
-En las imágenes a continuación se muestran algunas de las salidas obtenidas durante el análisis del \textit{core dump}. Una vez cargado el \textit{core dump}, se utilizó el comando \textit{where} para obtener la ubicación del fallo de página en el \textit{kernel}. La salida de este comando muestra la pila de llamadas al momento del fallo, y se observa que el fallo ocurrió en la función \verb|kern_select()|.
+En las imágenes a continuación se muestran algunas de las salidas obtenidas durante el análisis del \textit{core dump}. Una vez cargado el \textit{core dump}, se utilizó el comando \texttt{where} para obtener la ubicación del fallo de página en el \textit{kernel}. La salida de este comando muestra la pila de llamadas al momento del fallo, y se observa que el fallo ocurrió en la función \verb|kern_select()|.
 
-Para obtener más información sobre el fallo, se utilizó el comando \textit{up} para navegar hacia la función \verb|kern_select()|.
+Para obtener más información sobre el fallo, se utilizó el comando \texttt{up} para navegar hacia la función \verb|kern_select()|.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/kgdb_init.jpeg}
-    \caption{Inicialización de \textit{kgdb} y lectura del \textit{crash dump}.}
+    \caption{Inicialización de \texttt{kgdb} y lectura del \textit{crash dump}.}
     \label{fig:kgdb_init}
 \end{figure}
 
@@ -387,20 +387,20 @@ Para obtener más información sobre el fallo, se utilizó el comando \textit{up
 
 El análisis inicial permitió identificar el lugar en el que el \textit{kernel} terminaba fallando, pero no explicaba por sí solo la causa del problema. La aparición del fallo en \verb|kern_select()| indicaba el punto en el que se observaba el acceso inválido a memoria, aunque el error se originaba antes, durante una decisión de encolado del planificador.\par
 
-La causa identificada fue una desincronización entre las run queues reales de FreeBSD y el marcado de la red de Petri. En las versiones previas del planificador, podía ocurrir que FreeBSD encolara un hilo en una cola per-CPU por una restricción de \textit{pinning}, \textit{bounding} o afinidad, mientras que la red no registraba el disparo de \verb|TRAN_ADDTOQUEUE| porque dicha transición se encontraba inhibida por \verb|PLACE_CANTQ|. Desde ese momento, la red dejaba de representar correctamente el estado del planificador.\par
+La causa identificada fue una desincronización entre las \textit{run queues} reales de FreeBSD y el marcado de la red de Petri. En las versiones previas del planificador, podía ocurrir que FreeBSD encolara un hilo en una cola per-CPU por una restricción de \textit{pinning}, \textit{bounding} o afinidad, mientras que la red no registraba el disparo de \verb|TRAN_ADDTOQUEUE| porque dicha transición se encontraba inhibida por \verb|PLACE_CANTQ|. Desde ese momento, la red dejaba de representar correctamente el estado del planificador.\par
 
-El efecto posterior era que, cuando el \textit{scheduler} intentaba desencolar o ejecutar el hilo, la red podía intentar disparar transiciones como \verb|TRAN_UNQUEUE|, \verb|TRAN_EXEC| o \verb|TRAN_REMOVE_QUEUE| sobre un marcado incorrecto. Por eso el \textit{panic} aparecía en funciones alejadas del punto original del error: el \textit{crash} era una consecuencia tardía de una decisión de encolado que había dejado inconsistentes al \textit{kernel} y al modelo.\par
+El efecto posterior era que, cuando el planificador intentaba desencolar o ejecutar el hilo, la red podía intentar disparar transiciones como \verb|TRAN_UNQUEUE|, \verb|TRAN_EXEC| o \verb|TRAN_REMOVE_QUEUE| sobre un marcado incorrecto. Por eso el \textit{kernel panic} aparecía en funciones alejadas del punto original del error: el \textit{crash} era una consecuencia tardía de una decisión de encolado que había dejado inconsistentes al \textit{kernel} y al modelo.\par
 
 Para corregir esta situación se incorporó la transición \verb|TRAN_ADDTOQUEUE_FORCED|. Esta transición registra en la red los encolados que FreeBSD debe realizar obligatoriamente para respetar reglas internas del sistema operativo. A diferencia de \verb|TRAN_ADDTOQUEUE|, no está inhibida por \verb|PLACE_CANTQ|, pero mantiene la incidencia sobre \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|. De esta forma, evita la desincronización sin eliminar la penalización de la CPU para futuras decisiones de balanceo.\par
 
 \section{Instrumentación dinámica con DTrace}
 \label{appendix:dtrace-sdt}
 
-\textit{DTrace} es un framework de observabilidad dinámica que permite inspeccionar eventos del sistema durante la ejecución, activando trazas bajo demanda. A diferencia de una depuración basada en impresiones permanentes en el \textit{kernel}, permite recolectar información puntual durante una prueba y luego desactivar la instrumentación sin mantener una salida constante de logs.\par
+\textit{DTrace} es un \textit{framework} de observabilidad dinámica que permite inspeccionar eventos del sistema durante la ejecución, activando trazas bajo demanda. A diferencia de una depuración basada en impresiones permanentes en el \textit{kernel}, permite recolectar información puntual durante una prueba y luego desactivar la instrumentación sin mantener una salida constante de registros.\par
 
-Un \textit{probe} es un punto observable sobre el cual \textit{DTrace} puede enganchar una acción de trazado. Algunos probes son provistos por el sistema, mientras que otros pueden ser definidos explícitamente dentro del código. Para este trabajo se utilizó \verb|SDT| (\textit{Statically Defined Tracing}), que permite declarar probes estáticos propios en el \textit{kernel}. De esta forma se expusieron eventos internos del planificador y de la red de Petri, como decisiones tomadas por \verb|sched_add()|, transiciones efectivamente disparadas y transiciones que hubieran quedado bloqueadas por falta de sensibilización.\par
+Un \textit{probe} es un punto observable sobre el cual \textit{DTrace} puede enganchar una acción de trazado. Algunos \textit{probes} son provistos por el sistema, mientras que otros pueden ser definidos explícitamente dentro del código. Para este trabajo se utilizó \verb|SDT| (\textit{Statically Defined Tracing}), que permite declarar \textit{probes} estáticos propios en el \textit{kernel}. De esta forma se expusieron eventos internos del planificador y de la red de Petri, como decisiones tomadas por \verb|sched_add()|, transiciones efectivamente disparadas y transiciones que hubieran quedado bloqueadas por falta de sensibilización.\par
 
-Esta instrumentación fue necesaria porque el problema no se manifestaba en el mismo punto en el que se originaba. El \textit{page fault} aparecía más tarde, en funciones alejadas del planificador, por lo que era necesario observar los eventos previos de encolado y el efecto que tenían sobre el marcado de la red. Con probes propios, las pruebas pudieron diferenciar si un hilo iba a la cola global, si era encolado por la política normal de Petri o si era registrado mediante el camino forzado agregado para respetar restricciones internas de FreeBSD.\par
+Esta instrumentación fue necesaria porque el problema no se manifestaba en el mismo punto en el que se originaba. El \textit{page fault} aparecía más tarde, en funciones alejadas del planificador, por lo que era necesario observar los eventos previos de encolado y el efecto que tenían sobre el marcado de la red. Con \textit{probes} propios, las pruebas pudieron diferenciar si un hilo iba a la cola global, si era encolado por la política normal de Petri o si era registrado mediante el camino forzado agregado para respetar restricciones internas de FreeBSD.\par
 
 \section{Evidencia mediante DTrace}
 

@@ -6,11 +6,33 @@ Primero se describen los conceptos fundamentales de procesos e hilos, incluyendo
 
 Finalmente se introducen las nociones de Redes de Petri que se usan a lo largo del informe. No se busca desarrollar una teoría completa sobre el tema, sino dejar explícitos los elementos que aparecen luego en el diseño y en la implementación: plazas, transiciones, tokens, marcado, sensibilización, disparo de transiciones, matrices y arcos inhibidores.\par
 
+\section*{Glosario de términos técnicos}
+\addcontentsline{toc}{section}{Glosario de términos técnicos}
+
+A lo largo del informe se conserva en inglés un conjunto de términos propios de FreeBSD, de la literatura de sistemas operativos y de las herramientas de depuración utilizadas. Cuando el término aparece como identificador de código, nombre de estructura, comando o función, se escribe con tipografía monoespaciada. Cuando se usa como concepto técnico dentro del texto, se escribe en cursiva. Esta convención busca evitar traducciones literales poco precisas y, al mismo tiempo, mantener una terminología uniforme.\par
+
+\begin{description}
+    \item[\textit{kernel}:] Núcleo del sistema operativo. Se mantiene el término en inglés por ser la denominación técnica habitual en la documentación de FreeBSD.
+    \item[\textit{scheduler}:] Planificador de corto plazo. En el cuerpo del informe se usa preferentemente el término castellano ``planificador'', salvo cuando se hace referencia explícita al término técnico en inglés.
+    \item[\textit{thread}:] Hilo de ejecución. En el cuerpo del informe se usa ``hilo'', mientras que \textit{thread} se conserva en citas, diffs, nombres técnicos o referencias directas al código.
+    \item[\textit{run queue}:] Cola de ejecución. Cuando se habla del concepto se utiliza \textit{run queue}; cuando se hace referencia a la estructura o identificador del código se utiliza \texttt{run\_queue}.
+    \item[\texttt{idlethread}:] Hilo de inactividad asociado a cada CPU. Se mantiene en tipografía monoespaciada porque se lo trata como nombre técnico propio del planificador.
+    \item[\textit{timeslice}:] Intervalo de tiempo durante el cual un hilo puede ejecutarse antes de que el planificador reevalúe la asignación del procesador.
+    \item[\textit{pinned} y \textit{pinning}:] Condición y mecanismo por los cuales un hilo queda anclado al último procesador en el que ejecutó.
+    \item[\textit{bound} y \textit{bounding}:] Condición y mecanismo por los cuales un hilo queda vinculado a un procesador específico.
+    \item[\textit{preemption}:] Interrupción de la ejecución de un hilo por decisión del planificador para permitir la ejecución de otro hilo.
+    \item[\textit{kernel panic}:] Falla crítica del \textit{kernel} que detiene la ejecución normal del sistema operativo.
+    \item[\textit{page fault}:] Fallo de página producido por un acceso inválido o no resuelto a memoria.
+    \item[\textit{crash dump} y \textit{core dump}:] Volcados de memoria generados para analizar el estado del sistema al momento de una falla.
+    \item[\textit{probe}:] Punto de instrumentación observable mediante DTrace.
+    \item[\textit{framework}:] Marco técnico o infraestructura de soporte para una funcionalidad. En este informe se usa para referirse a DTrace como infraestructura de observabilidad dinámica.
+\end{description}
+
 \section{Procesos e hilos}
 
 En sistemas operativos, los procesos son entidades aisladas que representan la ejecución de una tarea o aplicación en particular. Cada proceso cuenta con su propio espacio de direcciones, que es un área reservada de memoria virtual donde se aloja el código del programa, las variables y los recursos necesarios para su ejecución. Además, disponen de acceso a los recursos del \textit{kernel} a través de llamadas a sistemas.\par
 
-Dentro de cada proceso, puede haber uno o varios hilos de ejecución. Estos hilos son unidades de ejecución independientes que comparten los recursos del proceso padre. Cada hilo se asocia con un procesador virtual, que tiene su propio contexto y un stack de ejecución alojado en el espacio de direcciones del proceso.\par
+Dentro de cada proceso, puede haber uno o varios hilos de ejecución. Estos hilos son unidades de ejecución independientes que comparten los recursos del proceso padre. Cada hilo se asocia con un procesador virtual, que tiene su propio contexto y una pila de ejecución alojada en el espacio de direcciones del proceso.\par
 
 El \textit{kernel} del sistema operativo crea la ilusión de ejecución concurrente de múltiples procesos, distribuyendo los recursos del sistema entre los procesadores listos para ejecutar tareas.\par
 
@@ -26,7 +48,7 @@ La estructura simplificada de un proceso se puede observar en la Figura \ref{fig
     \item Descriptores de archivos: una matriz de punteros que indica los archivos abiertos por el proceso e información relevante de los mismos.
     \item Vector de llamadas al sistema: estructura de datos que mapea las llamadas al sistema con las funciones correspondientes en el \textit{kernel} del sistema operativo.
     \item Contabilidad de recursos: estructura que describe la utilización de los recursos del sistema por parte del proceso.
-    \item Estadísticas: estadísticas del proceso sobre su ejecución, temporizadores y profiling.
+    \item Estadísticas: estadísticas del proceso sobre su ejecución, temporizadores y perfilado.
     \item Acciones de señal: la acción a tomar cuando se envía una señal a un proceso.
     \item Estructura de hilo: el contenido de la estructura de hilos del proceso.
 \end{itemize}
@@ -57,14 +79,14 @@ La estructura de un hilo, que se muestra en la Figura \ref{fig:process-state}, c
 
 \begin{itemize}
     \item Información para la planificación: se refiere a la prioridad del hilo en modo \textit{kernel} y en modo usuario, la cantidad de tiempo que ha pasado suspendido y el uso reciente de la CPU. Además, se indica el estado de ejecución del hilo, banderas de estado adicionales; y si el hilo se encuentra suspendido, información sobre el canal y evento por el cual espera.
-    \item TSB (thread state block): estado de ejecución del hilo en modo usuario y modo kernel. La estructura incluye registros de propósito general, punteros de pila, contador de programa, registros de gestión de memoria, entre otros.
-    \item Pila del kernel: pila para usar al ejecutar en el kernel. Las pilas del \textit{kernel} deben mantenerse pequeñas para evitar desperdiciar memoria física.
+    \item TSB (\textit{thread state block}): estado de ejecución del hilo en modo usuario y modo \textit{kernel}. La estructura incluye registros de propósito general, punteros de pila, contador de programa, registros de gestión de memoria, entre otros.
+    \item Pila del \textit{kernel}: pila para usar al ejecutar en el \textit{kernel}. Las pilas del \textit{kernel} deben mantenerse pequeñas para evitar desperdiciar memoria física.
     \item Estado de la máquina (\textit{machine-dependent state}): se refiere a la información del hilo en relación a detalles que son específicos de la arquitectura de la CPU (registros de estado de punto flotante, información de interrupciones, información de registros de segmento de memoria, etc.).
 \end{itemize}
 
 \subsection{Estados de los procesos e hilos}
 
-La estructura de un proceso en FreeBSD incluye un campo que indica su estado actual. Los estados de un proceso son fundamentales para entender su comportamiento en el sistema y están estrechamente relacionados con el funcionamiento del planificador 4BSD. Cuando se crea un proceso utilizando la llamada al sistema \textit{fork}, inicialmente se marca como nuevo (NEW). Este estado indica que el proceso está en su fase de creación y aún no ha recibido suficientes recursos para comenzar la ejecución.
+La estructura de un proceso en FreeBSD incluye un campo que indica su estado actual. Los estados de un proceso son fundamentales para entender su comportamiento en el sistema y están estrechamente relacionados con el funcionamiento del planificador 4BSD. Cuando se crea un proceso utilizando la llamada al sistema \texttt{fork}, inicialmente se marca como nuevo (NEW). Este estado indica que el proceso está en su fase de creación y aún no ha recibido suficientes recursos para comenzar la ejecución.
 
 Una vez que se asignan los recursos necesarios, el estado del proceso se cambia a NORMAL. En este estado, los hilos del proceso pueden encontrarse en diferentes subestados: ejecutable (RUNNABLE) cuando están listos para ejecutarse o actualmente en ejecución, durmiendo (SLEEPING) cuando están esperando un evento, o detenidos (STOPPED) cuando han sido pausados por una señal o por el proceso padre. El estado NORMAL persiste hasta que el proceso completa su tarea.
 
@@ -101,7 +123,7 @@ Las prioridades de los hilos son un componente importante para la planificación
 
 Las prioridades en el rango de 0 a 47 son asignadas de forma predeterminada por el sistema y se destinan a las tareas de interrupción.\par
 
-Las prioridades de los hilos en tiempo real se encuentran en el intervalo de 48 a 79 y deben ser configuradas previamente por las aplicaciones mediante la llamada al sistema \texttt{rtprio}. A continuación, se encuentran los hilos con prioridades en el rango de 80 a 119, conocidos como hilos del \textit{kernel} superior (top-half \textit{kernel} threads). Estos hilos se encargan de gestionar operaciones críticas del \textit{kernel} que afectan a todo el sistema.\par
+Las prioridades de los hilos en tiempo real se encuentran en el intervalo de 48 a 79 y deben ser configuradas previamente por las aplicaciones mediante la llamada al sistema \texttt{rtprio}. A continuación, se encuentran los hilos con prioridades en el rango de 80 a 119, conocidos como hilos del \textit{kernel} superior (\textit{top-half kernel threads}). Estos hilos se encargan de gestionar operaciones críticas del \textit{kernel} que afectan a todo el sistema.\par
 
 Los hilos con prioridades entre 120 y 223 pertenecen a la clase de hilos de tiempo compartido. Están destinados a ejecutar tareas de usuario convencionales y sus prioridades son ajustadas de manera automática por el \textit{kernel} en función del uso de la CPU.\par
 
@@ -113,11 +135,11 @@ Cuando no hay tareas activas que requieran el uso de la CPU, los hilos de la cla
         \hline
         \textbf{Rango} & \textbf{Clase} & \textbf{Tipo de hilo}          \\
         \hline
-        0 - 47         & ITHD           & Bottom-half \textit{kernel} (interrupt) \\
+        0 - 47         & ITHD           & \textit{Bottom-half kernel} (\textit{interrupt}) \\
         \hline
         48 -79         & REALTIME       & Real-time user                 \\
         \hline
-        80 - 119       & KERN           & Top-half \textit{kernel}                \\
+        80 - 119       & KERN           & \textit{Top-half kernel}                \\
         \hline
         120 - 223      & TIMESHARE      & Time-sharing user              \\
         \hline
@@ -143,7 +165,7 @@ Algunas tareas requieren un control más preciso sobre el proceso, como el caso 
 
 \subsection{\textit{Multilevel Feedback Queue Scheduling}}
 
-El planificador 4BSD, utiliza un algoritmo de planificación basado en colas de retroalimentación multinivel \textit{Multilevel Feedback Queue}. Todos los hilos en estado \textit{RUNNABLE} reciben una prioridad que determina en qué cola de ejecución se colocan. Al seleccionar un nuevo hilo para ejecutar, el sistema escanea las colas de ejecución de mayor a menor prioridad y elige aquel que se encuentra en la primera cola no vacía. Si varios hilos residen en una cola, el sistema los ejecuta en orden circular (\textit{Round Robin}); es decir, en el orden en que se encuentran en la cola, con igual cantidad de tiempo permitido.\par
+El planificador 4BSD utiliza un algoritmo de planificación basado en colas de retroalimentación multinivel (\textit{Multilevel Feedback Queue}). Todos los hilos en estado \textit{RUNNABLE} reciben una prioridad que determina en qué cola de ejecución se colocan. Al seleccionar un nuevo hilo para ejecutar, el sistema escanea las colas de ejecución de mayor a menor prioridad y elige aquel que se encuentra en la primera cola no vacía. Si varios hilos residen en una cola, el sistema los ejecuta en orden circular (\textit{round-robin}); es decir, en el orden en que se encuentran en la cola, con igual cantidad de tiempo permitido.\par
 
 Si un hilo se bloquea, no se vuelve a colocar en la cola de ejecución (\texttt{run\_queue}); en su lugar, se coloca en una \texttt{turnstile\_queue} o en una \texttt{sleep\_queue}. Cuando el hilo agota el \textit{timeslice}, se coloca al final de la cola de la que provino y se selecciona el hilo que se encuentra al comienzo de la misma para ejecutarse.\par
 
@@ -173,7 +195,7 @@ La rutina \verb|mi_switch()| no puede ser llamada desde el código que se ejecut
 
 El planificador 4BSD en FreeBSD está diseñado para gestionar la carga de trabajo en sistemas multiprocesador mediante un enfoque que equilibra la carga de los procesadores. Para lograr esto, el planificador emplea tanto las colas de ejecución específicas de cada CPU como una cola de ejecución global. Tanto la cola global como las específicas de cada CPU están estructuradas como colas de múltiples niveles con realimentación (Multilevel Feedback Queue), lo que permite priorizar y gestionar los hilos de manera eficiente según su comportamiento y necesidades de tiempo de CPU.
 
-La cola de ejecución global contiene hilos que pueden ser ejecutados por cualquier CPU del sistema. Sirve como un \textit{pool} central de hilos listos para ejecutarse, permitiendo una distribución flexible de la carga de trabajo. Cuando una CPU queda inactiva, revisa tanto su propia cola de ejecución como la cola de ejecución global, seleccionando el hilo con mayor prioridad para ejecutarlo. En los casos en donde la cola de ejecución propia está vacía, la CPU tomará un hilo de la cola global, garantizando que todas las CPUs tengan trabajo disponible si hay suficientes hilos listos para ejecutarse.
+La cola de ejecución global contiene hilos que pueden ser ejecutados por cualquier CPU del sistema. Sirve como un conjunto central de hilos listos para ejecutarse, permitiendo una distribución flexible de la carga de trabajo. Cuando una CPU queda inactiva, revisa tanto su propia cola de ejecución como la cola de ejecución global, seleccionando el hilo con mayor prioridad para ejecutarlo. En los casos en donde la cola de ejecución propia está vacía, la CPU tomará un hilo de la cola global, garantizando que todas las CPUs tengan trabajo disponible si hay suficientes hilos listos para ejecutarse.
 
 Por otro lado, cada CPU en el sistema tiene su propia cola de ejecución. Estas colas contienen hilos que están designados para ejecutarse en CPUs específicas. Para optimizar el rendimiento, el planificador 4BSD considera varias restricciones y preferencias de afinidad cuando decide dónde colocar un hilo cuando termina su \textit{timeslice} o debe abandonar por otras razones.
 
@@ -211,7 +233,7 @@ Sobre esta base teórica se apoya el proyecto integrador previo y también las e
 
 Con estos conceptos básicos de Redes de Petri ya presentados, se puede entender con mayor claridad el trabajo integrador previo sobre el que se apoya esta tesis. En esta sección se retoman sus decisiones principales y el modelo final que luego fue tomado como punto de partida para desarrollar las nuevas extensiones.\par
 
-En el contexto del proyecto integrador previo, se llevó a cabo un análisis detallado del comportamiento del \textit{scheduler} de un sistema operativo, con un enfoque específico en el proceso de asignación de tiempo de procesador. El objetivo fundamental fue identificar oportunidades de mejora en su funcionamiento, migrando de una visión estadística a un sistema más complejo implementado mediante Redes de Petri, en donde las decisiones de encolado de los hilos en una CPU se derivan de la información representada en el modelo, incluidos los estados globales y los de cada hilo.\par
+En el contexto del proyecto integrador previo, se llevó a cabo un análisis detallado del comportamiento del planificador de un sistema operativo, con un enfoque específico en el proceso de asignación de tiempo de procesador. El objetivo fundamental fue identificar oportunidades de mejora en su funcionamiento, migrando de una visión estadística a un sistema más complejo implementado mediante Redes de Petri, en donde las decisiones de encolado de los hilos en una CPU se derivan de la información representada en el modelo, incluidos los estados globales y los de cada hilo.\par
 
 En las secciones siguientes, se presentan los puntos clave abordados en este estudio, incluyendo la naturaleza de las modificaciones realizadas. Además, se resaltan los puntos de interés surgidos durante este análisis, los cuales orientarán el desarrollo de los distintos módulos destinados a ampliar las funcionalidades de planificación, como la inhibición de asignación de trabajo a procesadores y la monopolización de los mismos por parte de los hilos.\par
 
@@ -250,7 +272,7 @@ Uno de los modelos representados mediante redes de Petri es el de los estados de
 Las plazas de la Red de Petri de la Figura \ref{fig:threadModel} se corresponden a los estados posibles del hilo, siendo posible encontrarse en un solo estado a la vez. Las transiciones, por otro lado, representan los eventos que pueden llevar al hilo de un estado a otro. A continuación, se detallan las transiciones que se modelaron en la Red de Petri para el hilo:
 
 \begin{itemize}
-    \item \verb|T0_INIT|: Transición del estado \verb|INACTIVE| a \verb|CAN_RUN| que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al \textit{scheduler}, por lo que inicialmente un hilo en el planificador se inicializa en el estado \verb|CAN_RUN| Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
+    \item \verb|T0_INIT|: Transición del estado \verb|INACTIVE| a \verb|CAN_RUN| que ocurre cuando el hilo se agrega al planificador. Esta tarea no corresponde al planificador, por lo que inicialmente un hilo en el planificador se inicializa en el estado \verb|CAN_RUN|. Aunque esta transición no se dispara en la práctica, se incluyó en el modelo por razones representativas.
     \item \verb|T1_ON_QUEUE|: El hilo se coloca en una cola local de una CPU específica o en la cola global, según la disponibilidad.
     \item \verb|T2_SET_RUNNING|: El hilo se retira de la cola y comienza a ejecutar las instrucciones del programa asignado, ocupando así el procesador.
     \item \verb|T3_SWITCH_OUT|: El planificador interrumpe el hilo y lo devuelve a su estado de \verb|CAN_RUN| seleccionando otro hilo de mayor prioridad para ejecutar y realizando un cambio de contexto.

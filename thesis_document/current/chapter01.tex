@@ -5,7 +5,7 @@ El sistema operativo elegido para realizar este proyecto y las modificaciones pe
 
 El planificador de bajo nivel se ejecuta cada vez que un hilo se bloquea o interrumpe, y se debe seleccionar un nuevo hilo para ejecutar. Al ejecutarse miles de veces por segundo, debe tomar decisiones rápidamente y con la menor cantidad de información posible para ser eficiente. Para simplificar su tarea, el \textit{kernel} mantiene un conjunto de colas de ejecución para cada CPU.\@ Cuando una tarea se bloquea en una CPU, la responsabilidad del planificador de bajo nivel es encontrar y elegir el hilo con la máxima prioridad en la cola de ejecución asignada a esa CPU.\par
 
-Este trabajo se construye sobre los cimientos establecidos en un proyecto integrador previo, donde se abordó la mejora del \textit{scheduler} en el sistema operativo FreeBSD.\@ En dicha investigación\cite{bib1}, se identificó la naturaleza estadística del proceso de asignación de tiempo de procesador y se propuso un modelo basado en redes de Petri para introducir determinismo y reducir la incertidumbre en la toma de decisiones.\par
+Este trabajo se construye sobre los cimientos establecidos en un proyecto integrador previo, donde se abordó la mejora del planificador en el sistema operativo FreeBSD.\@ En dicha investigación\cite{bib1}, se identificó la naturaleza estadística del proceso de asignación de tiempo de procesador y se propuso un modelo basado en redes de Petri para introducir determinismo y reducir la incertidumbre en la toma de decisiones.\par
 
 \section{Oportunidad}
 El proyecto integrador previo estableció una base sólida para la comprensión integral del funcionamiento de los sistemas operativos y demostró la relevancia de la planificación en el rendimiento del sistema. Este logro requirió un compromiso considerable y una laboriosa inversión de tiempo en la construcción de modelos, así como en el análisis de los resultados obtenidos.\par
@@ -46,9 +46,9 @@ Objetivos secundarios:
     \item Desarrollar una funcionalidad que permita inhibir manualmente la asignación de nuevos hilos a procesadores seleccionados. Esta funcionalidad no implementa apagado físico de procesadores, sino un mecanismo de control a nivel del planificador que puede servir como base para trabajos futuros.
     \item Desarrollar un mecanismo que le brinde a un hilo la posibilidad de ejecutarse de forma exclusiva en un procesador seleccionado, evitando que otros hilos se encolen en éste mientras el módulo se encuentra activo.
     \item Analizar y aprender exhaustivamente acerca del código fuente del sistema operativo FreeBSD.\@
-    \item Profundizar los conocimientos en la depuración del \textit{kernel} y las diferentes herramientas de debugging.
-    \item Mejorar la documentación del proyecto, estrategia de ramas y commits en el repositorio de desarrollo priorizando las buenas prácticas de programación. Esto permitirá dejar mejores bases para quienes decidan continuar con la investigación a futuro.
-    \item Automatizar y documentar los procesos repetitivos que se llevan a cabo en las diferentes etapas del proyecto, como por ejemplo la instalación de máquinas virtuales, paquetes necesarios para el desarrollo, configuraciones de red, instalación y compilación de kernel, entre otras.
+    \item Profundizar los conocimientos en la depuración del \textit{kernel} y las diferentes herramientas de depuración.
+    \item Mejorar la documentación del proyecto, estrategia de ramas y \textit{commits} en el repositorio de desarrollo priorizando las buenas prácticas de programación. Esto permitirá dejar mejores bases para quienes decidan continuar con la investigación a futuro.
+    \item Automatizar y documentar los procesos repetitivos que se llevan a cabo en las diferentes etapas del proyecto, como por ejemplo la instalación de máquinas virtuales, paquetes necesarios para el desarrollo, configuraciones de red, instalación y compilación de \textit{kernel}, entre otras.
     \item Compartir e interactuar con la comunidad de FreeBSD a través de foros y listas de difusión.
 \end{itemize}
 
