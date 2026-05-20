@@ -161,6 +161,48 @@ Para obtener más información sobre el fallo, se utilizó el comando \textit{up
     \label{fig:kgdb_kern-select}
 \end{figure}
 
+\section{Interpretación posterior del fallo}
+
+El análisis inicial permitió identificar el lugar en el que el \textit{kernel} terminaba fallando, pero no explicaba por sí solo la causa del problema. La aparición del fallo en \verb|kern_select()| indicaba el punto en el que se observaba el acceso inválido a memoria, aunque el error se originaba antes, durante una decisión de encolado del planificador.\par
+
+La causa identificada fue una desincronización entre las run queues reales de FreeBSD y el marcado de la red de Petri. En las versiones previas del planificador, podía ocurrir que FreeBSD encolara un hilo en una cola per-CPU por una restricción de \textit{pinning}, \textit{bounding} o afinidad, mientras que la red no registraba el disparo de \verb|TRAN_ADDTOQUEUE| porque dicha transición se encontraba inhibida por \verb|PLACE_CANTQ|. Desde ese momento, la red dejaba de representar correctamente el estado del planificador.\par
+
+El efecto posterior era que, cuando el \textit{scheduler} intentaba desencolar o ejecutar el hilo, la red podía intentar disparar transiciones como \verb|TRAN_UNQUEUE|, \verb|TRAN_EXEC| o \verb|TRAN_REMOVE_QUEUE| sobre un marcado incorrecto. Por eso el \textit{panic} aparecía en funciones alejadas del punto original del error: el \textit{crash} era una consecuencia tardía de una decisión de encolado que había dejado inconsistentes al \textit{kernel} y al modelo.\par
+
+Para corregir esta situación se incorporó la transición \verb|TRAN_ADDTOQUEUE_FORCED|. Esta transición registra en la red los encolados que FreeBSD debe realizar obligatoriamente para respetar reglas internas del sistema operativo. A diferencia de \verb|TRAN_ADDTOQUEUE|, no está inhibida por \verb|PLACE_CANTQ|, pero mantiene la incidencia sobre \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|. De esta forma, evita la desincronización sin eliminar la penalización de la CPU para futuras decisiones de balanceo.\par
+
+\section{Instrumentación dinámica con DTrace}
+\label{appendix:dtrace-sdt}
+
+\textit{DTrace} es un framework de observabilidad dinámica que permite inspeccionar eventos del sistema durante la ejecución, activando trazas bajo demanda. A diferencia de una depuración basada en impresiones permanentes en el \textit{kernel}, permite recolectar información puntual durante una prueba y luego desactivar la instrumentación sin mantener una salida constante de logs.\par
+
+Un \textit{probe} es un punto observable sobre el cual \textit{DTrace} puede enganchar una acción de trazado. Algunos probes son provistos por el sistema, mientras que otros pueden ser definidos explícitamente dentro del código. Para este trabajo se utilizó \verb|SDT| (\textit{Statically Defined Tracing}), que permite declarar probes estáticos propios en el \textit{kernel}. De esta forma se expusieron eventos internos del planificador y de la red de Petri, como decisiones tomadas por \verb|sched_add()|, transiciones efectivamente disparadas y transiciones que hubieran quedado bloqueadas por falta de sensibilización.\par
+
+Esta instrumentación fue necesaria porque el problema no se manifestaba en el mismo punto en el que se originaba. El \textit{page fault} aparecía más tarde, en funciones alejadas del planificador, por lo que era necesario observar los eventos previos de encolado y el efecto que tenían sobre el marcado de la red. Con probes propios, las pruebas pudieron diferenciar si un hilo iba a la cola global, si era encolado por la política normal de Petri o si era registrado mediante el camino forzado agregado para respetar restricciones internas de FreeBSD.\par
+
+\section{Evidencia mediante DTrace}
+
+Para validar el comportamiento se agregó instrumentación mediante \textit{DTrace}. Las trazas diferenciaron los encolados a cola global, los encolados per-CPU decididos por la política de Petri y los encolados per-CPU forzados por restricciones de FreeBSD.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Escenario} & \textbf{Global} & \textbf{Policy} & \textbf{Forced} & \textbf{Bloq.} \\
+        \hline
+        General & 2570 & 0 & 13 & 0 \\
+        \hline
+        \texttt{cpuset -l 1,2} & 2595 & 311 & 198 & 0 \\
+        \hline
+    \end{tabular}
+    \caption[Conteo de decisiones de encolado con DTrace]{Conteo de decisiones observadas mediante DTrace para los caminos principales de encolado. Las columnas \textit{Policy} y \textit{Forced} corresponden a \texttt{ADDTOQUEUE\_POLICY} y \texttt{ADDTOQUEUE\_FORCED}.}
+    \label{tabla:addtoqueue-forced-dtrace-appendix}
+\end{table}
+
+La prueba sin afinidad explícita mostró que la mayoría de los hilos siguieron el camino de cola global, con pocos casos forzados asociados a hilos internos del sistema. La prueba restringida con \verb|cpuset| mostró la aparición simultánea de \verb|ADDTOQUEUE_POLICY| y \verb|ADDTOQUEUE_FORCED|. Esto permitió confirmar que la red sigue decidiendo cuando existe una CPU válida y sensibilizada, y que el camino forzado aparece únicamente cuando resulta necesario para mantener la semántica de FreeBSD y la sincronización del marcado.\par
+
+En la ejecución restringida, si se consideran únicamente los encolados per-CPU registrados por la red, el 61.10\% correspondió a \verb|ADDTOQUEUE_POLICY| y el 38.89\% a \verb|ADDTOQUEUE_FORCED|. No se registraron transiciones bloqueadas durante las pruebas, lo que indica que el modelo permaneció sincronizado con el estado real del planificador en los escenarios evaluados.\par
+
 \chapter{Ejecución del programa de estrés con diferentes cantidades de núcleos activos}\label{appendix:apD}
 
 \begin{figure}[H]

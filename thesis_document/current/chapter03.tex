@@ -406,15 +406,15 @@ Asimismo, se considera la posibilidad de que, en el futuro, se pueda anclar no s
 
 Durante el proceso de desarrollo de los módulos, se fueron trabajando además algunas otras problemáticas encontradas.\par
 
-\subsection{Modelado Específico de los Hilos \textit{Pinned}}
+\subsection{Modelado de restricciones internas del planificador}
 
-Durante el desarrollo de los módulos de inhibición y monopolización de procesadores, surgió un problema crítico relacionado con la gestión de hilos \textit{pinned}, que ya había sido identificado en investigaciones anteriores.\par
+Durante el desarrollo de los módulos de inhibición y monopolización de procesadores, surgió un problema crítico relacionado con la interacción entre la red de Petri y algunas reglas internas del planificador de FreeBSD. Inicialmente, el caso más visible era el de los hilos \textit{pinned}, pero el análisis posterior mostró que el problema también involucraba a hilos \textit{bound} y a hilos con restricciones de afinidad.\par
 
-En FreeBSD, los hilos \textit{pinned} deben ejecutarse exclusivamente en el procesador al que han sido asignados. En el contexto del planificador 4BSD modelado e implementado en la red de Petri de recursos, se modificó la lógica de selección de CPU. Originalmente, un hilo \textit{pinned} se reencolaba automáticamente en su procesador original sin condiciones adicionales. Sin embargo, con el desarrollo del modelo de la red de recursos, se introdujo una nueva condición: para que un hilo \textit{pinned} sea reencolado en su último procesador asignado, la transición que lo agrega a la cola del procesador debe estar habilitada.\par
+En FreeBSD, estas condiciones no son simples preferencias de balanceo. Un hilo \textit{pinned} debe volver a ejecutarse en el último procesador en el que corrió, un hilo \textit{bound} queda asociado a un procesador específico y la afinidad limita el conjunto de CPUs válidas para ejecutar el hilo. Por lo tanto, cuando el planificador debe encolar uno de estos hilos, no siempre puede elegir libremente cualquier cola del sistema.\par
 
-Aunque esta modificación era necesaria para mantener el equilibrio en la carga de los núcleos del sistema, introdujo un problema adicional. Si, durante la ejecución de un hilo actual, se agrega otro hilo a la cola de ese procesador y simultáneamente se fija el hilo actual (es decir, se convierte en \textit{pinned}), la transición de reencolado del hilo \textit{pinned} podría quedar deshabilitada.\par
+El conflicto apareció porque la transición \verb|TRAN_ADDTOQUEUE| de la red de recursos estaba inhibida por la plaza \verb|PLACE_CANTQ|. Esta inhibición era útil como política de balanceo, ya que evitaba elegir repetidamente una CPU que ya había recibido trabajo. Sin embargo, al mismo tiempo podía impedir que la red registrara un encolado que FreeBSD debía realizar para respetar sus propias reglas internas.\par
 
-En tal situación, el planificador podría verse forzado a seleccionar un núcleo diferente o la cola global, lo que violaría la regla fundamental de los hilos \textit{pinned} del \textit{kernel} y podría provocar un \texttt{KERNEL PANIC}.\par
+La distinción central fue separar las decisiones de política de las restricciones obligatorias del sistema operativo. La red de Petri puede decidir entre varias CPUs válidas cuando el hilo no tiene restricciones fuertes, o cuando hay más de una CPU permitida y sensibilizada. En cambio, cuando FreeBSD exige una CPU concreta, o cuando la red no encuentra una CPU sensibilizada dentro del conjunto permitido, el modelo no puede bloquear el evento real de encolado sin quedar desincronizado respecto del estado del \textit{scheduler}.\par
 
 % \subsection{Solución del problema de afinidad (procesadores sobrecargados)}
 
@@ -435,16 +435,44 @@ En tal situación, el planificador podría verse forzado a seleccionar un núcle
 % % SKIPPED_TODO{SEGUNDA IMAGEN DEL HTOP}
 
 
-\subsection{Problema con la placa de red en el sistema operativo}\label{ch:problema_red}
+\subsection{Fallo de página por desincronización entre FreeBSD y la red de Petri}\label{ch:problema_red}
 
-Durante el desarrollo del proyecto integrador, identificamos un problema recurrente relacionado con el uso de la placa de red en nuestra máquina virtual. Este inconveniente surgía específicamente al utilizar SSH para facilitar la conexión con la máquina. Sin embargo, cuando se desactivaba la placa de red antes de iniciar la máquina virtual, el problema no ocurría, aunque esto también impedía el uso de SSH.\par
+Durante el desarrollo identificamos un problema recurrente que inicialmente parecía estar relacionado con el uso de la placa de red en la máquina virtual. El síntoma aparecía con mayor frecuencia al habilitar SSH para conectarnos al sistema, mientras que al desactivar la placa de red antes del arranque el problema dejaba de reproducirse. Sin embargo, el análisis posterior mostró que la placa de red no era la causa raíz, sino un escenario que aumentaba la probabilidad de ejecutar caminos problemáticos del planificador.\par
 
-El problema técnico consistía en un \textit{kernel} panic provocado por un page fault durante el arranque del sistema operativo. Luego de cada incidente, el sistema generaba un archivo con información del estado previo al fallo, lo que nos permitió realizar un análisis más detallado.\par
+El síntoma visible era un \textit{kernel panic} provocado por un \textit{page fault}. En varios \textit{crash dumps}, el fallo aparecía en funciones como \verb|kern_select()| o en caminos de espera del \textit{kernel}. Esto dificultó el diagnóstico porque el punto del \textit{crash} no era el lugar donde se había introducido el error. El sistema llegaba a esas funciones con el estado real del planificador y el marcado de la red de Petri ya desincronizados.\par
 
-Para abordar la situación, recurrimos al foro oficial de FreeBSD, donde presentamos nuestro caso. La discusión nos brindó diversas perspectivas y posibles soluciones, pero no logramos resolver el problema. Este intercambio de ideas se encuentra documentado en el hilo titulado \emph{"Kernel panics when given a high workload"}\cite{bib6}, accesible en el foro oficial de FreeBSD.\par
+Al revisar la implementación del proyecto integrador previo, observamos que la decisión de CPU quedaba delegada al método \verb|resource_choose_cpu()|. En ese modelo, si un hilo con restricciones debía ir a una CPU cuya transición \verb|TRAN_ADDTOQUEUE| estaba inhibida por \verb|PLACE_CANTQ|, el planificador podía enviarlo a la cola global. Esta decisión mantenía la red sincronizada con el evento registrado, pero podía incumplir reglas internas de FreeBSD, ya que la cola global puede ser consumida por cualquier CPU y no vuelve a validar las condiciones de \textit{pinning}, \textit{bounding} o afinidad antes de ejecutar el hilo.\par
 
-Aunque no encontramos una solución definitiva, este proceso nos permitió adquirir conocimientos valiosos. Aprendimos a utilizar herramientas avanzadas para depurar el kernel, a interpretar archivos de crash dump generados durante los fallos y confirmamos que la comunidad de FreeBSD tiene un fuerte interés en iniciativas relacionadas con planificadores basados en Redes de Petri. Además, demostraron una disposición notable para ayudar en casos similares.\par
+En nuestras versiones posteriores intentamos respetar mejor esas reglas internas. Para hilos \textit{pinned}, \textit{bound} o con afinidad restringida, el planificador encolaba el hilo en la CPU correspondiente o dentro del conjunto permitido por FreeBSD. El problema era que, si la red tenía esa CPU inhibida por \verb|PLACE_CANTQ|, la transición \verb|TRAN_ADDTOQUEUE| no estaba sensibilizada. En consecuencia, FreeBSD agregaba el hilo a la run queue real, pero la red no sumaba el token correspondiente en \verb|PLACE_QUEUE| ni actualizaba correctamente su estado.\par
 
-Consideramos que este es un punto relevante para futuras investigaciones y mejoras. Si bien no se trata de un problema bloqueante, su solución podría contribuir significativamente a mejorar la experiencia de desarrollo y operación del sistema.\par
+A partir de ese momento, la red dejaba de representar el estado real del \textit{scheduler}. Cuando FreeBSD luego intentaba sacar ese hilo de la cola para ejecutarlo, la red podía intentar disparar \verb|TRAN_UNQUEUE| sin haber registrado antes el \verb|TRAN_ADDTOQUEUE| correspondiente. Esa misma diferencia de marcado podía propagarse a transiciones posteriores como \verb|TRAN_EXEC|, \verb|TRAN_RETURN_INVOL|, \verb|TRAN_RETURN_VOL| o \verb|TRAN_REMOVE_QUEUE|. Por este motivo, el \textit{panic} terminaba apareciendo más tarde y en otro punto del \textit{kernel}: el error observable era consecuencia de haber desincronizado previamente el estado real de FreeBSD y el marcado de la red.\par
 
-Las capturas de pantalla y el análisis detallado del fallo se encuentran documentados en el Apéndice \ref{appendix:apC}.\par
+Para llegar a esta conclusión fue necesario combinar varias formas de depuración. En primer lugar se analizaron los \textit{crash dumps} con \textit{kgdb}, utilizando la pila de llamadas para ubicar el punto observable del fallo y confirmar que el \textit{page fault} aparecía fuera del código del planificador. Luego se revisaron los eventos previos registrados por el \textit{kernel}, especialmente los casos de transiciones no sensibilizadas disparadas desde \verb|sched_add()|. Esa evidencia permitió dejar de tratar el problema como un fallo asociado a la placa de red y reconstruir la secuencia real: una decisión de encolado obligatoria para FreeBSD no quedaba registrada en la red, y el error recién se manifestaba más adelante cuando la red intentaba continuar desde un marcado incorrecto.\par
+
+La solución implementada consistió en separar el encolado decidido por la política de la red del encolado impuesto por restricciones de FreeBSD. La transición original \verb|TRAN_ADDTOQUEUE| se conserva como camino normal de política y sigue estando inhibida por \verb|PLACE_CANTQ|. Para los casos en los que el \textit{kernel} necesita registrar un encolado obligatorio, se agregó una transición \verb|TRAN_ADDTOQUEUE_FORCED|. Esta transición no está inhibida por \verb|PLACE_CANTQ|, por lo que evita la desincronización, pero mantiene la incidencia sobre \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|. De esta forma, la CPU que recibió un hilo forzado igualmente queda penalizada para futuras decisiones libres de la red.\par
+
+La Figura \ref{fig:addtoqueue-forced-subnet} muestra esta diferencia sobre un recorte de la subred de encolado per-CPU. Para simplificar la explicación, se dejaron únicamente las plazas y transiciones necesarias para entender el nuevo camino forzado y su continuidad dentro de la red de recursos. Por ese motivo se omiten caminos de retorno, remoción, cola global y control SMP, que siguen formando parte de la red completa pero no modifican el punto central del cambio. En el recorte puede verse que ambas transiciones agregan un token a \verb|PLACE_QUEUE| y a \verb|PLACE_CANTQ|. Luego, el token agregado en \verb|PLACE_QUEUE| permite continuar por el camino normal de ejecución, comenzando por \verb|TRAN_UNQUEUE|. La diferencia es que solo el camino de política conserva el arco inhibidor desde \verb|PLACE_CANTQ|.\par
+
+\begin{figure}[H]
+    \centering
+    \IfFileExists{images/addtoqueue-forced-subnet.png}{%
+        \includegraphics[width=0.95\textwidth]{images/addtoqueue-forced-subnet.png}
+    }{%
+        \fbox{%
+            \begin{minipage}[c][0.34\textheight][c]{0.92\textwidth}
+                \centering
+                Espacio reservado para la subred de encolado con la transición forzada.\par
+                \vspace{0.3cm}
+                \footnotesize\texttt{images/addtoqueue-forced-subnet.png}
+            \end{minipage}
+        }
+    }
+    \caption[Subred de encolado con transición forzada]{Recorte explicativo de la subred de encolado per-CPU con la transición forzada. \texttt{TRAN\_ADDTOQUEUE[i]} conserva el arco inhibidor desde \texttt{PLACE\_CANTQ[i]}. \texttt{TRAN\_ADDTOQUEUE\_FORCED[i]} registra el mismo cambio de marcado, pero no es inhibida por \texttt{PLACE\_CANTQ[i]}. Ambas transiciones dejan el token en \texttt{PLACE\_QUEUE[i]} para que luego pueda dispararse \texttt{TRAN\_UNQUEUE[i]}.}
+    \label{fig:addtoqueue-forced-subnet}
+\end{figure}
+
+Con este cambio, los hilos \textit{pinned} y \textit{bound} se registran mediante el camino forzado, ya que FreeBSD impone una CPU concreta. Para hilos con afinidad, la red primero intenta elegir una CPU permitida mediante \verb|TRAN_ADDTOQUEUE|. Si no existe una CPU válida y sensibilizada dentro del conjunto permitido, se utiliza \verb|TRAN_ADDTOQUEUE_FORCED| como respaldo para mantener la coherencia entre el estado real del planificador y el marcado de la red.\par
+
+Una vez definida la corrección, se agregó instrumentación específica con \textit{DTrace} para validarla sin depender de impresiones masivas desde el \textit{kernel}. Para esto se incorporó un proveedor \verb|SDT| propio, descripto en el Apéndice \ref{appendix:dtrace-sdt}, con eventos asociados al disparo de transiciones, a intentos bloqueados y a las decisiones tomadas por \verb|sched_add()|. Las trazas permitieron distinguir si un hilo era enviado a la cola global, si era encolado en una cola per-CPU por decisión de la política de Petri, o si era registrado mediante \verb|TRAN_ADDTOQUEUE_FORCED|. Con esta instrumentación se pudo observar el comportamiento del modelo en ejecución real, validar que la transición original seguía siendo utilizada cuando correspondía y verificar que los encolados obligatorios quedaran registrados sin volver a desincronizar la red.\par
+
+El análisis técnico del \textit{crash dump} y la evidencia obtenida con instrumentación de \textit{DTrace} se encuentran documentados en el Apéndice \ref{appendix:apC}. La explicación de \textit{DTrace}, \textit{probes} y \verb|SDT| se desarrolla específicamente en el Apéndice \ref{appendix:dtrace-sdt}.\par
