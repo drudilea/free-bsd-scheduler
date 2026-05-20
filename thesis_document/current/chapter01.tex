@@ -17,7 +17,7 @@ La presente oportunidad de trabajo se centra en la incorporación de nuevas func
 En este contexto, se identificaron dos oportunidades específicas. La primera consiste en impedir que determinadas CPUs reciban nuevos hilos en sus colas de ejecución, simulando desde el planificador una reducción de los procesadores disponibles para tareas comunes. Esta funcionalidad no apaga físicamente el procesador ni mide consumo energético; solamente agrega un mecanismo de control que podría ser aprovechado en trabajos futuros para definir políticas de eficiencia energética. La segunda oportunidad se centra en reservar un núcleo para un hilo específico, evitando que otros hilos sean encolados en ese núcleo mientras la reserva se encuentra activa. Si bien estos cambios todavía requieren desarrollos adicionales para integrarse con políticas automáticas y casos de uso concretos, representan un primer paso hacia un control más preciso de la asignación de recursos del planificador.\par
 
 \section{Motivación}
-Entre las principales motivaciones que nos impulsan a realizar este proyecto, podemos destacar la importancia de la planificación a corto plazo en los sistemas operativos y su impacto en el rendimiento.
+Entre las principales motivaciones de este proyecto se destaca la importancia de la planificación a corto plazo en los sistemas operativos y su impacto en el rendimiento.
 
 Actualmente la planificación a corto plazo de sistemas operativos es un objeto de estudio para encontrar soluciones que disminuyan el indeterminismo y optimicen el rendimiento. En concreto, la implementación del planificador a corto plazo de FreeBSD utilizando Redes de Petri, ha demostrado muchas ventajas mediante esta técnica de modelado.\par
 
@@ -48,7 +48,7 @@ Objetivos secundarios:
     \item Analizar y aprender exhaustivamente acerca del código fuente del sistema operativo FreeBSD.\@
     \item Profundizar los conocimientos en la depuración del \textit{kernel} y las diferentes herramientas de debugging.
     \item Mejorar la documentación del proyecto, estrategia de ramas y commits en el repositorio de desarrollo priorizando las buenas prácticas de programación. Esto permitirá dejar mejores bases para quienes decidan continuar con la investigación a futuro.
-    \item Automatizar y documentar los procesos repetitivos que se llevan a cabo en las diferentes etapas del proyecto, como por ejemplo la instalación de máquinas virtuales, paquetes que nos ayudarán a la hora del desarrollo, configuraciones de red, instalación y compilación de kernel, entre otras.
+    \item Automatizar y documentar los procesos repetitivos que se llevan a cabo en las diferentes etapas del proyecto, como por ejemplo la instalación de máquinas virtuales, paquetes necesarios para el desarrollo, configuraciones de red, instalación y compilación de kernel, entre otras.
     \item Compartir e interactuar con la comunidad de FreeBSD a través de foros y listas de difusión.
 \end{itemize}
 

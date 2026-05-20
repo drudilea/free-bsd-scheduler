@@ -217,7 +217,7 @@ Aunque el planificador 4BSD es más simple en comparación con los más modernos
 
 A pesar de que el planificador ULE se ha convertido en el predeterminado en las versiones más recientes de FreeBSD (a partir de la versión 8.0), el planificador 4BSD sigue siendo una opción estable y confiable. La comunidad de FreeBSD continúa manteniendo y brindando soporte para el planificador 4BSD, asegurando su disponibilidad para aquellos que prefieren su simplicidad y eficiencia. Además, no hay planes inmediatos por parte del equipo de desarrollo de FreeBSD para dejar de darle soporte.\par
 
-Nuestro proyecto se basa en el trabajo previo que se centró en el planificador 4BSD. Para obtener una comprensión más detallada y contextualizada de esta elección, se puede consultar las secciones de \textit{Alcance} (1.4) y  \textit{Diferencias entre el planificador ULE y el 4BSD} (2.3.3) del proyecto integrador previo\cite{bib1}. Aunque nuestro enfoque principal no radica en realizar cambios inmediatos en el sistema operativo ni en contribuir directamente a la comunidad de FreeBSD, continuamos con la fase de investigación e implementación centrada en este tipo de planificadores.\par
+Este proyecto se basa en el trabajo previo que se centró en el planificador 4BSD. Para obtener una comprensión más detallada y contextualizada de esta elección, se pueden consultar las secciones de \textit{Alcance} (1.4) y  \textit{Diferencias entre el planificador ULE y el 4BSD} (2.3.3) del proyecto integrador previo\cite{bib1}. Aunque el enfoque principal no radica en realizar cambios inmediatos en el sistema operativo ni en contribuir directamente a la comunidad de FreeBSD, el trabajo continúa con la fase de investigación e implementación centrada en este tipo de planificadores.\par
 
 
 \subsection{Análisis de modificaciones realizadas}
@@ -228,7 +228,7 @@ Un aspecto importante de esta planificación ocurre cuando un hilo debe ceder la
 
 Las modificaciones realizadas en el código del planificador 4BSD se centraron en adaptar las funciones principales para que se ajusten al uso de redes de Petri. Estos cambios se llevaron a cabo en el archivo \textit{sched\_4bsd.c}, que contiene las funciones principales del planificador 4BSD.
 
-Para comprender la naturaleza de los cambios realizados en el trabajo previo, detallaremos los resultados finales en términos de modelado de sistemas mediante redes de Petri.
+Para comprender la naturaleza de los cambios realizados en el trabajo previo, se detallan los resultados finales en términos de modelado de sistemas mediante redes de Petri.
 
 \subsection{Modelado del hilo}
 
@@ -265,15 +265,15 @@ Por otro lado, se realizó el modelado de la red de Petri del planificador, o re
     \label{fig:schedulerModel}
 \end{figure}
 
-Las plazas del planificador, podemos separarlas en las siguientes categorías:
+Las plazas del planificador se pueden separar en las siguientes categorías:
 
 \begin{itemize}
-    \item \textbf{Plazas de la actividad del procesador}: Entre ellas encontramos las plazas \verb|PLACE_CPU|, \verb|PLACE_TOEXEC| y \verb|PLACE_EXECUTING| que representan el estado de ejecución de un hilo sobre el procesador en cuestión.
+    \item \textbf{Plazas de la actividad del procesador}: Entre ellas se encuentran las plazas \verb|PLACE_CPU|, \verb|PLACE_TOEXEC| y \verb|PLACE_EXECUTING|, que representan el estado de ejecución de un hilo sobre el procesador en cuestión.
     \item \textbf{Plazas de colas del procesador}: \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|, que representan las colas del procesador en cuestión, con un sistema diseñado para soportar la penalización de procesadores.
     \item \textbf{Plazas globales o de sistema}: \verb|PLACE_GLOBAL_QUEUE|, \verb|PLACE_SMP_READY| y \verb|PLACE_SMP_NOT_READY| que representan las colas globales y el estado del sistema SMP en un determinado momento.
 \end{itemize}
 
-En cuanto a las transiciones de la red, podemos hacer la misma categorización:
+En cuanto a las transiciones de la red, se puede hacer la misma categorización:
 
 \begin{itemize}
     \item \textbf{Transiciones de la actividad del procesador}:
@@ -319,7 +319,7 @@ La red de recursos se inicializará siempre con un token en la plaza que indica 
 
 
 
-\subsection{Métodos de interés para nuestro proyecto}
+\subsection{Métodos de interés para este proyecto}
 
 Las principales modificaciones realizadas en el planificador se encuentran en las siguientes funciones, donde se implementaron las transiciones correspondientes para asociar y ajustar el funcionamiento del planificador original, al modelo de la red de Petri:
 
