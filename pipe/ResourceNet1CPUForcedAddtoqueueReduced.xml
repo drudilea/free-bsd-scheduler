@@ -1,21 +1,20 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
-<pnml>
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
     <net id="Net-One" type="P/T net">
-        <token id="Default" enabled="true" red="0" green="0" blue="0" />
+        <token id="Default" enabled="true" red="0" green="0" blue="0"/>
         <place id="PLACE_CANTQ[i]">
             <graphics>
-                <position x="600.0" y="240.0" />
+                <position x="487.5" y="70.0"/>
             </graphics>
             <name>
                 <value>PLACE_CANTQ[i]</value>
                 <graphics>
-                    <offset x="95.66666666666671" y="42.66666666666667" />
+                    <offset x="68.16666666666687" y="-9.83333333333335"/>
                 </graphics>
             </name>
             <initialMarking>
                 <value>Default,0</value>
                 <graphics>
-                    <offset x="0.0" y="0.0" />
+                    <offset x="0.0" y="0.0"/>
                 </graphics>
             </initialMarking>
             <capacity>
@@ -24,18 +23,18 @@
         </place>
         <place id="PLACE_CPU[i]">
             <graphics>
-                <position x="240.0" y="165.0" />
+                <position x="202.5" y="40.0"/>
             </graphics>
             <name>
                 <value>PLACE_CPU[i]</value>
                 <graphics>
-                    <offset x="106.99999999999991" y="16.272727272727273" />
+                    <offset x="49.500000000000014" y="-3.893939393939393"/>
                 </graphics>
             </name>
             <initialMarking>
                 <value>Default,0</value>
                 <graphics>
-                    <offset x="0.0" y="0.0" />
+                    <offset x="0.0" y="0.0"/>
                 </graphics>
             </initialMarking>
             <capacity>
@@ -44,18 +43,18 @@
         </place>
         <place id="PLACE_EXECUTING[i]">
             <graphics>
-                <position x="150.0" y="165.0" />
+                <position x="62.5" y="40.0"/>
             </graphics>
             <name>
                 <value>PLACE_EXECUTING[i]</value>
                 <graphics>
-                    <offset x="1.0" y="0.0" />
+                    <offset x="59.00000000000007" y="3.8333333333333335"/>
                 </graphics>
             </name>
             <initialMarking>
                 <value>Default,1</value>
                 <graphics>
-                    <offset x="0.0" y="0.0" />
+                    <offset x="0.0" y="0.0"/>
                 </graphics>
             </initialMarking>
             <capacity>
@@ -64,18 +63,18 @@
         </place>
         <place id="PLACE_QUEUE[i]">
             <graphics>
-                <position x="360.0" y="210.0" />
+                <position x="322.5" y="85.0"/>
             </graphics>
             <name>
                 <value>PLACE_QUEUE[i]</value>
                 <graphics>
-                    <offset x="69.16666666666671" y="-5.833333333333335" />
+                    <offset x="17.833333333333393" y="3.9999999999999982"/>
                 </graphics>
             </name>
             <initialMarking>
                 <value>Default,0</value>
                 <graphics>
-                    <offset x="0.0" y="0.0" />
+                    <offset x="0.0" y="0.0"/>
                 </graphics>
             </initialMarking>
             <capacity>
@@ -84,18 +83,18 @@
         </place>
         <place id="PLACE_TOEXEC[i]">
             <graphics>
-                <position x="240.0" y="300.0" />
+                <position x="202.5" y="175.0"/>
             </graphics>
             <name>
                 <value>PLACE_TOEXEC[i]</value>
                 <graphics>
-                    <offset x="91.03030303030297" y="51.63636363636364" />
+                    <offset x="116.03030303030297" y="38.46969696969697"/>
                 </graphics>
             </name>
             <initialMarking>
                 <value>Default,0</value>
                 <graphics>
-                    <offset x="0.0" y="0.0" />
+                    <offset x="0.0" y="0.0"/>
                 </graphics>
             </initialMarking>
             <capacity>
@@ -104,12 +103,12 @@
         </place>
         <transition id="TRAN_ADDTOQUEUE_FORCED[i]">
             <graphics>
-                <position x="465.0" y="255.0" />
+                <position x="352.5" y="145.0"/>
             </graphics>
             <name>
                 <value>TRAN_ADDTOQUEUE_FORCED[i]</value>
                 <graphics>
-                    <offset x="77.83333333333327" y="46.0" />
+                    <offset x="115.16666666666623" y="27.66666666666665"/>
                 </graphics>
             </name>
             <orientation>
@@ -130,12 +129,38 @@
         </transition>
         <transition id="TRAN_ADDTOQUEUE[i]">
             <graphics>
-                <position x="465.0" y="210.0" />
+                <position x="352.5" y="25.0"/>
             </graphics>
             <name>
                 <value>TRAN_ADDTOQUEUE[i]</value>
                 <graphics>
-                    <offset x="64.83333333333327" y="47.0" />
+                    <offset x="87.66666666666687" y="3.9999999999999996"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="TRAN_EXEC_EMPTY[i]">
+            <graphics>
+                <position x="102.5" y="175.0"/>
+            </graphics>
+            <name>
+                <value>TRAN_EXEC_EMPTY[i]</value>
+                <graphics>
+                    <offset x="71.66666666666664" y="33.33333333333332"/>
                 </graphics>
             </name>
             <orientation>
@@ -156,12 +181,38 @@
         </transition>
         <transition id="TRAN_EXEC[i]">
             <graphics>
-                <position x="240.0" y="435.0" />
+                <position x="205.0" y="265.0"/>
             </graphics>
             <name>
                 <value>TRAN_EXEC[i]</value>
                 <graphics>
-                    <offset x="2.0" y="14.0" />
+                    <offset x="47.500000000000014" y="36.66666666666667"/>
+                </graphics>
+            </name>
+            <orientation>
+                <value>90</value>
+            </orientation>
+            <rate>
+                <value>1.0</value>
+            </rate>
+            <timed>
+                <value>false</value>
+            </timed>
+            <infiniteServer>
+                <value>false</value>
+            </infiniteServer>
+            <priority>
+                <value>1</value>
+            </priority>
+        </transition>
+        <transition id="TRAN_TRHOW">
+            <graphics>
+                <position x="602.5" y="70.0"/>
+            </graphics>
+            <name>
+                <value>TRAN_TRHOW</value>
+                <graphics>
+                    <offset x="52.500000000000036" y="42.50000000000002"/>
                 </graphics>
             </name>
             <orientation>
@@ -182,12 +233,12 @@
         </transition>
         <transition id="TRAN_UNQUEUE[i]">
             <graphics>
-                <position x="240.0" y="240.0" />
+                <position x="202.5" y="115.0"/>
             </graphics>
             <name>
                 <value>TRAN_UNQUEUE[i]</value>
                 <graphics>
-                    <offset x="31.818181818181824" y="-2.7272727272727266" />
+                    <offset x="-0.5151515151515109" y="7.439393939393942"/>
                 </graphics>
             </name>
             <orientation>
@@ -207,153 +258,177 @@
             </priority>
         </transition>
         <arc id="AddtoqueueForced to Cantq" source="TRAN_ADDTOQUEUE_FORCED[i]" target="PLACE_CANTQ[i]">
-            <graphics />
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="491" y="267" curvePoint="false" />
-            <arcpath id="001" x="522" y="266" curvePoint="true" />
-            <arcpath id="002" x="597" y="254" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="379" y="157" curvePoint="false"/>
+            <arcpath id="001" x="425" y="127" curvePoint="true"/>
+            <arcpath id="002" x="486" y="90" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
         <arc id="AddtoqueueForced to Queue" source="TRAN_ADDTOQUEUE_FORCED[i]" target="PLACE_QUEUE[i]">
-            <graphics />
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="461" y="267" curvePoint="false" />
-            <arcpath id="001" x="385" y="228" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="364" y="151" curvePoint="false"/>
+            <arcpath id="001" x="341" y="110" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
         <arc id="Addtoqueue to Cantq" source="TRAN_ADDTOQUEUE[i]" target="PLACE_CANTQ[i]">
-            <graphics />
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="491" y="222" curvePoint="false" />
-            <arcpath id="001" x="561" y="238" curvePoint="true" />
-            <arcpath id="002" x="597" y="248" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="379" y="37" curvePoint="false"/>
+            <arcpath id="001" x="480" y="84" curvePoint="true"/>
+            <arcpath id="002" x="485" y="83" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
         <arc id="Addtoqueue to Queue" source="TRAN_ADDTOQUEUE[i]" target="PLACE_QUEUE[i]">
-            <graphics />
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="461" y="222" curvePoint="false" />
-            <arcpath id="001" x="386" y="222" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="359" y="41" curvePoint="false"/>
+            <arcpath id="001" x="340" y="83" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
         <arc id="Cantq to Addtoqueue" source="PLACE_CANTQ[i]" target="TRAN_ADDTOQUEUE[i]">
-            <graphics />
+            <graphics/>
             <inscription>
-                <value />
-                <graphics />
+                <value/>
+                <graphics/>
             </inscription>
             <tagged>
-                <value />
+                <value/>
             </tagged>
-            <arcpath id="000" x="598" y="259" curvePoint="false" />
-            <arcpath id="001" x="553" y="266" curvePoint="true" />
-            <arcpath id="002" x="481" y="227" curvePoint="false" />
-            <type value="inhibitor" />
-        </arc>
-        <arc id="Cantq to Exec" source="PLACE_CANTQ[i]" target="TRAN_EXEC[i]">
-            <graphics />
-            <inscription>
-                <value>Default,1</value>
-                <graphics />
-            </inscription>
-            <tagged>
-                <value>false</value>
-            </tagged>
-            <arcpath id="000" x="602" y="263" curvePoint="false" />
-            <arcpath id="001" x="432" y="407" curvePoint="true" />
-            <arcpath id="002" x="266" y="447" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="486" y="89" curvePoint="false"/>
+            <arcpath id="001" x="396" y="97" curvePoint="true"/>
+            <arcpath id="002" x="369" y="42" curvePoint="false"/>
+            <type value="inhibitor"/>
         </arc>
         <arc id="CPU to Unqueue" source="PLACE_CPU[i]" target="TRAN_UNQUEUE[i]">
-            <graphics />
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="251" y="191" curvePoint="false" />
-            <arcpath id="001" x="251" y="246" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="214" y="66" curvePoint="false"/>
+            <arcpath id="001" x="214" y="121" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
-        <arc id="Exec to Executing" source="TRAN_EXEC[i]" target="PLACE_EXECUTING[i]">
-            <graphics />
+        <arc id="PLACE_CANTQ[i] to TRAN_TRHOW" source="PLACE_CANTQ[i]" target="TRAN_TRHOW">
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="236" y="447" curvePoint="false" />
-            <arcpath id="001" x="118" y="401" curvePoint="true" />
-            <arcpath id="002" x="132" y="198" curvePoint="true" />
-            <arcpath id="003" x="149" y="185" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="514" y="80" curvePoint="false"/>
+            <arcpath id="001" x="599" y="82" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="PLACE_TOEXEC[i] to TRAN_EXEC_EMPTY[i]" source="PLACE_TOEXEC[i]" target="TRAN_EXEC_EMPTY[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="200" y="185" curvePoint="false"/>
+            <arcpath id="001" x="129" y="187" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="PLACE_TOEXEC[i] to TRAN_EXEC[i]" source="PLACE_TOEXEC[i]" target="TRAN_EXEC[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="215" y="201" curvePoint="false"/>
+            <arcpath id="001" x="216" y="271" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
         <arc id="Queue to Unqueue" source="PLACE_QUEUE[i]" target="TRAN_UNQUEUE[i]">
-            <graphics />
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="357" y="226" curvePoint="false" />
-            <arcpath id="001" x="266" y="252" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="320" y="100" curvePoint="false"/>
+            <arcpath id="001" x="229" y="127" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
-        <arc id="Toexec to Exec" source="PLACE_TOEXEC[i]" target="TRAN_EXEC[i]">
-            <graphics />
+        <arc id="TRAN_EXEC_EMPTY[i] to PLACE_EXECUTING[i]" source="TRAN_EXEC_EMPTY[i]" target="PLACE_EXECUTING[i]">
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="251" y="326" curvePoint="false" />
-            <arcpath id="001" x="251" y="441" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="114" y="181" curvePoint="false"/>
+            <arcpath id="001" x="79" y="66" curvePoint="false"/>
+            <type value="normal"/>
+        </arc>
+        <arc id="TRAN_EXEC[i] to PLACE_EXECUTING[i]" source="TRAN_EXEC[i]" target="PLACE_EXECUTING[i]">
+            <graphics/>
+            <inscription>
+                <value>Default,1</value>
+                <graphics/>
+            </inscription>
+            <tagged>
+                <value>false</value>
+            </tagged>
+            <arcpath id="000" x="201" y="277" curvePoint="false"/>
+            <arcpath id="001" x="30" y="184" curvePoint="true"/>
+            <arcpath id="002" x="70" y="66" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
         <arc id="Unqueue to Toexec" source="TRAN_UNQUEUE[i]" target="PLACE_TOEXEC[i]">
-            <graphics />
+            <graphics/>
             <inscription>
                 <value>Default,1</value>
-                <graphics />
+                <graphics/>
             </inscription>
             <tagged>
                 <value>false</value>
             </tagged>
-            <arcpath id="000" x="251" y="256" curvePoint="false" />
-            <arcpath id="001" x="251" y="297" curvePoint="false" />
-            <type value="normal" />
+            <arcpath id="000" x="214" y="131" curvePoint="false"/>
+            <arcpath id="001" x="214" y="172" curvePoint="false"/>
+            <type value="normal"/>
         </arc>
     </net>
 </pnml>
