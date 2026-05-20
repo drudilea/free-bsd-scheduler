@@ -93,7 +93,7 @@ En la tabla \ref{tabla:estados-proceso}, se proporciona una descripción concisa
 
 En FreeBSD, el sistema organiza las estructuras de procesos en dos listas principales: \texttt{zombproc} y \texttt{allproc}. Los procesos en estado ZOMBIE se encuentran en la lista \texttt{zombproc}, mientras que los procesos activos están en la lista \texttt{allproc}. Esta distinción permite optimizar las operaciones del sistema, como la llamada al sistema \texttt{wait} que busca procesos terminados, así como las operaciones del planificador que identifican procesos listos para ejecutarse.
 
-Los hilos de un proceso, por su lado, excluyendo los que están en ejecución, se distribuyen en tres colas principales: \texttt{run\_queue}, \texttt{sleep\_queue} y \texttt{turnstile\_queue}. Los hilos listos para ejecutarse se ubican en la \texttt{run\_queue}, mientras que aquellos que están bloqueados esperando eventos se encuentran en la \texttt{sleep\_queue} o en la \texttt{turnstile\_queue}. Es importante destacar que las colas \texttt{run\_queue} están organizadas según la prioridad de planificación de hilos establecida por el planificador 4BSD. La diferencia entre la \texttt{turnstile\_queue} y la \texttt{sleep\_queue}, radica en que esta última se utiliza para hilos bloqueados con locks de tipo \texttt{sleepable}, mientras que la \texttt{turnstile\_queue} alberga hilos bloqueados con locks de tipo \texttt{non-sleepable}.
+Los hilos de un proceso, por su lado, excluyendo los que están en ejecución, se distribuyen en tres colas principales: \texttt{run\_queue}, \texttt{sleep\_queue} y \texttt{turnstile\_queue}. Los hilos listos para ejecutarse se ubican en la \texttt{run\_queue}, mientras que aquellos que están bloqueados esperando eventos se encuentran en la \texttt{sleep\_queue} o en la \texttt{turnstile\_queue}. Es importante destacar que las colas \texttt{run\_queue} están organizadas según la prioridad de planificación de hilos establecida por el planificador 4BSD. La diferencia entre la \texttt{turnstile\_queue} y la \texttt{sleep\_queue}, radica en que esta última se utiliza para hilos bloqueados con bloqueos de tipo \texttt{sleepable}, mientras que la \texttt{turnstile\_queue} alberga hilos bloqueados con bloqueos de tipo \texttt{non-sleepable}.
 
 \subsection{Prioridad de los hilos}
 
@@ -315,7 +315,7 @@ Las jerarquías están definidas de la siguiente forma:
 \begin{itemize}
     \item Transiciones \verb|TRAN_ADDTOQUEUE| y \verb|TRAN_QUEUE_GLOBAL| de la red de recursos son jerárquicas a la transición \verb|T1_ON_QUEUE| del hilo.
     \item Transiciones \verb|TRAN_EXEC| y \verb|TRAN_EXEC_EMPTY| de la red de recursos son jerárquicas a la transición \verb|T2_SET_RUNNING| del hilo.
-    \item Transiciones \verb|TRAN_REMOVE_QUEUE|, \verb|TRAN_REMOVE_EMPTY_QUEUE| y \verb|TRAN_REMOVE_GLOBAL_QUEUE| de la red de recursos son jerárquicas a la transición \verb|T6_ REMOVE| del hilo.
+    \item Transiciones \verb|TRAN_REMOVE_QUEUE|, \verb|TRAN_REMOVE_EMPTY_QUEUE| y \verb|TRAN_REMOVE_GLOBAL_QUEUE| de la red de recursos son jerárquicas a la transición \verb|T6_REMOVE| del hilo.
     \item Transición \verb|TRAN_RETURN_INVOL| de la red de recursos es jerárquica a la transición \verb|T3_SWITCH_OUT| del hilo.
     \item Transición \verb|TRAN_RETURN_VOL| de la red de recursos es jerárquica a la transición \verb|T4_TO_WAIT_CHANNEL| del hilo.
 \end{itemize}
