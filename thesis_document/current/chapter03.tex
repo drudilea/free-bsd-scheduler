@@ -107,7 +107,9 @@ Si bien el método de \textit{preemption} no se encuentra modelado en la Red de 
 
 \subsection{Actualización a la versión 12}
 
-Al comparar las diferencias entre las versiones 11.4.0 y 12.3.0 (última \textit{release}) de FreeBSD, no se encontraron cambios significativos en los archivos relevantes para el planificador desarrollado. Debido a esto, no fue necesario realizar ajustes específicos para esta versión.\par
+Al comparar las diferencias entre las versiones 11.4.0 y 12.3.0 (última \textit{release}) de FreeBSD, no se encontraron cambios relevantes en los archivos directamente intervenidos por el planificador desarrollado. La revisión se concentró en \verb|sched_4bsd.c|, \verb|kern_thread.c| y en los puntos donde el modelo de Petri se vincula con el encolado, la selección de CPU y el cambio de contexto.\par
+
+Esta etapa se mantuvo como un punto de control dentro de la migración. Aunque no requirió cambios específicos en el código del planificador, permitió separar dos situaciones distintas: por un lado, una actualización de versión que no alteraba los puntos de integración del modelo; por otro, los cambios de FreeBSD 13 que sí modificaban el flujo de \verb|sched_switch()| y requerían adaptar la implementación. De esta forma, los problemas encontrados en la versión 13 no quedaron mezclados con diferencias arrastradas desde la rama 12.\par
 
 
 \subsection{Actualización a la versión 13}

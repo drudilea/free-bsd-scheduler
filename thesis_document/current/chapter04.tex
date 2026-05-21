@@ -83,7 +83,7 @@ Esta situación fue considerada durante la implementación para evitar que el m�
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-idle.png}
-    \caption{Estado inactivo del sistema.}
+    \caption[Estado inactivo del sistema]{Estado inactivo del sistema. La captura muestra los procesadores sin carga de usuario, ejecutando hilos de clase IDLE antes de activar el módulo de inhibición.}
     \label{fig:cpuOnOff-result-idle}
 \end{figure}
 
@@ -97,7 +97,7 @@ Este escenario con el módulo deshabilitado sirve como punto de referencia para 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-full-load.png}
-    \caption{Estado de los núcleos con el módulo de inhibición inhabilitado.}
+    \caption[Estado con módulo de inhibición inhabilitado]{Estado de los núcleos con el módulo de inhibición inhabilitado. La carga se reparte sobre todos los procesadores disponibles durante la ejecución del programa de estrés.}
     \label{fig:cpuOnOff-result-full-load}
 \end{figure}
 
@@ -111,7 +111,7 @@ Durante esta evaluación se observó que, al inhibir la asignación de trabajo a
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-1CPU.png}
-    \caption{Estado de los núcleos con el módulo de inhibición habilitado para la CPU2.}
+    \caption[Inhibición de asignación habilitada para CPU2]{Estado de los núcleos con el módulo de inhibición habilitado para la CPU2. La CPU inhibida no recibe nuevos hilos ordinarios, mientras el resto continúa ejecutando la carga.}
     \label{fig:cpuOnOff-result-1cpu}
 \end{figure}
 
@@ -120,7 +120,7 @@ En relación al tiempo necesario para completar el cálculo del programa, se obs
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-2CPU.png}
-    \caption{Estado de los núcleos con el módulo de inhibición habilitado para múltiples CPUs.}
+    \caption[Inhibición de asignación habilitada para múltiples CPUs]{Estado de los núcleos con el módulo de inhibición habilitado para múltiples CPUs. La carga queda concentrada en los procesadores que permanecen habilitados para recibir trabajo.}
     \label{fig:cpuOnOff-result-2cpu}
 \end{figure}
 
@@ -139,10 +139,35 @@ En la Tabla \ref{tabla:cpuOnOff-result-times} se presentan los tiempos de ejecuc
     \label{tabla:cpuOnOff-result-times}
 \end{table}
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cpuOnOff-4CPUsTime.png}
+        \caption{Ejecución con 4 CPUs activas: 26 segundos.}
+        \label{fig:cpuOnOff-4CPUsTime}
+    \end{subfigure}
+
+    \vspace{0.15cm}
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cpuOnOff-3CPUsTime.png}
+        \caption{Ejecución con 3 CPUs activas: 34 segundos.}
+        \label{fig:cpuOnOff-3CPUsTime}
+    \end{subfigure}
+
+    \vspace{0.15cm}
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cpuOnOff-2CPUsTime.png}
+        \caption{Ejecución con 2 CPUs activas: 49 segundos.}
+        \label{fig:cpuOnOff-2CPUsTime}
+    \end{subfigure}
+    \caption[Capturas de tiempos de ejecución con distintas cantidades de CPUs activas]{Capturas asociadas a los tiempos de ejecución presentados en la Tabla \ref{tabla:cpuOnOff-result-times}. Las salidas muestran el aumento del tiempo total cuando se reduce manualmente la cantidad de procesadores habilitados para recibir trabajo ordinario.}
+    \label{fig:cpuOnOff-times-screenshots}
+\end{figure}
+
 El objetivo de esta prueba no es proponer la inhibición de procesadores durante un contexto de gran carga de trabajo, sino mostrar que el sistema puede operar con una reducción manual de los procesadores disponibles. A futuro, esta activación podría ser gestionada por el \textit{kernel} o por mecanismos externos, como directivas embebidas en los procesos o módulos del sistema que tomen decisiones según el tipo de tarea, la prioridad del hilo, el estado general de carga o criterios de eficiencia energética.\par
-
-Las capturas de pantalla con los resultados mostrados en la Tabla \ref{tabla:cpuOnOff-result-times} se encuentran documentados en el Apéndice \ref{appendix:apD}.
-
 
 \section{Resultados del Módulo de Monopolización de Núcleos}
 
@@ -168,7 +193,7 @@ A su vez se ha ejecutado el proceso de estrés configurado para tener un solo hi
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/top_disabled.png}
-    \caption{Estado de los procesos en el sistema con el módulo de monopolización deshabilitado.}
+    \caption[Procesos con módulo de monopolización deshabilitado]{Estado de los procesos con el módulo de monopolización deshabilitado. La herramienta de monitoreo muestra que el hilo de carga puede ser distribuido entre distintos procesadores por la política normal del planificador.}
     \label{fig:top_disabled}
 \end{figure}
 
@@ -177,7 +202,7 @@ Además de los resultados obtenidos con la herramienta que monitora los procesos
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/dtrace_disabled.png}
-    \caption{Ejecución de un hilo en diferentes núcleos del sistema con el módulo de monopolización deshabilitado.}
+    \caption[Traza de ejecución sin monopolización]{Ejecución de un hilo con el módulo de monopolización deshabilitado. La traza registra migraciones entre núcleos, usadas como referencia antes de activar la reserva de CPU.}
     \label{fig:dtrace_disabled}
 \end{figure}
 
@@ -192,14 +217,14 @@ Luego de activar el módulo, se observó que los resultados obtenidos concuerdan
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/cpuMonopolized-idle.png}
-    \caption{Estado de los procesos previo a la habilitación del módulo.}
+    \caption[Estado previo a la habilitación de monopolización]{Estado de los procesos antes de habilitar el módulo de monopolización. Esta captura fija el punto de comparación: no existe todavía una CPU reservada para el hilo observado.}
     \label{fig:cpuMonopolized-idle}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/cpuMonopolized-on.png}
-    \caption{Estado de los procesos luego de activar el módulo de monopolización para el CPU1.}
+    \caption[Monopolización habilitada para CPU1]{Estado de los procesos luego de activar el módulo de monopolización para la CPU1. La CPU reservada queda asociada al hilo seleccionado y no recibe otros hilos ordinarios durante la prueba.}
     \label{fig:cpuMonopolized-on}
 \end{figure}
 
@@ -208,7 +233,7 @@ En la Figura \ref{fig:cpuMonopolized-dtrace} se observa el comportamiento del hi
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/cpuMonopolized-dtrace.png}
-    \caption{Estado del hilo monopolizado antes y después de la activación del módulo.}
+    \caption[Traza del hilo antes y después de la monopolización]{Estado del hilo antes y después de la activación del módulo. La traza muestra la ejecución inicial bajo la política normal y, luego, la permanencia del hilo en el núcleo designado.}
     \label{fig:cpuMonopolized-dtrace}
 \end{figure}
 
