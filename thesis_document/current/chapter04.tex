@@ -220,6 +220,10 @@ Al desactivar el módulo, el sistema continúa operando según lo esperado, con 
 
 En esta sección se presentan los resultados de las actualizaciones realizadas para adaptar el planificador basado en Redes de Petri a FreeBSD 13.1. Estas actualizaciones permitieron conservar el funcionamiento observado originalmente en la versión 11 y dejar el proyecto sobre la versión definida como objetivo de migración.\par
 
+La elección de FreeBSD 13.1 responde al momento en que se desarrolló y cerró la implementación completa de la tesis. Durante esa etapa, el entorno de trabajo y las ramas de validación estaban estabilizados sobre 13.1; trasladar toda la implementación a otra versión hubiera mezclado la validación de los módulos con un nuevo proceso de portabilidad. Por esa razón, la evaluación funcional se mantuvo sobre 13.1.\par
+
 La actualización fue priorizada al inicio del proyecto para trabajar sobre una base de código más actual que la del proyecto integrador previo. Esto redujo las diferencias entre el \textit{kernel} original y el repositorio derivado (\textit{fork}) desarrollado. Si bien fue necesario resolver diversos conflictos entre las versiones 11 y 13 de FreeBSD, las pruebas confirmaron que el planificador opera de manera estable en la versión actualizada.\par
 
 El código actualizado se encuentra en una rama específica del repositorio, junto con ramas adicionales que documentan cada etapa de la transición progresiva desde la versión 11 hasta la 13.1.\par
+
+De forma adicional, se realizó una prueba experimental de portabilidad del planificador base hacia la rama \texttt{main} de FreeBSD. Esta prueba no forma parte de la validación funcional presentada para FreeBSD 13.1: no se ejecutaron pruebas de estrés, no se midió rendimiento y no se verificó estabilidad bajo carga sostenida. Su objetivo fue revisar si los cambios centrales del planificador basado en Redes de Petri podían trasladarse a una base más reciente sin rediseñar el modelo. El análisis completo quedó documentado en el repositorio de documentación del proyecto y se resume en el Apéndice \ref{appendix:port-main}.\par
