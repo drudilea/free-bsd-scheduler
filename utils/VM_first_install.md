@@ -21,31 +21,32 @@ La imágen utilizada corresponde con la versión utilizada en el trabajo integra
 ---
 
 ## Instalación del SO
->[Recomendamos seguir esta guía para la instalación del sistema operativo](https://forums.freebsd.org/threads/beginners-guide-how-to-set-up-a-freebsd-desktop-from-scratch.61659/)
+
+> [Recomendamos seguir esta guía para la instalación del sistema operativo](https://forums.freebsd.org/threads/beginners-guide-how-to-set-up-a-freebsd-desktop-from-scratch.61659/)
 
 1. Abrir la máquina virtual instalada, y hacer click en el ícono para crear una nueva máquina virtual.
 
-   <img src='./assets/installationAssets/inst_step_0.jpeg' style='max-height: 300px' />
+   <img src='../assets/installationAssets/inst_step_0.jpeg' style='max-height: 300px' />
 
 2. Hacer click en la opción para instalar la máquina desde un archivo local (ISO) y luego importar la imagen de disco desde la ubicación en donde fue guardada previamente.
 
-   <img src='./assets/installationAssets/inst_step_1.jpeg' style='max-height: 300px' />
+   <img src='../assets/installationAssets/inst_step_1.jpeg' style='max-height: 300px' />
 
 3. Elegir la cantidad de memoria y procesadores para asignarle a la máquina. Intentar que la cantidad de procesadores sea como mínimo dos.
 
-   <img src='./assets/installationAssets/inst_step_2.jpeg' style='max-height: 300px' />
+   <img src='../assets/installationAssets/inst_step_2.jpeg' style='max-height: 300px' />
 
 4. Asignar la cantidad de espacio en disco deseada.
 
-   <img src='./assets/installationAssets/inst_step_3.jpeg' style='max-height: 300px' />
+   <img src='../assets/installationAssets/inst_step_3.jpeg' style='max-height: 300px' />
 
 5. Elegir el nombre que tendrá la instancia y en caso de querer revisar las configuraciones antes de comenzar la instalación, clickear el checkbox correspondiente.
 
-   <img src='./assets/installationAssets/inst_step_4.jpeg' style='max-height: 300px' />
+   <img src='../assets/installationAssets/inst_step_4.jpeg' style='max-height: 300px' />
 
 6. Una vez terminadas las configuraciones, se iniciará una nueva ventana con la pantalla de inicio de FreeBSD. Es posible apretar Enter o dejar pasar 8 segundos para que comience la guía de instalación.
 
-   <img src='./assets/installationAssets/inst_step_5.jpeg' style='max-height: 300px' />
+   <img src='../assets/installationAssets/inst_step_5.jpeg' style='max-height: 300px' />
 
 [Paso a paso](https://computingforgeeks.com/how-to-install-freebsd-on-kvm-virtualbox/)
 

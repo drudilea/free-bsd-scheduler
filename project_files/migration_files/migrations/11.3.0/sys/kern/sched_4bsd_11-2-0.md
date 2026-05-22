@@ -5,5 +5,3 @@
 ---
 
 ## NO HAY CAMBIOS
-
-<img src="https://pbs.twimg.com/media/FH4qA9UXwAkKvsO.jpg">

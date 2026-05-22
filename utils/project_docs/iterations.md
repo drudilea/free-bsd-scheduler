@@ -110,7 +110,7 @@ be started by kick_init(), also run by process 0 using sysinit.
 
 ## Modelo propuesto
 
-<img src="assets/developAssets/Resource_1CPU-1st_IT.png" width="600px">
+<img src="../../assets/developAssets/Resource_1CPU-1st_IT.png" width="600px">
 
 ## Análisis del modelo
 

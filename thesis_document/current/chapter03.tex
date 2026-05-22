@@ -84,6 +84,50 @@ Esta organización meticulosa asegura que todos los aspectos del proyecto, desde
 
 Para más detalles, puede acceder al repositorio de documentación del proyecto en: \url{https://github.com/drudilea/free-bsd-scheduler}.\par
 
+\subsection{Documentación y automatización de procesos repetitivos}
+
+Durante el desarrollo hubo tareas que debieron repetirse muchas veces para poder trabajar sobre el \textit{kernel}: preparar máquinas virtuales, configurar el acceso remoto, instalar herramientas auxiliares, compilar e instalar \textit{kernels} de prueba, seleccionar el \textit{kernel} activo, recuperar evidencia luego de fallos y ejecutar pruebas funcionales sobre las extensiones desarrolladas. Para reducir errores manuales y dejar un camino reproducible para trabajos futuros, esas tareas fueron documentadas en el repositorio de trabajo.\par
+
+La documentación incluye guías para la instalación inicial de la máquina virtual, la instalación de paquetes auxiliares, la configuración de SSH, la compilación de \textit{kernels} y la depuración remota. Además, se consolidó un flujo de pruebas actualizado para el planificador basado en Redes de Petri. Allí se describen los \textit{kernels} de prueba, los comandos \texttt{sysctl} utilizados para activar las funcionalidades, las pruebas de carga y los criterios para conservar evidencia ante un \textit{kernel panic}.\par
+
+También se incorporaron scripts auxiliares para tareas puntuales del entorno de desarrollo, como el inicio de la máquina virtual. Estos scripts no reemplazan el proceso completo de compilación ni validación del \textit{kernel}, pero reducen pasos repetitivos del flujo diario de trabajo.\par
+
+La Tabla \ref{tabla:documentacion_automatizacion} resume los documentos y scripts principales generados para este propósito. El resultado no fue una herramienta única de automatización integral, sino un conjunto de procedimientos reproducibles y scripts auxiliares para simplificar el trabajo sobre el entorno experimental.\par
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{|p{0.38\textwidth}|p{0.48\textwidth}|}
+        \hline
+        \textbf{Archivo} & \textbf{Propósito} \\
+        \hline
+        \texttt{utils/VM\_first\_install.md} & Instalación inicial de la máquina virtual. \\
+        \hline
+        \texttt{utils/install\_addons.md} & Instalación de herramientas auxiliares. \\
+        \hline
+        \texttt{utils/SSH\_config.md} & Configuración de acceso remoto por SSH. \\
+        \hline
+        \texttt{utils/kernel\_compilation.md} & Compilación e instalación de \textit{kernels} de prueba. \\
+        \hline
+        \texttt{utils/remote\_debug.md} & Depuración remota del \textit{kernel}. \\
+        \hline
+        \texttt{tests/current\_scheduler\_testing.md} & Flujo de pruebas funcionales y recolección de evidencia. \\
+        \hline
+        \texttt{utils/scripts/vmUp.sh} & Automatización del inicio de la máquina virtual. \\
+        \hline
+    \end{tabular}
+    \caption{Documentación y scripts auxiliares del entorno experimental.}
+    \label{tabla:documentacion_automatizacion}
+\end{table}
+
+\subsection{Consulta a la comunidad de FreeBSD}
+
+Durante la depuración de un \textit{kernel panic} asociado a fallos de página bajo carga, se abrió una consulta pública en los foros de FreeBSD\cite{bib6}. El objetivo fue pedir orientación sobre estrategias de depuración, ya que el fallo aparecía de forma aleatoria, se observaba con mayor frecuencia bajo carga elevada y el \textit{kernel} genérico no presentaba el mismo comportamiento en las pruebas realizadas.\par
+
+En esa consulta se compartió información del entorno de trabajo, incluyendo la versión FreeBSD 13.1, el uso del planificador 4BSD, las opciones de depuración activadas, salidas de \texttt{kgdb} y fragmentos del \textit{backtrace} donde el fallo aparecía en caminos alejados del planificador. Las respuestas recibidas sugirieron revisar la correspondencia entre símbolos de depuración y \textit{kernel}, comparar contra un \textit{kernel} 4BSD sin modificaciones, revisar registros y direcciones alrededor del punto de fallo, considerar la desactivación de optimizaciones para depurar y avanzar hacia depuración en vivo cuando fuera posible.\par
+
+Esta interacción no constituyó una contribución técnica al proyecto FreeBSD ni un reporte formal de error aceptado por el proyecto. Su aporte dentro de este trabajo fue más limitado y concreto: brindó criterios de depuración y ayudó a orientar el análisis hacia la posibilidad de que el fallo observable fuera consecuencia de una corrupción o desincronización introducida por las modificaciones del planificador. Ese análisis fue luego desarrollado con mayor profundidad mediante \texttt{kgdb} e instrumentación con \textit{DTrace}, como se describe en la sección \ref{ch:problema_red}.\par
+
 \section{Módulo de actualizaciones}
 
 El desarrollo del proyecto se organizó en módulos, cada uno con objetivos específicos y alcanzables para asegurar avances concretos en cada etapa.\par
