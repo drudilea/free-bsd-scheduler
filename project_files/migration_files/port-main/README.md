@@ -4,11 +4,11 @@ Esta carpeta documenta el experimento de portar la rama base del planificador Pe
 
 El objetivo de estos documentos es separar tres temas que suelen mezclarse:
 
-1. Que cambios funcionales de Petri ya existian en la rama 13.1.
-2. Que cambios fueron necesarios por diferencias reales de FreeBSD `main`.
-3. Que cuidados de integracion conviene mantener antes de abrir un PR contra el `main` del repositorio del proyecto.
+1. Qué cambios funcionales de Petri ya existían en la rama 13.1.
+2. Qué cambios fueron necesarios por diferencias reales de FreeBSD `main`.
+3. Qué cuidados de integración conviene mantener antes de abrir un PR contra el `main` del repositorio del proyecto.
 
-No se documentan aqui los modulos de encendido/apagado de CPUs ni de monopolizacion. Esos modulos deberian quedar en PRs separados sobre la rama base Petri portada a `main`.
+No se documentan aquí los módulos de encendido/apagado de CPUs ni de monopolización. Esos módulos deberían quedar en PRs separados, apoyados sobre la rama base Petri portada a `main`.
 
 ## Rama y alcance
 
@@ -47,37 +47,37 @@ tools/sched/petri_addtoqueue.d
 
 ## Lectura recomendada
 
-1. [00-scheduler.md](00-scheduler.md) Explica el funcionamiento de los metodos de `sched_4bsd.c` tocados por la tesis y como se relacionan entre si.
+1. [00-scheduler.md](00-scheduler.md) Explica el funcionamiento de los métodos de `sched_4bsd.c` tocados por la tesis y cómo se relacionan entre sí.
 
-2. [01-contexto.md](01-contexto.md) Explica por que el merge completo contra `main` no era una buena senial y por que se uso un port por delta.
+2. [01-contexto.md](01-contexto.md) Explica por qué el merge completo contra `main` no era una buena señal y por qué se usó una aplicación del delta Petri.
 
-3. [02-sched-throw.md](02-sched-throw.md) Explica con detalle el caso mas importante: `sched_throw()`, `sched_ap_entry()` y quien esta ejecutando el codigo del scheduler.
+3. [02-sched-throw.md](02-sched-throw.md) Explica con detalle el caso más importante: `sched_throw()`, `sched_ap_entry()` y quién está ejecutando el código del scheduler.
 
-4. [03-cambios-reales.md](03-cambios-reales.md) Lista los cambios reales entre Petri sobre 13.1 y Petri sobre `main`, separando cambios funcionales de cambios de integracion.
+4. [03-cambios-reales.md](03-cambios-reales.md) Lista los cambios reales entre Petri sobre 13.1 y Petri sobre `main`, separando cambios funcionales de cambios de integración.
 
-5. [04-viabilidad-pr.md](04-viabilidad-pr.md) Evalua si el port es viable como PR contra el `main` del repositorio del proyecto y que validaciones faltan.
+5. [04-viabilidad-pr.md](04-viabilidad-pr.md) Evalúa si el port es viable como PR contra el `main` del repositorio del proyecto y qué validaciones quedan pendientes.
 
 ## Resumen corto
 
-La logica central de Petri sobre 13.1 se pudo trasladar a `main` sin redisenio conceptual.
+La lógica central de Petri sobre 13.1 se pudo trasladar a `main` sin rediseño conceptual.
 
-El conflicto sustantivo estuvo en `sys/kern/sched_4bsd.c`, especialmente por la separacion moderna de FreeBSD entre:
+El conflicto sustantivo estuvo en `sys/kern/sched_4bsd.c`, especialmente por la separación moderna de FreeBSD entre:
 
 ```text
 sched_throw(td)     -> sale un hilo real
 sched_ap_entry()    -> arranca una CPU sin hilo saliente real
-sched_throw_tail()  -> parte comun que elige el siguiente hilo
+sched_throw_tail()  -> parte común que elige el siguiente hilo
 ```
 
-El resto del trabajo fue principalmente de integracion:
+El resto del trabajo fue principalmente de integración:
 
 - preservar restricciones fuertes de FreeBSD: `pinned`, `bound` y afinidad;
-- mantener `ADDTOQUEUE_FORCED` para evitar desincronizacion Petri/FreeBSD;
+- mantener `ADDTOQUEUE_FORCED` para evitar desincronización Petri/FreeBSD;
 - rehacer `PI_KERNELCONF` desde el `GENERIC` actual de `main`;
 - compilar los archivos Petri solo con `SCHED_4BSD`;
 - evitar afectar kernels normales que no usan el planificador 4BSD.
 
-## Relacion con documentos existentes
+## Relación con documentos existentes
 
 Estos documentos complementan:
 
@@ -87,7 +87,7 @@ Estos documentos complementan:
 La idea importante que se mantiene desde esos documentos es:
 
 ```text
-Petri puede decidir cuando FreeBSD tiene libertad de politica.
+Petri puede decidir cuando FreeBSD tiene libertad de política.
 Petri no debe bloquear restricciones duras del kernel.
 ```
 

@@ -450,19 +450,19 @@ En la ejecución restringida, si se consideran únicamente los encolados per-CPU
 
 \chapter{Port experimental del planificador a FreeBSD \texttt{main}}\label{appendix:port-main}
 
-Este apéndice resume el estudio experimental realizado para revisar la portabilidad del planificador base hacia la rama \texttt{main} de FreeBSD. El trabajo no reemplaza la validación presentada sobre FreeBSD 13.1. Tampoco permite afirmar que el planificador esté listo para ejecutarse en producción sobre \texttt{main}. Su valor está en otro punto: permite identificar qué partes del desarrollo dependen de la versión usada durante esta tesis y qué ajustes serían necesarios para continuar el trabajo sobre una base más reciente.\par
+Este apéndice resume el estudio experimental realizado para revisar la portabilidad del planificador base hacia la rama \texttt{main} de FreeBSD. El objetivo no fue reemplazar la validación realizada sobre FreeBSD 13.1 ni presentar una versión lista para uso en producción. Su aporte es más acotado: identificar qué partes del desarrollo dependen de la versión usada durante esta tesis y qué ajustes serían necesarios para continuar el trabajo sobre una base más reciente.\par
 
-El estudio completo quedó documentado en el repositorio de documentación del proyecto, dentro de \verb|project_files/migration_files/port-main|. Esa carpeta contiene notas específicas sobre el funcionamiento de \verb|sched_4bsd.c|, el cambio en el camino de \verb|sched_throw()|, las diferencias reales entre el desarrollo sobre FreeBSD 13.1 y el port a \texttt{main}, y una evaluación de viabilidad para continuar con una propuesta de integración interna al repositorio del proyecto.\par
+El estudio completo quedó documentado en el repositorio de documentación del proyecto, dentro de \verb|project_files/migration_files/port-main|. Esa carpeta reúne notas sobre el funcionamiento de \verb|sched_4bsd.c|, el cambio en el camino de \verb|sched_throw()|, las diferencias entre el desarrollo sobre FreeBSD 13.1 y el port a \texttt{main}, y una evaluación de viabilidad para continuar con una propuesta de integración interna al repositorio del proyecto.\par
 
 \section{Alcance del experimento}
 
-El experimento se limitó al planificador base basado en Redes de Petri. No se incluyeron los módulos de inhibición de asignación de trabajo a procesadores ni de monopolización de núcleos. La idea fue separar la pregunta de portabilidad del núcleo del planificador de las extensiones desarrolladas después.\par
+El experimento se limitó al planificador base basado en Redes de Petri. No se incluyeron los módulos de inhibición de asignación de trabajo a procesadores ni de monopolización de núcleos. Esta separación permite analizar la portabilidad del núcleo del planificador sin mezclarla con las extensiones desarrolladas después.\par
 
 La rama utilizada para el experimento fue \verb|feature/petri-net-scheduler-main-port|. La base fue la rama \texttt{main} del repositorio derivado, sincronizada con la rama \texttt{main} de FreeBSD al momento del estudio. Sobre esa base se aplicó el delta del planificador Petri, en lugar de realizar una fusión histórica completa desde la rama basada en FreeBSD 13.1. Esta decisión redujo la cantidad de conflictos no relacionados con la tesis y permitió concentrar el análisis en los archivos realmente modificados por el proyecto.\par
 
-Como resultado del experimento, se abrió una propuesta de integración en estado borrador hacia \texttt{main} del repositorio derivado: \url{https://github.com/drudilea/freebsd-src/pull/20}. El objetivo de esa propuesta fue dejar trazable la integración revisada, no presentar el port como una versión validada funcionalmente.\par
+Como resultado del experimento, se abrió una propuesta de integración en estado borrador hacia \texttt{main} del repositorio derivado: \url{https://github.com/drudilea/freebsd-src/pull/20}. Esa propuesta sirve para dejar trazable la integración revisada, no para presentar el port como una versión validada funcionalmente.\par
 
-El alcance debe leerse con cuidado. Se revisaron conflictos de integración, coherencia conceptual del flujo del planificador y estilo de código. No se ejecutaron pruebas de estrés sobre el \textit{kernel} resultante, no se realizó una medición de rendimiento y no se validó el comportamiento en ejecución real con carga sostenida. Por lo tanto, el resultado debe considerarse una prueba de integración y no una validación funcional equivalente a la realizada sobre FreeBSD 13.1.\par
+El alcance debe leerse con cuidado. Se revisaron conflictos de integración, coherencia conceptual del flujo del planificador y estilo de código. No se ejecutaron pruebas de estrés sobre el \textit{kernel} resultante, no se midió rendimiento y no se validó el comportamiento con carga sostenida. Por lo tanto, el resultado debe considerarse una prueba de integración y no una validación funcional equivalente a la realizada sobre FreeBSD 13.1.\par
 
 \section{Diferencias relevantes encontradas}
 
@@ -499,7 +499,7 @@ Otro ajuste fue el archivo \verb|PI_KERNELCONF|. En lugar de arrastrar el archiv
 
 \section{Interpretación del resultado}
 
-El estudio sugiere que el núcleo del planificador basado en Redes de Petri puede trasladarse a una base más reciente sin rediseñar el modelo. La mayor parte de los cambios fueron de integración: ubicar llamadas en el flujo actualizado del planificador, respetar definiciones ya existentes en FreeBSD \texttt{main}, limitar la compilación de los archivos Petri al planificador 4BSD y evitar diferencias antiguas en la configuración del \textit{kernel}.\par
+El estudio sugiere que el núcleo del planificador basado en Redes de Petri puede trasladarse a una base más reciente sin rediseñar el modelo. La mayor parte de los cambios fueron de integración: ubicar llamadas en el flujo actualizado del planificador, respetar definiciones ya existentes en FreeBSD \texttt{main}, limitar la compilación de los archivos Petri al planificador 4BSD y evitar diferencias heredadas en la configuración del \textit{kernel}.\par
 
 El punto conceptual que se mantiene desde la corrección descripta en la sección \ref{ch:problema_red} es que Petri debe decidir cuando FreeBSD tiene libertad de política, pero no debe bloquear restricciones internas del \textit{kernel}. Por eso la transición \verb|TRAN_ADDTOQUEUE_FORCED| sigue siendo necesaria en el port: registra en la red los encolados que FreeBSD debe realizar por \textit{pinning}, \textit{bounding} o afinidad, sin desincronizar el marcado.\par
 

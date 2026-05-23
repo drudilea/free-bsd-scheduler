@@ -2,32 +2,32 @@
 
 ## Resumen
 
-Fuera del caso `sched_throw()`, el port a `main` no requirio un redisenio de la logica Petri.
+Fuera del caso `sched_throw()`, el port a `main` no requirió un rediseño de la lógica Petri.
 
-La mayoria de los cambios son de integracion:
+La mayoría de los cambios son de integración:
 
 - insertar los hooks Petri en el `sched_4bsd.c` actual;
 - no arrastrar un `PI_KERNELCONF` viejo;
 - no compilar Petri en kernels que no usan 4BSD;
-- limpiar detalles de C que podian dificultar revision o build.
+- limpiar detalles de C que podían dificultar revisión o build.
 
 ## Tabla de cambios
 
-| Area | Cambio respecto de 13.1 | Tipo | Motivo |
+| Área | Cambio respecto de 13.1 | Tipo | Motivo |
 | --- | --- | --- | --- |
-| `sched_throw()` | Se adapto a la separacion `sched_throw()` / `sched_ap_entry()` / `sched_throw_tail()` | Funcional por API nueva | FreeBSD `main` ya no usa `sched_throw(NULL)` |
-| `sched_add()` | Misma logica general de Petri + `ADDTOQUEUE_FORCED` | Misma logica | Mantener sincronizada la red sin romper `pinned`, `bound` ni afinidad |
-| `sched_switch()` | Mismos eventos Petri: expulsion del saliente y ejecucion del entrante | Misma logica | Reflejar `RUNNING -> ...` y `... -> RUNNING` en la red |
-| `sched_choose()` | Mismo registro de cola per-CPU, cola global e `idlethread` | Misma logica | Mantener coherencia del marcado cuando se elige un hilo |
-| `sched_rem()` | Mismo registro al remover de cola per-CPU o global | Misma logica | Evitar que Petri conserve hilos que FreeBSD ya removio |
-| `PI_KERNELCONF` | Rehecho desde el `GENERIC` actual de `main` | Integracion | Evitar arrastrar diferencias viejas de 13.1 |
-| `sys/conf/files` | Archivos Petri como `optional sched_4bsd` | Integracion | Evitar meter Petri en kernels ULE o no 4BSD |
-| `kern_thread.c` | Inicializacion Petri bajo `#ifdef SCHED_4BSD` | Integracion | Evitar dependencia Petri fuera de 4BSD |
+| `sched_throw()` | Se adaptó a la separación `sched_throw()` / `sched_ap_entry()` / `sched_throw_tail()` | Funcional por API nueva | FreeBSD `main` ya no usa `sched_throw(NULL)` |
+| `sched_add()` | Misma lógica general de Petri + `ADDTOQUEUE_FORCED` | Misma lógica | Mantener sincronizada la red sin romper `pinned`, `bound` ni afinidad |
+| `sched_switch()` | Mismos eventos Petri: expulsión del saliente y ejecución del entrante | Misma lógica | Reflejar `RUNNING -> ...` y `... -> RUNNING` en la red |
+| `sched_choose()` | Mismo registro de cola per-CPU, cola global e `idlethread` | Misma lógica | Mantener coherencia del marcado cuando se elige un hilo |
+| `sched_rem()` | Mismo registro al remover de cola per-CPU o global | Misma lógica | Evitar que Petri conserve hilos que FreeBSD ya removió |
+| `PI_KERNELCONF` | Rehecho desde el `GENERIC` actual de `main` | Integración | Evitar arrastrar diferencias viejas de 13.1 |
+| `sys/conf/files` | Archivos Petri como `optional sched_4bsd` | Integración | Evitar meter Petri en kernels ULE o no 4BSD |
+| `kern_thread.c` | Inicialización Petri bajo `#ifdef SCHED_4BSD` | Integración | Evitar dependencia Petri fuera de 4BSD |
 | estilo C | Limpieza de formato, helpers muertos y variables no usadas | Mantenimiento | Reducir riesgo de build/review |
 
 ## sched_add
 
-La logica importante en `sched_add()` es la misma que ya se venia usando.
+La lógica importante en `sched_add()` es la misma que ya se venía usando.
 
 La regla conceptual es:
 
@@ -45,7 +45,7 @@ Hilo con afinidad/cpuset:
   debe ir a una CPU permitida.
 ```
 
-Petri participa cuando hay libertad de politica. No debe anular restricciones que FreeBSD considera obligatorias.
+Petri participa cuando hay libertad de política. No debe anular restricciones que FreeBSD considera obligatorias.
 
 ```mermaid
 flowchart TD
@@ -58,25 +58,25 @@ flowchart TD
     E -- "pinned / bound" --> F["usar CPU obligatoria"]
     F --> G["Petri: TRAN_ADDTOQUEUE_FORCED"]
 
-    E -- "affinity/cpuset" --> H["Petri intenta elegir CPU valida"]
+    E -- "affinity/cpuset" --> H["Petri intenta elegir CPU válida"]
     H --> I{"ADDTOQUEUE sensibilizada?"}
     I -- "si" --> J["Petri: TRAN_ADDTOQUEUE"]
     I -- "no" --> K["FreeBSD fallback a CPU permitida"]
     K --> L["Petri: TRAN_ADDTOQUEUE_FORCED"]
 ```
 
-### Por que existe ADDTOQUEUE_FORCED
+### Por qué existe ADDTOQUEUE_FORCED
 
 `ADDTOQUEUE_FORCED` no es una forma de ignorar Petri. Es una forma de registrar en Petri un evento que FreeBSD debe realizar.
 
-Sin esa transicion, podia pasar esto:
+Sin esa transición, podía pasar esto:
 
 ```text
 FreeBSD:
   debe encolar un hilo en runq_pcpu[1]
 
 Petri:
-  ADDTOQUEUE_P1 esta inhibida por CANTQ_P1
+  ADDTOQUEUE_P1 está inhibida por CANTQ_P1
 
 Resultado:
   FreeBSD encola realmente el hilo
@@ -96,7 +96,7 @@ Petri:
   incrementa CANTQ
 ```
 
-Esto mantiene la penalizacion de balanceo, pero evita que la red bloquee una restriccion dura del kernel.
+Esto mantiene la penalización de balanceo, pero evita que la red bloquee una restricción dura del kernel.
 
 ## sched_switch
 
@@ -107,7 +107,7 @@ hilo saliente deja CPU -> resource_expulse_thread()
 hilo entrante ejecuta  -> resource_execute_thread()
 ```
 
-La diferencia con `main` no fue conceptual. El codigo alrededor de `sched_switch()` esta mas actualizado que en 13.1, por lo que los hooks se ubicaron donde el estado del hilo ya es coherente para actualizar Petri.
+La diferencia con `main` no fue conceptual. El código alrededor de `sched_switch()` está más actualizado que en 13.1, por lo que los hooks se ubicaron donde el estado del hilo ya es coherente para actualizar Petri.
 
 Flujo simplificado:
 
@@ -128,9 +128,9 @@ sequenceDiagram
 
 ## sched_choose
 
-El trabajo de `sched_choose()` es elegir que hilo ejecutar.
+El trabajo de `sched_choose()` es elegir qué hilo ejecutar.
 
-En Petri importa de donde salio ese hilo:
+En Petri importa de dónde salió ese hilo:
 
 ```text
 cola per-CPU:
@@ -143,7 +143,7 @@ sin hilos disponibles:
   idlethread
 ```
 
-El `idlethread` es especial porque no representa trabajo real de usuario. Aun asi, Petri necesita registrar un pasaje coherente para que el marcado del hilo y de los recursos no quede roto.
+El `idlethread` es especial porque no representa trabajo real de usuario. Aun así, Petri necesita registrar un pasaje coherente para que el marcado del hilo y de los recursos no quede roto.
 
 ## sched_rem
 
@@ -161,7 +161,7 @@ cola global:
 
 ## PI_KERNELCONF
 
-En vez de traer el archivo viejo de 13.1, se tomo el `GENERIC` actual de `main` y se aplicaron solo las diferencias necesarias:
+En vez de traer el archivo viejo de 13.1, se tomó el `GENERIC` actual de `main` y se aplicaron solo las diferencias necesarias:
 
 ```text
 ident PI_KERNELCONF
@@ -175,13 +175,13 @@ Esto evita que el PR muestre cientos de cambios irrelevantes por diferencias ent
 
 ## sys/conf/files y kern_thread.c
 
-El primer delta traia los archivos Petri como `standard`. Eso significa:
+El primer delta traía los archivos Petri como `standard`. Eso significa:
 
 ```text
 compilar Petri en cualquier kernel
 ```
 
-Para un PR contra `main`, eso no era conveniente. La integracion quedo asi:
+Para un PR contra `main`, eso no era conveniente. La integración quedó así:
 
 ```text
 kern/petri_global_net.c  optional sched_4bsd
@@ -198,9 +198,9 @@ init_petri_thread(td);
 
 Con esto, Petri queda atado al planificador 4BSD, que es donde realmente se integra.
 
-## Que no se cambio
+## Qué no se cambió
 
-No se cambio la idea central del modelo:
+No se cambió la idea central del modelo:
 
 ```text
 ADDTOQUEUE
@@ -214,11 +214,11 @@ REMOVE_GLOBAL_QUEUE
 ADDTOQUEUE_FORCED
 ```
 
-Tampoco se agregaron los modulos:
+Tampoco se agregaron los módulos:
 
 ```text
 CPU on/off
 CPU monopolize
 ```
 
-Esos deberian llegar despues, en PRs separados.
+Esos deberían llegar después, en PRs separados.

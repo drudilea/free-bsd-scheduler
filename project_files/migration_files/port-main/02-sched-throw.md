@@ -1,10 +1,10 @@
-# sched_throw, sched_ap_entry y quien ejecuta el scheduler
+# sched_throw, sched_ap_entry y quién ejecuta el scheduler
 
 ## Idea clave
 
-El codigo del scheduler no lo ejecuta magicamente "el hilo que entra".
+El código del scheduler no lo ejecuta "el hilo que entra".
 
-Lo ejecuta la CPU que esta corriendo en ese momento, usando el contexto del hilo actual, hasta que ocurre el cambio de contexto real.
+Lo ejecuta la CPU que está corriendo en ese momento, usando el contexto del hilo actual, hasta que ocurre el cambio de contexto real.
 
 Eso significa:
 
@@ -12,7 +12,7 @@ Eso significa:
 Antes del cambio de contexto:
   se sigue ejecutando el hilo saliente.
 
-Despues del cambio de contexto:
+Después del cambio de contexto:
   empieza a ejecutar el hilo entrante.
 ```
 
@@ -21,12 +21,12 @@ Despues del cambio de contexto:
 Ejemplo:
 
 ```text
-CPU0 esta ejecutando hilo A.
+CPU0 está ejecutando hilo A.
 Hilo A hace yield, se bloquea o debe ser reemplazado.
-CPU0 entra al scheduler todavia en contexto de A.
+CPU0 entra al scheduler todavía en contexto de A.
 El scheduler elige hilo B.
 Se ejecuta la rutina de cambio de contexto.
-CPU0 continua ejecutando B.
+CPU0 continúa ejecutando B.
 ```
 
 Diagrama:
@@ -41,17 +41,17 @@ sequenceDiagram
 
     CPU->>A: Ejecuta A
     A->>S: Entra al scheduler
-    Note over CPU,S: Todavia se esta ejecutando codigo en contexto de A
+    Note over CPU,S: Todavía se está ejecutando código en contexto de A
     S->>P: A deja la CPU
-    S->>S: Elige proximo hilo
+    S->>S: Elige próximo hilo
     S->>P: B empieza a ejecutar
     S->>CPU: Cambio de contexto
-    CPU->>B: Continua ejecutando B
+    CPU->>B: Continúa ejecutando B
 ```
 
 ## Diferencia entre sched_switch y sched_throw
 
-`sched_switch()` representa un cambio normal. El hilo saliente puede volver mas tarde.
+`sched_switch()` representa un cambio normal. El hilo saliente puede volver más tarde.
 
 Ejemplos:
 
@@ -62,7 +62,7 @@ Ejemplos:
 
 `sched_throw()` es distinto. Se usa cuando el contexto actual se descarta. El hilo saliente existe, pero no vuelve por el camino normal.
 
-Ejemplo tipico:
+Ejemplo típico:
 
 ```text
 un hilo termina
@@ -84,7 +84,7 @@ tirar el contexto actual y saltar a otro
 
 ## El caso raro: arranque de CPUs
 
-Cuando una CPU secundaria arranca, no hay un hilo real que este saliendo.
+Cuando una CPU secundaria arranca, no hay un hilo real que esté saliendo.
 
 La CPU entra por primera vez al scheduler y necesita elegir algo para ejecutar. Pero no existe un `td` anterior que Petri pueda expulsar.
 
@@ -108,22 +108,22 @@ sequenceDiagram
 
     CPU->>S: Entra por primera vez
     Note over CPU,S: No hay hilo saliente real
-    S->>S: Elige proximo hilo
+    S->>S: Elige próximo hilo
     S->>P: B empieza a ejecutar
     S->>CPU: cpu_throw(NULL, B)
-    CPU->>B: Continua ejecutando B
+    CPU->>B: Continúa ejecutando B
 ```
 
-## Como era antes
+## Cómo era antes
 
-En la version vieja, FreeBSD reutilizaba `sched_throw()` para ambos casos:
+En la versión vieja, FreeBSD reutilizaba `sched_throw()` para ambos casos:
 
 ```text
 sched_throw(td)    -> hilo real saliendo
 sched_throw(NULL)  -> CPU arrancando, sin hilo saliente
 ```
 
-Eso hacia que `sched_throw()` tuviera que preguntar:
+Eso hacía que `sched_throw()` tuviera que preguntar:
 
 ```text
 hay td real?
@@ -136,18 +136,18 @@ si td existe:
   se debe registrar que el hilo deja la CPU
 
 si td es NULL:
-  no se debe expulsar ningun hilo
+  no se debe expulsar ningún hilo
 ```
 
-## Como es en main
+## Cómo es en main
 
-FreeBSD `main` separo los casos. El cambio relevante esta en el commit:
+FreeBSD `main` separó los casos. El cambio relevante está en el commit:
 
 ```text
 6a8ea6d17498 sched: split sched_ap_entry() out of sched_throw()
 ```
 
-La intencion del cambio en FreeBSD fue limpiar la ruta comun:
+La intención del cambio en FreeBSD fue limpiar la ruta común:
 
 ```text
 sched_throw(td)
@@ -157,7 +157,7 @@ sched_ap_entry()
   caso especial: una CPU arranca
 
 sched_throw_tail(td)
-  parte comun: elegir el proximo hilo y saltar a el
+  parte común: elegir el próximo hilo y saltar a él
 ```
 
 Diagrama:
@@ -176,7 +176,7 @@ flowchart TD
     H --> I["cpu_throw(td, newtd)"]
 ```
 
-## Que hubo que hacer en el port
+## Qué hubo que hacer en el port
 
 La regla correcta para Petri es:
 
@@ -191,7 +191,7 @@ Siempre que se elige un hilo entrante:
   resource_execute_thread(newtd, cpu)
 ```
 
-En `main`, eso se traduce asi:
+En `main`, eso se traduce así:
 
 ```text
 sched_throw(td):
@@ -207,22 +207,22 @@ sched_throw_tail(td):
   cpu_throw(td, newtd)
 ```
 
-## Por que no habia que volver al diseno viejo
+## Por qué no había que volver al diseño anterior
 
-Una solucion tentadora habria sido reintroducir una logica tipo:
+Una alternativa posible habría sido reintroducir una lógica del estilo:
 
 ```text
 sched_throw(NULL)
 ```
 
-Pero eso iria contra la direccion actual de FreeBSD `main`.
+Pero eso iría contra la dirección actual de FreeBSD `main`.
 
-La solucion usada respeta el diseno nuevo:
+La solución usada respeta el diseño actual:
 
 - `sched_throw()` no recibe `NULL`;
 - `sched_ap_entry()` cubre el arranque de CPUs;
 - Petri solo expulsa cuando existe un hilo saliente real;
-- Petri siempre registra la ejecucion del hilo entrante en la parte comun.
+- Petri siempre registra la ejecución del hilo entrante en la parte común.
 
 ## Resumen mental
 
@@ -237,7 +237,7 @@ sched_ap_entry:
   arranca una CPU; no hay hilo saliente.
 
 sched_throw_tail:
-  parte comun; elige el proximo hilo y salta a el.
+  parte común; elige el próximo hilo y salta a el.
 ```
 
 Para el modelo Petri:
