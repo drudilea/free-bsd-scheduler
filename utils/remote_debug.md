@@ -8,11 +8,11 @@
 
     ## Dev
 
-    <img src='./assets/remoteDebugging/pipe_dev_config.png' style='max-height: 600px' />
+    <img src='../assets/remoteDebugging/pipe_dev_config.png' style='max-height: 600px' />
 
     ## Target
 
-    <img src='./assets/remoteDebugging/pipe_target_config.png' style='max-height: 600px' />
+    <img src='../assets/remoteDebugging/pipe_target_config.png' style='max-height: 600px' />
 
     > En caso de que no sea posible la conexión con la dirección de pipe propuesta (generalmente en Mac), es posible utilizar la siguiente: `/tmp/serial`
 
