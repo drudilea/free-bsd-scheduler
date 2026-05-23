@@ -425,29 +425,6 @@ La prueba sin afinidad explícita mostró que la mayoría de los hilos siguieron
 
 En la ejecución restringida, si se consideran únicamente los encolados per-CPU registrados por la red, el 61.10\% correspondió a \verb|ADDTOQUEUE_POLICY| y el 38.89\% a \verb|ADDTOQUEUE_FORCED|. No se registraron transiciones bloqueadas durante las pruebas, lo que indica que el modelo permaneció sincronizado con el estado real del planificador en los escenarios evaluados.\par
 
-\chapter{Ejecución del programa de estrés con diferentes cantidades de núcleos activos}\label{appendix:apD}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/cpuOnOff-4CPUsTime.png}
-    \caption{Tiempo de ejecución del programa de estrés con 4 núcleos activos.}
-    \label{fig:cpuOnOff-4CPUsTime}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/cpuOnOff-3CPUsTime.png}
-    \caption{Tiempo de ejecución del programa de estrés con 3 núcleos activos.}
-    \label{fig:cpuOnOff-3CPUsTime}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{images/cpuOnOff-2CPUsTime.png}
-    \caption{Tiempo de ejecución del programa de estrés con 2 núcleos activos.}
-    \label{fig:cpuOnOff-2CPUsTime}
-\end{figure}
-
 \chapter{Port experimental del planificador a FreeBSD \texttt{main}}\label{appendix:port-main}
 
 Este apéndice resume el estudio experimental realizado para revisar la portabilidad del planificador base hacia la rama \texttt{main} de FreeBSD. El objetivo no fue reemplazar la validación realizada sobre FreeBSD 13.1 ni presentar una versión lista para uso en producción. Su aporte es más acotado: identificar qué partes del desarrollo dependen de la versión usada durante esta tesis y qué ajustes serían necesarios para continuar el trabajo sobre una base más reciente.\par
