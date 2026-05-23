@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        background: #ffffff;
+      }
+      td.colhead {
+        font-weight: bold;
+        text-align: center;
+        background: #ffffff;
+      }
+      td.rowhead {
+        font-weight: bold;
+        background: #ffffff;
+      }
+      td.cell {
+        text-align: center;
+        padding: 5px, 0;
+      }
+      tr.even {
+        background: #a0a0d0;
+      }
+      tr.odd {
+        background: #c0c0f0;
+      }
+      td.empty {
+        background: #ffffff;
+      }
+    </style>
+    <html>
+      <head>
+        <style type="text/css">
+          <!--
+            body { font-family: Arial,Helvetica,sans-serif; text-align: center; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+            td.colhead { font-weight: bold; text-align: center; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+            td.rowhead { font-weight: bold; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+            td.cell { text-align: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0 }
+            tr.even { background-color: #a0a0d0; background-repeat: repeat; background-attachment: scroll }
+            tr.odd { background-color: #c0c0f0; background-repeat: repeat; background-attachment: scroll }
+            td.empty { background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+          -->
+        </style>
+      </head>
+      <body>
+        <h2>Petri net invariant analysis results</h2>
+        <h3>T-Invariants</h3>
+        <table border="0" cellspacing="2">
+          <tr class="odd">
+            <td class="colhead">TRAN_ADDTOQUEUE_FORCED[i]</td>
+            <td class="colhead">TRAN_ADDTOQUEUE[i]</td>
+            <td class="colhead">TRAN_EXEC_EMPTY[i]</td>
+            <td class="colhead">TRAN_EXEC[i]</td>
+            <td class="colhead">TRAN_TRHOW</td>
+            <td class="colhead">TRAN_UNQUEUE[i]</td>
+          </tr>
+        </table>
+        The net is not covered by positive T-Invariants, therefore we do not
+        know if it is bounded and live.<br /><br />
+
+        <h3>P-Invariants</h3>
+        <table border="0" cellspacing="2">
+          <tr class="odd">
+            <td class="colhead">PLACE_CANTQ[i]</td>
+            <td class="colhead">PLACE_CPU[i]</td>
+            <td class="colhead">PLACE_EXECUTING[i]</td>
+            <td class="colhead">PLACE_QUEUE[i]</td>
+            <td class="colhead">PLACE_TOEXEC[i]</td>
+          </tr>
+          <tr class="even">
+            <td class="cell">0</td>
+            <td class="cell">1</td>
+            <td class="cell">1</td>
+            <td class="cell">0</td>
+            <td class="cell">1</td>
+          </tr>
+        </table>
+        The net is not covered by positive P-Invariants, therefore we do not
+        know if it is bounded.<br />
+
+        <h3>P-Invariant equations</h3>
+        M(PLACE_CPU[i]) + M(PLACE_EXECUTING[i]) + M(PLACE_TOEXEC[i]) = 1<br /><br /><br />Analysis
+        time: 0.0s
+      </body>
+    </html>
+  </head>
+</html>

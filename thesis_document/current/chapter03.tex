@@ -442,4 +442,63 @@ Con este cambio, los hilos \textit{pinned} y \textit{bound} se registran mediant
 
 Una vez definida la corrección, se agregó instrumentación específica con \textit{DTrace} para validarla sin depender de impresiones masivas desde el \textit{kernel}. Para esto se incorporó un proveedor \verb|SDT| propio, descripto en el Apéndice \ref{appendix:dtrace-sdt}, con eventos asociados al disparo de transiciones, a intentos bloqueados y a las decisiones tomadas por \verb|sched_add()|. Las trazas permitieron distinguir si un hilo era enviado a la cola global, si era encolado en una cola per-CPU por decisión de la política de Petri, o si era registrado mediante \verb|TRAN_ADDTOQUEUE_FORCED|. Con esta instrumentación se pudo observar el comportamiento del modelo en ejecución real, validar que la transición original seguía siendo utilizada cuando correspondía y verificar que los encolados obligatorios quedaran registrados sin volver a desincronizar la red.\par
 
+\subsection{Análisis formal del modelo extendido}
+
+Además de la validación en ejecución, se revisaron formalmente los modelos de Red de Petri utilizados durante el desarrollo. El alcance de este análisis es acotado: no pretende demostrar propiedades del \textit{kernel} completo, sino comprobar que las extensiones agregadas al modelo conservan relaciones estructurales básicas y no introducen estados de \textit{deadlock} en los escenarios analizados.\par
+
+Para esto se trabajó con dos modelos principales. El primero fue el submodelo reducido de encolado forzado mostrado en la Figura \ref{fig:addtoqueue-forced-subnet}, usado para mirar de forma aislada el cambio introducido por \verb|TRAN_ADDTOQUEUE_FORCED|. El segundo fue un modelo consolidado de una CPU, mostrado en la Figura \ref{fig:resource-final-1cpu}, que reúne la suspensión de procesadores, la ejecución del \texttt{idlethread} y el encolado forzado. De esta manera, el modelo consolidado permite observar en una misma red la inhibición manual de asignación de trabajo y el registro de encolados obligatorios de FreeBSD.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/resource-final-1cpu.png}
+    \caption[Modelo consolidado de recursos para una CPU]{Modelo consolidado de recursos para una CPU utilizado en el análisis formal. La red integra la inhibición manual de asignación de trabajo, la ejecución del \texttt{idlethread} y la transición de encolado forzado.}
+    \label{fig:resource-final-1cpu}
+\end{figure}
+
+En los modelos analizados se identificaron algunos invariantes estructurales útiles para revisar la consistencia del marcado. En la red de hilos presentada en la Figura \ref{fig:threadModel}, por ejemplo, se conserva la relación:
+
+\[
+M(\texttt{CAN\_RUN}) +
+M(\texttt{CPU\_RUN\_QUEUE}) +
+M(\texttt{INACTIVE}) +
+M(\texttt{INHIBITED}) +
+M(\texttt{RUNNING}) = 1
+\]
+
+Esta expresión refleja que el hilo no se duplica ni desaparece dentro de la red: queda representado en uno de sus estados posibles. En la red de recursos, tanto en el modelo base como en el modelo consolidado de una CPU, se conserva la exclusión entre los modos globales de arranque y operación SMP:
+
+\[
+M(\texttt{PLACE\_SMP\_NOT\_READY}) +
+M(\texttt{PLACE\_SMP\_READY}) = 1
+\]
+
+También se conserva el estado del recurso CPU:
+
+\[
+M(\texttt{PLACE\_CPU[i]}) +
+M(\texttt{PLACE\_EXECUTING[i]}) +
+M(\texttt{PLACE\_TOEXEC[i]}) = 1
+\]
+
+Este último invariante aparece en el submodelo reducido y en el modelo consolidado. Muestra que el token que representa al procesador puede estar en tres lugares: la CPU disponible, un hilo próximo a ejecutar o un hilo en ejecución. La transición \verb|TRAN_ADDTOQUEUE_FORCED| no cambia esa relación, porque su función es registrar un encolado obligatorio, no modificar directamente el estado de ejecución del recurso. Estos invariantes se calculan sobre la matriz de incidencia; por eso no dependen de los arcos inhibidores. Los inhibidores pueden habilitar o bloquear transiciones según el marcado, pero no agregan ni consumen tokens por sí mismos.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.30\textwidth}|p{0.22\textwidth}|p{0.35\textwidth}|}
+        \hline
+        \textbf{Modelo} & \textbf{Resultado PIPE} & \textbf{Interpretación} \\
+        \hline
+        Submodelo reducido de encolado forzado & Sin \textit{deadlock}; no \textit{bounded}; no \textit{safe} & El submodelo permite acumulación de tokens en las plazas de cola, pero no alcanza un marcado bloqueado. \\
+        \hline
+        Modelo consolidado de una CPU & Sin \textit{deadlock}; no \textit{bounded}; no \textit{safe} & El modelo final analizado no presenta estados bloqueados; la falta de acotación responde a que no se modela una capacidad máxima de cola. \\
+        \hline
+    \end{tabular}
+    \caption{Resultados de análisis formal obtenidos con PIPE sobre los modelos de recursos.}
+    \label{tabla:pipe-analisis-formal}
+\end{table}
+
+Los resultados \textit{bounded} y \textit{safe} deben leerse dentro del alcance del modelo. Las colas del planificador no se modelaron con una capacidad máxima fija, por lo que PIPE permite disparos repetidos de encolado y acumulación de tokens en plazas como \verb|PLACE_QUEUE| o \verb|PLACE_CANTQ|. Por este motivo, que la red no sea \textit{bounded} ni \textit{safe} no invalida la corrección analizada; simplemente indica que este modelo no impone una cota formal sobre el tamaño de las colas.\par
+
+La matriz de incidencia del modelo consolidado confirma el punto central de la corrección. El encolado ordinario y el encolado forzado tienen el mismo efecto sobre \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|: ambos agregan un token a la cola per-CPU y un token a la plaza que penaliza futuras decisiones de encolado. La diferencia aparece en la matriz de inhibición. \verb|PLACE_CANTQ| bloquea el camino ordinario, pero no bloquea el camino forzado. Así, cuando FreeBSD necesita registrar un encolado obligatorio, la red puede actualizar su marcado sin quedar bloqueada por la política normal de balanceo.\par
+
 El análisis técnico del \textit{crash dump} y la evidencia obtenida con instrumentación de \textit{DTrace} se encuentran documentados en el Apéndice \ref{appendix:apC}. La explicación de \textit{DTrace}, \textit{probes} y \verb|SDT| se desarrolla específicamente en el Apéndice \ref{appendix:dtrace-sdt}.\par

@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <style type="text/css">
+      <!--
+        body { font-family: Arial,Helvetica,sans-serif; text-align: center; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+        td.colhead { font-weight: bold; text-align: center; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+        td.rowhead { font-weight: bold; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+        td.cell { text-align: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0 }
+        tr.even { background-color: #a0a0d0; background-repeat: repeat; background-attachment: scroll }
+        tr.odd { background-color: #c0c0f0; background-repeat: repeat; background-attachment: scroll }
+        td.empty { background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+      -->
+    </style>
+  </head>
+  <body>
+    <h2>Petri net invariant analysis results</h2>
+    <h3>T-Invariants</h3>
+    <table border="0" cellspacing="2">
+      <tr class="odd">
+        <td class="colhead">T0_INIT</td>
+        <td class="colhead">T1_ON_QUEUE</td>
+        <td class="colhead">T2_SET_RUNNING</td>
+        <td class="colhead">T3_SWITCH_OUT</td>
+        <td class="colhead">T4_TO_WAIT_CHANNEL</td>
+        <td class="colhead">T5_WAKEUP</td>
+        <td class="colhead">T6_REMOVE</td>
+      </tr>
+      <tr class="even">
+        <td class="cell">0</td>
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+        <td class="cell">0</td>
+        <td class="cell">0</td>
+        <td class="cell">0</td>
+      </tr>
+      <tr class="odd">
+        <td class="cell">0</td>
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+        <td class="cell">0</td>
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+        <td class="cell">0</td>
+      </tr>
+      <tr class="even">
+        <td class="cell">0</td>
+        <td class="cell">1</td>
+        <td class="cell">0</td>
+        <td class="cell">0</td>
+        <td class="cell">0</td>
+        <td class="cell">0</td>
+        <td class="cell">1</td>
+      </tr>
+    </table>
+    The net is not covered by positive T-Invariants, therefore we do not know if
+    it is bounded and live.<br /><br />
+
+    <h3>P-Invariants</h3>
+    <table border="0" cellspacing="2">
+      <tr class="odd">
+        <td class="colhead">CAN_RUN</td>
+        <td class="colhead">CPU_RUN_QUEUE</td>
+        <td class="colhead">INACTIVE</td>
+        <td class="colhead">INHIBITED</td>
+        <td class="colhead">RUNNING</td>
+      </tr>
+      <tr class="even">
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+        <td class="cell">1</td>
+      </tr>
+    </table>
+    The net is covered by positive P-Invariants, therefore it is bounded.<br />
+
+    <h3>P-Invariant equations</h3>
+    M(CAN_RUN) + M(CPU_RUN_QUEUE) + M(INACTIVE) + M(INHIBITED) + M(RUNNING) =
+    1<br /><br /><br />Analysis time: 0.001s
+  </body>
+</html>

@@ -1,0 +1,370 @@
+<html>
+  <head>
+    <style type="text/css">
+      <!--
+        body { font-family: Arial,Helvetica,sans-serif; text-align: center; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+        td.colhead { font-weight: bold; text-align: center; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+        td.rowhead { font-weight: bold; background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+        td.cell { text-align: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0 }
+        tr.even { background-color: #a0a0d0; background-repeat: repeat; background-attachment: scroll }
+        tr.odd { background-color: #c0c0f0; background-repeat: repeat; background-attachment: scroll }
+        td.empty { background-color: #ffffff; background-repeat: repeat; background-attachment: scroll }
+      -->
+    </style>
+  </head>
+  <body>
+    <h2>Petri net incidence and marking</h2>
+    <table border="0" cellspacing="2">
+      <tr>
+        <td class="colhead">
+          Forwards incidence matrix <i>I<sup>+</sup></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="cell">
+          <table border="0" cellspacing="2">
+            <tr class="even">
+              <td class="empty"></td>
+              <td class="colhead">T0_INIT</td>
+              <td class="colhead">T1_ON_QUEUE</td>
+              <td class="colhead">T2_SET_RUNNING</td>
+              <td class="colhead">T3_SWITCH_OUT</td>
+              <td class="colhead">T4_TO_WAIT_CHANNEL</td>
+              <td class="colhead">T5_WAKEUP</td>
+              <td class="colhead">T6_REMOVE</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">CAN_RUN</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">1</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">CPU_RUN_QUEUE</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">INACTIVE</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">INHIBITED</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">RUNNING</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <table border="0" cellspacing="2">
+      <tr>
+        <td class="colhead">
+          Backwards incidence matrix <i>I<sup>-</sup></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="cell">
+          <table border="0" cellspacing="2">
+            <tr class="even">
+              <td class="empty"></td>
+              <td class="colhead">T0_INIT</td>
+              <td class="colhead">T1_ON_QUEUE</td>
+              <td class="colhead">T2_SET_RUNNING</td>
+              <td class="colhead">T3_SWITCH_OUT</td>
+              <td class="colhead">T4_TO_WAIT_CHANNEL</td>
+              <td class="colhead">T5_WAKEUP</td>
+              <td class="colhead">T6_REMOVE</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">CAN_RUN</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">CPU_RUN_QUEUE</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">INACTIVE</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">INHIBITED</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">RUNNING</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <table border="0" cellspacing="2">
+      <tr>
+        <td class="colhead">Combined incidence matrix <i>I</i></td>
+      </tr>
+      <tr>
+        <td class="cell">
+          <table border="0" cellspacing="2">
+            <tr class="even">
+              <td class="empty"></td>
+              <td class="colhead">T0_INIT</td>
+              <td class="colhead">T1_ON_QUEUE</td>
+              <td class="colhead">T2_SET_RUNNING</td>
+              <td class="colhead">T3_SWITCH_OUT</td>
+              <td class="colhead">T4_TO_WAIT_CHANNEL</td>
+              <td class="colhead">T5_WAKEUP</td>
+              <td class="colhead">T6_REMOVE</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">CAN_RUN</td>
+              <td class="cell">1</td>
+              <td class="cell">-1</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">1</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">CPU_RUN_QUEUE</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">-1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">-1</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">INACTIVE</td>
+              <td class="cell">-1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">INHIBITED</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">-1</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">RUNNING</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">1</td>
+              <td class="cell">-1</td>
+              <td class="cell">-1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <table border="0" cellspacing="2">
+      <tr>
+        <td class="colhead">Inhibition matrix <i>H</i></td>
+      </tr>
+      <tr>
+        <td class="cell">
+          <table border="0" cellspacing="2">
+            <tr class="even">
+              <td class="empty"></td>
+              <td class="colhead">T0_INIT</td>
+              <td class="colhead">T1_ON_QUEUE</td>
+              <td class="colhead">T2_SET_RUNNING</td>
+              <td class="colhead">T3_SWITCH_OUT</td>
+              <td class="colhead">T4_TO_WAIT_CHANNEL</td>
+              <td class="colhead">T5_WAKEUP</td>
+              <td class="colhead">T6_REMOVE</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">CAN_RUN</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">CPU_RUN_QUEUE</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">INACTIVE</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">INHIBITED</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">RUNNING</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <table border="0" cellspacing="2">
+      <tr>
+        <td class="colhead">Marking</td>
+      </tr>
+      <tr>
+        <td class="cell">
+          <table border="0" cellspacing="2">
+            <tr class="even">
+              <td class="empty"></td>
+              <td class="colhead">CAN_RUN</td>
+              <td class="colhead">CPU_RUN_QUEUE</td>
+              <td class="colhead">INACTIVE</td>
+              <td class="colhead">INHIBITED</td>
+              <td class="colhead">RUNNING</td>
+            </tr>
+            <tr class="odd">
+              <td class="rowhead">Initial</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+            <tr class="even">
+              <td class="rowhead">Current</td>
+              <td class="cell">1</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+              <td class="cell">0</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <table border="0" cellspacing="2">
+      <tr>
+        <td class="colhead">Enabled transitions</td>
+      </tr>
+      <tr>
+        <td class="cell">
+          <table border="0" cellspacing="2">
+            <tr class="even">
+              <td class="colhead">T0_INIT</td>
+              <td class="colhead">T1_ON_QUEUE</td>
+              <td class="colhead">T2_SET_RUNNING</td>
+              <td class="colhead">T3_SWITCH_OUT</td>
+              <td class="colhead">T4_TO_WAIT_CHANNEL</td>
+              <td class="colhead">T5_WAKEUP</td>
+              <td class="colhead">T6_REMOVE</td>
+            </tr>
+            <tr class="odd">
+              <td class="cell">no</td>
+              <td class="cell">yes</td>
+              <td class="cell">no</td>
+              <td class="cell">no</td>
+              <td class="cell">no</td>
+              <td class="cell">no</td>
+              <td class="cell">no</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
