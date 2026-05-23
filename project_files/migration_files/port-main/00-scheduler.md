@@ -1,12 +1,12 @@
 # Funcionamiento de sched_4bsd en los flujos tocados por la tesis
 
-Este documento explica los metodos principales de `sys/kern/sched_4bsd.c` que quedan involucrados por la tesis y por el port a FreeBSD `main`. La explicacion usa la modalidad actual de `main`, donde `sched_throw()` y `sched_ap_entry()` son caminos separados.
+Este documento explica los métodos principales de `sys/kern/sched_4bsd.c` que quedan involucrados por la tesis y por el port a FreeBSD `main`. La explicación usa la modalidad actual de `main`, donde `sched_throw()` y `sched_ap_entry()` son caminos separados.
 
-El objetivo no es documentar todo el planificador 4BSD. El objetivo es entender donde se insertan los eventos Petri y como se relacionan los metodos que agregan, remueven, eligen, ejecutan o expulsan hilos.
+El objetivo no es documentar todo el planificador 4BSD. El objetivo es entender dónde se insertan los eventos Petri y cómo se relacionan los métodos que agregan, remueven, eligen, ejecutan o expulsan hilos.
 
-## Modelo mental minimo
+## Modelo mental mínimo
 
-El scheduler no es un hilo separado que corre por su cuenta. El codigo del scheduler lo ejecuta la CPU actual, usando el contexto del hilo actual, hasta que ocurre un cambio de contexto real.
+El scheduler no es un hilo separado que corre por su cuenta. El código del scheduler lo ejecuta la CPU actual, usando el contexto del hilo actual, hasta que ocurre un cambio de contexto real.
 
 En un cambio normal:
 
@@ -19,7 +19,7 @@ la CPU cambia de contexto
 CPU ejecuta hilo B
 ```
 
-Por eso, mientras `sched_switch()` o `sched_throw()` estan corriendo, todavia se esta ejecutando codigo desde el contexto del hilo saliente. El hilo entrante empieza realmente despues de `cpu_switch()` o `cpu_throw()`.
+Por eso, mientras `sched_switch()` o `sched_throw()` están corriendo, todavía se está ejecutando código desde el contexto del hilo saliente. El hilo entrante empieza realmente después de `cpu_switch()` o `cpu_throw()`.
 
 ## Estados importantes para Petri
 
@@ -32,34 +32,34 @@ Mapeo conceptual:
 
 ```text
 sched_add       -> CAN_RUN/RUNNING pasa a RUNQ
-sched_choose    -> RUNQ pasa hacia ejecucion
+sched_choose    -> RUNQ pasa hacia ejecución
 sched_switch    -> RUNNING deja CPU y puede volver a cola o quedar inhibido
 sched_rem       -> RUNQ sale de una cola sin ejecutar
 sched_throw     -> RUNNING deja CPU y no vuelve
 sched_ap_entry  -> CPU nueva entra sin hilo saliente real
 ```
 
-## Mapa de metodos
+## Mapa de métodos
 
-| Metodo | Rol en 4BSD | Rol para Petri | Relacion principal |
+| Método | Rol en 4BSD | Rol para Petri | Relación principal |
 | --- | --- | --- | --- |
 | `sched_setup()` | Inicializa run queues | Inicializa la red global de recursos | Boot |
 | `schedinit()` | Inicializa `thread0` y `sched_lock` | Marca `thread0` como inicialmente ejecutando | Boot |
-| `sched_fork_thread()` | Inicializa datos scheduler de un hilo hijo | Hereda afinidad y prepara estado scheduler; la red del hilo se inicializa fuera, en `thread_alloc()` | Creacion de hilos |
+| `sched_fork_thread()` | Inicializa datos scheduler de un hilo hijo | Hereda afinidad y prepara estado scheduler; la red del hilo se inicializa fuera, en `thread_alloc()` | Creación de hilos |
 | `sched_wakeup()` | Reactiva un hilo dormido | Termina llamando a `sched_add()` | Entrada a cola |
 | `sched_add()` | Encola un hilo runnable | Dispara `TRAN_QUEUE_GLOBAL`, `TRAN_ADDTOQUEUE` o `TRAN_ADDTOQUEUE_FORCED` | Entrada a cola |
 | `sched_petrinet_pickcpu()` | Wrapper local para elegir CPU con Petri | Llama a `resource_choose_cpu()` | Afinidad/cpuset |
-| `sched_pickcpu()` | Seleccion 4BSD tradicional de CPU valida | Fallback cuando Petri no puede elegir o cuando FreeBSD impone una CPU | Afinidad/cpuset |
-| `sched_choose()` | Elige el proximo hilo a ejecutar | Dispara `TRAN_UNQUEUE`, `TRAN_FROM_GLOBAL_CPU` o el camino `idlethread` | Salida de cola hacia CPU |
-| `sched_rem()` | Remueve un hilo de una cola | Dispara remocion Petri de cola per-CPU o global | Remocion sin ejecutar |
+| `sched_pickcpu()` | Selección 4BSD tradicional de CPU válida | Fallback cuando Petri no puede elegir o cuando FreeBSD impone una CPU | Afinidad/cpuset |
+| `sched_choose()` | Elige el próximo hilo a ejecutar | Dispara `TRAN_UNQUEUE`, `TRAN_FROM_GLOBAL_CPU` o el camino `idlethread` | Salida de cola hacia CPU |
+| `sched_rem()` | Remueve un hilo de una cola | Dispara remoción Petri de cola per-CPU o global | Remoción sin ejecutar |
 | `sched_switch()` | Cambio normal de contexto | Expulsa hilo saliente y ejecuta hilo entrante | Cambio normal |
 | `sched_throw()` | Descarta un hilo saliente real | Expulsa el hilo saliente y pasa a `sched_throw_tail()` | Salida definitiva |
 | `sched_ap_entry()` | Entrada inicial de una CPU | No expulsa nada; pasa a `sched_throw_tail(NULL)` | Arranque de CPU |
-| `sched_throw_tail()` | Parte comun de `throw` y AP entry | Elige y registra ejecucion del hilo entrante | Ejecucion sin retorno |
-| `sched_bind()` | Ata el hilo actual a una CPU | Produce casos `TDF_BOUND` que `sched_add()` debe respetar | Restriccion dura |
-| `sched_unbind()` | Quita `TDF_BOUND` | Permite volver a planificacion normal | Restriccion dura |
-| `sched_is_bound()` | Consulta si un hilo esta bound | Ayuda a otros subsistemas a respetar la condicion | Restriccion dura |
-| `sched_affinity()` | Reacciona a cambios de cpuset/afinidad | Puede forzar `sched_rem()` + `sched_add()` si el hilo en cola quedo en CPU invalida | Restriccion dura |
+| `sched_throw_tail()` | Parte común de `throw` y AP entry | Elige y registra ejecución del hilo entrante | Ejecución sin retorno |
+| `sched_bind()` | Ata el hilo actual a una CPU | Produce casos `TDF_BOUND` que `sched_add()` debe respetar | Restricción dura |
+| `sched_unbind()` | Quita `TDF_BOUND` | Permite volver a planificación normal | Restricción dura |
+| `sched_is_bound()` | Consulta si un hilo está bound | Ayuda a otros subsistemas a respetar la condición | Restricción dura |
+| `sched_affinity()` | Reacciona a cambios de cpuset/afinidad | Puede forzar `sched_rem()` + `sched_add()` si el hilo en cola quedó en CPU inválida | Restricción dura |
 
 ## Vista global de flujos
 
@@ -96,7 +96,7 @@ flowchart TD
     EXEC2 --> CPUTHROW["cpu_throw(td, newtd)"]
 ```
 
-## Inicializacion
+## Inicialización
 
 ### sched_setup()
 
@@ -108,7 +108,7 @@ Responsabilidades relevantes:
 - en el port Petri, llama a `init_resource_net()`;
 - suma carga inicial para `thread0`.
 
-Para Petri, este metodo es el punto donde se inicializa la red global de recursos. Esa red representa CPUs, colas per-CPU, cola global y estado SMP.
+Para Petri, este método es el punto donde se inicializa la red global de recursos. Esa red representa CPUs, colas per-CPU, cola global y estado SMP.
 
 Flujo:
 
@@ -149,7 +149,7 @@ Responsabilidades relevantes:
 - hereda flags de afinidad (`TSF_AFFINITY`);
 - inicializa slice y datos de prioridad.
 
-La red del hilo no se inicializa aca en el port actual. Se inicializa en `thread_alloc()` mediante `init_petri_thread(td)`, protegido por `SCHED_4BSD`. `sched_fork_thread()` igual es relevante porque prepara datos que `sched_add()` usara despues, especialmente afinidad y `td_cpuset`.
+La red del hilo no se inicializa acá en el port actual. Se inicializa en `thread_alloc()` mediante `init_petri_thread(td)`, protegido por `SCHED_4BSD`. `sched_fork_thread()` igual es relevante porque prepara datos que `sched_add()` usará después, especialmente afinidad y `td_cpuset`.
 
 ## Entrada a cola: sched_wakeup y sched_add
 
@@ -159,12 +159,12 @@ La red del hilo no se inicializa aca en el port actual. Se inicializa en `thread
 
 Responsabilidades relevantes:
 
-- recalcula prioridad si durmio suficiente tiempo;
+- recalcula prioridad si durmió suficiente tiempo;
 - reinicia `ts_slice`;
 - restaura prioridad base de interrupt threads cuando corresponde;
 - llama a `sched_add(td, srqflags)`.
 
-`sched_wakeup()` no decide en que cola queda el hilo. Esa decision se delega en `sched_add()`.
+`sched_wakeup()` no decide en que cola queda el hilo. Esa decisión se delega en `sched_add()`.
 
 ```mermaid
 flowchart TD
@@ -175,30 +175,30 @@ flowchart TD
 
 ### sched_add()
 
-`sched_add()` es uno de los puntos mas importantes para la tesis. Su trabajo es poner un hilo ejecutable en alguna cola.
+`sched_add()` es uno de los puntos más importantes para la tesis. Su trabajo es poner un hilo ejecutable en alguna cola.
 
 En SMP hay dos familias de cola:
 
 - cola global `runq`;
 - colas per-CPU `runq_pcpu[cpu]`.
 
-La logica relevante para Petri es:
+La lógica relevante para Petri es:
 
 ```text
-si el hilo no tiene restriccion fuerte:
+si el hilo no tiene restricción fuerte:
   usar cola global
   Petri: TRAN_QUEUE_GLOBAL
 
-si el hilo esta pinned:
+si el hilo está pinned:
   usar su CPU obligatoria
   Petri: TRAN_ADDTOQUEUE_FORCED
 
-si el hilo esta bound:
+si el hilo está bound:
   usar la runqueue per-CPU ya asociada por FreeBSD
   Petri: TRAN_ADDTOQUEUE_FORCED
 
 si el hilo tiene afinidad/cpuset:
-  intentar elegir CPU valida con Petri
+  intentar elegir CPU válida con Petri
   si Petri puede: TRAN_ADDTOQUEUE
   si Petri no puede: fallback FreeBSD + TRAN_ADDTOQUEUE_FORCED
 ```
@@ -216,7 +216,7 @@ flowchart TD
     D -- "no" --> G["ts_runq = runq global"]
     G --> GP["Petri: TRAN_QUEUE_GLOBAL"]
 
-    D -- "si" --> E{"tipo de restriccion"}
+    D -- "si" --> E{"tipo de restricción"}
     E -- "pinned" --> P["cpu = td_lastcpu o sched_pickcpu()"]
     P --> PF["Petri: TRAN_ADDTOQUEUE_FORCED"]
 
@@ -240,34 +240,34 @@ flowchart TD
 
 `sched_petrinet_pickcpu()` es un wrapper chico que llama a `resource_choose_cpu(td)`.
 
-Su rol es separar la decision Petri de la logica de `sched_add()`. Esta decision solo se usa cuando FreeBSD tiene una restriccion de afinidad/cpuset, pero todavia hay libertad para elegir una CPU dentro del conjunto permitido.
+Su rol es separar la decisión Petri de la lógica de `sched_add()`. Esta decisión solo se usa cuando FreeBSD tiene una restricción de afinidad/cpuset, pero todavía hay libertad para elegir una CPU dentro del conjunto permitido.
 
-Si Petri no encuentra una transicion `ADDTOQUEUE` sensibilizada en una CPU permitida, devuelve `NOCPU`. En ese caso `sched_add()` usa `sched_pickcpu(td)` como fallback y registra `TRAN_ADDTOQUEUE_FORCED`.
+Si Petri no encuentra una transición `ADDTOQUEUE` sensibilizada en una CPU permitida, devuelve `NOCPU`. En ese caso `sched_add()` usa `sched_pickcpu(td)` como fallback y registra `TRAN_ADDTOQUEUE_FORCED`.
 
 ### sched_pickcpu()
 
-`sched_pickcpu()` es la eleccion tradicional de 4BSD. Busca una CPU valida segun `THREAD_CAN_SCHED()` y carga de colas.
+`sched_pickcpu()` es la elección tradicional de 4BSD. Busca una CPU válida según `THREAD_CAN_SCHED()` y carga de colas.
 
-En el port Petri sigue siendo necesario porque hay casos donde no se puede delegar todo a Petri:
+En el port Petri sigue siendo necesario porqué hay casos donde no se puede delegar todo a Petri:
 
-- `pinned` sin `td_lastcpu` valido;
-- fallback de afinidad cuando Petri no encuentra transicion sensibilizada;
-- cualquier caso donde FreeBSD necesita una CPU valida aunque la politica Petri no pueda decidir.
+- `pinned` sin `td_lastcpu` válido;
+- fallback de afinidad cuando Petri no encuentra transición sensibilizada;
+- cualquier caso donde FreeBSD necesita una CPU válida aunque la política Petri no pueda decidir.
 
 ### maybe_preempt() y maybe_resched()
 
-Estos metodos no son el centro de Petri, pero cierran el flujo de `sched_add()`.
+Estos métodos no son el centro de Petri, pero cierran el flujo de `sched_add()`.
 
-Despues de encolar un hilo, 4BSD decide si conviene interrumpir al hilo actual:
+Después de encolar un hilo, 4BSD decide si conviene interrumpir al hilo actual:
 
 - `maybe_preempt(td)` intenta marcar preemption si el nuevo hilo tiene prioridad suficiente;
-- si no hay preemption inmediata, `maybe_resched(td)` puede marcar que se reprograme despues.
+- si no hay preemption inmediata, `maybe_resched(td)` puede marcar que se reprograme después.
 
-Petri no modela la decision de prioridad como tal. Petri registra el encolado. El cambio de ejecucion real llegara despues por `sched_switch()`.
+Petri no modela la decisión de prioridad como tal. Petri registra el encolado. El cambio de ejecución real llegará después por `sched_switch()`.
 
-## Salida de cola hacia ejecucion: sched_choose
+## Salida de cola hacia ejecución: sched_choose
 
-`sched_choose()` elige el proximo hilo a ejecutar.
+`sched_choose()` elige el próximo hilo a ejecutar.
 
 En SMP compara:
 
@@ -286,7 +286,7 @@ Si elige desde cola global:
 Petri: TRAN_FROM_GLOBAL_CPU_Pn
 ```
 
-Si no hay ningun hilo:
+Si no hay ningún hilo:
 
 ```text
 se devuelve idlethread
@@ -312,13 +312,13 @@ flowchart TD
     K --> L["return idlethread"]
 ```
 
-`sched_choose()` no hace por si solo el cambio de contexto. Solo devuelve el hilo elegido. Quien llame a `sched_choose()` debe luego registrar ejecucion y saltar al hilo.
+`sched_choose()` no hace por sí solo el cambio de contexto. Solo devuelve el hilo elegido. Quien llame a `sched_choose()` debe luego registrar ejecución y saltar al hilo.
 
 ## Remocion de cola: sched_rem
 
 `sched_rem()` saca un hilo de la cola sin ejecutarlo.
 
-Casos tipicos:
+Casos típicos:
 
 - un hilo en cola deja de ser elegible;
 - cambia su afinidad y estaba en una cola que ya no corresponde;
@@ -334,7 +334,7 @@ si estaba en runq global:
   TRAN_REMOVE_GLOBAL_QUEUE
 ```
 
-Despues de actualizar Petri, FreeBSD hace:
+Después de actualizar Petri, FreeBSD hace:
 
 ```text
 runq_remove(ts->ts_runq, td)
@@ -358,7 +358,7 @@ flowchart TD
 
 `sched_switch(td, flags)` es el camino normal de cambio de contexto.
 
-El hilo `td` es el hilo saliente. El codigo todavia se esta ejecutando en su contexto.
+El hilo `td` es el hilo saliente. El código todavía se está ejecutando en su contexto.
 
 Responsabilidades relevantes:
 
@@ -367,7 +367,7 @@ Responsabilidades relevantes:
 3. tomar `sched_lock` si hace falta;
 4. registrar en Petri que el hilo saliente deja la CPU;
 5. si el hilo saliente sigue `RUNNING`, volver a encolarlo con `sched_add()`;
-6. elegir el proximo hilo con `choosethread()`;
+6. elegir el próximo hilo con `choosethread()`;
 7. registrar en Petri que el hilo entrante ejecuta;
 8. hacer el cambio de contexto real.
 
@@ -385,7 +385,7 @@ sequenceDiagram
     S->>P: resource_expulse_thread(A, flags)
     alt A sigue runnable
         S->>Q: sched_add(A)
-    else A quedo inhibido
+    else A quedó inhibido
         S->>S: no se reencola
     end
     S->>Q: choosethread()
@@ -394,15 +394,15 @@ sequenceDiagram
     S->>B: cpu_switch hacia B
 ```
 
-Relacion con otros metodos:
+Relación con otros métodos:
 
 - llama a `sched_add()` si el hilo saliente debe volver a cola;
 - llama indirectamente a `sched_choose()` via `choosethread()`;
-- comparte con `sched_throw_tail()` la idea de "elegir nuevo hilo y registrar ejecucion", pero no usa `sched_throw_tail()` porque `sched_switch()` tiene mucho manejo especifico de un cambio normal.
+- comparte con `sched_throw_tail()` la idea de "elegir nuevo hilo y registrar ejecución", pero no usa `sched_throw_tail()` porque `sched_switch()` tiene mucho manejo especifico de un cambio normal.
 
 ## Salida definitiva: sched_throw, sched_ap_entry y sched_throw_tail
 
-Estos metodos son la diferencia mas importante con `main`.
+Estos métodos son la diferencia más importante con `main`.
 
 ### sched_throw(td)
 
@@ -444,7 +444,7 @@ sched_ap_entry()
 
 ### sched_throw_tail(td)
 
-`sched_throw_tail(td)` es la parte comun:
+`sched_throw_tail(td)` es la parte común:
 
 ```text
 sched_throw_tail(td)
@@ -453,9 +453,9 @@ sched_throw_tail(td)
   cpu_throw(td, newtd)
 ```
 
-Si viene desde `sched_throw(td)`, el parametro `td` es el hilo saliente real.
+Si viene desde `sched_throw(td)`, el parámetro `td` es el hilo saliente real.
 
-Si viene desde `sched_ap_entry()`, el parametro es `NULL`, porque la CPU esta arrancando y no hay hilo saliente que expulsar.
+Si viene desde `sched_ap_entry()`, el parámetro es `NULL`, porque la CPU está arrancando y no hay hilo saliente que expulsar.
 
 Diagrama:
 
@@ -485,21 +485,21 @@ Efectos relevantes:
 
 - marca `TDF_BOUND`;
 - en SMP, deja `ts_runq` apuntando a `runq_pcpu[cpu]`;
-- si el hilo no esta corriendo en esa CPU, fuerza un `mi_switch()`.
+- si el hilo no está corriendo en esa CPU, fuerza un `mi_switch()`.
 
-Esto explica por que `sched_add()` no puede dejar que Petri elija cualquier CPU para un hilo `bound`. FreeBSD ya decidio una CPU concreta.
+Esto explica por qué `sched_add()` no puede dejar que Petri elija cualquier CPU para un hilo `bound`. FreeBSD ya decidio una CPU concreta.
 
 ### sched_unbind()
 
 `sched_unbind(td)` limpia `TDF_BOUND`.
 
-Desde ese momento el hilo deja de tener esa restriccion dura y puede volver a seguir reglas normales de planificacion.
+Desde ese momento el hilo deja de tener esa restricción dura y puede volver a seguir reglas normales de planificación.
 
 ### sched_is_bound()
 
 `sched_is_bound(td)` consulta `TDF_BOUND`.
 
-No modifica estado, pero permite que otros subsistemas sepan si el hilo esta atado a una CPU.
+No modifica estado, pero permite que otros subsistemas sepan si el hilo está atado a una CPU.
 
 ### sched_affinity()
 
@@ -509,11 +509,11 @@ Responsabilidades relevantes:
 
 - recalcula `TSF_AFFINITY`;
 - si el hilo puede correr en todas las CPUs, no hace nada;
-- si el hilo esta `pinned` o `bound`, no lo mueve;
-- si el hilo esta en runqueue pero en una CPU ya no permitida, hace `sched_rem(td)` y luego `sched_add(td)`;
-- si el hilo esta ejecutando en una CPU no permitida, marca AST para forzar cambio de contexto.
+- si el hilo está `pinned` o `bound`, no lo mueve;
+- si el hilo está en runqueue pero en una CPU ya no permitida, hace `sched_rem(td)` y luego `sched_add(td)`;
+- si el hilo está ejecutando en una CPU no permitida, marca AST para forzar cambio de contexto.
 
-Relacion con Petri:
+Relación con Petri:
 
 ```text
 sched_affinity()
@@ -521,7 +521,7 @@ sched_affinity()
   puede forzar sched_add()
 ```
 
-Por eso `sched_add()` necesita distinguir afinidad de un caso normal. Cuando la afinidad restringe las CPUs permitidas, Petri puede elegir solo dentro de ese conjunto. Si no puede elegir una transicion normal sensibilizada, FreeBSD hace fallback a una CPU permitida y Petri registra `ADDTOQUEUE_FORCED`.
+Por eso `sched_add()` necesita distinguir afinidad de un caso normal. Cuando la afinidad restringe las CPUs permitidas, Petri puede elegir solo dentro de ese conjunto. Si no puede elegir una transición normal sensibilizada, FreeBSD hace fallback a una CPU permitida y Petri registra `ADDTOQUEUE_FORCED`.
 
 ## Flujos que se parecen pero no son lo mismo
 
@@ -533,7 +533,7 @@ La diferencia:
 
 ```text
 sched_switch:
-  el hilo saliente puede volver a correr despues.
+  el hilo saliente puede volver a correr después.
   si sigue RUNNING, se reencola con sched_add().
 
 sched_throw:
@@ -550,7 +550,7 @@ La diferencia:
 ```text
 sched_throw:
   hay hilo saliente real.
-  Petri debe registrar expulsion.
+  Petri debe registrar expulsión.
 
 sched_ap_entry:
   no hay hilo saliente real.
@@ -587,7 +587,7 @@ resource_execute_thread:
   elegido -> RUNNING
 ```
 
-Por eso el port llama a `resource_execute_thread()` despues de `choosethread()`, tanto en `sched_switch()` como en `sched_throw_tail()`.
+Por eso el port llama a `resource_execute_thread()` después de `choosethread()`, tanto en `sched_switch()` como en `sched_throw_tail()`.
 
 ## Resumen por camino
 
@@ -632,24 +632,24 @@ sched_ap_entry()
     cpu_throw(NULL, newtd)
 ```
 
-### Afinidad cambia mientras un hilo esta en cola
+### Afinidad cambia mientras un hilo está en cola
 
 ```text
 sched_affinity(td)
-  si la cola actual ya no es valida:
+  si la cola actual ya no es válida:
     sched_rem(td)
     sched_add(td)
 ```
 
-## Regla final para leer el codigo
+## Regla final para leer el código
 
-La pregunta que conviene hacer en cada metodo es:
+La pregunta que conviene hacer en cada método es:
 
 ```text
-Que hecho real acaba de ocurrir en FreeBSD?
+Qué hecho real acaba de ocurrir en FreeBSD?
 ```
 
-Despues, Petri debe registrar ese hecho:
+Después, Petri debe registrar ese hecho:
 
 ```text
 entra a cola global       -> TRAN_QUEUE_GLOBAL
@@ -661,11 +661,11 @@ deja de ejecutar          -> RETURN_VOL o RETURN_INVOL
 empieza a ejecutar        -> EXEC o EXEC_EMPTY
 ```
 
-La red Petri no debe inventar un estado distinto al del scheduler real. Esa es la razon por la que `ADDTOQUEUE_FORCED` y la separacion moderna de `sched_throw()` son importantes para el port a `main`.
+La red Petri no debe inventar un estado distinto al del scheduler real. Esa es la razón por la que `ADDTOQUEUE_FORCED` y la separación moderna de `sched_throw()` son importantes para el port a `main`.
 
 ## Ejemplo completo de recorrido de un hilo
 
-Este ejemplo es didactico. En una ejecucion real, no todos los hilos pasan por todos estos metodos. Algunos caminos son alternativos entre si. Por ejemplo, un hilo no "necesita" pasar por `sched_rem()` antes de ejecutar; si sale de la cola para ejecutar, lo normal es que pase por `sched_choose()`. Aun asi, el ejemplo sirve para ver como se conectan las piezas.
+Este ejemplo es didáctico. En una ejecución real, no todos los hilos pasan por todos estos métodos. Algunos caminos son alternativos entre sí. Por ejemplo, un hilo no "necesita" pasar por `sched_rem()` antes de ejecutar; si sale de la cola para ejecutar, lo normal es que pase por `sched_choose()`. Aun así, el ejemplo sirve para ver cómo se conectan las piezas.
 
 Se usa un hilo ficticio:
 
@@ -686,8 +686,8 @@ flowchart TD
     D --> E["2. H queda listo"]
     E --> F["sched_wakeup(H)"]
     F --> G["sched_add(H)"]
-    G --> H1{"restriccion de CPU?"}
-    H1 -- "sin restriccion" --> I["Petri: TRAN_QUEUE_GLOBAL"]
+    G --> H1{"restricción de CPU?"}
+    H1 -- "sin restricción" --> I["Petri: TRAN_QUEUE_GLOBAL"]
     H1 -- "afinidad/pinned/bound" --> J["Petri: TRAN_ADDTOQUEUE o TRAN_ADDTOQUEUE_FORCED"]
 
     I --> K["3. CPU0 necesita elegir hilo"]
@@ -706,7 +706,7 @@ flowchart TD
 
     T --> V["5. Cambia afinidad de H en cola"]
     V --> W["sched_affinity(H)"]
-    W --> X{"cola actual sigue valida?"}
+    W --> X{"cola actual sigue válida?"}
     X -- "si" --> Y["no se mueve"]
     X -- "no" --> Z["sched_rem(H)"]
     Z --> AA["Petri: REMOVE_QUEUE o REMOVE_GLOBAL_QUEUE"]
@@ -720,9 +720,9 @@ flowchart TD
     AF --> AG["7. H se ata a CPU1"]
     AG --> AH["sched_bind(H, CPU1)"]
     AH --> AI["TDF_BOUND + ts_runq = runq_pcpu[CPU1]"]
-    AI --> AJ{"H ya esta en CPU1?"}
+    AI --> AJ{"H ya está en CPU1?"}
     AJ -- "no" --> AK["mi_switch() -> sched_switch(H)"]
-    AJ -- "si" --> AL["continua ejecutando"]
+    AJ -- "si" --> AL["continúa ejecutando"]
 
     AK --> AM["8. H vuelve a cola bound"]
     AM --> AN["sched_add(H)"]
@@ -737,7 +737,7 @@ flowchart TD
     AU --> AV["cpu_throw(H, newtd)"]
 ```
 
-### Paso 1: creacion del hilo
+### Paso 1: creación del hilo
 
 Cuando el kernel crea el hilo `H`, primero se reserva e inicializa la estructura `struct thread`.
 
@@ -748,7 +748,7 @@ thread_alloc()
   init_petri_thread(H)
 ```
 
-Eso deja la red local del hilo en su marcado inicial. Luego, cuando el scheduler prepara datos especificos de 4BSD:
+Eso deja la red local del hilo en su marcado inicial. Luego, cuando el scheduler prepara datos específicos de 4BSD:
 
 ```text
 sched_fork_thread(parent, H)
@@ -762,7 +762,7 @@ se completan datos como:
 - prioridad inicial;
 - flags de afinidad heredados.
 
-En este momento `H` todavia no esta ejecutando.
+En este momento `H` todavía no está ejecutando.
 
 ### Paso 2: el hilo queda listo y entra a una cola
 
@@ -772,7 +772,7 @@ Cuando `H` queda listo para correr, puede llegar por:
 sched_wakeup(H)
 ```
 
-Ese metodo actualiza prioridad y slice, pero delega la decision importante:
+Ese método actualiza prioridad y slice, pero delega la decisión importante:
 
 ```text
 sched_add(H)
@@ -791,7 +791,7 @@ Si `H` tiene afinidad, `pinned` o `bound`, entra a una cola per-CPU:
 
 ```text
 sched_add(H)
-  elegir CPU valida
+  elegir CPU válida
   Petri: TRAN_ADDTOQUEUE o TRAN_ADDTOQUEUE_FORCED
   runq_add()
 ```
@@ -800,10 +800,10 @@ La diferencia entre `ADDTOQUEUE` y `ADDTOQUEUE_FORCED` es:
 
 ```text
 ADDTOQUEUE:
-  Petri pudo elegir una CPU valida y sensibilizada.
+  Petri pudo elegir una CPU válida y sensibilizada.
 
 ADDTOQUEUE_FORCED:
-  FreeBSD necesitaba esa CPU o Petri no encontro una transicion normal valida.
+  FreeBSD necesitaba esa CPU o Petri no encontró una transición normal válida.
 ```
 
 ### Paso 3: una CPU elige a H para ejecutar
@@ -832,17 +832,17 @@ sched_choose()
   return H
 ```
 
-Despues de elegirlo, el metodo que llamo a `sched_choose()` registra la ejecucion:
+Después de elegirlo, el método que llamó a `sched_choose()` registra la ejecución:
 
 ```text
 resource_execute_thread(H, CPU0)
 ```
 
-Ahora Petri registra que `H` paso a `RUNNING`.
+Ahora Petri registra que `H` pasó a `RUNNING`.
 
 ### Paso 4: H deja la CPU por un cambio normal
 
-Supongase que `H` se bloquea, cede CPU o es reemplazado. El camino normal es:
+Supóngase que `H` se bloquea, cede CPU o es reemplazado. El camino normal es:
 
 ```text
 sched_switch(H, flags)
@@ -861,7 +861,7 @@ SW_VOL   -> TRAN_RETURN_VOL
 SW_INVOL -> TRAN_RETURN_INVOL
 ```
 
-Despues hay dos posibilidades.
+Después hay dos posibilidades.
 
 Si `H` sigue siendo ejecutable:
 
@@ -870,7 +870,7 @@ sched_switch(H)
   sched_add(H)
 ```
 
-Si `H` quedo esperando un evento:
+Si `H` quedó esperando un evento:
 
 ```text
 sched_switch(H)
@@ -885,11 +885,11 @@ resource_execute_thread(newtd, CPU0)
 cpu_switch hacia newtd
 ```
 
-### Paso 5: H esta en cola y cambia su afinidad
+### Paso 5: H está en cola y cambia su afinidad
 
-Supongase ahora que `H` esta esperando en una cola y cambia su cpuset o afinidad.
+Supóngase ahora que `H` está esperando en una cola y cambia su cpuset o afinidad.
 
-El metodo relevante es:
+El método relevante es:
 
 ```text
 sched_affinity(H)
@@ -897,7 +897,7 @@ sched_affinity(H)
 
 Si `H` estaba en una cola per-CPU que sigue permitida, no se mueve.
 
-Si `H` estaba en una cola que ya no es valida:
+Si `H` estaba en una cola que ya no es válida:
 
 ```text
 sched_affinity(H)
@@ -938,20 +938,20 @@ Este paso es similar al paso 3. La diferencia es que ahora la CPU elegida puede 
 
 ### Paso 7: H se ata a una CPU concreta
 
-Supongase que `H` llama o llega a un flujo que lo ata a `CPU1`:
+Supóngase que `H` llama o llega a un flujo que lo ata a `CPU1`:
 
 ```text
 sched_bind(H, CPU1)
 ```
 
-Ese metodo:
+Ese método:
 
 ```text
 td_flags |= TDF_BOUND
 ts_runq = &runq_pcpu[CPU1]
 ```
 
-Si `H` no esta corriendo en `CPU1`, FreeBSD fuerza un cambio:
+Si `H` no está corriendo en `CPU1`, FreeBSD fuerza un cambio:
 
 ```text
 mi_switch(SW_VOL | SWT_BIND)
@@ -974,7 +974,7 @@ sched_add(H)
 
 ### Paso 8: H deja de estar bound
 
-En algun momento puede ejecutarse:
+En algún momento puede ejecutarse:
 
 ```text
 sched_unbind(H)
@@ -986,7 +986,7 @@ Eso limpia:
 TDF_BOUND
 ```
 
-Desde ese momento, `H` vuelve a depender de reglas normales de planificacion, salvo que tenga otras restricciones como afinidad o pinning.
+Desde ese momento, `H` vuelve a depender de reglas normales de planificación, salvo que tenga otras restricciones como afinidad o pinning.
 
 ### Paso 9: H termina
 
@@ -1038,9 +1038,9 @@ sched_ap_entry()
     cpu_throw(NULL, newtd)
 ```
 
-Esta es la razon principal para no tratar `sched_throw()` y `sched_ap_entry()` como si fueran lo mismo en FreeBSD `main`.
+Esta es la razón principal para no tratar `sched_throw()` y `sched_ap_entry()` como si fueran lo mismo en FreeBSD `main`.
 
-## Lectura del ejemplo en una linea
+## Lectura del ejemplo en una línea
 
 ```text
 crear H -> inicializar Petri local -> wakeup -> add -> choose -> execute -> switch/expulse -> tal vez add otra vez -> affinity puede rem/remove+add -> bind puede forzar switch y add forced -> throw descarta H -> AP entry es un camino separado sin H saliente
