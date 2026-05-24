@@ -1,0 +1,3 @@
+FreeBSD utama 13.1-RELEASE FreeBSD 13.1-RELEASE n250148-fc952ac2212b GENERIC_4BSD amd64
+kern.sched.name: 4BSD
+kern.bootfile: /boot/kernel-4BSD/kernel

@@ -1,0 +1,6 @@
+FreeBSD utama 13.1-RELEASE FreeBSD 13.1-RELEASE feature/petri-net-scheduler_cpu-on-off-module-n250160-90234519327d PI_KERNELCONF amd64
+kern.version: FreeBSD 13.1-RELEASE feature/petri-net-scheduler_cpu-on-off-module-n250160-90234519327d PI_KERNELCONF
+
+kern.bootfile: /boot/kernel-petri-onoff/kernel
+kern.sched_petri.cpu_toggle: -1
+kern.sched_petri.cpu_toggle: 1
