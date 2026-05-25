@@ -196,17 +196,17 @@ Durante el desarrollo se observó que aplicar estos módulos sobre CPU0 podía p
 
 La limitación tiene un costo práctico: en sistemas con pocos núcleos, excluir CPU0 reduce de forma directa la cantidad de procesadores que pueden ser inhibidos o monopolizados. Por lo tanto, la decisión mejora la estabilidad del prototipo, pero también restringe su aplicabilidad en equipos de baja cantidad de CPUs.\par
 
-\subsection{Relación con mecanismos nativos de afinidad de FreeBSD}
+\subsection{Relación con mecanismos nativos de afinidad de FreeBSD}\label{sect:afinidad-freebsd-modulos}
 
-FreeBSD ya ofrece mecanismos para limitar o fijar la ejecución de hilos y procesos a ciertos procesadores. Herramientas como \verb|cpuset| y llamadas como \verb|cpuset_setaffinity()| permiten definir conjuntos de CPUs permitidas, mientras que mecanismos internos como \verb|sched_bind()|, los hilos \textit{pinned} y los hilos \textit{bound} expresan restricciones más fuertes dentro del \textit{kernel}. Por lo tanto, los módulos desarrollados en esta tesis no deben entenderse como un reemplazo general de esas funcionalidades.\par
+FreeBSD ya cuenta con mecanismos para regular la relación entre hilos, procesos y procesadores. Herramientas como \verb|cpuset| y llamadas como \verb|cpuset_setaffinity()| permiten definir conjuntos de CPUs permitidas. A nivel interno, \verb|sched_bind()|, los hilos \textit{pinned} y los hilos \textit{bound} expresan restricciones más fuertes dentro del \textit{kernel}. Por lo tanto, los módulos de esta tesis no deben entenderse como un reemplazo general de esas funcionalidades.\par
 
-La diferencia principal está en el lugar donde se representa la restricción. Los mecanismos nativos indican dónde puede correr un hilo o un proceso. En cambio, los módulos desarrollados incorporan parte de esa decisión al modelo de recursos del planificador basado en Redes de Petri. La pregunta deja de ser únicamente qué CPUs tiene permitidas un hilo y pasa a incluir qué CPUs están disponibles, dentro del marcado de la red, para recibir nuevo trabajo ordinario.\par
+La diferencia principal está en el lugar donde se representa la restricción. Los mecanismos nativos indican dónde puede ejecutarse un hilo o un proceso. En este trabajo, en cambio, parte de esa decisión se incorpora al modelo de recursos del planificador basado en Redes de Petri. La pregunta deja de ser únicamente qué CPUs tiene permitidas un hilo y pasa a incluir qué CPUs están disponibles, dentro del marcado de la red, para recibir nuevo trabajo ordinario.\par
 
-En el módulo de inhibición, esta diferencia aparece con claridad. Un uso de \verb|cpuset| puede limitar la ejecución de un proceso o conjunto de procesos a ciertas CPUs. El módulo desarrollado, en cambio, representa la disponibilidad de cada CPU como parte de la red de recursos: cuando una CPU queda inhibida, el modelo impide que la política normal del planificador la elija para nuevos encolados ordinarios. El procesador no se apaga ni se retira del sistema; simplemente deja de participar en esa decisión de asignación.\par
+En el módulo de inhibición, esta diferencia aparece con claridad. Un uso de \verb|cpuset| puede limitar la ejecución de un proceso, o de un conjunto de procesos, a ciertas CPUs. El módulo implementado representa la disponibilidad de cada CPU como parte de la red de recursos: cuando una CPU queda inhibida, el modelo impide que la política normal del planificador la elija para nuevos encolados ordinarios. El procesador no se apaga ni se retira del sistema; simplemente deja de participar en esa decisión de asignación.\par
 
-En el módulo de monopolización, FreeBSD ya cuenta con mecanismos para fijar hilos a CPUs concretas. El aporte del módulo no consiste solamente en ubicar un hilo en una CPU, sino en impedir que esa CPU reciba hilos ordinarios distintos del hilo seleccionado mientras la reserva permanece activa. Para lograrlo, se agregó una estructura auxiliar consultada durante la selección de CPU. Esta decisión no quedó completamente expresada como una extensión de la red, pero sí se integró al punto donde el planificador decide si una CPU puede aceptar o no un hilo determinado.\par
+En el módulo de monopolización, la diferencia está en la condición adicional que se impone sobre el encolado: mientras la reserva permanece activa, la CPU seleccionada no recibe hilos ordinarios distintos del hilo elegido. Para lograrlo, se agregó una estructura auxiliar consultada durante la selección de CPU. Esta decisión no quedó completamente expresada como una extensión de la red, pero sí se integró al punto donde el planificador decide si una CPU puede aceptar o no un hilo determinado.\par
 
-De esta forma, el aporte de los módulos no es ofrecer una API de afinidad más completa que las existentes en FreeBSD. Su aporte es estudiar cómo esas restricciones pueden convivir con un planificador modelado mediante Redes de Petri, qué parte puede expresarse directamente con plazas y transiciones, y en qué casos hace falta lógica auxiliar para conservar la coherencia con las reglas internas del \textit{kernel}.\par
+Así, el interés de estos módulos está en la convivencia entre las restricciones propias de FreeBSD y el modelo de Petri del planificador: qué parte puede expresarse directamente con plazas y transiciones, y en qué casos hace falta lógica auxiliar para conservar la coherencia con las reglas internas del \textit{kernel}.\par
 
 \begin{table}[H]
     \centering
@@ -216,13 +216,13 @@ De esta forma, el aporte de los módulos no es ofrecer una API de afinidad más 
         \hline
         \textbf{Mecanismo} & \textbf{Alcance principal} & \textbf{Relación con este trabajo} \\
         \hline
-        \verb|cpuset| y llamadas de afinidad & Restringen el conjunto de CPUs permitidas para procesos o hilos. & Sirven como referencia para afinidad, pero no modifican el marcado de la red de recursos. \\
+        \verb|cpuset| y llamadas de afinidad & Restringen el conjunto de CPUs permitidas para procesos o hilos. & Sirven como referencia para comparar alcance, pero no modifican el marcado de la red de recursos. \\
         \hline
         \verb|sched_bind()|, \textit{pinned} y \textit{bound} & Expresan restricciones fuertes usadas por el \textit{kernel}. & Deben ser respetadas por el planificador Petri; motivan los caminos de encolado forzado. \\
         \hline
         Módulo de inhibición & Marca una CPU como no disponible para recibir nuevo trabajo ordinario. & Integra esa disponibilidad al modelo de recursos mediante plazas, transiciones e inhibidores. \\
         \hline
-        Módulo de monopolización & Reserva una CPU, desde la lógica de encolado, para el hilo seleccionado. & Agrega una política de exclusión en la selección de CPU, apoyada en lógica auxiliar. \\
+        Módulo de monopolización & Reserva una CPU, desde la lógica de encolado, para el hilo seleccionado. & Agrega una regla de exclusión durante la selección de CPU, apoyada en lógica auxiliar. \\
         \hline
     \end{tabular}
     \caption{Comparación entre mecanismos nativos de afinidad y los módulos desarrollados.}
