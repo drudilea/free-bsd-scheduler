@@ -1,0 +1,23 @@
+CPU distribution for tid 100402
+
+Partial summary
+cpu,2,54
+total,54
+
+Partial summary
+cpu,2,119
+total,119
+
+Partial summary
+cpu,2,175
+total,175
+
+Partial summary
+cpu,2,259
+total,259
+
+
+Final summary
+cpu,2,259
+total,259
+

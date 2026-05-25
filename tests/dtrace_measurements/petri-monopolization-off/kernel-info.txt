@@ -1,0 +1,5 @@
+FreeBSD utama 13.1-RELEASE FreeBSD 13.1-RELEASE testing/petri-net-scheduler_monopolize-cpu-module-n250158-5ed1d1703e89 PI_KERNELCONF amd64
+kern.version: FreeBSD 13.1-RELEASE testing/petri-net-scheduler_monopolize-cpu-module-n250158-5ed1d1703e89 PI_KERNELCONF
+
+kern.bootfile: /boot/kernel-petri-monopolized/kernel
+kern.sched_petri.monopolize: 
