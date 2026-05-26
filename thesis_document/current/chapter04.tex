@@ -7,11 +7,11 @@ La actualización del planificador permitió utilizarlo en FreeBSD 13.1 sin afec
 
 Antes de presentar los resultados específicos de cada módulo, se incluye la validación realizada sobre el problema de estabilidad descripto en la sección \ref{ch:problema_red}. Esta validación no corresponde a un módulo funcional independiente, sino a una corrección transversal del planificador base sobre el cual se apoyan las extensiones desarrolladas.\par
 
-La validación presentada en este capítulo es principalmente funcional. Las mediciones se usaron para respaldar comportamientos concretos: decisiones de encolado observadas con \textit{DTrace}, ausencia de transiciones bloqueadas, tiempos de ejecución con distinta cantidad de CPUs habilitadas y residencia de un hilo sobre un núcleo reservado. No se busca demostrar una mejora general de rendimiento ni medir todo el costo interno del planificador; los resultados deben leerse como evidencia de comportamiento y estabilidad.\par
+La validación presentada en este capítulo es principalmente funcional. Las mediciones se usaron para respaldar comportamientos concretos: decisiones de encolado observadas con \textit{DTrace}, ausencia de transiciones bloqueadas, tiempos de ejecución con distinta cantidad de procesadores habilitados y residencia de un hilo sobre un núcleo reservado. No se busca demostrar una mejora general de rendimiento ni medir todo el costo interno del planificador; los resultados deben leerse como evidencia de comportamiento y estabilidad.\par
 
 \section{Resultados de estabilización del planificador base}
 
-Para validar la corrección del fallo de página se instrumentó el planificador mediante \textit{DTrace}, agregando eventos específicos para observar los caminos de encolado utilizados por \verb|sched_add()|. Antes de analizar los resultados, se definieron tres categorías de trazado. La primera corresponde a \verb|TRAN_QUEUE_GLOBAL|, utilizada cuando el hilo es enviado a la cola global. La segunda corresponde a \verb|TRAN_ADDTOQUEUE|, utilizada cuando la red de Petri elige una cola per-CPU mediante su política normal. La tercera corresponde a \verb|TRAN_ADDTOQUEUE_FORCED|, utilizada cuando FreeBSD debe encolar el hilo en una cola per-CPU por una restricción interna, aunque la política normal de Petri no pueda elegir libremente esa CPU.\par
+Para validar la corrección del fallo de página se instrumentó el planificador mediante \textit{DTrace}, agregando eventos específicos para observar los caminos de encolado utilizados por \verb|sched_add()|. Antes de analizar los resultados, se definieron tres categorías de trazado. La primera corresponde a \verb|TRAN_QUEUE_GLOBAL|, utilizada cuando el hilo es enviado a la cola global. La segunda corresponde a \verb|TRAN_ADDTOQUEUE|, utilizada cuando la red de Petri elige una cola por CPU mediante su política normal. La tercera corresponde a \verb|TRAN_ADDTOQUEUE_FORCED|, utilizada cuando FreeBSD debe encolar el hilo en una cola por CPU por una restricción interna, aunque la política normal de Petri no pueda elegir libremente esa CPU.\par
 
 La instrumentación se implementó mediante un proveedor \verb|SDT| propio llamado \verb|petri|, siguiendo el esquema descripto en el Apéndice \ref{appendix:dtrace-sdt}. Esto permitió exponer eventos internos del planificador y de la red de Petri a \textit{DTrace}, recolectando información acotada sobre el camino de encolado, la transición efectivamente disparada y los intentos de disparo que hubieran quedado bloqueados por falta de sensibilización.\par
 
@@ -25,9 +25,9 @@ La instrumentación se implementó mediante un proveedor \verb|SDT| propio llama
         \hline
         \verb|petri:sched:addtoqueue:global| & Identifica los casos enviados a la cola global del planificador. \\
         \hline
-        \verb|petri:resource:addtoqueue:policy| & Identifica los encolados per-CPU decididos por la política de la red mediante \verb|TRAN_ADDTOQUEUE|. \\
+        \verb|petri:resource:addtoqueue:policy| & Identifica los encolados por CPU decididos por la política de la red mediante \verb|TRAN_ADDTOQUEUE|. \\
         \hline
-        \verb|petri:resource:addtoqueue:forced| & Identifica los encolados per-CPU obligatorios registrados mediante \verb|TRAN_ADDTOQUEUE_FORCED|. \\
+        \verb|petri:resource:addtoqueue:forced| & Identifica los encolados por CPU obligatorios registrados mediante \verb|TRAN_ADDTOQUEUE_FORCED|. \\
         \hline
         \verb|petri:resource:transition:fire| & Registra transiciones disparadas efectivamente en la red de recursos. \\
         \hline
@@ -46,14 +46,14 @@ En el análisis de las trazas, \verb|TRAN_ADDTOQUEUE| se identificó como \textt
     \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
-        \textbf{Escenario} & \textbf{Global} & \textbf{Policy} & \textbf{Forced} & \textbf{Bloq.} \\
+        \textbf{Escenario} & \textbf{Global} & \textbf{Política} & \textbf{Forzado} & \textbf{Bloq.} \\
         \hline
         Carga general & 99.49\% & 0.00\% & 0.50\% & 0 \\
         \hline
         \textit{cpuset} 1,2 & 83.60\% & 10.01\% & 6.37\% & 0 \\
         \hline
     \end{tabular}
-    \caption[Distribución de decisiones de encolado]{Distribución de decisiones observadas en \texttt{sched\_add()} durante las pruebas con DTrace. Las columnas \textit{Policy} y \textit{Forced} corresponden a \texttt{ADDTOQUEUE\_POLICY} y \texttt{ADDTOQUEUE\_FORCED}.}
+    \caption[Distribución de decisiones de encolado]{Distribución de decisiones observadas en \texttt{sched\_add()} durante las pruebas con DTrace. Las columnas de política y forzado corresponden a \texttt{ADDTOQUEUE\_POLICY} y \texttt{ADDTOQUEUE\_FORCED}.}
     \label{tabla:addtoqueue-forced-dtrace}
 \end{table}
 
@@ -61,16 +61,16 @@ La primera prueba utilizó una carga general sin afinidad explícita. En este es
 
 La segunda prueba restringió la ejecución mediante \verb|cpuset| a un subconjunto de CPUs. En este caso aparecieron tanto \texttt{ADDTOQUEUE\_POLICY} como \texttt{ADDTOQUEUE\_FORCED}. Esto muestra que la red de Petri no quedó en desuso: cuando encontró una CPU permitida y sensibilizada, siguió tomando decisiones mediante \verb|TRAN_ADDTOQUEUE|. Al mismo tiempo, cuando no encontró una CPU disponible dentro del conjunto permitido, el camino \verb|TRAN_ADDTOQUEUE_FORCED| permitió registrar el encolado real sin bloquear el planificador ni desincronizar el marcado de la red.\par
 
-Si se consideran solamente los encolados per-CPU registrados por la red en la prueba con \verb|cpuset|, el 61.10\% correspondió al camino de política y el 38.89\% al camino forzado. Además, dentro de los encolados forzados, la mayor parte correspondió a casos de respaldo por afinidad. Estos resultados confirman que la transición forzada aparece en ejecución real, que la transición original sigue siendo utilizada por la política de Petri y que el modelo permanece sincronizado en los escenarios evaluados.\par
+Si se consideran solamente los encolados por CPU registrados por la red en la prueba con \verb|cpuset|, el 61.10\% correspondió al camino de política y el 38.89\% al camino forzado. Además, dentro de los encolados forzados, la mayor parte correspondió a casos de respaldo por afinidad. Estos resultados confirman que la transición forzada aparece en ejecución real, que la transición original sigue siendo utilizada por la política de Petri y que el modelo permanece sincronizado en los escenarios evaluados.\par
 
 \section{Resultados de la Implementación del Módulo de Inhibición de Asignación de Trabajo a Procesadores}
 
 El módulo de inhibición de asignación de trabajo a procesadores permite evitar, de manera controlada, que determinados procesadores reciban nuevos hilos en sus colas de ejecución. La primera validación del módulo se realizó mediante una prueba funcional basada en capturas del sistema:
 
 \begin{enumerate}
-    \item \textbf{Estado inactivo}: En ausencia de tareas pendientes, los procesadores permanecen en estado de espera, ejecutando hilos de la clase IDLE.\@
+    \item \textbf{Estado inactivo}: En ausencia de tareas pendientes, los procesadores permanecen en estado de espera, ejecutando hilos de la clase \texttt{IDLE}.\@
     \item \textbf{Comportamiento con el módulo inhabilitado}: Se llevaron a cabo distintas pruebas de estrés en el sistema. Como resultado, todos los procesadores operaron al 100\% de su capacidad.
-    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhibiendo distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron nuevos hilos de trabajo, mientras que los demás procesadores continuaron ejecutando las tareas sin interrupciones.
+    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhibiendo distintos procesadores en las pruebas. Se observó que los procesadores en cuestión no recibieron nuevos hilos de trabajo, mientras que los demás procesadores continuaron ejecutando las tareas sin interrupciones.
 \end{enumerate}
 
 Estos resultados muestran que el sistema puede aplicar la inhibición de asignación de trabajo a procesadores sin comprometer su estabilidad durante esas pruebas.\par
@@ -78,14 +78,14 @@ Estos resultados muestran que el sistema puede aplicar la inhibición de asignac
 En los siguientes apartados se detallan las observaciones de cada etapa de esa validación funcional.\par
 
 \subsection{Estado Inactivo del Sistema}
-En situaciones de inactividad del sistema operativo, caracterizadas por la ausencia de tareas pendientes, cada procesador opera en un modo especial ejecutando hilos de la clase IDLE.\@ Este escenario está diseñado para que el sistema mantenga un estado pasivo, preparado para abordar de manera eficiente cualquier tarea que pueda emerger.\par
+En situaciones de inactividad del sistema operativo, caracterizadas por la ausencia de tareas pendientes, cada procesador opera en un modo especial ejecutando hilos de la clase \texttt{IDLE}.\@ Este escenario está diseñado para que el sistema mantenga un estado pasivo, preparado para abordar de manera eficiente cualquier tarea que pueda emerger.\par
 
 Esta situación fue considerada durante la implementación para evitar que el módulo afecte la estabilidad del sistema cuando no hay hilos de usuario listos para ejecutar. La Figura \ref{fig:cpuOnOff-result-idle} muestra este estado.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-idle.png}
-    \caption[Estado inactivo del sistema]{Estado inactivo del sistema. La captura muestra los procesadores sin carga de usuario, ejecutando hilos de clase IDLE antes de activar el módulo de inhibición.}
+    \caption[Estado inactivo del sistema]{Estado inactivo del sistema. La captura muestra los procesadores sin carga de usuario, ejecutando hilos de clase \texttt{IDLE} antes de activar el módulo de inhibición.}
     \label{fig:cpuOnOff-result-idle}
 \end{figure}
 
@@ -122,17 +122,17 @@ En relación al tiempo necesario para completar el cálculo del programa, se obs
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-2CPU.png}
-    \caption[Inhibición de asignación habilitada para múltiples CPUs]{Estado de los núcleos con el módulo de inhibición habilitado para múltiples CPUs. La carga queda concentrada en los procesadores que permanecen habilitados para recibir trabajo.}
+    \caption[Inhibición de asignación habilitada para múltiples procesadores]{Estado de los núcleos con el módulo de inhibición habilitado para múltiples procesadores. La carga queda concentrada en los procesadores que permanecen habilitados para recibir trabajo.}
     \label{fig:cpuOnOff-result-2cpu}
 \end{figure}
 
-La Tabla \ref{tabla:cpuOnOff-result-times} resume los tiempos de ejecución del programa de estrés con distinta cantidad de CPUs habilitadas. La variación se calcula respecto de la ejecución con cuatro CPUs.\par
+La Tabla \ref{tabla:cpuOnOff-result-times} resume los tiempos de ejecución del programa de estrés con distinta cantidad de procesadores habilitados. La variación se calcula respecto de la ejecución con cuatro procesadores.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
-        \textbf{CPUs habilitadas} & \textbf{Tiempo (s)} & \textbf{Variación} \\
+        \textbf{Procesadores habilitados} & \textbf{Tiempo (s)} & \textbf{Variación} \\
         \hline
         4 & 26 & Base \\
         \hline
@@ -141,18 +141,18 @@ La Tabla \ref{tabla:cpuOnOff-result-times} resume los tiempos de ejecución del 
         2 & 49 & +88,5\% \\
         \hline
     \end{tabular}
-    \caption{Tiempo de ejecución del programa de estrés con diferentes cantidades de CPUs habilitadas.}
+    \caption{Tiempo de ejecución del programa de estrés con diferentes cantidades de procesadores habilitados.}
     \label{tabla:cpuOnOff-result-times}
 \end{table}
 
-El resultado es el esperado: al reducir la cantidad de procesadores disponibles, el tiempo de ejecución aumenta. La tabla no se presenta como una mejora de rendimiento, sino como evidencia de que el módulo modifica la oferta de CPUs y concentra la carga en los procesadores restantes.\par
+El resultado es el esperado: al reducir la cantidad de procesadores disponibles, el tiempo de ejecución aumenta. La tabla no se presenta como una mejora de rendimiento, sino como evidencia de que el módulo modifica la oferta de procesadores y concentra la carga en los procesadores restantes.\par
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.9\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/cpuOnOff-4CPUsTime.png}
-        \caption{Ejecución con 4 CPUs activas: 26 segundos.}
+        \caption{Ejecución con 4 procesadores activos: 26 segundos.}
         \label{fig:cpuOnOff-4CPUsTime}
     \end{subfigure}
 
@@ -160,7 +160,7 @@ El resultado es el esperado: al reducir la cantidad de procesadores disponibles,
     \begin{subfigure}{0.9\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/cpuOnOff-3CPUsTime.png}
-        \caption{Ejecución con 3 CPUs activas: 34 segundos.}
+        \caption{Ejecución con 3 procesadores activos: 34 segundos.}
         \label{fig:cpuOnOff-3CPUsTime}
     \end{subfigure}
 
@@ -168,10 +168,10 @@ El resultado es el esperado: al reducir la cantidad de procesadores disponibles,
     \begin{subfigure}{0.9\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/cpuOnOff-2CPUsTime.png}
-        \caption{Ejecución con 2 CPUs activas: 49 segundos.}
+        \caption{Ejecución con 2 procesadores activos: 49 segundos.}
         \label{fig:cpuOnOff-2CPUsTime}
     \end{subfigure}
-    \caption[Capturas de tiempos de ejecución con distintas cantidades de CPUs activas]{Capturas asociadas a los tiempos de ejecución presentados en la Tabla \ref{tabla:cpuOnOff-result-times}. Las salidas muestran el aumento del tiempo total cuando se reduce manualmente la cantidad de procesadores habilitados para recibir trabajo.}
+    \caption[Capturas de tiempos de ejecución con distintas cantidades de procesadores activos]{Capturas asociadas a los tiempos de ejecución presentados en la Tabla \ref{tabla:cpuOnOff-result-times}. Las salidas muestran el aumento del tiempo total cuando se reduce manualmente la cantidad de procesadores habilitados para recibir trabajo.}
     \label{fig:cpuOnOff-times-screenshots}
 \end{figure}
 
@@ -179,7 +179,7 @@ El resultado es el esperado: al reducir la cantidad de procesadores disponibles,
 
 Además de la prueba funcional anterior, se realizó una medición posterior e independiente con \textit{DTrace}. No corresponde al mismo ensayo mostrado en las capturas: en esta medición la inhibición se activó sobre CPU1 y se usó \verb|openssl| como carga de observación. Se compararon tres escenarios: 4BSD sin modificaciones, Petri con el módulo de inhibición inactivo y Petri con CPU1 inhibida. Los \textit{probes} usados se resumen en el Apéndice \ref{appendix:dtrace-native-measurements}; los scripts y las salidas completas quedaron en el repositorio de documentación del proyecto, bajo \verb|tests/dtrace_measurements| y \verb|utils/scripts/DTrace|.\par
 
-La primera medición contó eventos \verb|sched:::off-cpu| de \verb|openssl| durante una carga CPU-bound simple. Los resultados se resumen en la Tabla \ref{tabla:dtrace-context-switches-inhibicion}.\par
+La primera medición contó eventos \verb|sched:::off-cpu| de \verb|openssl| durante una carga \textit{CPU-bound} simple. Los resultados se resumen en la Tabla \ref{tabla:dtrace-context-switches-inhibicion}.\par
 
 \begin{table}[H]
     \centering
@@ -196,11 +196,11 @@ La primera medición contó eventos \verb|sched:::off-cpu| de \verb|openssl| dur
         Petri con CPU1 inhibida & 20,02 s & 57 & 2,85 \\
         \hline
     \end{tabular}
-    \caption{Cambios de contexto observados con DTrace durante una carga CPU-bound simple.}
+    \caption{Cambios de contexto observados con DTrace durante una carga \textit{CPU-bound} simple.}
     \label{tabla:dtrace-context-switches-inhibicion}
 \end{table}
 
-La segunda medición observó eventos \verb|sched:::on-cpu| para ver en qué CPUs entraba a ejecutar \verb|openssl|. Para hacer visible la distribución se ejecutó \verb|openssl speed| durante 20 segundos, con bloques de 8192 bytes y cuatro procesos. La comparación relevante es entre Petri con inhibición inactiva y Petri con CPU1 inhibida.\par
+La segunda medición observó eventos \verb|sched:::on-cpu| para ver en qué procesadores entraba a ejecutar \verb|openssl|. Para hacer visible la distribución se ejecutó \verb|openssl speed| durante 20 segundos, con bloques de 8192 bytes y cuatro procesos. La comparación relevante es entre Petri con inhibición inactiva y Petri con CPU1 inhibida.\par
 
 \begin{table}[H]
     \centering
@@ -221,9 +221,9 @@ La segunda medición observó eventos \verb|sched:::on-cpu| para ver en qué CPU
 
 \subsection{Lectura conjunta de los resultados}
 
-Las capturas muestran el comportamiento visible del módulo: al inhibir una o más CPUs, el sistema sigue ejecutando la carga en los procesadores que permanecen habilitados. La medición de tiempos acompaña esa lectura: con menos CPUs disponibles, el programa de estrés tarda más en completar el cálculo. Ese resultado no se interpreta como una comparación de rendimiento, sino como una consecuencia esperada de retirar procesadores de la asignación de trabajo.\par
+Las capturas muestran el comportamiento visible del módulo: al inhibir uno o más procesadores, el sistema sigue ejecutando la carga en los procesadores que permanecen habilitados. La medición de tiempos acompaña esa lectura: con menos procesadores disponibles, el programa de estrés tarda más en completar el cálculo. Ese resultado no se interpreta como una comparación de rendimiento, sino como una consecuencia esperada de retirar procesadores de la asignación de trabajo.\par
 
-La medición con \textit{DTrace} agrega una verificación más puntual. Con el módulo inactivo, CPU1 recibió trabajo de \verb|openssl|. Con CPU1 inhibida, no se registraron entradas \verb|on-cpu| de \verb|openssl| en ese procesador, y la carga siguió ejecutándose en las CPUs restantes. CPU1 pasó de 58 entradas, equivalentes al 18,9\% de la muestra, a 0. La tasa de cambios de contexto aumentó, pero los valores absolutos siguen siendo bajos y se mantienen en el mismo orden de magnitud que los escenarios de referencia.\par
+La medición con \textit{DTrace} agrega una verificación más puntual. Con el módulo inactivo, CPU1 recibió trabajo de \verb|openssl|. Con CPU1 inhibida, no se registraron entradas \verb|on-cpu| de \verb|openssl| en ese procesador, y la carga siguió ejecutándose en los procesadores restantes. CPU1 pasó de 58 entradas, equivalentes al 18,9\% de la muestra, a 0. La tasa de cambios de contexto aumentó, pero los valores absolutos siguen siendo bajos y se mantienen en el mismo orden de magnitud que los escenarios de referencia.\par
 
 Con el alcance definido en la sección \ref{sect:afinidad-freebsd-modulos}, esta prueba no evalúa rendimiento frente a mecanismos nativos de afinidad. Solo verifica que, al inhibir una CPU, la red deje de elegirla para nuevos hilos y el sistema conserve un funcionamiento estable.\par
 
@@ -232,7 +232,7 @@ Con el alcance definido en la sección \ref{sect:afinidad-freebsd-modulos}, esta
 El módulo de monopolización de núcleos permite reservar una CPU para un hilo específico. Mientras la reserva está activa, otros hilos no deberían ser encolados en esa CPU. La primera validación del módulo se realizó mediante una prueba funcional basada en capturas del sistema. Esa prueba se organizó en dos momentos:
 
 \begin{enumerate}
-    \item \textbf{Estado normal del sistema:} Con el módulo deshabilitado, el hilo observado puede ejecutarse en distintas CPUs según la política normal del planificador.
+    \item \textbf{Estado normal del sistema:} Con el módulo deshabilitado, el hilo observado puede ejecutarse en distintos procesadores según la política normal del planificador.
     \item \textbf{Comportamiento con el módulo habilitado:} Se reservó una CPU para un hilo específico y se observó si el hilo quedaba asociado a ese núcleo.
 \end{enumerate}
 
@@ -240,7 +240,7 @@ Esta prueba muestra que el planificador puede aplicar la reserva sin afectar la 
 
 \subsection{Estado Normal del Sistema}
 
-Con el módulo de monopolización deshabilitado, el planificador distribuye los hilos entre los núcleos disponibles según la política normal de la Red de Petri. Si un núcleo no tiene tareas listas, toma hilos de la cola global o ejecuta su hilo de clase IDLE.\par
+Con el módulo de monopolización deshabilitado, el planificador distribuye los hilos entre los núcleos disponibles según la política normal de la Red de Petri. Si un núcleo no tiene tareas listas, toma hilos de la cola global o ejecuta su hilo de clase \texttt{IDLE}.\par
 
 La Figura \ref{fig:top_disabled} muestra este estado inicial: la carga se reparte entre los núcleos y no existe una CPU reservada.\par
 
@@ -330,7 +330,7 @@ Para revisar si la CPU reservada seguía recibiendo trabajo de otros hilos, se e
         \hline
         Ejecuciones del TID reservado \verb|100402| en CPU2 & 259 \\
         \hline
-        Ejecuciones del TID reservado \verb|100402| en otras CPUs & 0 \\
+        Ejecuciones del TID reservado \verb|100402| en otros procesadores & 0 \\
         \hline
         Ejecuciones de otros hilos en CPU2 & 0 \\
         \hline
@@ -343,7 +343,7 @@ Para revisar si la CPU reservada seguía recibiendo trabajo de otros hilos, se e
 
 Las capturas y la traza inicial muestran el cambio de estado del sistema: antes de activar el módulo no hay una CPU reservada, y el hilo observado puede moverse entre núcleos. Después de activar la monopolización, la ejecución se desplaza hacia el núcleo elegido y la CPU queda excluida del encolado de otros hilos durante la prueba.\par
 
-La medición complementaria refuerza esa observación con un seguimiento independiente. Sin monopolización, el hilo medido fue despachado hacia distintas CPUs. Con el módulo habilitado, las 259 entradas observadas ocurrieron en CPU2, y no se registraron entradas del mismo TID en otras CPUs. La traza sobre CPU2 tampoco registró entradas de otros hilos durante el intervalo observado. Esto muestra que, para la carga medida, la CPU quedó reservada en la práctica para el hilo indicado.\par
+La medición complementaria refuerza esa observación con un seguimiento independiente. Sin monopolización, el hilo medido fue despachado hacia distintos procesadores. Con el módulo habilitado, las 259 entradas observadas ocurrieron en CPU2, y no se registraron entradas del mismo TID en otros procesadores. La traza sobre CPU2 tampoco registró entradas de otros hilos durante el intervalo observado. Esto muestra que, para la carga medida, la CPU quedó reservada en la práctica para el hilo indicado.\par
 
 Esta medición complementaria valida la residencia del hilo en el procesador reservado y la exclusión de otros hilos durante el intervalo observado. No mide todavía el costo de esta decisión sobre el planificador. Para eso sería necesario analizar, por ejemplo, la variación temporal de la ejecución del hilo reservado y el costo de las verificaciones agregadas al camino de selección de CPU.\par
 

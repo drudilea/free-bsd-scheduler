@@ -54,7 +54,10 @@
 
 \renewcommand{\arraystretch}{1.5}
 \setlength{\tabcolsep}{10pt}
-\renewcommand{\tablename}{Tabla}
+\addto\captionsspanish{%
+    \renewcommand{\tablename}{Tabla}%
+    \renewcommand{\listtablename}{Índice de tablas}%
+}
 
 \begin{document}
 \input{titlepage}
