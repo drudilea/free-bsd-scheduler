@@ -402,7 +402,7 @@ Un \textit{probe} es un punto observable sobre el cual \textit{DTrace} puede eng
 
 Esta instrumentación fue necesaria porque el problema no se manifestaba en el mismo punto en el que se originaba. El \textit{page fault} aparecía más tarde, en funciones alejadas del planificador, por lo que era necesario observar los eventos previos de encolado y el efecto que tenían sobre el marcado de la red. Con \textit{probes} propios, las pruebas pudieron diferenciar si un hilo iba a la cola global, si era encolado por la política normal de Petri o si era registrado mediante el camino forzado agregado para respetar restricciones internas de FreeBSD.\par
 
-\section{Evidencia mediante DTrace}
+\section{Evidencia de la corrección mediante DTrace}
 
 Para validar el comportamiento se agregó instrumentación mediante \textit{DTrace}. Las trazas diferenciaron los encolados a cola global, los encolados per-CPU decididos por la política de Petri y los encolados per-CPU forzados por restricciones de FreeBSD.\par
 
@@ -424,6 +424,24 @@ Para validar el comportamiento se agregó instrumentación mediante \textit{DTra
 La prueba sin afinidad explícita mostró que la mayoría de los hilos siguieron el camino de cola global, con pocos casos forzados asociados a hilos internos del sistema. La prueba restringida con \verb|cpuset| mostró la aparición simultánea de \verb|ADDTOQUEUE_POLICY| y \verb|ADDTOQUEUE_FORCED|. Esto permitió confirmar que la red sigue decidiendo cuando existe una CPU válida y sensibilizada, y que el camino forzado aparece únicamente cuando resulta necesario para mantener la semántica de FreeBSD y la sincronización del marcado.\par
 
 En la ejecución restringida, si se consideran únicamente los encolados per-CPU registrados por la red, el 61.10\% correspondió a \verb|ADDTOQUEUE_POLICY| y el 38.89\% a \verb|ADDTOQUEUE_FORCED|. No se registraron transiciones bloqueadas durante las pruebas, lo que indica que el modelo permaneció sincronizado con el estado real del planificador en los escenarios evaluados.\par
+
+\chapter{Mediciones complementarias con \textit{probes} nativos}
+\label{appendix:dtrace-native-measurements}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.30\textwidth}|p{0.58\textwidth}|}
+        \hline
+        \textbf{Probe} & \textbf{Uso dentro de la medición} \\
+        \hline
+        \verb|sched:::off-cpu| & Cuenta salidas de CPU de la carga observada, usadas como aproximación acotada de cambios de contexto durante el intervalo de prueba. \\
+        \hline
+        \verb|sched:::on-cpu| & Registra entradas en ejecución y permite agruparlas por CPU, ya sea para un proceso como \verb|openssl| o para un TID específico. \\
+        \hline
+    \end{tabular}
+    \caption{Probes nativos utilizados en las mediciones complementarias con DTrace.}
+    \label{tabla:dtrace-native-probes}
+\end{table}
 
 \chapter{Port experimental del planificador a FreeBSD \texttt{main}}\label{appendix:port-main}
 

@@ -57,7 +57,7 @@ En el análisis de las trazas, \verb|TRAN_ADDTOQUEUE| se identificó como \textt
     \label{tabla:addtoqueue-forced-dtrace}
 \end{table}
 
-La primera prueba utilizó una carga general sin afinidad explícita. En este escenario, casi todos los hilos fueron enviados a la cola global, lo cual es esperable para trabajo ordinario del planificador 4BSD. Los pocos casos forzados observados correspondieron a hilos \textit{bound} del sistema, y no se registraron transiciones bloqueadas.\par
+La primera prueba utilizó una carga general sin afinidad explícita. En este escenario, casi todos los hilos fueron enviados a la cola global, lo cual es esperable para trabajo del planificador 4BSD. Los pocos casos forzados observados correspondieron a hilos \textit{bound} del sistema, y no se registraron transiciones bloqueadas.\par
 
 La segunda prueba restringió la ejecución mediante \verb|cpuset| a un subconjunto de CPUs. En este caso aparecieron tanto \texttt{ADDTOQUEUE\_POLICY} como \texttt{ADDTOQUEUE\_FORCED}. Esto muestra que la red de Petri no quedó en desuso: cuando encontró una CPU permitida y sensibilizada, siguió tomando decisiones mediante \verb|TRAN_ADDTOQUEUE|. Al mismo tiempo, cuando no encontró una CPU disponible dentro del conjunto permitido, el camino \verb|TRAN_ADDTOQUEUE_FORCED| permitió registrar el encolado real sin bloquear el planificador ni desincronizar el marcado de la red.\par
 
@@ -70,7 +70,7 @@ El módulo de inhibición de asignación de trabajo a procesadores permite evita
 \begin{enumerate}
     \item \textbf{Estado inactivo}: En ausencia de tareas pendientes, los procesadores permanecen en estado de espera, ejecutando hilos de la clase IDLE.\@
     \item \textbf{Comportamiento con el módulo inhabilitado}: Se llevaron a cabo distintas pruebas de estrés en el sistema. Como resultado, todos los procesadores operaron al 100\% de su capacidad.
-    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhibiendo distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron nuevos hilos de trabajo ordinario, mientras que los demás procesadores continuaron ejecutando las tareas sin interrupciones.
+    \item \textbf{Comportamiento con el módulo habilitado}: Se repitieron las pruebas de estrés con el módulo activado, inhibiendo distintos CPUs en las pruebas. Se observó que los procesadores en cuestión no recibieron nuevos hilos de trabajo, mientras que los demás procesadores continuaron ejecutando las tareas sin interrupciones.
 \end{enumerate}
 
 Estos resultados muestran que el sistema puede aplicar la inhibición de asignación de trabajo a procesadores sin comprometer su estabilidad durante esas pruebas.\par
@@ -113,7 +113,7 @@ Durante esta evaluación se observó que, al inhibir la asignación de trabajo a
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/cpuOnOff-result-1CPU.png}
-    \caption[Inhibición de asignación habilitada para CPU2]{Estado de los núcleos con el módulo de inhibición habilitado para la CPU2. La CPU inhibida no recibe nuevos hilos ordinarios, mientras el resto continúa ejecutando la carga.}
+    \caption[Inhibición de asignación habilitada para CPU2]{Estado de los núcleos con el módulo de inhibición habilitado para la CPU2. La CPU inhibida no recibe nuevos hilos, mientras el resto continúa ejecutando la carga.}
     \label{fig:cpuOnOff-result-1cpu}
 \end{figure}
 
@@ -171,13 +171,13 @@ El resultado es el esperado: al reducir la cantidad de procesadores disponibles,
         \caption{Ejecución con 2 CPUs activas: 49 segundos.}
         \label{fig:cpuOnOff-2CPUsTime}
     \end{subfigure}
-    \caption[Capturas de tiempos de ejecución con distintas cantidades de CPUs activas]{Capturas asociadas a los tiempos de ejecución presentados en la Tabla \ref{tabla:cpuOnOff-result-times}. Las salidas muestran el aumento del tiempo total cuando se reduce manualmente la cantidad de procesadores habilitados para recibir trabajo ordinario.}
+    \caption[Capturas de tiempos de ejecución con distintas cantidades de CPUs activas]{Capturas asociadas a los tiempos de ejecución presentados en la Tabla \ref{tabla:cpuOnOff-result-times}. Las salidas muestran el aumento del tiempo total cuando se reduce manualmente la cantidad de procesadores habilitados para recibir trabajo.}
     \label{fig:cpuOnOff-times-screenshots}
 \end{figure}
 
 \subsection{Medición complementaria con DTrace}
 
-Además de la prueba funcional anterior, se realizó una medición posterior e independiente con \textit{DTrace}. No corresponde al mismo ensayo mostrado en las capturas: en esta medición la inhibición se activó sobre CPU1 y se usó \verb|openssl| como carga de observación. Se compararon tres escenarios: 4BSD sin modificaciones, Petri con el módulo de inhibición inactivo y Petri con CPU1 inhibida. Los scripts y las salidas completas quedaron en \verb|tests/dtrace_measurements|.\par
+Además de la prueba funcional anterior, se realizó una medición posterior e independiente con \textit{DTrace}. No corresponde al mismo ensayo mostrado en las capturas: en esta medición la inhibición se activó sobre CPU1 y se usó \verb|openssl| como carga de observación. Se compararon tres escenarios: 4BSD sin modificaciones, Petri con el módulo de inhibición inactivo y Petri con CPU1 inhibida. Los \textit{probes} usados se resumen en el Apéndice \ref{appendix:dtrace-native-measurements}; los scripts y las salidas completas quedaron en el repositorio de documentación del proyecto, bajo \verb|tests/dtrace_measurements| y \verb|utils/scripts/DTrace|.\par
 
 La primera medición contó eventos \verb|sched:::off-cpu| de \verb|openssl| durante una carga CPU-bound simple. Los resultados se resumen en la Tabla \ref{tabla:dtrace-context-switches-inhibicion}.\par
 
@@ -219,15 +219,17 @@ La segunda medición observó eventos \verb|sched:::on-cpu| para ver en qué CPU
     \label{tabla:dtrace-cpu-distribution-inhibicion}
 \end{table}
 
-Con el módulo inactivo, CPU1 recibió trabajo ordinario de \verb|openssl|. Con CPU1 inhibida, no se registraron entradas \verb|on-cpu| de \verb|openssl| en ese procesador, y la carga siguió ejecutándose en las CPUs restantes. CPU1 pasó de 58 entradas, equivalentes al 18,9\% de la muestra, a 0. La tasa de cambios de contexto aumentó, pero los valores absolutos siguen siendo bajos y se mantienen en el mismo orden de magnitud que los escenarios de referencia. Esta medición muestra el efecto del módulo sobre la disponibilidad de CPU1; no se interpreta como mejora de rendimiento.\par
+\subsection{Lectura conjunta de los resultados}
 
-El objetivo de estas validaciones no es proponer la inhibición de procesadores durante un contexto de gran carga de trabajo, sino mostrar que el sistema puede operar con una reducción manual de los procesadores disponibles. A futuro, esta activación podría ser gestionada por el \textit{kernel} o por mecanismos externos, como directivas embebidas en los procesos o módulos del sistema que tomen decisiones según el tipo de tarea, la prioridad del hilo, el estado general de carga o criterios de eficiencia energética.\par
+Las capturas muestran el comportamiento visible del módulo: al inhibir una o más CPUs, el sistema sigue ejecutando la carga en los procesadores que permanecen habilitados. La medición de tiempos acompaña esa lectura: con menos CPUs disponibles, el programa de estrés tarda más en completar el cálculo. Ese resultado no se interpreta como una comparación de rendimiento, sino como una consecuencia esperada de retirar procesadores de la asignación de trabajo.\par
 
-Con el alcance definido en la sección \ref{sect:afinidad-freebsd-modulos}, esta prueba no evalúa rendimiento frente a mecanismos nativos de afinidad. Solo verifica que, al inhibir una CPU, la red deje de elegirla para nuevos hilos ordinarios y el sistema conserve un funcionamiento estable.\par
+La medición con \textit{DTrace} agrega una verificación más puntual. Con el módulo inactivo, CPU1 recibió trabajo de \verb|openssl|. Con CPU1 inhibida, no se registraron entradas \verb|on-cpu| de \verb|openssl| en ese procesador, y la carga siguió ejecutándose en las CPUs restantes. CPU1 pasó de 58 entradas, equivalentes al 18,9\% de la muestra, a 0. La tasa de cambios de contexto aumentó, pero los valores absolutos siguen siendo bajos y se mantienen en el mismo orden de magnitud que los escenarios de referencia.\par
+
+Con el alcance definido en la sección \ref{sect:afinidad-freebsd-modulos}, esta prueba no evalúa rendimiento frente a mecanismos nativos de afinidad. Solo verifica que, al inhibir una CPU, la red deje de elegirla para nuevos hilos y el sistema conserve un funcionamiento estable.\par
 
 \section{Resultados del Módulo de Monopolización de Núcleos}
 
-El módulo de monopolización de núcleos permite reservar una CPU para un hilo específico. Mientras la reserva está activa, otros hilos ordinarios no deberían ser encolados en esa CPU. La primera validación del módulo se realizó mediante una prueba funcional basada en capturas del sistema. Esa prueba se organizó en dos momentos:
+El módulo de monopolización de núcleos permite reservar una CPU para un hilo específico. Mientras la reserva está activa, otros hilos no deberían ser encolados en esa CPU. La primera validación del módulo se realizó mediante una prueba funcional basada en capturas del sistema. Esa prueba se organizó en dos momentos:
 
 \begin{enumerate}
     \item \textbf{Estado normal del sistema:} Con el módulo deshabilitado, el hilo observado puede ejecutarse en distintas CPUs según la política normal del planificador.
@@ -278,7 +280,7 @@ Luego de activar el módulo, la CPU elegida quedó asociada al hilo indicado. La
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/cpuMonopolized-on.png}
-    \caption[Monopolización habilitada para CPU1]{Estado de los procesos luego de activar el módulo de monopolización para la CPU1. La CPU reservada queda asociada al hilo seleccionado y no recibe otros hilos ordinarios durante la prueba.}
+    \caption[Monopolización habilitada para CPU1]{Estado de los procesos luego de activar el módulo de monopolización para la CPU1. La CPU reservada queda asociada al hilo seleccionado y no recibe otros hilos durante la prueba.}
     \label{fig:cpuMonopolized-on}
 \end{figure}
 
@@ -291,13 +293,13 @@ En la Figura \ref{fig:cpuMonopolized-dtrace} se observa el cambio en la ejecuci�
     \label{fig:cpuMonopolized-dtrace}
 \end{figure}
 
-Un caso relevante aparece cuando el programa de estrés termina y el módulo sigue activo. En ese estado, el núcleo reservado continúa excluido para hilos ordinarios distintos del hilo indicado. En este punto, el comportamiento se parece al módulo de inhibición: ambos excluyen una CPU de la asignación ordinaria de trabajo, aunque por motivos distintos.\par
+Un caso relevante aparece cuando el programa de estrés termina y el módulo sigue activo. En ese estado, el núcleo reservado continúa excluido para hilos distintos del hilo indicado. En este punto, el comportamiento se parece al módulo de inhibición: ambos excluyen una CPU de la asignación de trabajo, aunque por motivos distintos.\par
 
 Al desactivar el módulo, el sistema continúa operando según lo esperado, con todos sus núcleos disponibles, tal como lo haría en su estado normal.\par
 
 \subsection{Medición complementaria con DTrace}
 
-Además de la prueba anterior, se realizó una medición posterior e independiente con \textit{DTrace}. No corresponde al mismo ensayo mostrado en las capturas: se usó otro hilo, otra CPU reservada y otro método de observación. En esta medición se siguió el TID \verb|100402| y la reserva se activó sobre CPU2 mediante \verb|kern.sched_petri.monopolize|. Durante la medición se mantuvo una carga concurrente acotada con \verb|openssl speed| para evitar que la VM perdiera responsividad. Los resultados se resumen en la Tabla \ref{tabla:dtrace-monopolizacion-cpu2}.\par
+Además de la prueba anterior, se realizó una medición posterior e independiente con \textit{DTrace}. No corresponde al mismo ensayo mostrado en las capturas: se usó otro hilo, otra CPU reservada y otro método de observación. En esta medición se siguió el TID \verb|100402| y la reserva se activó sobre CPU2 mediante \verb|kern.sched_petri.monopolize|. Durante la medición se mantuvo una carga concurrente acotada con \verb|openssl speed| para evitar que la VM perdiera responsividad. Los \textit{probes} usados se resumen en el Apéndice \ref{appendix:dtrace-native-measurements}; los resultados se presentan en las Tablas \ref{tabla:dtrace-monopolizacion-cpu2} y \ref{tabla:dtrace-monopolizacion-reserva-cpu2}.\par
 
 \begin{table}[H]
     \centering
@@ -316,11 +318,36 @@ Además de la prueba anterior, se realizó una medición posterior e independien
     \label{tabla:dtrace-monopolizacion-cpu2}
 \end{table}
 
-Sin monopolización, el hilo medido fue despachado hacia distintas CPUs. Con la reserva activa, las 259 entradas observadas ocurrieron en CPU2. Además, el trazado de otros hilos sobre CPU2 no registró entradas de hilos ordinarios distintos del TID reservado. El resultado respalda el comportamiento buscado en esta segunda prueba: el hilo queda asociado al núcleo elegido y la CPU reservada deja de recibir otros hilos ordinarios.\par
+Para revisar si la CPU reservada seguía recibiendo trabajo de otros hilos, se ejecutó una segunda traza sobre CPU2. Esa traza filtró entradas \verb|on-cpu| cuyo TID fuera distinto del hilo reservado, excluyendo hilos \verb|idle|. El resultado se resume en la Tabla \ref{tabla:dtrace-monopolizacion-reserva-cpu2}.\par
 
-Esta medición complementaria valida la residencia del hilo en el procesador reservado y la exclusión de otros hilos ordinarios durante el intervalo observado. No mide todavía el costo de esta decisión sobre el planificador. Para eso sería necesario analizar, por ejemplo, la variación temporal de la ejecución del hilo reservado y el costo de las verificaciones agregadas al camino de selección de CPU.\par
+\begin{table}[H]
+    \centering
+    \small
+    \setlength{\tabcolsep}{5pt}
+    \begin{tabular}{|>{\RaggedRight\arraybackslash}p{0.52\textwidth}|c|}
+        \hline
+        \textbf{Evento observado durante la reserva de CPU2} & \textbf{Entradas} \\
+        \hline
+        Ejecuciones del TID reservado \verb|100402| en CPU2 & 259 \\
+        \hline
+        Ejecuciones del TID reservado \verb|100402| en otras CPUs & 0 \\
+        \hline
+        Ejecuciones de otros hilos en CPU2 & 0 \\
+        \hline
+    \end{tabular}
+    \caption{Verificación de la CPU reservada durante la medición de monopolización.}
+    \label{tabla:dtrace-monopolizacion-reserva-cpu2}
+\end{table}
 
-Bajo el mismo alcance de la sección \ref{sect:afinidad-freebsd-modulos}, esta prueba valida la exclusión de otros hilos ordinarios desde la lógica de encolado del planificador Petri. No valida aislamiento absoluto del procesador, ya que FreeBSD conserva el control sobre interrupciones, prioridades, cambios de contexto y tareas internas del \textit{kernel}.\par
+\subsection{Lectura conjunta de los resultados}
+
+Las capturas y la traza inicial muestran el cambio de estado del sistema: antes de activar el módulo no hay una CPU reservada, y el hilo observado puede moverse entre núcleos. Después de activar la monopolización, la ejecución se desplaza hacia el núcleo elegido y la CPU queda excluida del encolado de otros hilos durante la prueba.\par
+
+La medición complementaria refuerza esa observación con un seguimiento independiente. Sin monopolización, el hilo medido fue despachado hacia distintas CPUs. Con el módulo habilitado, las 259 entradas observadas ocurrieron en CPU2, y no se registraron entradas del mismo TID en otras CPUs. La traza sobre CPU2 tampoco registró entradas de otros hilos durante el intervalo observado. Esto muestra que, para la carga medida, la CPU quedó reservada en la práctica para el hilo indicado.\par
+
+Esta medición complementaria valida la residencia del hilo en el procesador reservado y la exclusión de otros hilos durante el intervalo observado. No mide todavía el costo de esta decisión sobre el planificador. Para eso sería necesario analizar, por ejemplo, la variación temporal de la ejecución del hilo reservado y el costo de las verificaciones agregadas al camino de selección de CPU.\par
+
+Bajo el mismo alcance de la sección \ref{sect:afinidad-freebsd-modulos}, esta prueba valida la exclusión de otros hilos desde la lógica de encolado del planificador Petri. No valida aislamiento absoluto del procesador, ya que FreeBSD conserva el control sobre interrupciones, prioridades, cambios de contexto, tareas internas del \textit{kernel} y restricciones nativas que pueden obligar al sistema a usar una CPU concreta.\par
 
 \section{Resultados de las actualizaciones en la versión del S.O.}
 
