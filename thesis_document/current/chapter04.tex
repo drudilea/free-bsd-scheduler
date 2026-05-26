@@ -223,7 +223,7 @@ Con el módulo inactivo, CPU1 recibió trabajo ordinario de \verb|openssl|. Con 
 
 El objetivo de estas validaciones no es proponer la inhibición de procesadores durante un contexto de gran carga de trabajo, sino mostrar que el sistema puede operar con una reducción manual de los procesadores disponibles. A futuro, esta activación podría ser gestionada por el \textit{kernel} o por mecanismos externos, como directivas embebidas en los procesos o módulos del sistema que tomen decisiones según el tipo de tarea, la prioridad del hilo, el estado general de carga o criterios de eficiencia energética.\par
 
-Esta validación tampoco busca comparar el módulo con \verb|cpuset| en términos de rendimiento. La comparación relevante es de alcance: \verb|cpuset| permite restringir dónde puede ejecutarse una carga, mientras que el módulo desarrollado cambia el estado de disponibilidad de la CPU dentro del modelo del planificador. Por eso, el resultado buscado no es mostrar que el módulo sea más eficiente, sino que la red deja de elegir la CPU inhibida para nuevos hilos ordinarios y conserva estable el funcionamiento del sistema.\par
+Con el alcance definido en la sección \ref{sect:afinidad-freebsd-modulos}, esta prueba no evalúa rendimiento frente a mecanismos nativos de afinidad. Solo verifica que, al inhibir una CPU, la red deje de elegirla para nuevos hilos ordinarios y el sistema conserve un funcionamiento estable.\par
 
 \section{Resultados del Módulo de Monopolización de Núcleos}
 
@@ -320,7 +320,7 @@ Sin monopolización, el hilo medido fue despachado hacia distintas CPUs. Con la 
 
 Esta medición complementaria valida la residencia del hilo en el procesador reservado y la exclusión de otros hilos ordinarios durante el intervalo observado. No mide todavía el costo de esta decisión sobre el planificador. Para eso sería necesario analizar, por ejemplo, la variación temporal de la ejecución del hilo reservado y el costo de las verificaciones agregadas al camino de selección de CPU.\par
 
-Este comportamiento no reemplaza a \verb|cpuset_setaffinity()| ni a \verb|sched_bind()|. Esos mecanismos restringen dónde puede ejecutarse un hilo. El módulo desarrollado agrega una condición distinta: mientras la reserva está activa, la CPU seleccionada no recibe hilos ordinarios distintos del elegido. Esto no implica aislamiento absoluto del procesador, ya que FreeBSD conserva el control sobre interrupciones, prioridades, cambios de contexto y tareas internas del \textit{kernel}. El alcance validado es la exclusión de otros hilos ordinarios desde la lógica de encolado del planificador Petri.\par
+Bajo el mismo alcance de la sección \ref{sect:afinidad-freebsd-modulos}, esta prueba valida la exclusión de otros hilos ordinarios desde la lógica de encolado del planificador Petri. No valida aislamiento absoluto del procesador, ya que FreeBSD conserva el control sobre interrupciones, prioridades, cambios de contexto y tareas internas del \textit{kernel}.\par
 
 \section{Resultados de las actualizaciones en la versión del S.O.}
 
