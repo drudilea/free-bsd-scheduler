@@ -38,16 +38,39 @@ Donde \texttt{\textbf{<DESCRIPCIÓN>}} es una breve explicación del contenido d
 
 Por ejemplo, \textit{DrudiGoldmanPI/feature\_cpuMonopolized-13.1.0} es una rama destinada a la implementación del módulo de monopolización, el cual se detalla más adelante en esta sección de desarrollo; mientras que \textit{DrudiGoldmanPI/update\_petriNetScheduler-12.3.0} corresponde a una rama utilizada para la actualización del planificador 4BSD, modelado mediante Redes de Petri, a la versión 12.3.0 del sistema operativo.\par
 
+Esa convención se mantuvo durante el desarrollo y las pruebas, porque permitía identificar rápidamente el origen y el propósito de cada rama de trabajo. Para las ramas que quedaron asociadas a propuestas de integración en el repositorio derivado \texttt{drudilea/freebsd-src}, se usó una nomenclatura más cercana a la organización habitual de FreeBSD. De esta forma, las ramas históricas con prefijo \texttt{DrudiGoldmanPI/} conservan el detalle del proceso de desarrollo, mientras que las ramas abiertas como \textit{pull requests} separan el planificador base, los módulos y el port experimental a \texttt{main}.\par
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{|>{\RaggedRight\arraybackslash}p{0.39\textwidth}|>{\RaggedRight\arraybackslash}p{0.20\textwidth}|>{\RaggedRight\arraybackslash}p{0.29\textwidth}|}
+        \hline
+        \textbf{Rama de integración} & \textbf{Base} & \textbf{Contenido} \\
+        \hline
+        \path{feature/petri-net-scheduler} & \path{release13.1} & Integración del planificador basado en Redes de Petri sobre FreeBSD 13.1. \\
+        \hline
+        \path{feature/petri-net-scheduler_cpu-on-off-module} & \path{feature/petri-net-scheduler} & Módulo de inhibición de asignación de trabajo a procesadores. \\
+        \hline
+        \path{feature/petri-net-scheduler_monopolize-cpu-module} & \path{feature/petri-net-scheduler} & Módulo de monopolización de núcleos. \\
+        \hline
+        \path{feature/petri-net-scheduler-main-port} & \path{main} & Port experimental del planificador base hacia la rama \texttt{main}. \\
+        \hline
+    \end{tabular}
+    \caption{Ramas de integración abiertas como propuestas en el repositorio derivado de FreeBSD.}
+    \label{tabla:ramas-integracion-freebsd-src}
+\end{table}
+
 \subsection{Conventional Commits}
 En este proyecto, se utilizó la convención de \textit{Conventional Commits} para mantener un historial de cambios claro y consistente. Esta práctica facilita la lectura y comprensión de los cambios realizados, tanto para el equipo de desarrollo como para futuros colaboradores.\par
 
 Los mensajes de \textit{commit} siguen un formato estandarizado que describe de manera concisa el tipo de cambio, la versión del sistema operativo afectada y una breve descripción de la modificación. A continuación, se presentan algunos ejemplos extraídos del proyecto:
 
 \begin{itemize}
-    \item \texttt{feat(13.1.0): Move thread lock before resource\_expulse\_thread()}
-    \item \texttt{fix(13.1.0): Fix sched\_pickcpu for cases when resource\_choose\_cpu returns -1 (NOCPU)}
-    \item \texttt{refactor(13.1.0): Change kernel config file identifier}
-    \item \texttt{feat(12.3.0): Short term scheduler modeling with PN - Add PI code to release/12.3.0}
+    \item \texttt{feat(13.1.0): move thread lock}
+    \item \texttt{fix(13.1.0): handle NOCPU case}
+    \item \texttt{refactor(13.1.0): rename kernel config}
+    \item \texttt{feat(12.3.0): add Petri scheduler}
 \end{itemize}
 
 Los tipos de cambios más comunes utilizados incluyen:
