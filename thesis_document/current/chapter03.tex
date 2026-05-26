@@ -18,7 +18,7 @@ Estas metodologías permitieron trabajar de manera ordenada y eficiente, y tambi
 \subsection{Estrategia de ramificación}
 Definir una estrategia de ramificación o \textit{branch strategy} en los proyectos es fundamental para mantener el control sobre el flujo de trabajo, la organización del proyecto y asegurar que las modificaciones se integren sin problemas en la rama principal del código. Una estrategia bien definida establece un conjunto de reglas claras y consistentes para la creación y fusión de ramas de código.\par
 
-Además, esta estrategia facilita el mantenimiento de un historial completo y bien organizado de las modificaciones realizadas al código, lo cual es esencial para el seguimiento y la continuidad del proyecto. En este caso, se definió el prefijo de branches utilizando los apellidos de los integrantes del grupo de trabajo, como por ejemplo, \texttt{\textbf{DrudiGoldmanPI/}}. Este enfoque ayuda a identificar y localizar fácilmente todos los cambios realizados en este proyecto integrador.\par
+Además, esta estrategia facilita el mantenimiento de un historial completo y bien organizado de las modificaciones realizadas al código, lo cual es esencial para el seguimiento y la continuidad del proyecto. En este caso, se definió el prefijo de ramas utilizando los apellidos de los integrantes del grupo de trabajo, como por ejemplo, \texttt{\textbf{DrudiGoldmanPI/}}. Este enfoque ayuda a identificar y localizar fácilmente todos los cambios realizados en este proyecto integrador.\par
 
 Para definir los nombres de las ramas, se establecieron tres casos principales por los cuales se crearían nuevas ramas:
 
@@ -38,7 +38,7 @@ Donde \texttt{\textbf{<DESCRIPCIÓN>}} es una breve explicación del contenido d
 
 Por ejemplo, \textit{DrudiGoldmanPI/feature\_cpuMonopolized-13.1.0} es una rama destinada a la implementación del módulo de monopolización, el cual se detalla más adelante en esta sección de desarrollo; mientras que \textit{DrudiGoldmanPI/update\_petriNetScheduler-12.3.0} corresponde a una rama utilizada para la actualización del planificador 4BSD, modelado mediante Redes de Petri, a la versión 12.3.0 del sistema operativo.\par
 
-Esa convención se mantuvo durante el desarrollo y las pruebas, porque permitía identificar rápidamente el origen y el propósito de cada rama de trabajo. Para las ramas que quedaron asociadas a propuestas de integración en el repositorio derivado \texttt{drudilea/freebsd-src}, se usó una nomenclatura más cercana a la organización habitual de FreeBSD. De esta forma, las ramas históricas con prefijo \texttt{DrudiGoldmanPI/} conservan el detalle del proceso de desarrollo, mientras que las ramas abiertas como \textit{pull requests} separan el planificador base, los módulos y el port experimental a \texttt{main}.\par
+Esa convención se mantuvo durante el desarrollo y las pruebas, porque permitía identificar rápidamente el origen y el propósito de cada rama de trabajo. Para las ramas que quedaron asociadas a propuestas de integración en el repositorio derivado \texttt{drudilea/freebsd-src}, se usó una nomenclatura más cercana a la organización habitual de FreeBSD. De esta forma, las ramas históricas con prefijo \texttt{DrudiGoldmanPI/} conservan el detalle del proceso de desarrollo, mientras que las ramas abiertas como \textit{pull requests} separan el planificador base, los módulos y el \textit{port} experimental a \texttt{main}.\par
 
 \begin{table}[H]
     \centering
@@ -54,14 +54,14 @@ Esa convención se mantuvo durante el desarrollo y las pruebas, porque permitía
         \hline
         \path{feature/petri-net-scheduler_monopolize-cpu-module} & \path{feature/petri-net-scheduler} & Módulo de monopolización de núcleos. \\
         \hline
-        \path{feature/petri-net-scheduler-main-port} & \path{main} & Port experimental del planificador base hacia la rama \texttt{main}. \\
+        \path{feature/petri-net-scheduler-main-port} & \path{main} & \textit{Port} experimental del planificador base hacia la rama \texttt{main}. \\
         \hline
     \end{tabular}
     \caption{Ramas de integración abiertas como propuestas en el repositorio derivado de FreeBSD.}
     \label{tabla:ramas-integracion-freebsd-src}
 \end{table}
 
-\subsection{Conventional Commits}
+\subsection{\textit{Conventional Commits}}
 En este proyecto, se utilizó la convención de \textit{Conventional Commits} para mantener un historial de cambios claro y consistente. Esta práctica facilita la lectura y comprensión de los cambios realizados, tanto para el equipo de desarrollo como para futuros colaboradores.\par
 
 Los mensajes de \textit{commit} siguen un formato estandarizado que describe de manera concisa el tipo de cambio, la versión del sistema operativo afectada y una breve descripción de la modificación. A continuación, se presentan algunos ejemplos extraídos del proyecto:
@@ -80,7 +80,7 @@ Los tipos de cambios más comunes utilizados incluyen:
     \item \textbf{refactor}: Para modificaciones que mejoran el código sin alterar su funcionalidad.
 \end{itemize}
 
-Para la integración de cambios, se adoptó la estrategia de \textit{squash merge}. Esta técnica permite consolidar todos los cambios de una rama en un único \textit{commit} bien detallado, lo cual simplifica el historial del proyecto y facilita el seguimiento de avances importantes. Cada \textit{squash merge} incluye un resumen comprensivo de todos los \textit{sub-commits} que forman parte del cambio, garantizando así una documentación clara y precisa del progreso del proyecto.\par
+Para la integración de cambios, se adoptó la estrategia de \textit{squash merge}. Esta técnica permite consolidar todos los cambios de una rama en un único \textit{commit} bien detallado, lo cual simplifica el historial del proyecto y facilita el seguimiento de avances importantes. Cada \textit{squash merge} incluye un resumen comprensivo de todos los \textit{commits} parciales que forman parte del cambio, garantizando así una documentación clara y precisa del progreso del proyecto.\par
 
 \subsection{Repositorio de Documentación del Proyecto} \label{sect:wiki}
 
@@ -90,7 +90,7 @@ El repositorio de la documentación del proyecto está organizado de manera estr
     \item \textbf{Archivos del Proyecto}
           \begin{itemize}
               \item \textbf{Archivos de Migraciones:} Contiene subdirectorios correspondientes a diferentes versiones de migración del sistema, incluyendo archivos de configuración y código fuente relevante.
-              \item \textbf{Port experimental a \texttt{main}:} Documenta el estudio de portabilidad del planificador base hacia la rama \texttt{main} de FreeBSD, incluyendo el análisis de \verb|sched_4bsd.c|, los cambios de integración y las validaciones pendientes.
+              \item \textbf{\textit{Port} experimental a \texttt{main}:} Documenta el estudio de portabilidad del planificador base hacia la rama \texttt{main} de FreeBSD, incluyendo el análisis de \verb|sched_4bsd.c|, los cambios de integración y las validaciones pendientes.
               \item \textbf{Logs:} Registro de eventos y mensajes generados durante pruebas y actualizaciones del sistema.
               \item \textbf{Módulos:} Módulos de \textit{kernel} adicionales para poner en funcionamiento los nuevos desarrollos.
               \item \textbf{Otros:} Programas auxiliares para seguir el comportamiento de las transiciones de la Red de Petri.
@@ -217,15 +217,15 @@ La CPU0 suele tener un rol particular en distintas rutas internas del \textit{ke
 
 Durante el desarrollo se observó que aplicar estos módulos sobre CPU0 podía producir comportamientos inestables. En lugar de incorporar una excepción parcial sin comprender completamente todos los caminos internos involucrados, se decidió impedir su selección dentro de ambos módulos. Esta restricción no implica que sea imposible diseñar una política que incluya CPU0, sino que dicha posibilidad requiere un análisis específico de afinidad, interrupciones y caminos obligatorios del \textit{kernel} que quedó fuera del alcance de este prototipo.\par
 
-La limitación tiene un costo práctico: en sistemas con pocos núcleos, excluir CPU0 reduce de forma directa la cantidad de procesadores que pueden ser inhibidos o monopolizados. Por lo tanto, la decisión mejora la estabilidad del prototipo, pero también restringe su aplicabilidad en equipos de baja cantidad de CPUs.\par
+La limitación tiene un costo práctico: en sistemas con pocos núcleos, excluir CPU0 reduce de forma directa la cantidad de procesadores que pueden ser inhibidos o monopolizados. Por lo tanto, la decisión mejora la estabilidad del prototipo, pero también restringe su aplicabilidad en equipos de baja cantidad de núcleos.\par
 
 \subsection{Relación con mecanismos nativos de afinidad de FreeBSD}\label{sect:afinidad-freebsd-modulos}
 
 FreeBSD ya cuenta con mecanismos para regular la relación entre hilos, procesos y procesadores. Herramientas como \verb|cpuset| y llamadas como \verb|cpuset_setaffinity()| permiten definir conjuntos de CPUs permitidas. A nivel interno, \verb|sched_bind()|, los hilos \textit{pinned} y los hilos \textit{bound} expresan restricciones más fuertes dentro del \textit{kernel}. Por lo tanto, los módulos de esta tesis no deben entenderse como un reemplazo general de esas funcionalidades.\par
 
-La diferencia principal está en el lugar donde se representa la restricción. Los mecanismos nativos indican dónde puede ejecutarse un hilo o un proceso. En este trabajo, en cambio, parte de esa decisión se incorpora al modelo de recursos del planificador basado en Redes de Petri. La pregunta deja de ser únicamente qué CPUs tiene permitidas un hilo y pasa a incluir qué CPUs están disponibles, dentro del marcado de la red, para recibir nuevo trabajo ordinario.\par
+La diferencia principal está en el lugar donde se representa la restricción. Los mecanismos nativos indican dónde puede ejecutarse un hilo o un proceso. En este trabajo, en cambio, parte de esa decisión se incorpora al modelo de recursos del planificador basado en Redes de Petri. La pregunta deja de ser únicamente qué procesadores tiene permitidos un hilo y pasa a incluir qué procesadores están disponibles, dentro del marcado de la red, para recibir nuevo trabajo ordinario.\par
 
-En el módulo de inhibición, esta diferencia aparece con claridad. Un uso de \verb|cpuset| puede limitar la ejecución de un proceso, o de un conjunto de procesos, a ciertas CPUs. El módulo implementado representa la disponibilidad de cada CPU como parte de la red de recursos: cuando una CPU queda inhibida, el modelo impide que la política normal del planificador la elija para nuevos encolados ordinarios. El procesador no se apaga ni se retira del sistema; simplemente deja de participar en esa decisión de asignación.\par
+En el módulo de inhibición, esta diferencia aparece con claridad. Un uso de \verb|cpuset| puede limitar la ejecución de un proceso, o de un conjunto de procesos, a ciertos procesadores. El módulo implementado representa la disponibilidad de cada CPU como parte de la red de recursos: cuando una CPU queda inhibida, el modelo impide que la política normal del planificador la elija para nuevos encolados ordinarios. El procesador no se apaga ni se retira del sistema; simplemente deja de participar en esa decisión de asignación.\par
 
 En el módulo de monopolización, la diferencia es que la restricción se aplica sobre el recurso CPU y no solo sobre el hilo: mientras el módulo está habilitado para un hilo determinado, el procesador seleccionado queda excluido del encolado de otros hilos ordinarios y se conserva para ese hilo. Para lograrlo, el planificador registra qué hilo tiene asignado el procesador y consulta esa información antes de decidir si una CPU puede recibir un nuevo hilo. Esta decisión no quedó completamente expresada como una extensión de la red, pero sí se integró al punto donde el planificador decide si una CPU puede aceptar o no un hilo determinado.\par
 
@@ -239,7 +239,7 @@ Así, el interés de estos módulos está en la convivencia entre las restriccio
         \hline
         \textbf{Tipo de restricción} & \textbf{Dónde actúa} & \textbf{Idea clave} & \textbf{Relación con este trabajo} \\
         \hline
-        Afinidad nativa de FreeBSD & Hilo o proceso & Limita el conjunto de CPUs permitidas, por ejemplo mediante \verb|cpuset| o llamadas de afinidad. & Puede parecer similar al módulo de inhibición, pero actúa sobre los hilos o procesos, no sobre la disponibilidad de una CPU dentro de la red. \\
+        Afinidad nativa de FreeBSD & Hilo o proceso & Limita el conjunto de procesadores permitidos, por ejemplo mediante \verb|cpuset| o llamadas de afinidad. & Puede parecer similar al módulo de inhibición, pero actúa sobre los hilos o procesos, no sobre la disponibilidad de una CPU dentro de la red. \\
         \hline
         Restricciones internas fuertes del \textit{kernel} & Hilo & Casos como \textit{pinned}, \textit{bound} o \verb|sched_bind()| imponen una CPU concreta. & El planificador Petri debe respetarlas. A diferencia de la monopolización, no reservan una CPU frente al resto de hilos. \\
         \hline
@@ -407,7 +407,7 @@ Los detalles técnicos y las implementaciones específicas se encuentran documen
 
 Los resultados del módulo fueron satisfactorios, demostrando que los hilos pudieron monopolizar los procesadores de manera efectiva.\par
 
-Para verificar este comportamiento, se realizaron pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos de las CPUs durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
+Para verificar este comportamiento, se realizaron pruebas utilizando una herramienta de monitoreo y un programa de estrés. Estas pruebas consistieron en ejecutar diferentes programas diseñados para mantener hilos activos en los distintos núcleos durante un tiempo prolongado. Inicialmente, se observó el comportamiento global del sistema sin activar el módulo de monopolización. Luego, se seleccionó uno de estos hilos y se lo ancló a un procesador específico. Esto permitió comprobar que el módulo funcionaba correctamente, manteniendo los hilos anclados en un mismo núcleo sin que este pudiera ejecutar otras tareas, lo que confirma la efectividad de la monopolización.\par
 
 Como se indicó en la sección \ref{sect:cpu0-modulos}, el módulo no incluyó la monopolización de CPU0. La decisión se mantuvo por el mismo criterio adoptado en el módulo de inhibición: evitar que el prototipo interfiera con rutas internas del sistema que pueden depender de ese procesador.\par
 
@@ -474,7 +474,7 @@ Para llegar a esta conclusión fue necesario combinar varias formas de depuraci�
 
 La solución implementada consistió en separar el encolado decidido por la política de la red del encolado impuesto por restricciones de FreeBSD. La transición original \verb|TRAN_ADDTOQUEUE| se conserva como camino normal de política y sigue estando inhibida por \verb|PLACE_CANTQ|. Para los casos en los que el \textit{kernel} necesita registrar un encolado obligatorio, se agregó una transición \verb|TRAN_ADDTOQUEUE_FORCED|. Esta transición no está inhibida por \verb|PLACE_CANTQ|, por lo que evita la desincronización, pero mantiene la incidencia sobre \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|. De esta forma, la CPU que recibió un hilo forzado igualmente queda penalizada para futuras decisiones libres de la red.\par
 
-La Figura \ref{fig:addtoqueue-forced-subnet} muestra esta diferencia sobre un recorte de la subred de encolado per-CPU. Para simplificar la explicación, se dejaron únicamente las plazas y transiciones necesarias para entender el nuevo camino forzado y su continuidad dentro de la red de recursos. Por ese motivo se omiten caminos de retorno, remoción, cola global y control SMP, que siguen formando parte de la red completa pero no modifican el punto central del cambio. En el recorte puede verse que ambas transiciones agregan un token a \verb|PLACE_QUEUE| y a \verb|PLACE_CANTQ|. Luego, el token agregado en \verb|PLACE_QUEUE| permite continuar por el camino normal de ejecución, comenzando por \verb|TRAN_UNQUEUE|. La diferencia es que solo el camino de política conserva el arco inhibidor desde \verb|PLACE_CANTQ|.\par
+La Figura \ref{fig:addtoqueue-forced-subnet} muestra esta diferencia sobre un recorte de la subred de encolado por CPU. Para simplificar la explicación, se dejaron únicamente las plazas y transiciones necesarias para entender el nuevo camino forzado y su continuidad dentro de la red de recursos. Por ese motivo se omiten caminos de retorno, remoción, cola global y control SMP, que siguen formando parte de la red completa pero no modifican el punto central del cambio. En el recorte puede verse que ambas transiciones agregan un token a \verb|PLACE_QUEUE| y a \verb|PLACE_CANTQ|. Luego, el token agregado en \verb|PLACE_QUEUE| permite continuar por el camino normal de ejecución, comenzando por \verb|TRAN_UNQUEUE|. La diferencia es que solo el camino de política conserva el arco inhibidor desde \verb|PLACE_CANTQ|.\par
 
 \begin{figure}[H]
     \centering
@@ -490,13 +490,13 @@ La Figura \ref{fig:addtoqueue-forced-subnet} muestra esta diferencia sobre un re
             \end{minipage}
         }
     }
-    \caption[Subred de encolado con transición forzada]{Recorte explicativo de la subred de encolado per-CPU con la transición forzada. \texttt{TRAN\_ADDTOQUEUE[i]} conserva el arco inhibidor desde \texttt{PLACE\_CANTQ[i]}. \texttt{TRAN\_ADDTOQUEUE\_FORCED[i]} registra el mismo cambio de marcado, pero no es inhibida por \texttt{PLACE\_CANTQ[i]}. Ambas transiciones dejan el token en \texttt{PLACE\_QUEUE[i]} para que luego pueda dispararse \texttt{TRAN\_UNQUEUE[i]}.}
+    \caption[Subred de encolado con transición forzada]{Recorte explicativo de la subred de encolado por CPU con la transición forzada. \texttt{TRAN\_ADDTOQUEUE[i]} conserva el arco inhibidor desde \texttt{PLACE\_CANTQ[i]}. \texttt{TRAN\_ADDTOQUEUE\_FORCED[i]} registra el mismo cambio de marcado, pero no es inhibida por \texttt{PLACE\_CANTQ[i]}. Ambas transiciones dejan el token en \texttt{PLACE\_QUEUE[i]} para que luego pueda dispararse \texttt{TRAN\_UNQUEUE[i]}.}
     \label{fig:addtoqueue-forced-subnet}
 \end{figure}
 
 Con este cambio, los hilos \textit{pinned} y \textit{bound} se registran mediante el camino forzado, ya que FreeBSD impone una CPU concreta. Para hilos con afinidad, la red primero intenta elegir una CPU permitida mediante \verb|TRAN_ADDTOQUEUE|. Si no existe una CPU válida y sensibilizada dentro del conjunto permitido, se utiliza \verb|TRAN_ADDTOQUEUE_FORCED| como respaldo para mantener la coherencia entre el estado real del planificador y el marcado de la red.\par
 
-Una vez definida la corrección, se agregó instrumentación específica con \textit{DTrace} para validarla sin depender de impresiones masivas desde el \textit{kernel}. Para esto se incorporó un proveedor \verb|SDT| propio, descripto en el Apéndice \ref{appendix:dtrace-sdt}, con eventos asociados al disparo de transiciones, a intentos bloqueados y a las decisiones tomadas por \verb|sched_add()|. Las trazas permitieron distinguir si un hilo era enviado a la cola global, si era encolado en una cola per-CPU por decisión de la política de Petri, o si era registrado mediante \verb|TRAN_ADDTOQUEUE_FORCED|. Con esta instrumentación se pudo observar el comportamiento del modelo en ejecución real, validar que la transición original seguía siendo utilizada cuando correspondía y verificar que los encolados obligatorios quedaran registrados sin volver a desincronizar la red.\par
+Una vez definida la corrección, se agregó instrumentación específica con \textit{DTrace} para validarla sin depender de impresiones masivas desde el \textit{kernel}. Para esto se incorporó un proveedor \verb|SDT| propio, descripto en el Apéndice \ref{appendix:dtrace-sdt}, con eventos asociados al disparo de transiciones, a intentos bloqueados y a las decisiones tomadas por \verb|sched_add()|. Las trazas permitieron distinguir si un hilo era enviado a la cola global, si era encolado en una cola por CPU por decisión de la política de Petri, o si era registrado mediante \verb|TRAN_ADDTOQUEUE_FORCED|. Con esta instrumentación se pudo observar el comportamiento del modelo en ejecución real, validar que la transición original seguía siendo utilizada cuando correspondía y verificar que los encolados obligatorios quedaran registrados sin volver a desincronizar la red.\par
 
 \subsection{Análisis formal del modelo extendido}
 
@@ -559,6 +559,6 @@ El resultado no contradice la corrección buscada. En la implementación real, \
 
 El resultado no \textit{safe} también es esperable para las plazas que representan colas. Una cola de ejecución puede contener más de un hilo, por lo que exigir una propiedad 1-\textit{bounded} para todo el modelo no describe bien el comportamiento buscado. La propiedad que sí interesa en este análisis es más acotada: los tokens que representan recursos exclusivos, como el estado de una CPU, deben conservar sus invariantes estructurales, y las extensiones agregadas no deben introducir estados bloqueados en los escenarios modelados.\par
 
-La matriz de incidencia del modelo consolidado confirma el punto central de la corrección. El encolado ordinario y el encolado forzado tienen el mismo efecto sobre \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|: ambos agregan un token a la cola per-CPU y un token a la plaza que penaliza futuras decisiones de encolado. La diferencia aparece en la matriz de inhibición. \verb|PLACE_CANTQ| bloquea el camino ordinario, pero no bloquea el camino forzado. Así, cuando FreeBSD necesita registrar un encolado obligatorio, la red puede actualizar su marcado sin quedar bloqueada por la política normal de balanceo.\par
+La matriz de incidencia del modelo consolidado confirma el punto central de la corrección. El encolado ordinario y el encolado forzado tienen el mismo efecto sobre \verb|PLACE_QUEUE| y \verb|PLACE_CANTQ|: ambos agregan un token a la cola por CPU y un token a la plaza que penaliza futuras decisiones de encolado. La diferencia aparece en la matriz de inhibición. \verb|PLACE_CANTQ| bloquea el camino ordinario, pero no bloquea el camino forzado. Así, cuando FreeBSD necesita registrar un encolado obligatorio, la red puede actualizar su marcado sin quedar bloqueada por la política normal de balanceo.\par
 
 El análisis técnico del \textit{crash dump} y la evidencia obtenida con instrumentación de \textit{DTrace} se encuentran documentados en el Apéndice \ref{appendix:apC}. La explicación de \textit{DTrace}, \textit{probes} y \verb|SDT| se desarrolla específicamente en el Apéndice \ref{appendix:dtrace-sdt}.\par

@@ -387,7 +387,7 @@ Para obtener más información sobre el fallo, se utilizó el comando \texttt{up
 
 El análisis inicial permitió identificar el lugar en el que el \textit{kernel} terminaba fallando, pero no explicaba por sí solo la causa del problema. La aparición del fallo en \verb|kern_select()| indicaba el punto en el que se observaba el acceso inválido a memoria, aunque el error se originaba antes, durante una decisión de encolado del planificador.\par
 
-La causa identificada fue una desincronización entre las \textit{run queues} reales de FreeBSD y el marcado de la red de Petri. En las versiones previas del planificador, podía ocurrir que FreeBSD encolara un hilo en una cola per-CPU por una restricción de \textit{pinning}, \textit{bounding} o afinidad, mientras que la red no registraba el disparo de \verb|TRAN_ADDTOQUEUE| porque dicha transición se encontraba inhibida por \verb|PLACE_CANTQ|. Desde ese momento, la red dejaba de representar correctamente el estado del planificador.\par
+La causa identificada fue una desincronización entre las \textit{run queues} reales de FreeBSD y el marcado de la red de Petri. En las versiones previas del planificador, podía ocurrir que FreeBSD encolara un hilo en una cola por CPU por una restricción de \textit{pinning}, \textit{bounding} o afinidad, mientras que la red no registraba el disparo de \verb|TRAN_ADDTOQUEUE| porque dicha transición se encontraba inhibida por \verb|PLACE_CANTQ|. Desde ese momento, la red dejaba de representar correctamente el estado del planificador.\par
 
 El efecto posterior era que, cuando el planificador intentaba desencolar o ejecutar el hilo, la red podía intentar disparar transiciones como \verb|TRAN_UNQUEUE|, \verb|TRAN_EXEC| o \verb|TRAN_REMOVE_QUEUE| sobre un marcado incorrecto. Por eso el \textit{kernel panic} aparecía en funciones alejadas del punto original del error: el \textit{crash} era una consecuencia tardía de una decisión de encolado que había dejado inconsistentes al \textit{kernel} y al modelo.\par
 
@@ -404,26 +404,26 @@ Esta instrumentación fue necesaria porque el problema no se manifestaba en el m
 
 \section{Evidencia de la corrección mediante DTrace}
 
-Para validar el comportamiento se agregó instrumentación mediante \textit{DTrace}. Las trazas diferenciaron los encolados a cola global, los encolados per-CPU decididos por la política de Petri y los encolados per-CPU forzados por restricciones de FreeBSD.\par
+Para validar el comportamiento se agregó instrumentación mediante \textit{DTrace}. Las trazas diferenciaron los encolados a cola global, los encolados por CPU decididos por la política de Petri y los encolados por CPU forzados por restricciones de FreeBSD.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
-        \textbf{Escenario} & \textbf{Global} & \textbf{Policy} & \textbf{Forced} & \textbf{Bloq.} \\
+        \textbf{Escenario} & \textbf{Global} & \textbf{Política} & \textbf{Forzado} & \textbf{Bloq.} \\
         \hline
         General & 2570 & 0 & 13 & 0 \\
         \hline
         \texttt{cpuset -l 1,2} & 2595 & 311 & 198 & 0 \\
         \hline
     \end{tabular}
-    \caption[Conteo de decisiones de encolado con DTrace]{Conteo de decisiones observadas mediante DTrace para los caminos principales de encolado. Las columnas \textit{Policy} y \textit{Forced} corresponden a \texttt{ADDTOQUEUE\_POLICY} y \texttt{ADDTOQUEUE\_FORCED}.}
+    \caption[Conteo de decisiones de encolado con DTrace]{Conteo de decisiones observadas mediante DTrace para los caminos principales de encolado. Las columnas de política y forzado corresponden a \texttt{ADDTOQUEUE\_POLICY} y \texttt{ADDTOQUEUE\_FORCED}.}
     \label{tabla:addtoqueue-forced-dtrace-appendix}
 \end{table}
 
 La prueba sin afinidad explícita mostró que la mayoría de los hilos siguieron el camino de cola global, con pocos casos forzados asociados a hilos internos del sistema. La prueba restringida con \verb|cpuset| mostró la aparición simultánea de \verb|ADDTOQUEUE_POLICY| y \verb|ADDTOQUEUE_FORCED|. Esto permitió confirmar que la red sigue decidiendo cuando existe una CPU válida y sensibilizada, y que el camino forzado aparece únicamente cuando resulta necesario para mantener la semántica de FreeBSD y la sincronización del marcado.\par
 
-En la ejecución restringida, si se consideran únicamente los encolados per-CPU registrados por la red, el 61.10\% correspondió a \verb|ADDTOQUEUE_POLICY| y el 38.89\% a \verb|ADDTOQUEUE_FORCED|. No se registraron transiciones bloqueadas durante las pruebas, lo que indica que el modelo permaneció sincronizado con el estado real del planificador en los escenarios evaluados.\par
+En la ejecución restringida, si se consideran únicamente los encolados por CPU registrados por la red, el 61.10\% correspondió a \verb|ADDTOQUEUE_POLICY| y el 38.89\% a \verb|ADDTOQUEUE_FORCED|. No se registraron transiciones bloqueadas durante las pruebas, lo que indica que el modelo permaneció sincronizado con el estado real del planificador en los escenarios evaluados.\par
 
 \chapter{Mediciones complementarias con \textit{probes} nativos}
 \label{appendix:dtrace-native-measurements}
@@ -443,11 +443,11 @@ En la ejecución restringida, si se consideran únicamente los encolados per-CPU
     \label{tabla:dtrace-native-probes}
 \end{table}
 
-\chapter{Port experimental del planificador a FreeBSD \texttt{main}}\label{appendix:port-main}
+\chapter{\textit{Port} experimental del planificador a FreeBSD \texttt{main}}\label{appendix:port-main}
 
 Este apéndice resume el estudio experimental realizado para revisar la portabilidad del planificador base hacia la rama \texttt{main} de FreeBSD. El objetivo no fue reemplazar la validación realizada sobre FreeBSD 13.1 ni presentar una versión lista para uso en producción. Su aporte es más acotado: identificar qué partes del desarrollo dependen de la versión usada durante esta tesis y qué ajustes serían necesarios para continuar el trabajo sobre una base más reciente.\par
 
-El estudio completo quedó documentado en el repositorio de documentación del proyecto, dentro de \verb|project_files/migration_files/port-main|. Esa carpeta reúne notas sobre el funcionamiento de \verb|sched_4bsd.c|, el cambio en el camino de \verb|sched_throw()|, las diferencias entre el desarrollo sobre FreeBSD 13.1 y el port a \texttt{main}, y una evaluación de viabilidad para continuar con una propuesta de integración interna al repositorio del proyecto.\par
+El estudio completo quedó documentado en el repositorio de documentación del proyecto, dentro de \verb|project_files/migration_files/port-main|. Esa carpeta reúne notas sobre el funcionamiento de \verb|sched_4bsd.c|, el cambio en el camino de \verb|sched_throw()|, las diferencias entre el desarrollo sobre FreeBSD 13.1 y el \textit{port} a \texttt{main}, y una evaluación de viabilidad para continuar con una propuesta de integración interna al repositorio del proyecto.\par
 
 \section{Alcance del experimento}
 
@@ -455,7 +455,7 @@ El experimento se limitó al planificador base basado en Redes de Petri. No se i
 
 La rama utilizada para el experimento fue \verb|feature/petri-net-scheduler-main-port|. La base fue la rama \texttt{main} del repositorio derivado, sincronizada con la rama \texttt{main} de FreeBSD al momento del estudio. Sobre esa base se aplicó el delta del planificador Petri, en lugar de realizar una fusión histórica completa desde la rama basada en FreeBSD 13.1. Esta decisión redujo la cantidad de conflictos no relacionados con la tesis y permitió concentrar el análisis en los archivos realmente modificados por el proyecto.\par
 
-Como resultado del experimento, se abrió una propuesta de integración en estado borrador hacia \texttt{main} del repositorio derivado: \url{https://github.com/drudilea/freebsd-src/pull/20}. Esa propuesta sirve para dejar trazable la integración revisada, no para presentar el port como una versión validada funcionalmente.\par
+Como resultado del experimento, se abrió una propuesta de integración en estado borrador hacia \texttt{main} del repositorio derivado: \url{https://github.com/drudilea/freebsd-src/pull/20}. Esa propuesta sirve para dejar trazable la integración revisada, no para presentar el \textit{port} como una versión validada funcionalmente.\par
 
 El alcance debe leerse con cuidado. Se revisaron conflictos de integración, coherencia conceptual del flujo del planificador y estilo de código. No se ejecutaron pruebas de estrés sobre el \textit{kernel} resultante, no se midió rendimiento y no se validó el comportamiento con carga sostenida. Por lo tanto, el resultado debe considerarse una prueba de integración y no una validación funcional equivalente a la realizada sobre FreeBSD 13.1.\par
 
@@ -465,9 +465,9 @@ El conflicto técnico más importante apareció en \verb|sys/kern/sched_4bsd.c|.
 
 Esta separación cambia dónde debe actualizarse la red de recursos. Si existe un hilo saliente, la red debe registrar que ese hilo deja la CPU mediante \verb|resource_expulse_thread()|. Si la CPU está arrancando y no hay hilo saliente, no corresponde expulsar ningún hilo. En ambos casos, una vez elegido el hilo entrante, debe registrarse la ejecución mediante \verb|resource_execute_thread()| antes de llamar a \verb|cpu_throw()|, ya que dicha función no retorna al flujo anterior del planificador.\par
 
-También se identificó un cambio de integración relacionado con \textit{DTrace}. En la rama \texttt{main}, las definiciones del proveedor \verb|sched| se encuentran centralizadas en \verb|sched_shim.c|. Por ese motivo, el port no debe volver a definir esos \textit{probes} dentro de \verb|sched_4bsd.c|. La integración correcta consiste en mantener los \textit{probes} propios del proveedor \verb|petri| y evitar duplicar símbolos ya definidos por FreeBSD.\par
+También se identificó un cambio de integración relacionado con \textit{DTrace}. En la rama \texttt{main}, las definiciones del proveedor \verb|sched| se encuentran centralizadas en \verb|sched_shim.c|. Por ese motivo, el \textit{port} no debe volver a definir esos \textit{probes} dentro de \verb|sched_4bsd.c|. La integración correcta consiste en mantener los \textit{probes} propios del proveedor \verb|petri| y evitar duplicar símbolos ya definidos por FreeBSD.\par
 
-Otro ajuste fue el archivo \verb|PI_KERNELCONF|. En lugar de arrastrar el archivo usado en FreeBSD 13.1, se regeneró desde el \verb|GENERIC| actual de \texttt{main} y se aplicaron solo las diferencias necesarias para este prototipo: seleccionar \verb|SCHED_4BSD|, deshabilitar \verb|SCHED_ULE| en ese archivo de configuración, conservar soporte para \textit{DTrace} y mantener opciones de diagnóstico útiles durante el desarrollo. De esta forma se evita mezclar el port con cambios ajenos a la tesis.\par
+Otro ajuste fue el archivo \verb|PI_KERNELCONF|. En lugar de arrastrar el archivo usado en FreeBSD 13.1, se regeneró desde el \verb|GENERIC| actual de \texttt{main} y se aplicaron solo las diferencias necesarias para este prototipo: seleccionar \verb|SCHED_4BSD|, deshabilitar \verb|SCHED_ULE| en ese archivo de configuración, conservar soporte para \textit{DTrace} y mantener opciones de diagnóstico útiles durante el desarrollo. De esta forma se evita mezclar el \textit{port} con cambios ajenos a la tesis.\par
 
 \begin{table}[H]
     \centering
@@ -488,7 +488,7 @@ Otro ajuste fue el archivo \verb|PI_KERNELCONF|. En lugar de arrastrar el archiv
         \verb|sys/conf/files| & Los archivos Petri quedaron como \verb|optional sched_4bsd|. & Limitar el prototipo al planificador 4BSD. \\
         \hline
     \end{tabular}
-    \caption{Cambios principales del port experimental a FreeBSD \texttt{main}.}
+    \caption{Cambios principales del \textit{port} experimental a FreeBSD \texttt{main}.}
     \label{tabla:port-main-cambios}
 \end{table}
 
@@ -496,6 +496,6 @@ Otro ajuste fue el archivo \verb|PI_KERNELCONF|. En lugar de arrastrar el archiv
 
 El estudio sugiere que el núcleo del planificador basado en Redes de Petri puede trasladarse a una base más reciente sin rediseñar el modelo. La mayor parte de los cambios fueron de integración: ubicar llamadas en el flujo actualizado del planificador, respetar definiciones ya existentes en FreeBSD \texttt{main}, limitar la compilación de los archivos Petri al planificador 4BSD y evitar diferencias heredadas en la configuración del \textit{kernel}.\par
 
-El punto conceptual que se mantiene desde la corrección descripta en la sección \ref{ch:problema_red} es que Petri debe decidir cuando FreeBSD tiene libertad de política, pero no debe bloquear restricciones internas del \textit{kernel}. Por eso la transición \verb|TRAN_ADDTOQUEUE_FORCED| sigue siendo necesaria en el port: registra en la red los encolados que FreeBSD debe realizar por \textit{pinning}, \textit{bounding} o afinidad, sin desincronizar el marcado.\par
+El punto conceptual que se mantiene desde la corrección descripta en la sección \ref{ch:problema_red} es que Petri debe decidir cuando FreeBSD tiene libertad de política, pero no debe bloquear restricciones internas del \textit{kernel}. Por eso la transición \verb|TRAN_ADDTOQUEUE_FORCED| sigue siendo necesaria en el \textit{port}: registra en la red los encolados que FreeBSD debe realizar por \textit{pinning}, \textit{bounding} o afinidad, sin desincronizar el marcado.\par
 
 Aun así, el resultado no cierra la validación. Quedan tareas pendientes antes de considerar esta línea como una continuación estable del trabajo: compilar el \textit{kernel} con \verb|PI_KERNELCONF| en FreeBSD, iniciar el sistema con ese \textit{kernel}, ejecutar pruebas básicas de carga, revisar trazas con \textit{DTrace} y repetir escenarios con restricciones de afinidad. Recién después de esas validaciones podría evaluarse si los módulos de inhibición y monopolización deben portarse sobre la misma base.\par
