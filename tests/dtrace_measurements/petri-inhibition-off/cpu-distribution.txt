@@ -1,0 +1,38 @@
+CPU distribution for openssl
+
+Partial summary
+cpu,3,13
+cpu,1,14
+cpu,2,14
+cpu,0,33
+total,74
+
+Partial summary
+cpu,3,22
+cpu,1,27
+cpu,2,28
+cpu,0,68
+total,145
+
+Partial summary
+cpu,3,36
+cpu,1,40
+cpu,2,43
+cpu,0,108
+total,227
+
+Partial summary
+cpu,3,51
+cpu,1,56
+cpu,2,58
+cpu,0,131
+total,296
+
+
+Final summary
+cpu,3,55
+cpu,1,58
+cpu,2,61
+cpu,0,133
+total,307
+

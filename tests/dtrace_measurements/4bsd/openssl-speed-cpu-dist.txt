@@ -1,0 +1,11 @@
+Doing sha256 for 20s on 8192 size blocks: 791782 sha256's in 18.81s
+OpenSSL 1.1.1o-freebsd  3 May 2022
+built on: reproducible build, date unspecified
+options:bn(64,64) rc4(16x,int) des(int) aes(partial) idea(int) blowfish(ptr) 
+compiler: clang
+The 'numbers' are in 1000s of bytes per second processed.
+type           8192 bytes
+sha256          344785.55k
+real 20.03
+user 18.82
+sys 1.08

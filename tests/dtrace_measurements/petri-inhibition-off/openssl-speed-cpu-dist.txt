@@ -1,0 +1,28 @@
+Forked child 0
++DT:sha256:20:8192
+Forked child 1
+Forked child 2
++DT:sha256:20:8192
++DT:sha256:20:8192
++DT:sha256:20:8192
++R:939924:sha256:20.390625
++R:937893:sha256:20.398438
++R:938221:sha256:20.390625
++R:935666:sha256:20.390625
+Forked child 3
+Got: +H:8192 from 0
+Got: +F:23:sha256:376657254.07 from 0
+Got: +H:8192 from 1
+Got: +F:23:sha256:376933342.26 from 1
+Got: +H:8192 from 2
+Got: +F:23:sha256:377617528.06 from 2
+Got: +H:8192 from 3
+Got: +F:23:sha256:375906862.69 from 3
+OpenSSL 1.1.1o-freebsd  3 May 2022
+built on: reproducible build, date unspecified
+options:bn(64,64) rc4(16x,int) des(int) aes(partial) idea(int) blowfish(ptr) 
+compiler: clang
+sha256         1507114.99k
+real 20.41
+user 0.00
+sys 0.01
