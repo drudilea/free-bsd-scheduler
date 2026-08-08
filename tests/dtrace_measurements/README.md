@@ -19,6 +19,7 @@ utils/scripts/DTrace/
   thread_cpu_distribution.d
   thread_context_switches.d
   reserved_cpu_foreign_threads.d
+  petri_addtoqueue.d
 ```
 
 Cada escenario conserva:
@@ -75,6 +76,14 @@ dtrace -s ~/dtrace-measurements/scripts/cpu_distribution.d > $OUT/cpu-distributi
 ```
 
 Ambos scripts filtran por `execname == "openssl"`.
+
+Para resumir las decisiones de encolado normales y forzadas del planificador Petri:
+
+```bash
+dtrace -s ~/freebsd-wiki/utils/scripts/DTrace/petri_addtoqueue.d
+```
+
+Este script requiere un kernel que exponga los probes SDT del proveedor `petri`.
 
 ## Escenario 1: 4BSD puro
 
